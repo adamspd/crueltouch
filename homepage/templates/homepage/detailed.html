@@ -1,0 +1,32 @@
+{% extends 'homepage/base.html' %}
+{% block title %}CRUELTOUCH | Detailed{% endblock %}
+
+{% block body %}
+    <body>
+
+        <div class="image" style="display: block;
+                                  margin-left: auto;
+                                  margin-right: auto;
+                                  width: 99%;">
+             <div class="">
+                 <img src="{{ photo.file.url }}">
+             </div>
+        </div>
+
+
+    <!--
+    <div class="row">
+        <div class="column">
+             <div class="detailed-img">
+                 <img src="/media/Portfolio/{{ photo.name }}">
+             </div>
+        </div>
+        <div class="column">
+            <h1 class="photo-album">{{ photo.album }}</h1>
+            <h3>{{ photo.caption }}</h3>
+        </div>
+    </div>
+    -->
+
+    </body>
+{% endblock body %}
