@@ -1,0 +1,37 @@
+{% extends 'client/base.html' %}
+{% block title %}<title>Contact Form</title>{% endblock %}
+    {% block body %}
+        <div class="recentCustomers">
+            <div class="cardHeader">
+                <h2>All Your Contact Form</h2>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <td>Full Name</td>
+                    <td>Email</td>
+                    <td>Subject</td>
+                    <td>Message</td>
+                </tr>
+                </thead>
+                {% if all_ %}
+                    <tbody>
+                    {% for contact in all_contact %}
+
+                        <tr>
+
+                            <td><h4>{{ contact.full_name }}</h4></td>
+                            <td>{{ contact.email }}</td>
+                            <td>{{ contact.subject }}</td>
+                            <td>{{ contact.message }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                {% else %}
+                    <tr class="alert-info" id="info" style="text-align: center; margin-top: auto">
+                        <td>No new contact form.</td>
+                    </tr>
+                {% endif %}
+            </table>
+        </div>
+    {% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'client/base.html' %}
+{% load static %}
+{% block title %}<title>User Details</title>{% endblock %}
+{% block css %}<link rel="stylesheet" type="text/css" href="{% static 'client/gallery.css' %}">{% endblock %}
+    {% block body %}
+        {% if all_photos %}
+            {% for photo in all_photos %}
+                <div class="container-all">
+                    <div class="containers">
+                      <img src="{{ photo.file.url }}" alt="">
+                    </div>
+                </div>
+
+            {% endfor %}
+        {% else %}
+            <h2 class="alert-info" id="info" style="text-align: center; margin-top: auto">
+                {{ user_client.first_name }} doesn't have any photos uploaded yet.</h2>
+        {% endif %}
+    {% endblock %}
