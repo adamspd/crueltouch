@@ -28,9 +28,6 @@ urlpatterns = [
     # Book me
     path('bookme/', bookme, name='bookme'),
 
-    # Why register ?
-    path('information/', information, name='information'),
-
     # Book anyway
     path('bookanyway/', book_anyway, name='book_anyway'),
 
