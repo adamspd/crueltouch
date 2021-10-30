@@ -2,7 +2,6 @@ from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User, PermissionsMixin
-from django.template.defaulttags import csrf_token
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 
@@ -83,15 +82,22 @@ class UserClient(AbstractBaseUser, PermissionsMixin, models.Model):
         return self.active
 
 
-class Photo(models.Model):
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL,
-                              on_delete=models.CASCADE)
-    is_favorite = models.BooleanField(default=False)
-    can_be_downloaded = models.BooleanField(default=False)
-    file = models.ImageField(upload_to='Client', null=True, blank=True)
+class Album(models.Model):
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200, default=str(owner))
 
     def __str__(self):
-        return 'userID' + str(self.owner_id) + '-' + self.name
+        return str(self.owner)
+
+
+class Photo(models.Model):
+    album = models.ForeignKey(Album, on_delete=models.CASCADE)
+    file = models.ImageField(upload_to='Client', null=True, blank=True)
+    is_favorite = models.BooleanField(default=False)
+    can_be_downloaded = models.BooleanField(default=False)
+
+    def __str__(self):
+        return 'userID' + str(self.album.name) + '-' + self.file.name
 
 
 class BookMe(models.Model):
@@ -134,7 +140,7 @@ class BookMe(models.Model):
         return self.full_name
 
 
-class RoosProfilePhoto(models.Model):
+class OwnerProfilePhoto(models.Model):
     name = models.CharField(null=True, max_length=150)
     file = models.ImageField(upload_to='RoosPP', null=True, blank=True)
 

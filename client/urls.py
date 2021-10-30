@@ -18,7 +18,7 @@ urlpatterns = [
     path('logout/', logout_user, name='logout'),
 
     # favorite
-    path('favorite/', favorite, name='favorite'),
+    # path('favorite/', favorite, name='favorite'),
 
     # owner vs superuser
     path('rooslaurore/', owner, name='owner'),
@@ -30,6 +30,9 @@ urlpatterns = [
 
     # Book anyway
     path('bookanyway/', book_anyway, name='book_anyway'),
+
+    # client album details
+    url(r'^user/(?P<pk>[0-9]+)/$', user_album_details, name='album_details'),
 
     # Owner help
     path('ahelp/', owner_help, name='help_owner'),
