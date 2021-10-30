@@ -1,4 +1,5 @@
 from django.core.mail import send_mail
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -11,7 +12,8 @@ from django.views.generic import ListView, RedirectView
 
 from crueltouch import settings
 from .form import CustomRegisterForm, BookME
-from client.models import Photo, UserClient, BookMe, RoosProfilePhoto
+from client.models import UserClient, BookMe, Album, OwnerProfilePhoto
+# from client.models import Photo, UserClient, BookMe, RoosProfilePhoto
 from static_pages_and_forms.models import ContactForm
 
 User = get_user_model()
@@ -54,14 +56,22 @@ def index(request):
     if request.user.is_authenticated:
         user = request.user
         username = request.user.pk
-        all_photos = Photo.objects.filter(owner_id=username)
-        contexts = {
-            'all_photos': all_photos,
+        album = Album.objects.filter(owner_id=username)
+        print(album)
+        return render(request, 'client/index.html', {
+            'album': album,
             'user': user
-        }
-        return render(request, 'client/index.html', contexts)
+        })
     else:
         return render(request, 'client/login.html')
+
+
+@login_required(login_url='login')
+def user_album_details(request, pk):
+    selected_album = Album.objects.get(id=pk)
+    return render(request, 'client/photo_details.html', {
+        'album': selected_album
+    })
 
 
 def owner(request):
@@ -90,15 +100,16 @@ def email_check(user):
 
 def context(request):
     all_booked = BookMe.objects.all()
-    all_photos = Photo.objects.all()
+    # all_photos = Photo.objects.all()
+    all_photos = []
     all_clients = UserClient.objects.all()
     all_contacts = ContactForm.objects.all()
-    roos_profile = RoosProfilePhoto.objects.all()
+    # roos_profile = RoosProfilePhoto.objects.all()
     contexts = {'all_photos': all_photos,
                 'all_clients': all_clients,
                 'all_book_me': all_booked,
                 'all_contacts': all_contacts,
-                'roos_profile': roos_profile,
+                # 'roos_profile': roos_profile,
                 }
     return contexts
 
@@ -148,7 +159,8 @@ def owner_contact_form(request):
 def user_details(request, pk):
     if request.user.is_authenticated:
         user_client = UserClient.objects.get(id=pk)
-        all_photos = Photo.objects.filter(owner_id=user_client.id)
+        # all_photos = Photo.objects.filter(owner_id=user_client.id)
+        all_photos = []
         contexts = {
             'user_client': user_client,
             'all_photos': all_photos,
@@ -158,22 +170,22 @@ def user_details(request, pk):
         return render(request, 'client/log_as_owner.html')
 
 
-@login_required(login_url='login')
-def favorite(request, photo_id):
-    photo = get_object_or_404(Photo, pk=photo_id)
-    try:
-        selected_photo = photo.objects.get(pk=request.POST['photo'])
-    except (KeyError, Photo.DoesNotExist):
-        return render(request, 'client/index.html', {
-            'photo': photo,
-            'error_message': "You didn't like a photo",
-        })
-    else:
-        selected_photo.is_favorite = True
-        selected_photo.save()
-        return render(request, 'client/index.html', {
-            'photo': photo,
-        })
+# @login_required(login_url='login')
+# def favorite(request, photo_id):
+#     photo = get_object_or_404(Photo, pk=photo_id)
+#     try:
+#         selected_photo = photo.objects.get(pk=request.POST['photo'])
+#     except (KeyError, Photo.DoesNotExist):
+#         return render(request, 'client/index.html', {
+#             'photo': photo,
+#             'error_message': "You didn't like a photo",
+#         })
+#     else:
+#         selected_photo.is_favorite = True
+#         selected_photo.save()
+#         return render(request, 'client/index.html', {
+#             'photo': photo,
+#         })
 
 
 def superuserlogin(request):

@@ -9,7 +9,61 @@
     </style>
 </head>
 <body>
+<div class="container col-md-2 clearfix" style="text-align: center;">
+                    <a id="like" class="btn btn-lg btn-block btn-shared btn-favorite" style="
+                                                                                              -webkit-border-radius: 3px;
+                                                                                              -moz-border-radius: 3px;
+                                                                                              -ms-border-radius: 3px;
+                                                                                              border-radius: 3px;
+                                                                                              -webkit-transition: all 0.5s;
+                                                                                              -moz-transition: all 0.5s;
+                                                                                              -ms-transition: all 0.5s;
+                                                                                              transition: all 0.5s;
+                                                                                              color: #1892BF;
+                                                                                              border-color: #1892BF;
+                                                                                              background: transparent;
+                                                                                              margin: 0 3px;
+                                                                                              padding: 7px 14px;
+                                                                                              outline: 0;
+                                                                                              margin-left: 20px;
+                                                                                              margin-bottom: .2em;
 
+"                                                                                           >
+                        <span class="fa fa-star pull-left" style="margin-right: 1em;"></span>
+                        <span class="favorite-text">Favorite</span>
+                        <span class="unfavorite_text" style="display: none;">UnFavorite</span>
+                    </a>
+                </div>
 
 </body>
+
+ <form action="#{# {% url 'client:favorite' %} #}" method="post">
+        {% csrf_token %}
+        {% if all_photos %}
+            {% for photo in all_photos %}
+                <div class="container">
+                    <div class="gallery">
+                        <div class="gallery-item" tabindex="0">
+                            <img src="{{ photo.file.url }}" class="gallery-image">
+                            <input type="submit" id="photo{{ forloop.counter }}" name="photo"
+                            value="{{ photo.id }}">
+                            <label for="photo{{ forloop.counter }}">
+                                {{ photo.file.name }}
+                                {% if photo.is_favorite %}
+                                    <span class="fa fa-star pull-left" style="margin-right: 1em;"></span>
+                                {% endif %}
+                            </label><br>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+{#            <button type="submit" value="{{ photo.id }}">Favorite</button>#}
+        {% else %}
+            <h2 class="alert-info" id="info" style="text-align: center; margin-top: auto">
+                Hi, {{ user.first_name }}. You don't have any photos uploaded yet.</h2>
+            <div class="alert-warning" style="text-align: center; font-size: medium">
+                Wanna book me ? Click <a href="{% url 'client:bookme' %}">here</a> </div>
+        {% endif %}
+    </form>
 </html>
