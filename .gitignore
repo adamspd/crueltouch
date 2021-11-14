@@ -1,0 +1,13 @@
+.idea
+.env
+.DS_Store
+__pycache__
+static_pages_and_forms/migrations
+portfolio/migrations
+homepage/migrations
+client/migrations
+static_pages_and_forms/__pycache__
+portfolio/__pycache__
+homepage/__pycache__
+client/__pycache__
+
