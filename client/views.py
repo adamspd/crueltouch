@@ -12,7 +12,7 @@ from django.views.generic import ListView, RedirectView
 
 from crueltouch import settings
 from .form import CustomRegisterForm, BookME
-from client.models import UserClient, BookMe, Album, OwnerProfilePhoto
+from client.models import UserClient, BookMe, Album, OwnerProfilePhoto, Photo
 # from client.models import Photo, UserClient, BookMe, RoosProfilePhoto
 from static_pages_and_forms.models import ContactForm
 
@@ -119,7 +119,7 @@ def context(request):
 def when_owner_logged(request):
     if request.user.is_authenticated:
         contexts = context(request)
-        return render(request, 'client/owner_index.html', contexts)
+        return render(request, 'client/owner_dashboard.html', contexts)
     else:
         return render(request, 'client/log_as_owner.html')
 
@@ -156,6 +156,16 @@ def owner_contact_form(request):
 
 @login_required(login_url='/client/rooslaurore/')
 @user_passes_test(email_check, login_url='/client/rooslaurore/')
+def owner_bookme(request):
+    if request.user.is_authenticated:
+        all_book = BookMe.objects.all()
+        return render(request, 'client/owners_bookmes.html', {'all_book': all_book})
+    else:
+        return render(request, 'client/log_as_owner.html')
+
+
+@login_required(login_url='/client/rooslaurore/')
+@user_passes_test(email_check, login_url='/client/rooslaurore/')
 def user_details(request, pk):
     if request.user.is_authenticated:
         user_client = UserClient.objects.get(id=pk)
@@ -170,22 +180,22 @@ def user_details(request, pk):
         return render(request, 'client/log_as_owner.html')
 
 
-# @login_required(login_url='login')
-# def favorite(request, photo_id):
-#     photo = get_object_or_404(Photo, pk=photo_id)
-#     try:
-#         selected_photo = photo.objects.get(pk=request.POST['photo'])
-#     except (KeyError, Photo.DoesNotExist):
-#         return render(request, 'client/index.html', {
-#             'photo': photo,
-#             'error_message': "You didn't like a photo",
-#         })
-#     else:
-#         selected_photo.is_favorite = True
-#         selected_photo.save()
-#         return render(request, 'client/index.html', {
-#             'photo': photo,
-#         })
+@login_required(login_url='login')
+def favorite(request, album_id):
+    album = get_object_or_404(Album, pk=album_id)
+    try:
+        selected_photo = album.photo_set.get(pk=request.POST['photo'])
+    except (KeyError, Photo.DoesNotExist):
+        return render(request, 'client/photo_details.html', {
+            'album': album,
+            'error_message': "You didn't like a photo",
+        })
+    else:
+        selected_photo.is_favorite = True
+        selected_photo.save()
+        return render(request, 'client/photo_details.html', {
+            'album': album,
+        })
 
 
 def superuserlogin(request):

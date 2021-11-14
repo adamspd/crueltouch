@@ -1,0 +1,47 @@
+{% extends 'client/base.html' %}
+{% block title %}<title>Clients</title>{% endblock %}
+    {% block body %}
+        <div class="recentCustomers">
+            <div class="cardHeader">
+                <h2>Recent Book</h2>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <td>First Name</td>
+                    <td>Email</td>
+                    <td>Photo session</td>
+                    <td>Location</td>
+                    <td>Package</td>
+                    <td>Status</td>
+                </tr>
+                </thead>
+                {% if all_book %}
+                    <tbody>
+                    {% for book in all_book %}
+                        <tr>
+                            <td>{{ book.full_name }}</td>
+                            <td>{{ book.email }}</td>
+                            <td>{{ book.session_type }}</td>
+                            <td>{{ book.place }}</td>
+                            <td><span class="packages-number">{{ book.package }}</span></td>
+                            <td><span class="status {{ book.status }}">{{ book.status }}</span></td>
+                            <td><span class="status"></span>
+                                <select name="status" id="status">
+                                    <option value="book{{ forloop.counter }}">{{ book.status }}</option>
+                                    <option value="book{{ forloop.counter }}">{{ book.choices }}</option>
+                                    <option value="book{{ forloop.counter }}">{{ book.status }}</option>
+                                    <option value="book{{ forloop.counter }}">{{ book.status }}</option>
+                                </select>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                {% else %}
+                    <tr class="alert-info" id="info" style="text-align: center; margin-top: auto">
+                        <td>No Booking has been made yet.</td>
+                    </tr>
+                {% endif %}
+            </table>
+        </div>
+    {% endblock %}

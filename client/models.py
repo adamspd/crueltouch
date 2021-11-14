@@ -97,27 +97,25 @@ class Photo(models.Model):
     can_be_downloaded = models.BooleanField(default=False)
 
     def __str__(self):
-        return 'userID' + str(self.album.name) + '-' + self.file.name
+        return str(self.album.owner) + '-' + self.file.name
 
 
 class BookMe(models.Model):
     SESSION_TYPE = (
-        ('Portrait', 'Portrait'),
-        ('Wedding', 'Wedding'),
-        ('Birthday', 'Birthday'),
-        ('Graduation', 'Graduation'),
-        ('Others', 'Others'),
+        ('portrait', 'Portrait'),
+        ('birthday', 'Birthday'),
+        ('wOthers', 'Wedding and other events'),
     )
     WHERE = (
-        ('Studio', 'Studio'),
-        ('Outdoor', 'Outdoor'),
-        ('Others', 'Others'),
+        ('studio', 'Studio'),
+        ('outdoor', 'Outdoor'),
+        ('others', 'Others'),
     )
     PACKAGE = (
-        ('7 photos', '7 photos'),
-        ('24 photos', '24 photos'),
-        ('40 photos', '40 photos'),
-        ('50 photos', '50 photos'),
+        ('7', '7 photos'),
+        ('15', '15 photos'),
+        ('30', '30 photos'),
+        ('60', '60 photos'),
     )
 
     STATUS = (
@@ -129,8 +127,8 @@ class BookMe(models.Model):
 
     # who = models.ForeignKey(settings.AUTH_USER_MODEL,
     #                         on_delete=models.CASCADE, null=True)
-    full_name = models.CharField(max_length=255, blank=True, null=True)
-    email = models.EmailField(default="", null=True, blank=True)
+    full_name = models.CharField(max_length=255, blank=False, null=False)
+    email = models.EmailField(default="", null=False, blank=False)
     session_type = models.CharField(max_length=200, null=True, choices=SESSION_TYPE)
     place = models.CharField(max_length=200, null=True, choices=WHERE)
     package = models.CharField(max_length=200, null=True, choices=PACKAGE)
