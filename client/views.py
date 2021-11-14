@@ -195,6 +195,17 @@ def updateBookme(request, pk):
     return render(request, 'client/owner_update_bookme.html', context)
 
 
+@login_required(login_url='/client/rooslaurore/')
+@user_passes_test(email_check, login_url='/client/rooslaurore/')
+def delete_book(request, pk):
+    book = BookMe.objects.get(id=pk)
+    if request.method == 'POST':
+        book.delete()
+        return redirect('client:ownerislogged')
+    context = {'book': book}
+    return render(request, 'client/delete_book.html', context)
+
+
 @login_required(login_url='login')
 def favorite(request, album_id):
     album = get_object_or_404(Album, pk=album_id)

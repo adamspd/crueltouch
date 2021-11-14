@@ -14,6 +14,8 @@
                     <td>Location</td>
                     <td>Package</td>
                     <td>Status</td>
+                    <td>Update</td>
+                    <td>Remove</td>
                 </tr>
                 </thead>
                 {% if all_book %}
@@ -26,6 +28,8 @@
                             <td>{{ book.place }}</td>
                             <td><span class="packages-number">{{ book.package }}</span></td>
                             <td><span class="status {{ book.status }}">{{ book.status }}</span></td>
+                            <td><a class="btn btn-primary" href="{% url 'client:update_bookmes' book.id %}">Update</a></td>
+                            <td><a class="btn btn-danger" style="background-color: red" href="{% url 'client:delete_bookmes' book.id %}">Remove</a></td>
                         </tr>
                     {% endfor %}
                     </tbody>
