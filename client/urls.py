@@ -17,9 +17,6 @@ urlpatterns = [
     # log out/
     path('logout/', logout_user, name='logout'),
 
-    # favorite
-    # path('favorite/', favorite, name='favorite'),
-
     # owner vs superuser
     path('rooslaurore/', owner, name='owner'),
     path('adashboard/', when_owner_logged, name='ownerislogged'),
@@ -34,6 +31,9 @@ urlpatterns = [
     # client album details
     url(r'^user/(?P<pk>[0-9]+)/$', user_album_details, name='album_details'),
 
+    # favorite
+    url(r'^user/(?P<pk>[0-9]+)/favorite/$', favorite, name='favorite'),
+
     # Owner help
     path('ahelp/', owner_help, name='help_owner'),
 
@@ -45,4 +45,7 @@ urlpatterns = [
 
     # Owner's contact form
     path('amessages/', owner_contact_form, name='owner_messages'),
+
+    # Owner's book me
+    path('abook/', owner_bookme, name='owner_bookmes'),
 ]
