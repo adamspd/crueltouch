@@ -327,10 +327,10 @@ body {
 	border-bottom: none;
 }
 
-.details .recentBooks table tbody tr:hover {
+/*.details .recentBooks table tbody tr:hover {
 	background: var(--blue);
 	color: var(--white);
-}
+}*/
 
 .details .recentBooks table tr td {
 	padding: 10px;
@@ -449,10 +449,10 @@ body {
 	border-radius: 20px;
 }
 
-.recentCustomers table tr:hover {
+/*.recentCustomers table tr:hover {
 	background: var(--blue);
 	color: var(--white);
-}
+}*/
 
 .recentCustomers table tr td {
 	padding: 12px 10px;

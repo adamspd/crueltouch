@@ -15,5 +15,6 @@
         {% else %}
             <h2 class="alert-info" id="info" style="text-align: center; margin-top: auto">
                 {{ user_client.first_name }} doesn't have any photos uploaded yet.</h2>
+            <button class="btn btn-primary" style="left: 47%" href="{% url 'client:addphotos' %}">Add photos</button>
         {% endif %}
     {% endblock %}
