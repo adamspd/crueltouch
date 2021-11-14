@@ -139,7 +139,7 @@ def owner_help(request):
 def owner_client(request):
     if request.user.is_authenticated:
         contexts = context(request)
-        return render(request, 'client/owners_client.html', contexts)
+        return render(request, 'client/owner_client.html', contexts)
     else:
         return render(request, 'client/log_as_owner.html')
 
@@ -149,7 +149,7 @@ def owner_client(request):
 def owner_contact_form(request):
     if request.user.is_authenticated:
         all_contact = ContactForm.objects.all()
-        return render(request, 'client/owners_contact_form.html', {'all_contact': all_contact})
+        return render(request, 'client/owner_contact_form.html', {'all_contact': all_contact})
     else:
         return render(request, 'client/log_as_owner.html')
 
@@ -159,7 +159,7 @@ def owner_contact_form(request):
 def owner_bookme(request):
     if request.user.is_authenticated:
         all_book = BookMe.objects.all()
-        return render(request, 'client/owners_bookmes.html', {'all_book': all_book})
+        return render(request, 'client/owner_bookmes.html', {'all_book': all_book})
     else:
         return render(request, 'client/log_as_owner.html')
 
