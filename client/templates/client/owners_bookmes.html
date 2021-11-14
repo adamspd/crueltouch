@@ -26,14 +26,6 @@
                             <td>{{ book.place }}</td>
                             <td><span class="packages-number">{{ book.package }}</span></td>
                             <td><span class="status {{ book.status }}">{{ book.status }}</span></td>
-                            <td><span class="status"></span>
-                                <select name="status" id="status">
-                                    <option value="book{{ forloop.counter }}">{{ book.status }}</option>
-                                    <option value="book{{ forloop.counter }}">{{ book.choices }}</option>
-                                    <option value="book{{ forloop.counter }}">{{ book.status }}</option>
-                                    <option value="book{{ forloop.counter }}">{{ book.status }}</option>
-                                </select>
-                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>

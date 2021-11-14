@@ -48,4 +48,7 @@ urlpatterns = [
 
     # Owner's book me
     path('abook/', owner_bookme, name='owner_bookmes'),
+
+    # Update current book
+    path('a_update_bookme/<str:pk>/', updateBookme, name="update_bookmes")
 ]
