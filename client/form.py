@@ -15,3 +15,9 @@ class BookME(ModelForm):
     class Meta:
         model = BookMe
         fields = ['full_name', 'email', 'session_type', 'place', 'package']
+
+
+class UpdateBook(ModelForm):
+    class Meta:
+        model = BookMe
+        fields = ['full_name', 'email', 'session_type', 'place', 'package', 'status']

@@ -58,12 +58,13 @@
             <table>
                 <thead>
                 <tr>
-                    <td>Full Name</td>
+                    <td>Name</td>
                     <td>Email</td>
-                    <td>Session Type</td>
+                    <td>Session</td>
                     <td>Place</td>
                     <td>Packages</td>
                     <td>Status</td>
+                    <td>Update</td>
                 </tr>
                 </thead>
                 {% if all_book_me %}
@@ -76,6 +77,7 @@
                             <td>{{ book.place }}</td>
                             <td><span class="packages-number">{{ book.package }}</span></td>
                             <td><span class="status {{ book.status }}">{{ book.status }}</span></td>
+                            <td><a class="btn btn-primary" href="{% url 'client:update_bookmes' book.id %}">Update</a></td>
                         </tr>
                     {% endfor %}
                     </tbody>

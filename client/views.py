@@ -11,7 +11,7 @@ from django.urls import reverse
 from django.views.generic import ListView, RedirectView
 
 from crueltouch import settings
-from .form import CustomRegisterForm, BookME
+from .form import CustomRegisterForm, BookME, UpdateBook
 from client.models import UserClient, BookMe, Album, OwnerProfilePhoto, Photo
 # from client.models import Photo, UserClient, BookMe, RoosProfilePhoto
 from static_pages_and_forms.models import ContactForm
@@ -178,6 +178,21 @@ def user_details(request, pk):
         return render(request, 'client/user_details.html', contexts)
     else:
         return render(request, 'client/log_as_owner.html')
+
+
+@login_required(login_url='/client/rooslaurore/')
+@user_passes_test(email_check, login_url='/client/rooslaurore/')
+def updateBookme(request, pk):
+    book = BookMe.objects.get(id=pk)
+    form = UpdateBook(instance=book)
+    if request.method == 'POST':
+        form = UpdateBook(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect('client:ownerislogged')
+
+    context = {'form': form}
+    return render(request, 'client/owner_update_bookme.html', context)
 
 
 @login_required(login_url='login')
