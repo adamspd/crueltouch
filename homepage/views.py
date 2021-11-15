@@ -16,8 +16,6 @@ def index(request):
     list_of_album2 = list(album2)
     random.shuffle(list_of_album1)
     random.shuffle(list_of_album2)
-    # random.shuffle(album1, random=None)
-    # random.shuffle(album2, random=None)
     context = {
         'album1': list_of_album1,
         'album2': list_of_album2
