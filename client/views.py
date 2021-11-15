@@ -243,11 +243,25 @@ def delete_book(request, pk):
 @login_required(login_url='/client/rooslaurore/')
 @user_passes_test(email_check, login_url='/client/rooslaurore/')
 def add_photos(request, pk):
-    user = UserClient.objects.get(id=pk)
-    all_albums = Album.objects.all()
-    contexts = {'user': user,
-                'all_albums': all_albums}
-    return render(request, 'client/owner_addphotos.html', contexts)
+    if request.user.is_authenticated:
+        albums = Album.objects.all()
+        photos = Photo.objects.all()
+        if request.method == "POST":
+            data = request.POST
+            images = request.FILES.getlist('images')
+            for image in images:
+                post_photos = Photo.objects.create(
+                    album_id=data['category'],
+                    file=image
+                )
+            redirect('client:ownerislogged')
+
+        return render(request, 'client/owner_addphotos.html', {
+            'albums': albums,
+            'photos':  photos,
+        })
+    else:
+        return render(request, 'client/log_as_owner.html')
 
 
 @login_required(login_url='login')
