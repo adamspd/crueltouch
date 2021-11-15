@@ -84,7 +84,6 @@ class UserClient(AbstractBaseUser, PermissionsMixin, models.Model):
 
 class Album(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    name = models.CharField(max_length=200, default=str(owner))
 
     def __str__(self):
         return str(self.owner)
