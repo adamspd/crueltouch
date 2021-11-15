@@ -73,6 +73,7 @@ User = get_user_model()
 # Register your models here.
 # admin.site.register(Photo, PhotoAdmin)
 # admin.site.register(UserClient, UserAdminConfig)
+admin.site.register(UserClient)
 admin.site.register(BookMe)
 admin.site.register(Album)
 admin.site.register(Photo)

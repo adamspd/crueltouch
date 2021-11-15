@@ -10,11 +10,9 @@
 	</div>
 	Google Map end -->
     <style>
-            body {
-                background-color: ghostwhite;
-                background-repeat: no-repeat;
-                background-position: initial;
-                background-size: cover;
+        * {
+            background-image: url("12p.jpg");
+            background-size: cover;
         }
         input[type=text], input[type=email] {
             width: 90%;
@@ -185,9 +183,9 @@
 		}
 
         function display() {
-            const session = document.getElementById("id_session_type").value;
-            const place = document.getElementById("id_place").value;
-            const packages = document.getElementById("id_package").value;
+            var session = document.getElementById("id_session_type").value;
+            var place = document.getElementById("id_place").value;
+            var packages = document.getElementById("id_package").value;
 
             if (session === 'portrait' & place === 'outdoor' & packages == 7) {
 				document.getElementById('totalPrice').innerHTML = "Total: 200$";
