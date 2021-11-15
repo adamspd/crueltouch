@@ -1,7 +1,21 @@
 {% extends 'client/base.html' %}
 {% block title %}<title>Clients</title>{% endblock %}
+{% block optionalmenu %}
+    <li>
+        <a href="{% url 'client:add_photos_homepage' %}">
+            <span class="icon"><ion-icon name="images-outline"></ion-icon></span>
+            <span class="title">Add Photo Homepage</span>
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'client:add_photos_portfolio' %}">
+            <span class="icon"><ion-icon name="camera-outline"></ion-icon></span>
+            <span class="title">Add Photo Portfolio</span>
+        </a>
+    </li>
+{% endblock %}
 {% block body %}
-     <style>
+    <style>
         .container-add {
             position: absolute;
             left: 50%;
@@ -43,11 +57,9 @@
             <div class="col-md-4">
 
                 <div class="container-photos">
-
-
-                    <form method='POST' action="" enctype="multipart/form-data">
+                   <form method='POST' action="" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <h3>Upload photos</h3><br>
+                        <h3>Upload photos to Homepage</h3><br>
 
                         <div class="form-group m-3">
                             <label>Which row</label>
@@ -55,7 +67,7 @@
                                 <option value='none'>Select a row...</option>
 
                                 {% for album in albums %}
-                                <option value='{{album.id}}'>{{album.album_title}}</option>
+                                    <option value='{{ album.id }}'>{{ album.album_title }}</option>
                                 {% endfor %}
                             </select>
                         </div>

@@ -2,9 +2,6 @@ from django.db import models
 from django.utils.timezone import now
 
 
-# Create your models here.
-
-
 class Album(models.Model):
     album_title = models.CharField(max_length=200)
     creation_date = models.DateTimeField(default=now)

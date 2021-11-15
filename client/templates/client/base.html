@@ -26,10 +26,11 @@
                     <span class="title">Dashboard</span>
                 </a>
             </li>
+            {% block optionalmenu %}
             <li>
                 <a href="{% url 'client:add_photos_homepage' %}">
                     <span class="icon"><ion-icon name="images-outline"></ion-icon></span>
-                    <span class="title">Add Photo Homepage</span>
+                    <span class="title">Add Photo Website</span>
                 </a>
             </li>
             <li>
@@ -62,6 +63,7 @@
                     <span class="title">Password</span>
                 </a>
             </li>
+            {% endblock %}
             <li>
                 <a href="{% url 'client:logout' %}">
                     <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>

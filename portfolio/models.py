@@ -22,5 +22,3 @@ class Photo(models.Model):
     def __str__(self):
         return str(self.album) + "ID.{:0>3}".format(self.id)
 
-    def album_name(self):
-        return str(self.album.album_title)

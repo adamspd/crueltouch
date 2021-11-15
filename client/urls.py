@@ -60,4 +60,7 @@ urlpatterns = [
 
     # Add photo for the homepage
     path('addphotos/', add_photos_homepage, name="add_photos_homepage"),
+
+    # Add photo for the homepage
+    path('addportfolio/', add_photos_portfolio, name="add_photos_portfolio"),
 ]
