@@ -8,6 +8,7 @@ from django.contrib.auth import get_user_model
 
 # Create your views here.
 from django.urls import reverse
+from django.utils.timezone import now
 from django.views.generic import ListView, RedirectView
 
 from crueltouch import settings
@@ -15,7 +16,8 @@ from .form import CustomRegisterForm, BookME, UpdateBook
 from client.models import UserClient, BookMe, Album, OwnerProfilePhoto, Photo
 from homepage.models import Album as AlbumHomepage
 from homepage.models import Photo as PhotoHomepage
-# from client.models import Photo, UserClient, BookMe, RoosProfilePhoto
+from portfolio.models import Album as AlbumPortfolio
+from portfolio.models import Photo as PhotoPortfolio
 from static_pages_and_forms.models import ContactForm
 
 User = get_user_model()
@@ -121,6 +123,7 @@ def add_photos_homepage(request):
     if request.user.is_authenticated:
         albums = AlbumHomepage.objects.all()
         photos = PhotoHomepage.objects.all()
+
         if request.method == "POST":
             data = request.POST
             images = request.FILES.getlist('images')
@@ -131,9 +134,34 @@ def add_photos_homepage(request):
                 )
             redirect('client:ownerislogged')
 
-        return render(request, 'client/addphotos_homepage.html', {
+        return render(request, 'client/addphotos_website.html', {
             'albums': albums,
             'photos':  photos,
+        })
+    else:
+        return render(request, 'client/log_as_owner.html')
+
+
+@login_required(login_url='/client/rooslaurore/')
+@user_passes_test(email_check, login_url='/client/rooslaurore/')
+def add_photos_portfolio(request):
+    if request.user.is_authenticated:
+        albums = AlbumPortfolio.objects.all()
+        photos = PhotoPortfolio.objects.all()
+
+        if request.method == "POST":
+            data = request.POST
+            images = request.FILES.getlist('images')
+            for image in images:
+                PhotoPortfolio.objects.create(
+                    album_id=data['alb'],
+                    file=image
+                )
+            redirect('client:ownerislogged')
+
+        return render(request, 'client/addphotos_portfolio.html', {
+            'albums': albums,
+            'photos': photos,
         })
     else:
         return render(request, 'client/log_as_owner.html')
