@@ -1,7 +1,9 @@
+import random
+
 from django.shortcuts import render
 
 from django.views import generic
-from portfolio.models import Photo
+from .models import Photo
 
 
 # Create your views here.
@@ -10,8 +12,10 @@ from portfolio.models import Photo
 def index(request):
     album1 = Photo.objects.filter(album_id=1)
     album2 = Photo.objects.filter(album_id=2)
+    # random.shuffle(album1, random=None)
+    # random.shuffle(album2, random=None)
     context = {
-        'all_photos': album1,
+        'album1': album1,
         'album2': album2
     }
     return render(request, 'homepage/index.html', context)

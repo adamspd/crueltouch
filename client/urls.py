@@ -54,4 +54,10 @@ urlpatterns = [
 
     # Delete current book
     path('adelete/<str:pk>/', delete_book, name="delete_bookmes"),
+
+    # Add photo for clients
+    path('addphotos/<str:pk>/', add_photos, name="add_photos"),
+
+    # Add photo for the homepage
+    path('addphotos/', add_photos_homepage, name="add_photos_homepage"),
 ]

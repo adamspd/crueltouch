@@ -13,6 +13,8 @@ from django.views.generic import ListView, RedirectView
 from crueltouch import settings
 from .form import CustomRegisterForm, BookME, UpdateBook
 from client.models import UserClient, BookMe, Album, OwnerProfilePhoto, Photo
+from homepage.models import Album as AlbumHomepage
+from homepage.models import Photo as PhotoHomepage
 # from client.models import Photo, UserClient, BookMe, RoosProfilePhoto
 from static_pages_and_forms.models import ContactForm
 
@@ -100,8 +102,7 @@ def email_check(user):
 
 def context(request):
     all_booked = BookMe.objects.all()
-    # all_photos = Photo.objects.all()
-    all_photos = []
+    all_photos = Photo.objects.all()
     all_clients = UserClient.objects.all()
     all_contacts = ContactForm.objects.all()
     # roos_profile = RoosProfilePhoto.objects.all()
@@ -116,11 +117,37 @@ def context(request):
 
 @login_required(login_url='/client/rooslaurore/')
 @user_passes_test(email_check, login_url='/client/rooslaurore/')
+def add_photos_homepage(request):
+    if request.user.is_authenticated:
+        albums = AlbumHomepage.objects.all()
+        photos = PhotoHomepage.objects.all()
+        if request.method == "POST":
+            data = request.POST
+            images = request.FILES.getlist('images')
+            for image in images:
+                post_photos = PhotoHomepage.objects.create(
+                    album_id=data['row'],
+                    file=image
+                )
+            redirect('client:ownerislogged')
+
+        return render(request, 'client/addphotos_homepage.html', {
+            'albums': albums,
+            'photos':  photos,
+        })
+    else:
+        return render(request, 'client/log_as_owner.html')
+
+
+@login_required(login_url='/client/rooslaurore/')
+@user_passes_test(email_check, login_url='/client/rooslaurore/')
 def when_owner_logged(request):
     if request.user.is_authenticated:
         contexts = context(request)
+        print('owner is logged')
         return render(request, 'client/owner_dashboard.html', contexts)
     else:
+        print("Can't login")
         return render(request, 'client/log_as_owner.html')
 
 
@@ -169,13 +196,20 @@ def owner_bookme(request):
 def user_details(request, pk):
     if request.user.is_authenticated:
         user_client = UserClient.objects.get(id=pk)
-        # all_photos = Photo.objects.filter(owner_id=user_client.id)
-        all_photos = []
-        contexts = {
-            'user_client': user_client,
-            'all_photos': all_photos,
-        }
-        return render(request, 'client/user_details.html', contexts)
+        album = Album.objects.filter(owner_id=user_client.id)
+        if len(album) != 0:
+            id_album = album[0].id
+            all_photos = Photo.objects.filter(album_id=id_album)
+            contexts = {
+                'user_client': user_client,
+                'all_photos': all_photos,
+            }
+            return render(request, 'client/user_details.html', contexts)
+        else:
+            print(len(album))
+            return render(request, 'client/user_details.html', {
+                'user_client': user_client,
+            })
     else:
         return render(request, 'client/log_as_owner.html')
 
@@ -204,6 +238,16 @@ def delete_book(request, pk):
         return redirect('client:ownerislogged')
     context = {'book': book}
     return render(request, 'client/delete_book.html', context)
+
+
+@login_required(login_url='/client/rooslaurore/')
+@user_passes_test(email_check, login_url='/client/rooslaurore/')
+def add_photos(request, pk):
+    user = UserClient.objects.get(id=pk)
+    all_albums = Album.objects.all()
+    contexts = {'user': user,
+                'all_albums': all_albums}
+    return render(request, 'client/owner_addphotos.html', contexts)
 
 
 @login_required(login_url='login')
@@ -252,7 +296,7 @@ def form_bookme(request_client):
                             f'place => \n{form.cleaned_data["place"]}'
             # send_mail(subject=email_subject, message=email_message,
             #           from_email=settings.CONTACT_EMAIL, recipient_list=settings.ADMIN_EMAILS)
-            return redirect('homepage:index')
+            return redirect('https://crueltouch.setmore.com/')
     else:
         form = BookME()
     contexts = {'form': form}

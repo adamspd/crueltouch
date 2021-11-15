@@ -1,6 +1,17 @@
 from django.db import models
 from django.utils.timezone import now
-from homepage.models import Album
+
+
+class Album(models.Model):
+    album_title = models.CharField(max_length=200)
+    creation_date = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return self.album_title
+
+
+def get_path(instance, filename):
+    return '{0}/{1}'.format(instance.file.album_title, filename)
 
 
 class Photo(models.Model):

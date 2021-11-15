@@ -5,7 +5,7 @@
     <!-- Hero section  -->
 	<div class="hero-section">
         <div class="hero-slider owl-carousel">
-            {% for photo in all_photos %}
+            {% for photo in album1 %}
                 <div class="hero-item portfolio-item set-bg" data-setbg="{{ photo.file.url }}">
                     <a href="{% url 'homepage:detail' photo.id %}" class="hero-link">
                         <h2>Click</h2>

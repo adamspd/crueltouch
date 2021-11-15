@@ -27,6 +27,12 @@
                 </a>
             </li>
             <li>
+                <a href="{% url 'client:add_photos_homepage' %}">
+                    <span class="icon"><ion-icon name="images-outline"></ion-icon></span>
+                    <span class="title">Add Photo Homepage</span>
+                </a>
+            </li>
+            <li>
                 <a href="{% url 'client:owner_client' %}">
                     <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
                     <span class="title">Client</span>
@@ -78,6 +84,9 @@
                     <ion-icon name="search-outline"></ion-icon>
                 </label>
             </div>
+
+            {% block addmorephotos %}
+            {% endblock %}
 
             <!-- userImg -->
             <div class="user">
