@@ -278,7 +278,7 @@ def add_photos(request, pk):
             data = request.POST
             images = request.FILES.getlist('images')
             for image in images:
-                post_photos = Photo.objects.create(
+                Photo.objects.create(
                     album_id=data['category'],
                     file=image
                 )
@@ -338,11 +338,15 @@ def form_bookme(request_client):
                             f'place => \n{form.cleaned_data["place"]}'
             # send_mail(subject=email_subject, message=email_message,
             #           from_email=settings.CONTACT_EMAIL, recipient_list=settings.ADMIN_EMAILS)
-            return redirect('https://crueltouch.setmore.com/')
+
     else:
         form = BookME()
     contexts = {'form': form}
     return render(request_client, 'client/bookme.html', contexts)
+
+
+def scheduletimewithme(request):
+    return render(request, 'client/scheduletimewithme.html')
 
 
 def book_anyway(request):

@@ -58,9 +58,12 @@ urlpatterns = [
     # Add photo for clients
     path('addphotos/<str:pk>/', add_photos, name="add_photos"),
 
-    # Add photo for the homepage
+    # Add photo to the homepage
     path('addphotos/', add_photos_homepage, name="add_photos_homepage"),
 
-    # Add photo for the homepage
+    # Add photo to the portfolio
     path('addportfolio/', add_photos_portfolio, name="add_photos_portfolio"),
+
+    # Schedule time with me
+    path('schedule/', scheduletimewithme, name="scheduletimewithme"),
 ]
