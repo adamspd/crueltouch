@@ -338,7 +338,12 @@ def form_bookme(request_client):
                             f'place => \n{form.cleaned_data["place"]}'
             # send_mail(subject=email_subject, message=email_message,
             #           from_email=settings.CONTACT_EMAIL, recipient_list=settings.ADMIN_EMAILS)
-
+            client_name = form.cleaned_data['full_name']
+            client_email = form.cleaned_data['email']
+            return render(request=request_client, template_name='client/scheduletimewithme.html', context={
+                "client_name": client_name,
+                "client_email": client_email
+            })
     else:
         form = BookME()
     contexts = {'form': form}
