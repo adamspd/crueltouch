@@ -155,10 +155,10 @@
                         </div>
 
                         <br>
-                        <a class="button" type="submit" value="Submit" href="{% url 'client:scheduletimewithme' %}"><span>Schedule time with me</span></a>
+                        <input class="button" type="submit" value="Submit">
                     </form>
 
-
+{#href="{% url 'client:scheduletimewithme' %}" <span>Schedule time with me</span>#}
 
 				</div>
 			</div>
@@ -175,7 +175,7 @@
 		//Query All input fields
 		var form_fields = document.getElementsByTagName('input')
 		form_fields[1].placeholder='Full name...';
-		form_fields[2].placeholder='Email...';
+		form_fields[2].placeholder='A valid email address, please...';
 		form_fields[3].placeholder='Subject...';
 		form_fields[4].placeholder='Message...';
 

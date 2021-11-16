@@ -34,7 +34,7 @@ class UserManager(BaseUserManager):
 
 
 class UserClient(AbstractBaseUser, PermissionsMixin, models.Model):
-    email = models.EmailField(max_length=255, unique=True, default="example@gmail.com")
+    email = models.EmailField(max_length=255, unique=True, default="", help_text="A valid email address, please")
     first_name = models.CharField(max_length=255, default=None)
     active = models.BooleanField(default=True)  # can login
     admin = models.BooleanField(default=False)  # superuser
@@ -127,7 +127,7 @@ class BookMe(models.Model):
     # who = models.ForeignKey(settings.AUTH_USER_MODEL,
     #                         on_delete=models.CASCADE, null=True)
     full_name = models.CharField(max_length=255, blank=False, null=False)
-    email = models.EmailField(default="", null=False, blank=False)
+    email = models.EmailField(default="", null=False, blank=False, help_text="A valid email address, please !")
     session_type = models.CharField(max_length=200, null=True, choices=SESSION_TYPE)
     place = models.CharField(max_length=200, null=True, choices=WHERE)
     package = models.CharField(max_length=200, null=True, choices=PACKAGE)
