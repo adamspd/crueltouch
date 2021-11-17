@@ -65,5 +65,8 @@ urlpatterns = [
     path('addportfolio/', add_photos_portfolio, name="add_photos_portfolio"),
 
     # Schedule time with me
-    path('schedule/', scheduletimewithme, name="scheduletimewithme"),
+    path('paynow/', paynow, name="paynow"),
+
+    # Success page
+    path('success/', success_payment, name="success_payment")
 ]
