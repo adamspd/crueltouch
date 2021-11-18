@@ -76,10 +76,13 @@
 
 		//Query All input fields
 		var form_fields = document.getElementsByTagName('input')
-		form_fields[1].placeholder='Full name...';
-		form_fields[2].placeholder='Email...';
-		form_fields[3].placeholder='Subject...';
-		form_fields[4].placeholder='Message...';
+		form_fields[1].placeholder='How do I call you ? ';
+		form_fields[2].placeholder='A valid email address, please... !';
+		form_fields[3].placeholder="What is the subject of your message... ?";
+        form_fields[4].placeholder="I'm listening...";
+
+        var form_field_text_area = document.getElementsByTagName('textarea')
+		form_field_text_area[0].placeholder="I'm listening...";
 
 
 		for (var field in form_fields){
