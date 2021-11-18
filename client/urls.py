@@ -72,4 +72,7 @@ urlpatterns = [
 
     # create album for portfolio
     path('createalbum/', creationofalbum, name="creationofalbum"),
+
+    # delete photo from portfolio
+    path('deletephoto/<str:pk>', delete_photo, name="deletephotoportfolio"),
 ]

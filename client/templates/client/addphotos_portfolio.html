@@ -17,15 +17,14 @@
 {% block body %}
     <style>
         .container-add {
-            position: absolute;
-            left: 50%;
+            position: relative;
+            margin: auto;
             top: 50%;
-            transform: translate(-50%, -50%);
-            border: 1px solid lightcoral;
-            height: 450px;
+            border: 1px solid antiquewhite;
+            height: 500px;
             width: 350px;
             background-color: #b8daff;
-            border-radius: 35px;
+            border-radius: 25px;
         }
 
         .container-photos {
@@ -49,9 +48,6 @@
             min-height: 165px;
             margin-bottom: 38px;
         }
-        a#createAlbum {
-            color: white;
-        }
 
         label {
             margin-bottom: 15px;
@@ -63,49 +59,103 @@
             height: 15px;
         }
 
-        button#createalbum {
-        color: whitesmoke;
-        font-size: 15px;
-    }
+        button#addphotos {
+            color: whitesmoke;
+            font-size: 15px;
+            text-align: center;
+            margin: auto;
+            cursor: pointer;
+        }
 
+        h3 {
+            text-transform: uppercase;
+            color: black;
+        }
 
+        a#goback {
+            margin-left: 20px;
+            background-color: red;
+        }
+
+        a#portfolio {
+            margin-right: 20px;
+            height: 30px;
+            background-color: red;
+        }
+
+        .top-container {
+            display: flex;
+            justify-content: space-between;
+
+        }
     </style>
-    <a href="{% url 'client:ownerislogged' %}" class="btn btn-dark my-3">Go Back</a>
-    <div class="container-add">
+    <div style="justify-content: start; margin-top: 200px">
+        <div class="container-add">
+            <br>
+            <div class="top-container">
+                <a id="goback" href="{% url 'client:add_photos_homepage' %}" class="btn btn-dark my-3">< Go Back</a>
+                <a id="portfolio" href="{% url 'client:creationofalbum' %}" class="btn btn-dark my-3">Create Album ></a>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="container-photos">
+                        <form method='POST' action="" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <h3>Upload to portfolio</h3><br>
 
-        <div class="row justify-content-center">
-            <div class="col-md-4">
-
-                <div class="container-photos">
-                    <form method='POST' action="" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <h3>Upload photos to portfolio</h3><br>
-
-                        <div class="form-group m-3">
-                            <label>Album name</label><br>
+                            <div class="form-group m-3">
+                                <label>Album name</label><br>
                                 <select name="alb" class="form-control">
                                     <option value='none'>Select an album...</option>
 
                                     {% for album in albums %}
-                                    <option value='{{album.id}}'>{{album.album_title}}</option>
+                                        <option value='{{ album.id }}'>{{ album.album_title }}</option>
                                     {% endfor %}
                                 </select>
-                        </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="form-group m-3">
+                                <label>Upload image</label><br>
+                                <input required name="images" type="file" multiple class="form-control-file">
+                            </div>
+                            <br><br>
+                            <button id="addphotos" type='submit' class="btn btn-primary m-3">Upload Portfolio</button>
 
-                        <br>
-                        <a id="createAlbum" class="btn btn-primary m-3" href="{% url 'client:creationofalbum' %}">Create a new album</a>
-                        <br>
-                        <br>
-                        <div class="form-group m-3">
-                            <label>Upload image</label><br>
-                            <input required name="images" type="file" multiple class="form-control-file">
-                        </div>
-                        <br><br>
-                        <button id="createalbum" type='submit' class="btn btn-primary m-3">Upload Photos</button>
-
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div style="margin-top: 150px">
+            <div class="recentCustomers">
+            <div class="cardHeader">
+                <h2>All photos of portfolio</h2>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <td>Photos</td>
+
+                    <td>Remove</td>
+                </tr>
+                </thead>
+                {% if photos %}
+                    <tbody>
+                    {% for photo in photos %}
+                        <tr>
+                            <td><img src="{{ photo.file.url }}" alt="" style="height: 150px"></td>
+                            <td><a class="btn btn-danger" style="background-color: red" href="{% url 'client:deletephotoportfolio' photo.id %}">Remove</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                {% else %}
+                    <tr class="alert-info" id="info" style="text-align: center; margin-top: auto">
+                        <td>No photos to portfolio.</td>
+                    </tr>
+                {% endif %}
+            </table>
+        </div>
         </div>
     </div>
 {% endblock %}
