@@ -361,7 +361,8 @@ def success_payment(request):
 def book_anyway(request):
     return form_bookme(request)
 
-
+@login_required(login_url='/client/rooslaurore/')
+@user_passes_test(email_check, login_url='/client/rooslaurore/')
 def creationofalbum(request):
     if request.method == 'POST':
         form = CreateAlbumForm(request.POST)
@@ -372,6 +373,17 @@ def creationofalbum(request):
         form = CreateAlbumForm()
     context = {'form': form}
     return render(request, 'client/create_album_portfolio.html', context)
+
+
+@login_required(login_url='/client/rooslaurore/')
+@user_passes_test(email_check, login_url='/client/rooslaurore/')
+def delete_photo(request, pk):
+    photo = PhotoPortfolio.objects.get(id=pk)
+    if request.method == 'POST':
+        photo.delete()
+        return redirect('client:add_photos_portfolio')
+    context = {'photo': photo}
+    return render(request, 'client/delete_photo_portfolio.html', context)
 
 
 def information(request):

@@ -21,11 +21,11 @@
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            border: 1px solid lightcoral;
-            height: 450px;
+            border: 1px solid antiquewhite;
+            height: 500px;
             width: 350px;
             background-color: #b8daff;
-            border-radius: 35px;
+            border-radius: 25px;
         }
 
         .container-photos {
@@ -49,9 +49,53 @@
             min-height: 165px;
             margin-bottom: 38px;
         }
+
+        label {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        input select option {
+            height: 15px;
+        }
+
+        button#addphotos {
+            color: whitesmoke;
+            font-size: 15px;
+            text-align: center;
+            margin: auto;
+            cursor: pointer;
+        }
+
+        h3 {
+            text-transform: uppercase;
+            color: black;
+        }
+
+        a#goback {
+            margin-left: 20px;
+            background-color: red;
+        }
+
+        a#portfolio {
+            margin-right: 20px;
+            height: 30px;
+            background-color: red;
+        }
+        .top-container {
+            display: flex;
+            justify-content: space-between;
+
+        }
     </style>
-    <a href="{% url 'client:ownerislogged' %}" class="btn btn-dark my-3">Go Back</a>
+
     <div class="container-add">
+        <br>
+        <div class="top-container">
+            <a id="goback" href="{% url 'client:ownerislogged' %}" class="btn btn-dark my-3">< Go Back</a>
+            <a id="portfolio" href="{% url 'client:add_photos_portfolio' %}" class="btn btn-dark my-3">Add Portfolio ></a>
+        </div>
 
         <div class="row justify-content-center">
             <div class="col-md-4">
@@ -59,10 +103,10 @@
                 <div class="container-photos">
                    <form method='POST' action="" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <h3>Upload photos to Homepage</h3><br>
+                        <h3>Upload to Homepage</h3><br>
 
                         <div class="form-group m-3">
-                            <label>Which row</label>
+                            <label>Select a row</label><br>
                             <select name="row" class="form-control">
                                 <option value='none'>Select a row...</option>
 
@@ -72,14 +116,14 @@
                             </select>
                         </div>
 
-                        <br>
+                        <br><br>
 
                         <div class="form-group m-3">
                             <label>Upload image</label>
                             <input required name="images" type="file" multiple class="form-control-file">
                         </div>
-
-                        <button type='submit' class="btn btn-primary m-3">Submit</button>
+                       <br><br>
+                        <button id="addphotos" type='submit' class="btn btn-primary m-3">Upload Homepage</button>
 
                     </form>
                 </div>
