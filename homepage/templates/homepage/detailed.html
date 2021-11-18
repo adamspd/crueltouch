@@ -4,29 +4,27 @@
 {% block body %}
     <body>
 
-        <div class="image" style="display: block;
-                                  margin-left: auto;
-                                  margin-right: auto;
-                                  width: 99%;">
-             <div class="">
-                 <img src="{{ photo.file.url }}">
-             </div>
-        </div>
-
-
-    <!--
-    <div class="row">
-        <div class="column">
-             <div class="detailed-img">
-                 <img src="/media/Portfolio/{{ photo.name }}">
-             </div>
-        </div>
-        <div class="column">
-            <h1 class="photo-album">{{ photo.album }}</h1>
-            <h3>{{ photo.caption }}</h3>
+    <div class="image" style="">
+        <div class="">
+            <img class="image-source" src="{{ photo.file.url }}" style="">
         </div>
     </div>
-    -->
 
+
+    <style>
+        .image {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: auto;
+            background-color: #1b1e21;
+        }
+
+        .image-source {
+            position: center;
+            left: auto;
+            right: auto;
+        }
+    </style>
     </body>
 {% endblock body %}
