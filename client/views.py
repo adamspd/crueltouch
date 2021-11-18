@@ -350,8 +350,12 @@ def form_bookme(request_client):
     return render(request_client, 'client/bookme.html', contexts)
 
 
-def scheduletimewithme(request):
-    return render(request, 'client/scheduletimewithme.html')
+def paynow(request):
+    return render(request, 'client/payment.html')
+
+
+def success_payment(request):
+    return render(request, 'client/success.html')
 
 
 def book_anyway(request):
