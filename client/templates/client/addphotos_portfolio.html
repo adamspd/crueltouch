@@ -49,6 +49,26 @@
             min-height: 165px;
             margin-bottom: 38px;
         }
+        a#createAlbum {
+            color: white;
+        }
+
+        label {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        input select option {
+            height: 15px;
+        }
+
+        button#createalbum {
+        color: whitesmoke;
+        font-size: 15px;
+    }
+
+
     </style>
     <a href="{% url 'client:ownerislogged' %}" class="btn btn-dark my-3">Go Back</a>
     <div class="container-add">
@@ -62,7 +82,7 @@
                         <h3>Upload photos to portfolio</h3><br>
 
                         <div class="form-group m-3">
-                            <label>Album name</label>
+                            <label>Album name</label><br>
                                 <select name="alb" class="form-control">
                                     <option value='none'>Select an album...</option>
 
@@ -73,13 +93,15 @@
                         </div>
 
                         <br>
-
+                        <a id="createAlbum" class="btn btn-primary m-3" href="{% url 'client:creationofalbum' %}">Create a new album</a>
+                        <br>
+                        <br>
                         <div class="form-group m-3">
-                            <label>Upload image</label>
+                            <label>Upload image</label><br>
                             <input required name="images" type="file" multiple class="form-control-file">
                         </div>
-
-                        <button type='submit' class="btn btn-primary m-3">Submit</button>
+                        <br><br>
+                        <button id="createalbum" type='submit' class="btn btn-primary m-3">Upload Photos</button>
 
                     </form>
                 </div>
