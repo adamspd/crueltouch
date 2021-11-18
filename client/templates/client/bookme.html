@@ -125,29 +125,32 @@
 					<form action="" method="post">
                        {% csrf_token %}
                         <div>
-                            <label for="fullname">Full Name : </label>
+                            <label for="fullname">Full Name * : </label>
                             {{ form.full_name }}
                         </div>
                         <div>
-                            <label for="email">Email address  : </label>
+                            <label for="email">Email address * : </label>
                             {{ form.email }}
                         </div>
                         <div>
                             <div onchange="display();">
-                                <label for="sessiontype"> Type of photo session:
+                                <label for="sessiontype"> Type of photo session * :
                                     {{ form.session_type }}
                                 </label>
                             </div>
                             <div onchange="display();">
-                                <label for="place"> Location:
+                                <label for="place"> Location * :
                                     {{ form.place }}
                                 </label>
                             </div>
                             <div onchange="display();">
-                                <label for="package"> Select a package:
+                                <label for="package"> Select a package * :
                                     {{ form.package }}
                                 </label>
                             </div>
+                            <p class="small">
+                            * : required
+                        </p>
                         </div>
                         <div class="info">
                             <p id="totalPrice"></p>
