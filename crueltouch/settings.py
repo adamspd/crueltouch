@@ -76,6 +76,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'crueltouch.wsgi.application'
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+SESSION_COOKIE_SECURE = True
+
+SESSION_COOKIE_AGE = 900
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
