@@ -88,6 +88,14 @@
             justify-content: space-between;
 
         }
+        .divider-photos {
+            column-count: 6;
+            margin-left: 20px;
+        }
+
+        .cardHeader{
+            margin-left: 20px;
+        }
     </style>
     <div style="justify-content: start; margin-top: 200px">
         <div class="container-add">
@@ -127,35 +135,29 @@
                 </div>
             </div>
         </div>
-        <div style="margin-top: 150px">
-            <div class="recentCustomers">
+        <div style="margin-top: 100px">
             <div class="cardHeader">
-                <h2>All photos of portfolio</h2>
+                    <h2>Delete a selected photo</h2>
             </div>
-            <table>
-                <thead>
-                <tr>
-                    <td>Photos</td>
-
-                    <td>Remove</td>
-                </tr>
-                </thead>
-                {% if photos %}
-                    <tbody>
-                    {% for photo in photos %}
-                        <tr>
-                            <td><img src="{{ photo.file.url }}" alt="" style="height: 150px"></td>
-                            <td><a class="btn btn-danger" style="background-color: red" href="{% url 'client:deletephotoportfolio' photo.id %}">Remove</a></td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                {% else %}
-                    <tr class="alert-info" id="info" style="text-align: center; margin-top: auto">
-                        <td>No photos to portfolio.</td>
-                    </tr>
-                {% endif %}
-            </table>
-        </div>
+            <br>
+            <div class="divider-photos" style="justify-items: flex-start">
+                    {% if photos %}
+                        <div>
+                        {% for photo in photos %}
+                            <div>
+                                <div><img src="{{ photo.file.url }}" alt="" style="height: 150px"></div>
+                                <br>
+                                <div><a class="btn btn-danger" style="background-color: red" href="{% url 'client:deletephotoportfolio' photo.id %}">Remove</a></div>
+                                <br><br>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="alert-info" id="info" style="text-align: center; margin-top: auto">
+                            <p>No photos to portfolio.</p>
+                        </div>
+                    {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}
