@@ -7,16 +7,14 @@
 	<div class="portfolio-section">
 		<ul class="portfolio-filter controls text-center">
 			<li class="control" data-filter="all">All</li>
-			<li class="control" data-filter=".portrait">Portrait</li>
-            <li class="control" data-filter=".birthday">Birthday</li>
-			<li class="control" data-filter=".weddings">Weddings</li>
-			<li class="control" data-filter=".lifestyle">Lifestyle</li>
-			<li class="control" data-filter=".fashion">Fashion</li>
+            {% for album in all_albums %}
+			<li class="control" data-filter=".{{ album.album_title }}">{{ album.album_title.capitalize }}</li>
+            {% endfor %}
 		</ul>
 		<div class="row portfolio-gallery m-0">
             {% for photo in all_photos %}
 			<div class="mix col-xl-2 col-md-3 col-sm-4 col-6 p-0 {{ photo.album }}">
-				<a href="" class="portfolio-item img-popup set-bg" data-setbg="{{ photo.file.url }}"></a>
+				<a href="{% url 'pf:detail' photo.id %}" class="portfolio-item set-bg" data-setbg="{{ photo.file.url }}"></a>
 			</div>
             {% endfor %}
 

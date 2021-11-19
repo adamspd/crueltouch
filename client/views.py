@@ -12,7 +12,7 @@ from django.utils.timezone import now
 from django.views.generic import ListView, RedirectView
 
 from crueltouch import settings
-from .form import CustomRegisterForm, BookME, UpdateBook
+from .form import CustomRegisterForm, BookME, UpdateBook, CreateAlbumForm
 from client.models import UserClient, BookMe, Album, OwnerProfilePhoto, Photo
 from homepage.models import Album as AlbumHomepage
 from homepage.models import Photo as PhotoHomepage
@@ -360,6 +360,30 @@ def success_payment(request):
 
 def book_anyway(request):
     return form_bookme(request)
+
+@login_required(login_url='/client/rooslaurore/')
+@user_passes_test(email_check, login_url='/client/rooslaurore/')
+def creationofalbum(request):
+    if request.method == 'POST':
+        form = CreateAlbumForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('client:add_photos_portfolio')
+    else:
+        form = CreateAlbumForm()
+    context = {'form': form}
+    return render(request, 'client/create_album_portfolio.html', context)
+
+
+@login_required(login_url='/client/rooslaurore/')
+@user_passes_test(email_check, login_url='/client/rooslaurore/')
+def delete_photo(request, pk):
+    photo = PhotoPortfolio.objects.get(id=pk)
+    if request.method == 'POST':
+        photo.delete()
+        return redirect('client:add_photos_portfolio')
+    context = {'photo': photo}
+    return render(request, 'client/delete_photo_portfolio.html', context)
 
 
 def information(request):

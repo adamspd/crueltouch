@@ -3,7 +3,7 @@
 {% block body %}
     <!--Change the a href photo.file_url to photo.id when finished-->
     <!-- Hero section  -->
-	<div class="hero-section">
+    <div class="hero-section">
         <div class="hero-slider owl-carousel">
             {% for photo in album1 %}
                 <div class="hero-item portfolio-item set-bg" data-setbg="{{ photo.file.url }}">
@@ -24,52 +24,45 @@
         {% endfor %}
     </div>
 
-
-
-
-        {% comment %}
-        {% url 'homepage:detail' photo.id %}
-
-        <div class="hero-social-links">
-			<a href=""><i class="fa fa-facebook"></i></a>
-			<a href=""><i class="fa fa-instagram"></i></a>
-			<a href=""><i class="fa fa-twitter"></i></a>
-			<a href=""><i class="fa fa-pinterest"></i></a>
-		</div>{% endcomment %}
-
     <!-- Hero section end  -->
 
-    	<!-- Intro section   -->
-	<section class="intro-section">
-		<div class="intro-warp">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-xl-6 col-lg-7 p-0">
-						<div class="intro-text">
-							<h2 style="padding-left: 5px; padding-right: 5px; font-size:38px;">My name is Roos Laurore. I’m a photographer</h2>
-							<p>Born in the 90's, I am very passionated by everything related to art, music and photography. I spent 1 year in France doing photography and sharing with others in the field. I learnt how to use Photoshop and I'm really good at it. While in France, I landed my first wedding gig on a yatch. I am actually interested in computer science and long term investing. I'm planning to travel a little bit in the next years in Indonesia, Greece and China. Long term goal : Digital Nomad.</p>
-							<a href="{% url 'pf:index_portfolio' %}" class="sp-link">Take a look @my portfolio</a>
-						</div>
-					</div>
-					<div class="col-xl-6 col-lg-5 p-0">
-						<div class="skill-warp">
-							<div class="single-progress-item">
-								<div class="progress-bar-style" data-progress="95"></div>
-								<p>Business</p>
-							</div>
-							<div class="single-progress-item">
-								<div class="progress-bar-style" data-progress="100"></div>
-								<p>Passion</p>
-							</div>
-							<div class="single-progress-item">
-								<div class="progress-bar-style" data-progress="90"></div>
-								<p>Travels</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- Intro section end  -->
+    <!-- Intro section   -->
+    <section class="intro-section">
+        <div class="intro-warp">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-7 p-0">
+                        <div class="intro-text">
+                            <h2 style="padding-left: 5px; padding-right: 5px; font-size:38px;">My name is Roos Laurore.
+                                I’m a photographer</h2>
+                            <p>Born in the 90's, I am very passionated by everything related to art, music and
+                                photography. I spent 1 year in France doing photography and sharing with others in the
+                                field. I learnt how to use Photoshop and I'm really good at it. While in France, I
+                                landed my first wedding gig on a yatch. I am actually interested in computer science and
+                                long term investing. I'm planning to travel a little bit in the next years in Indonesia,
+                                Greece and China. Long term goal : Digital Nomad.</p>
+                            <a href="{% url 'pf:index_portfolio' %}" class="sp-link">Take a look @my portfolio</a>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-5 p-0">
+                        <div class="skill-warp">
+                            <div class="single-progress-item">
+                                <div class="progress-bar-style" data-progress="95"></div>
+                                <p>Business</p>
+                            </div>
+                            <div class="single-progress-item">
+                                <div class="progress-bar-style" data-progress="100"></div>
+                                <p>Passion</p>
+                            </div>
+                            <div class="single-progress-item">
+                                <div class="progress-bar-style" data-progress="90"></div>
+                                <p>Travels</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Intro section end  -->
 {% endblock %}

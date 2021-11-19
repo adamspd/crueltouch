@@ -1,5 +1,7 @@
 {% extends 'client/base.html' %}
-{% block title %}<title>Clients</title>{% endblock %}
+{% load static %}
+{% block css %}<link rel="stylesheet" type="text/css" href="{% static 'client/modifying_photos_albums.css' %}">{% endblock %}
+{% block title %}<title>Add Photos to Homepage</title>{% endblock %}
 {% block optionalmenu %}
     <li>
         <a href="{% url 'client:add_photos_homepage' %}">
@@ -16,42 +18,15 @@
 {% endblock %}
 {% block body %}
     <style>
-        .container-add {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            border: 1px solid lightcoral;
-            height: 450px;
-            width: 350px;
-            background-color: #b8daff;
-            border-radius: 35px;
-        }
 
-        .container-photos {
-            padding-left: 45px;
-            padding-top: 55px;
-        }
-
-        input[type=text], input[type=email] {
-            width: 90%;
-            display: inline-block;
-            font-size: 14px;
-            font-weight: 500;
-            border-bottom: 1px solid #b2b2b2;
-            padding-bottom: 14px;
-            margin-bottom: 20px;
-            background: transparent;
-        }
-
-        textarea {
-            height: 165px;
-            min-height: 165px;
-            margin-bottom: 38px;
-        }
     </style>
-    <a href="{% url 'client:ownerislogged' %}" class="btn btn-dark my-3">Go Back</a>
+<div class="containerofall">
     <div class="container-add">
+        <br>
+        <div class="top-container">
+            <a id="goback" href="{% url 'client:ownerislogged' %}" class="btn btn-dark my-3">< Go Back</a>
+            <a id="portfolio" href="{% url 'client:add_photos_portfolio' %}" class="btn btn-dark my-3">Add Portfolio ></a>
+        </div>
 
         <div class="row justify-content-center">
             <div class="col-md-4">
@@ -59,10 +34,10 @@
                 <div class="container-photos">
                    <form method='POST' action="" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <h3>Upload photos to Homepage</h3><br>
+                        <h3>Upload to Homepage</h3><br>
 
                         <div class="form-group m-3">
-                            <label>Which row</label>
+                            <label>Select a row</label><br>
                             <select name="row" class="form-control">
                                 <option value='none'>Select a row...</option>
 
@@ -72,18 +47,19 @@
                             </select>
                         </div>
 
-                        <br>
+                        <br><br>
 
                         <div class="form-group m-3">
                             <label>Upload image</label>
                             <input required name="images" type="file" multiple class="form-control-file">
                         </div>
-
-                        <button type='submit' class="btn btn-primary m-3">Submit</button>
+                       <br><br>
+                        <button id="addphotos" type='submit' class="btn btn-primary m-3">Upload Homepage</button>
 
                     </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}
