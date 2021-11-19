@@ -68,5 +68,11 @@ urlpatterns = [
     path('paynow/', paynow, name="paynow"),
 
     # Success page
-    path('success/', success_payment, name="success_payment")
+    path('success/', success_payment, name="success_payment"),
+
+    # create album for portfolio
+    path('createalbum/', creationofalbum, name="creationofalbum"),
+
+    # delete photo from portfolio
+    path('deletephoto/<str:pk>', delete_photo, name="deletephotoportfolio"),
 ]
