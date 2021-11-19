@@ -1,0 +1,85 @@
+.container-add {
+            position: relative;
+            margin: auto;
+            top: 50%;
+            border: 1px solid antiquewhite;
+            height: 500px;
+            width: 350px;
+            background-color: #b8daff;
+            border-radius: 25px;
+        }
+
+        .container-photos {
+            padding-left: 45px;
+            padding-top: 55px;
+        }
+
+        input[type=text], input[type=email] {
+            width: 90%;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 500;
+            border-bottom: 1px solid #b2b2b2;
+            padding-bottom: 14px;
+            margin-bottom: 20px;
+            background: transparent;
+        }
+
+        textarea {
+            height: 165px;
+            min-height: 165px;
+            margin-bottom: 38px;
+        }
+
+        label {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        input select option {
+            height: 15px;
+        }
+
+        button#addphotos {
+            color: whitesmoke;
+            font-size: 15px;
+            text-align: center;
+            margin: auto;
+            cursor: pointer;
+        }
+
+        h3 {
+            text-transform: uppercase;
+            color: black;
+        }
+
+        a#goback {
+            margin-left: 20px;
+            background-color: red;
+        }
+
+        a#portfolio {
+            margin-right: 20px;
+            height: 30px;
+            background-color: red;
+        }
+
+        .top-container {
+            display: flex;
+            justify-content: space-between;
+
+        }
+        .divider-photos {
+            column-count: 6;
+            margin-left: 20px;
+        }
+
+        .cardHeader{
+            margin-left: 20px;
+        }
+
+        .containerofall {
+            justify-content: start;
+            margin-top: 150px;
+        }
