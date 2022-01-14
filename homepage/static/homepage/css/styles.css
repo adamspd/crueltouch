@@ -438,6 +438,23 @@ ol {
 	display: block;
 }
 
+/* Image Popup */
+
+.img-popup-warp .mfp-content,
+.img-popup-warp.mfp-ready.mfp-removing .mfp-content {
+	opacity: 0;
+	-webkit-transform: scale(0.8);
+	transform: scale(0.8);
+	-webkit-transition: all 0.4s;
+	transition: all 0.4s;
+}
+
+.img-popup-warp.mfp-ready .mfp-content {
+	opacity: 1;
+	-webkit-transform: scale(1);
+	transform: scale(1);
+}
+
 .portfolio-item.next-btn {
 	background: #060606;
 	display: -webkit-box;
