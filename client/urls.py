@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'^user/(?P<pk>[0-9]+)/$', user_album_details, name='album_details'),
 
     # favorite
-    url(r'^user/(?P<pk>[0-9]+)/favorite/$', favorite, name='favorite'),
+    url(r'^user/(?P<pk>[0-9]+)/favorite$', favorite, name='favorite'),
 
     # Owner help
     path('ahelp/', owner_help, name='help_owner'),

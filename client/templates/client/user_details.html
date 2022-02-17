@@ -1,25 +1,30 @@
 {% extends 'client/base.html' %}
 {% load static %}
 {% block title %}<title>User Details</title>{% endblock %}
-{% block css %}<link rel="stylesheet" type="text/css" href="{% static 'client/gallery.css' %}">{% endblock %}
-    {% if all_photos %}
-        {% block addmorephotos %}
-            <a class="btn btn-primary" href="{% url 'client:add_photos' user_client.id %}">Add more photos</a>
-        {% endblock %}
-    {% endif %}
-    {% block body %}
-        {% if all_photos %}
-            {% for photo in all_photos %}
-                <div class="container-all">
-                    <div class="containers">
-                        <img src="{{ photo.file.url }}" alt="">
-                    </div>
-                </div>
-            {% endfor %}
-
-        {% else %}
-            <h2 class="alert-info" id="info" style="text-align: center; margin-top: auto">
-                {{ user_client.first_name }} doesn't have any photos uploaded yet.</h2><br>
-            <a class="btn btn-primary" style="left: 47%" href="{% url 'client:add_photos' user_client.id %}">Add photos</a>
-        {% endif %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'client/gallery.css' %}">{% endblock %}
+{% if all_photos %}
+    {% block addmorephotos %}
+        <a class="btn btn-primary" href="{% url 'client:add_photos' user_client.id %}">Add more photos</a>
     {% endblock %}
+{% endif %}
+{% block body %}
+    {% if all_photos %}
+        {% for photo in all_photos %}
+            <div class="container-all">
+                <div class="containers">
+                    <img src="{{ photo.file.url }}" alt="">
+                    <h2>{{ photo.id }}</h2>
+                    {% if photo.is_favorite %}
+                        <p>It's a favorite</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+
+    {% else %}
+        <h2 class="alert-info" id="info" style="text-align: center; margin-top: auto">
+            {{ user_client.first_name }} doesn't have any photos uploaded yet.</h2><br>
+        <a class="btn btn-primary" style="left: 47%" href="{% url 'client:add_photos' user_client.id %}">Add photos</a>
+    {% endif %}
+{% endblock %}
