@@ -1,5 +1,6 @@
 {% extends 'homepage/base.html' %}
-
+{% load static %}
+{% block priceTableCSS %}<link rel="stylesheet" type="text/css" href="{% static 'homepage/css/priceCards.css' %}" />{% endblock %}
 {% block body %}
     <!--Change the a href photo.file_url to photo.id when finished-->
     <!-- Hero section  -->
@@ -7,9 +8,9 @@
         <div class="hero-slider owl-carousel">
             {% for photo in album1 %}
                 <div class="hero-item portfolio-item set-bg" data-setbg="{{ photo.file.url }}">
-                    <a href="{% url 'homepage:detail' photo.id %}" class="hero-link">
+                    {% comment %}<a href="{% url 'homepage:detail' photo.id %}" class="hero-link">
                         <h2>Click</h2>
-                    </a>
+                    </a>{% endcomment %}
                 </div>
             {% endfor %}
         </div>
@@ -17,14 +18,82 @@
     <div class="hero-slider owl-carousel">
         {% for photo in album2 %}
             <div class="hero-item portfolio-item set-bg" data-setbg="{{ photo.file.url }}">
-                <a href="{% url 'homepage:detail' photo.id %}" class="hero-link">
+                {% comment %}<a href="{% url 'homepage:detail' photo.id %}" class="hero-link">
                     <h2>Click</h2>
-                </a>
+                </a>{% endcomment %}
             </div>
         {% endfor %}
     </div>
 
     <!-- Hero section end  -->
+
+     <!-- Promotion Cards -->
+    <section class="pricing-table">
+			<div class="container">
+				<div class="block-heading">
+					<h2>Our Pricing</h2>
+					<p>Take advantage of our latest promotion</p>
+				</div>
+				<div class="row justify-content-md-center">
+					<div class="col-md-5 col-lg-4">
+						<div class="item">
+							<div class="heading">
+								<h3>BASIC</h3>
+							</div>
+							<div class="features">
+								<h4><span class="feature">Photos</span> : <span class="value">7</span></h4>
+								<h4><span class="feature">Duration</span> : <span class="value">1 hour</span></h4>
+								<h4><span class="feature">Edit time</span> : <span class="value">10 days</span></h4>
+							</div>
+							<div class="price">
+								<h4>$200</h4>
+							</div>
+							<a href="{% url 'client:bookme' %}">
+                                <button class="btn btn-block btn-primary" type="submit">BOOK NOW</button>
+                            </a>
+						</div>
+					</div>
+
+					<div class="col-md-5 col-lg-4">
+						<div class="item">
+							<div class="ribbon">Best Value</div>
+							<div class="heading">
+								<h3>PRO</h3>
+							</div>
+							<div class="features">
+								<h4><span class="feature">Photos</span> : <span class="value">15</span></h4>
+								<h4><span class="feature">Duration</span> : <span class="value">2 hours</span></h4>
+								<h4><span class="feature">Edit time</span> : <span class="value">7 days</span></h4>
+							</div>
+							<div class="price">
+								<h4>$300</h4>
+							</div>
+                            <a href="{% url 'client:bookme' %}">
+                                <button class="btn btn-block btn-primary" type="submit">BOOK NOW</button>
+                            </a>
+						</div>
+					</div>
+					<div class="col-md-5 col-lg-4">
+						<div class="item">
+							<div class="heading">
+								<h3>PREMIUM</h3>
+							</div>
+							<div class="features">
+								<h4><span class="feature">Photos</span> : <span class="value">35</span></h4>
+								<h4><span class="feature">Duration</span> : <span class="value">4 hours</span></h4>
+								<h4><span class="feature">Edit time</span> : <span class="value">5 days</span></h4>
+							</div>
+							<div class="price">
+								<h4>$500</h4>
+							</div>
+							<a href="{% url 'client:bookme' %}">
+                                <button class="btn btn-block btn-primary" type="submit">BOOK NOW</button>
+                            </a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 
     <!-- Intro section   -->
     <section class="intro-section">
