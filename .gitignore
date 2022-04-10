@@ -1,14 +1,37 @@
+# pycache folders
+__pycache__
+client/__pycache__
+crueltouch/__pycache__
+homepage/__pycache__
+portfolio/__pycache__
+static_pages_and_forms/__pycache__
+
+# migrations folders
+client/migrations
+homepage/migrations
+portfolio/migrations
+static_pages_and_forms/migrations
+
+# DS_Store file
+.DS_Store
+client/.DS_Store
+crueltouch/.DS_Store
+homepage/.DS_Store
+portfolio/.DS_Store
+static_pages_and_forms/.DS_Store
+
+# IDE & Environments
 .idea
 .env
-.DS_Store
-__pycache__
-static_pages_and_forms/migrations
-portfolio/migrations
-homepage/migrations
-client/migrations
-static_pages_and_forms/__pycache__
-portfolio/__pycache__
-homepage/__pycache__
-client/__pycache__
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+db.sqlite3
+
 media/*
+
 
