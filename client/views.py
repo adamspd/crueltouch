@@ -12,7 +12,7 @@ from django.urls import reverse
 from django.views.generic import ListView, RedirectView
 
 from .form import CustomRegisterForm, BookME, UpdateBook, CreateAlbumForm
-from client.models import UserClient, BookMe, Album, OwnerProfilePhoto, Photo
+from client.models import UserClient, BookMe, Album, OwnerProfilePhoto, Photo, Fee, Package
 from homepage.models import Album as AlbumHomepage
 from homepage.models import Photo as PhotoHomepage
 from portfolio.models import Album as AlbumPortfolio
@@ -375,7 +375,7 @@ def logout_user(request):
         return redirect('client:login')
 
 
-# ----------- Booking ----------- #
+# ----------- Booking & Promotions ----------- #
 def bookme(request):
     return form_bookme(request)
 
@@ -422,6 +422,16 @@ def information(request):
 @deprecated("Works with the information function (previous), hence, no use")
 def book_anyway(request):
     return form_bookme(request)
+
+
+def promotions(request):
+    package = Package.objects.all()
+    fees = Fee.objects.all()
+    contexts = {
+        'package': package,
+        'fees': fees
+    }
+    return render(request, 'client/booking_and_promotions/feeCard.html', contexts)
 
 
 # ----------- Payment ----------- #

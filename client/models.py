@@ -143,3 +143,23 @@ class OwnerProfilePhoto(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Package(models.Model):
+    name = models.CharField(null=False, blank=False, max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+class Fee(models.Model):
+    package = models.ForeignKey(Package, on_delete=models.CASCADE)
+    card_type = models.CharField(null=False, blank=False, max_length=255)
+    number_of_pictures = models.CharField(null=False, blank=False, max_length=255)
+    duration = models.CharField(null=False, blank=False, max_length=255)
+    edit_time = models.CharField(null=False, blank=False, max_length=255)
+    price = models.CharField(null=False, blank=False, max_length=255)
+    best_value = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.card_type + self.price + "$"

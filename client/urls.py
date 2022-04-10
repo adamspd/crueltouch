@@ -75,4 +75,7 @@ urlpatterns = [
 
     # delete photo from portfolio
     path('deletephoto/<str:pk>', delete_photo, name="deletephotoportfolio"),
+
+    # latest promotions and fees
+    path('promotions/', promotions, name="promotions"),
 ]
