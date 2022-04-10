@@ -3,7 +3,7 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
-from django.utils import timezone
+from django.utils.timezone import now
 
 
 class UserManager(BaseUserManager):
@@ -39,7 +39,7 @@ class UserClient(AbstractBaseUser, PermissionsMixin, models.Model):
     active = models.BooleanField(default=True)  # can login
     admin = models.BooleanField(default=False)  # superuser
     staff = models.BooleanField(default=False)  # staff member
-    start_date = models.DateTimeField(default=timezone.now)
+    start_date = models.DateTimeField(default=now)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', ]
@@ -113,8 +113,7 @@ class BookMe(models.Model):
     PACKAGE = (
         ('7', '7 photos'),
         ('15', '15 photos'),
-        ('30', '30 photos'),
-        ('60', '60 photos'),
+        ('35', '35 photos'),
     )
 
     STATUS = (
@@ -132,6 +131,7 @@ class BookMe(models.Model):
     place = models.CharField(max_length=200, null=True, choices=WHERE)
     package = models.CharField(max_length=200, null=True, choices=PACKAGE)
     status = models.CharField(max_length=200, null=True, choices=STATUS, default="pending")
+    time_book_taken = models.DateTimeField(default=now)
 
     def __str__(self):
         return self.full_name

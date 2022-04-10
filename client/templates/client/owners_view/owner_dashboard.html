@@ -62,6 +62,7 @@
                     <td>Email</td>
                     <td>Session</td>
                     <td>Place</td>
+                    <td>Booked time</td>
                     <td>Packages</td>
                     <td>Status</td>
                     <td>Update</td>
@@ -75,6 +76,7 @@
                             <td>{{ book.email }}</td>
                             <td>{{ book.session_type }}</td>
                             <td>{{ book.place }}</td>
+                            <td>{{ book.time_book_taken }}</td>
                             <td><span class="packages-number">{{ book.package }}</span></td>
                             <td><span class="status {{ book.status }}">{{ book.status }}</span></td>
                             <td><a class="btn btn-primary" href="{% url 'client:update_bookmes' book.id %}">Update</a></td>
