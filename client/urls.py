@@ -1,5 +1,4 @@
-from django.urls import path
-from django.conf.urls import url
+from django.urls import path, re_path
 from .views import *
 
 app_name = 'client'
@@ -29,10 +28,10 @@ urlpatterns = [
     path('bookanyway/', book_anyway, name='book_anyway'),
 
     # client album details
-    url(r'^user/(?P<pk>[0-9]+)/$', user_album_details, name='album_details'),
+    re_path(r'^user/(?P<pk>\d+)/$', user_album_details, name='album_details'),
 
     # favorite
-    url(r'^user/(?P<pk>[0-9]+)/favorite$', favorite, name='favorite'),
+    re_path(r'^user/(?P<pk>\d+)/favorite$', favorite, name='favorite'),
 
     # Owner help
     path('ahelp/', owner_help, name='help_owner'),
@@ -41,7 +40,7 @@ urlpatterns = [
     path('aclient/', owner_client, name='owner_client'),
 
     # client details
-    url(r'^(?P<pk>[0-9]+)/$', user_details, name='user_details'),
+    re_path(r'^(?P<pk>\d+)/$', user_details, name='user_details'),
 
     # Owner's contact form
     path('amessages/', owner_contact_form, name='owner_messages'),

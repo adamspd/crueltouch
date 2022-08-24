@@ -1,4 +1,3 @@
-from deprecated.classic import deprecated
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -375,7 +374,7 @@ def logout_user(request):
         return redirect('client:login')
 
 
-# ----------- Booking ----------- #
+# ----------- Booking ----------- #d
 def bookme(request):
     return form_bookme(request)
 
@@ -404,7 +403,6 @@ def form_bookme(request_client):
     return render(request_client, 'client/booking_and_promotions/bookme.html', contexts)
 
 
-@deprecated("Don't use it because of user experience")
 def information(request):
     if request.method == 'POST':
         form = CustomRegisterForm(request.POST)
