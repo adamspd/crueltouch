@@ -1,11 +1,7 @@
 from django.contrib import admin
-from django.template.defaulttags import csrf_token
-
-from .models import *
-from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth import get_user_model
 
+from client.models import UserClient, BookMe, Album, Photo, OwnerProfilePhoto
 
 # class InlinePhoto(admin.TabularInline):
 #     model = Photo

@@ -1,0 +1,53 @@
+/* Button explosion */
+* {
+	border: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+.login_btn {
+	background: #255ff4;
+	border-radius: 0.2em;
+	color: #fff;
+	cursor: pointer;
+	margin: auto;
+	padding: 0.5em 1em;
+	transition: background .15s linear, color .15s linear;
+}
+.login_btn:focus, button:hover {
+	background: #0b46da;
+}
+.login_btn:focus {
+	outline: transparent;
+}
+.login_btn::-moz-focus-inner {
+	border: 0;
+}
+.login_btn:active {
+	transform: translateY(0.1em);
+}
+.exploding, .exploding:focus, .exploding:hover {
+	background: transparent;
+	color: transparent;
+}
+.exploding {
+	pointer-events: none;
+	position: relative;
+	will-change: transform;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.particle {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.particle--debris {
+	background: #255ff4;
+}
+.particle--fire {
+	border-radius: 50%;
+}

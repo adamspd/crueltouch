@@ -1,22 +1,18 @@
-from django.core.mail import send_mail
-from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import get_user_model
-
-# Create your views here.
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.views.generic import ListView, RedirectView
+from django.views.generic import RedirectView
 
-from .form import CustomRegisterForm, BookME, UpdateBook, CreateAlbumForm
-from client.models import UserClient, BookMe, Album, OwnerProfilePhoto, Photo
+from client.models import UserClient, BookMe, Album, Photo
 from homepage.models import Album as AlbumHomepage
 from homepage.models import Photo as PhotoHomepage
 from portfolio.models import Album as AlbumPortfolio
 from portfolio.models import Photo as PhotoPortfolio
 from static_pages_and_forms.models import ContactForm
+from .form import CustomRegisterForm, BookME, UpdateBook, CreateAlbumForm
 
 User = get_user_model()
 
@@ -417,7 +413,6 @@ def information(request):
     return render(request, 'client/booking_and_promotions/information.html', contexts)
 
 
-@deprecated("Works with the information function (previous), hence, no use")
 def book_anyway(request):
     return form_bookme(request)
 

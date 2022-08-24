@@ -17,4 +17,4 @@ def index_portfolio(request):
 
 def detailed_view(request, pk):
     photo = Photo.objects.get(id=pk)
-    return render(request, 'homepage/detailed.html', {'photo': photo})
+    return render(request, 'homepage/../templates/homepage/detailed.html', {'photo': photo})

@@ -1,0 +1,75 @@
+{% extends 'homepage/base.html' %}
+{% block title %}Book me{% endblock %}
+{% block body %}
+
+    <div class="container-payment" style="position: absolute; top: 40%; left: 45%; transform: translate(-50%, -50%)">
+        <h2 class="title">Payment</h2>
+        <br>
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+            <input type="hidden" name="cmd" value="_s-xclick">
+            <input type="hidden" name="hosted_button_id" value="66DDXECEHKM3N">
+            <table>
+                <tr>
+                    <td><input class="text-note" type="hidden" name="on0" value="Payment Options">Payment Options</td>
+                </tr>
+                <tr>
+                    <td><select name="os0">
+                        <option value="Reservation">Reservation $100.00 USD</option>
+                        <option value="Base payment">Base payment $200.00 USD</option>
+                    </select></td>
+                </tr>
+            </table>
+            <input type="hidden" name="currency_code" value="USD">
+            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0"
+                   name="submit" alt="PayPal - The safer, easier way to pay online!">
+            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+        </form>
+    </div>
+
+
+    <style>
+        .container-payment {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            margin: auto;
+            padding: 20px 20px 20px 20px;
+            text-align: center;
+        }
+
+        .title {
+            color: blue;
+            font-size: 30px;
+            text-transform: uppercase;
+
+        }
+
+        .text-note input {
+            font-size: medium;
+            margin-bottom: 55px;
+        }
+
+        button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+        }
+
+        a {
+            text-decoration: none;
+            font-size: 22px;
+            color: black;
+        }
+
+        button:hover, a:hover {
+            opacity: 0.7;
+        }
+    </style>
+
+{% endblock %}

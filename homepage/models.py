@@ -10,10 +10,6 @@ class Album(models.Model):
         return self.album_title
 
 
-def get_path(instance, filename):
-    return '{0}/{1}'.format(instance.file.album_title, filename)
-
-
 class Photo(models.Model):
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
     file = models.ImageField(upload_to='Homepage', null=True, blank=True)

@@ -29,4 +29,11 @@ urlpatterns = [
     path('client/', include('client.urls')),
     path('contact/', include('static_pages_and_forms.urls'), name='flatpages'),
     path('portfolio/', include('portfolio.urls'))
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )
+

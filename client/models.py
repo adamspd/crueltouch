@@ -1,9 +1,9 @@
-from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
-from django.db import models
 from django.conf import settings
+from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import User, PermissionsMixin
-from django.utils.translation import gettext_lazy as _
+from django.db import models
 from django.utils.timezone import now
+from django.utils.translation import gettext_lazy as _
 
 
 class UserManager(BaseUserManager):
@@ -34,7 +34,7 @@ class UserManager(BaseUserManager):
 
 
 class UserClient(AbstractBaseUser, PermissionsMixin, models.Model):
-    email = models.EmailField(max_length=255, unique=True, default="", help_text="A valid email address, please")
+    email = models.EmailField(max_length=255, unique=True, default="", help_text=_("A valid email address, please"))
     first_name = models.CharField(max_length=255, default=None)
     active = models.BooleanField(default=True)  # can login
     admin = models.BooleanField(default=False)  # superuser
@@ -126,11 +126,11 @@ class BookMe(models.Model):
     # who = models.ForeignKey(settings.AUTH_USER_MODEL,
     #                         on_delete=models.CASCADE, null=True)
     full_name = models.CharField(max_length=255, blank=False, null=False)
-    email = models.EmailField(default="", null=False, blank=False, help_text="A valid email address, please !")
+    email = models.EmailField(default="", null=False, blank=False, help_text=_("A valid email address, please !"))
     session_type = models.CharField(max_length=200, null=True, choices=SESSION_TYPE)
     place = models.CharField(max_length=200, null=True, choices=WHERE)
     package = models.CharField(max_length=200, null=True, choices=PACKAGE)
-    status = models.CharField(max_length=200, null=True, choices=STATUS, default="pending")
+    status = models.CharField(max_length=200, null=True, choices=STATUS, default=_("pending"))
     time_book_taken = models.DateTimeField(default=now)
 
     def __str__(self):

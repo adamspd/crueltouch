@@ -1,10 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 from django.forms import ModelForm
-from portfolio.models import Album as AlbumForm
 
 from client.models import UserClient, BookMe
-from portfolio.models import Album
+from portfolio.models import Album as AlbumForm
 
 
 class CustomRegisterForm(UserCreationForm):
