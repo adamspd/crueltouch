@@ -1,8 +1,10 @@
-from django.forms import ModelForm
+from django.core.exceptions import ValidationError
+from django.forms import ModelForm, forms
 from .models import ContactForm
 
 
 class Contact(ModelForm):
     class Meta:
         model = ContactForm
-        fields = ['full_name', 'email', 'subject', 'message']
+        fields = '__all__'
+
