@@ -12,6 +12,7 @@ from homepage.models import Photo as PhotoHomepage
 from portfolio.models import Album as AlbumPortfolio
 from portfolio.models import Photo as PhotoPortfolio
 from static_pages_and_forms.models import ContactForm
+from utils.crueltouch_utils import c_print, check_user_login
 from .form import CustomRegisterForm, BookME, UpdateBook, CreateAlbumForm
 
 User = get_user_model()
@@ -34,6 +35,8 @@ def register_page(request):
 
 
 def login_page(request):
+    if not request.user.is_anonymous:
+        check_user_login(request)
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
@@ -127,7 +130,9 @@ def context(request):
 
 # ----------- Owner's Login ----------- #
 def owner(request):
-    if request.method == 'POST':
+    if request.user.is_authenticated:
+        check_user_login(request)
+    elif request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
         user = authenticate(request, email=email, password=password)
@@ -151,7 +156,8 @@ def when_owner_logged(request):
         print('owner is logged')
         return render(request, 'client/owners_view/owner_dashboard.html', contexts)
     else:
-        print("Can't login")
+        messages.error(request, "Can't login")
+        c_print("Can't login")
         return render(request, 'client/login_registration/log_as_owner.html')
 
 
