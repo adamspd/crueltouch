@@ -32,6 +32,8 @@ venv.bak/
 
 db.sqlite3
 
+.github
+media
 
 
 
