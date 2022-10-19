@@ -1,0 +1,50 @@
+/* Help Table (Help)*/
+
+.detailed {
+	position: relative;
+	width: 97%;
+	padding-top: 10px;
+}
+
+.detailed .HelpCard {
+	position: relative;
+	background: var(--white);
+	padding: 30px;
+	box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+	border-radius: 20px;
+}
+
+.cardHeaderHelp {
+	display: flex;
+	align-items: flex-start;
+}
+
+.cardHeaderHelp h2 {
+	font-weight: 600;
+	color: var(--blue);
+}
+
+.detailed table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 10px;
+}
+
+.detailed table thead td {
+	font-weight: 600;
+}
+
+.detailed .HelpCard table tr {
+	color: var(--black1);
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.detailed .HelpCard table tr:last-child {
+	border-bottom: none;
+}
+
+.detailed .HelpCard table tr td {
+	padding: 10px;
+}
+
+/* Help Table end */

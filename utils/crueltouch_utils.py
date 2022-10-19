@@ -17,7 +17,7 @@ def check_user_login(request):
         user = request.user
         if user.is_superuser or user.is_admin:
             c_print("User is superuser already")
-            return redirect('client:ownerislogged')
+            return redirect('administration:index')
         elif user.is_active:
             c_print("User is active but not admin")
             return redirect("client:client_homepage")

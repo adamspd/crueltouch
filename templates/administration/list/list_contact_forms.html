@@ -1,0 +1,70 @@
+{% extends 'administration/list/data.html' %}
+{% load i18n %}
+{% load static %}
+{% block title %}ICERD | {% translate "Contact Forms" %}{% endblock %}
+
+{% block pageTitle %}
+    {% translate "Contact Forms" %}
+{% endblock %}
+{% block pageLink %}
+    {% translate "Contact Forms" %}
+{% endblock %}
+
+
+{% block table %}
+    <!-- Main content -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{% translate "Contact Forms" %}</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>{% translate "Full name" %}</th>
+                    <th>{% translate "Email" %}</th>
+                    <th>{% translate "Subject" %}</th>
+                    <th>{% translate "Message" %}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for rs in contact_forms %}
+                    <tr>
+                        <td>
+                            &nbsp;&nbsp;&nbsp;{{ rs.full_name }}
+                        </td>
+                        <td>
+                            <a href="mailto:{{ rs.email }}">
+                                &nbsp;&nbsp;&nbsp;{{ rs.email }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ rs.subject }}
+                        </td>
+                        <td>
+                            {{ rs.message }}
+                        <td>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-edit"></i>&nbsp;Update
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>{% translate "Full name" %}</th>
+                    <th>{% translate "Email" %}</th>
+                    <th>{% translate "Subject" %}</th>
+                    <th>{% translate "Message" %}</th>
+                    <th></th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <!-- /.table-responsive -->
+    </div>
+    <!-- /.card-body -->
+{% endblock %}

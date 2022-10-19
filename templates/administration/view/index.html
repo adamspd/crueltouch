@@ -1,0 +1,221 @@
+{% extends 'administration/base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block body %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0"><a href="" style="color: black">
+                            {% translate "Dashboard" %}
+                        </a>
+                        </h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'administration:index' %}">
+                                    {% translate "Dashboard" %}
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active">{% translate "Index" %}</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                <h3>{{ total_request_session }}</h3>
+                                <p>{% translate "Request Session" %}</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-ios-albums"></i>
+                            </div>
+                            <a href="{% url 'administration:session_list' %}" class="small-box-footer">
+                                {% translate "More info" %}
+                                <i class="fas fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <h3>{{ total_contact_forms }}</h3>
+                                <p>{% translate "Contact Forms" %}</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-document"></i>
+                            </div>
+                            <a href="{% url 'administration:message_list' %}" class="small-box-footer">
+                                {% translate "More info " %}
+                                <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <h3>{{ total_photos_delivered }}</h3>
+                                <p>{% translate "Photos Delivered" %}</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-images"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">
+                                {% translate "More info " %}
+                                <i class="fas fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <h3>{{ total_clients }}</h3>
+                                <p>{% translate "Clients" %}</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-person-stalker"></i>
+                            </div>
+                            <a href="{% url 'administration:user_list' %}" class="small-box-footer">
+                                {% translate "More info " %}
+                                <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header border-0">
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="card-title">Photoshoot Sessions</h3>
+                                    <a href="javascript:void(0);">View Report</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <p class="d-flex flex-column">
+                                        <span class="text-bold text-lg">{{ total_request_session }}</span>
+                                        <span>Requested Sessions Over Time</span>
+                                    </p>
+                                    <p class="ml-auto d-flex flex-column text-right">
+                                        {% if increase_percentage > 0 %}
+                                            <span class="text-success">
+                                          <i class="fas fa-arrow-up"></i> {{ increase_percentage }}%
+                                        </span>
+                                        {% else %}
+                                            <span class="text-danger">
+                                          <i class="fas fa-arrow-down"></i> {{ increase_percentage }}%
+                                        </span>
+                                        {% endif %}
+                                        <span class="text-muted">Since last month</span>
+                                    </p>
+                                </div>
+                                <!-- /.d-flex -->
+
+                                <div class="position-relative mb-4">
+                                    <canvas id="requested-sessions" height="200"></canvas>
+                                </div>
+
+                                <div class="d-flex flex-row justify-content-end">
+                                      <span class="mr-2">
+                                        <i class="fas fa-square text-primary"></i> Photoshoot Sessions each month
+                                      </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">{% translate "Last 10 requested photoshoot session" %}</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>{% translate "Name" %}</th>
+                                        <th>{% translate "Email" %}</th>
+                                        <th>{% translate "Date" %}</th>
+                                        <th>{% translate "Status" %}</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for rs in request_session %}
+                                        <tr>
+                                            <td>
+                                                &nbsp;&nbsp;&nbsp;{{ rs.full_name }}
+                                            </td>
+                                            <td>
+                                                <a href="mailto:{{ rs.email }}">
+                                                    &nbsp;&nbsp;&nbsp;{{ rs.email }}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                {{ rs.time_book_taken }}
+                                            </td>
+                                            <td>{{ rs.status }}</td>
+                                            <td>
+                                                <button class="btn btn-primary">
+                                                    <i class="fas fa-edit"></i>&nbsp;Update
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>{% translate "Name" %}</th>
+                                        <th>{% translate "Email" %}</th>
+                                        <th>{% translate "Date" %}</th>
+                                        <th>{% translate "Status" %}</th>
+                                        <th></th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block customJS %}
+    <script>
+        var my_chart = {{ book_me_by_month|safe }};
+    </script>
+
+    <script src="{% static 'administration/dist/js/pages/dashboard.js' %}"></script>
+    <script src="{% static 'administration/dist/js/pages/dashboard3.js' %}"></script>
+{% endblock %}

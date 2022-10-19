@@ -1,0 +1,343 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="{% static 'homepage/img/icon/android-icon-48x48.png' %}">
+    <title>{% block title %}Crueltouch | {% translate "Dashboard" %}{% endblock %}</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    {% block css %}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+              integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+              crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        <!-- Tempusdominus Bootstrap 4 -->
+        <!-- iCheck -->
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/icheck-bootstrap/3.0.1/icheck-bootstrap.min.css"
+              integrity="sha512-8vq2g5nHE062j3xor4XxPeZiPjmRDh6wlufQlfC6pdQ/9urJkU07NM0tEREeymP++NczacJ/Q59ul+/K2eYvcg=="
+              crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        <!-- JQVMap -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jqvmap.min.css"
+              integrity="sha512-RPxGl20NcAUAq1+Tfj8VjurpvkZaep2DeCgOfQ6afXSEgcvrLE6XxDG2aacvwjdyheM/bkwaLVc7kk82+mafkQ=="
+              crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        <!-- Theme style -->
+        <link rel="stylesheet" href="{% static 'administration/dist/css/adminlte.min.css' %}">
+        <!-- overlayScrollbars -->
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.3/css/OverlayScrollbars.min.css"
+              integrity="sha512-Xd88BFhCPQY5aAt2W3F5FmTVKkubVsAZDJBo7aXPRc5mwIPTEJvNeqbvBWfNKd4IEu3v9ots+nTdsTzVynlaOw=="
+              crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        <!-- Daterange picker -->
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.1/daterangepicker.css"
+              integrity="sha512-gp+RQIipEa1X7Sq1vYXnuOW96C4704yI1n0YB9T/KqdvqaEgL6nAuTSrKufUX3VBONq/TPuKiXGLVgBKicZ0KA=="
+              crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        <!-- summernote -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.css"
+              integrity="sha512-ngQ4IGzHQ3s/Hh8kMyG4FC74wzitukRMIcTOoKT3EyzFZCILOPF0twiXOQn75eDINUfKBYmzYn2AA8DkAk8veQ=="
+              crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    {% endblock %}
+    {% block customCSS %}{% endblock %}
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="" class="nav-link">{% translate "Homepage" %}</a>
+            </li>
+            <li class="nav-item d-sm-inline-block">
+                <a href="{% url 'client:logout' %}" class="nav-link">{% translate "Logout" %}</a>
+            </li>
+            <li class="nav-item d-sm-inline-block">
+                <div class="language_fr ml-auto">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ redirect_to }}">
+                        <select name="language" id="" onchange="this.form.submit()" class="custom-sel">
+                            {% get_available_languages as LANGUAGES %}
+                            {% get_language_info_list for LANGUAGES as languages %}
+                            {% for language in languages %}
+                                <option value="{{ language.code }}"
+                                        {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
+                                    {{ language.name_local.title }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                </div>
+            </li>
+        </ul>
+
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+            <!-- Navbar Search -->
+            <li class="nav-item">
+                <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                    <i class="fas fa-search"></i>
+                </a>
+                <div class="navbar-search-block">
+                    <form class="form-inline">
+                        <div class="input-group input-group-sm">
+                            <input class="form-control form-control-navbar" type="search" placeholder="Search"
+                                   aria-label="Search">
+                            <div class="input-group-append">
+                                <button class="btn btn-navbar" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </li>
+
+            <!-- Notifications Dropdown Menu -->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="far fa-bell"></i>
+                    <span class="badge badge-warning navbar-badge">0</span>
+                </a>
+            </li>
+            <li class="nav-item d-none">
+                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="{% url 'homepage:index' %}" class="brand-link">
+            <img src="{% static 'homepage/img/icon/android-icon-48x48.png' %}" alt="" class="brand-image img-circle elevation-3"
+                 style="opacity: .8">
+            <span class="brand-text font-weight-light">CRUELTOUCH</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    {% if user.profile_picture %}
+                        <img src="{{ user.profile_picture.url }}" class="img-circle elevation-2" alt="User Image">
+                    {% endif %}
+                </div>
+                <div class="info">
+                    <a href="" class="d-block">
+                        {{ user.get_full_name }}
+                    </a>
+                </div>
+            </div>
+
+            <!-- SidebarSearch Form -->
+            <div class="form-inline">
+                <div class="input-group" data-widget="sidebar-search">
+                    <input class="form-control form-control-sidebar" type="search" placeholder="Search"
+                           aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-sidebar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% if user.is_admin %}
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+                             with font-awesome or any other icon font library -->
+
+                        <li class="nav-item menu-open">
+                            <a href="{% url 'administration:index' %}" class="nav-link active">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    {% translate "Dashboard" %}
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                        </li>
+                        {# Only Adams here #}
+                        {% if user.username == "adamspierredavid" %}
+                            <li class="nav-item">
+                                <a href="/admin" class="nav-link">
+                                    <i class="nav-icon fas fa-lock"></i>
+                                    <p>
+                                        {% translate "Django Admin" %}
+                                    </p>
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            {# TODO: add possibility here for the admin to change visual website from here #}
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-image"></i>
+                                <p>
+                                    {% translate "Add photo to portfolio" %}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'administration:user_list' %}" class="nav-link">
+                                &nbsp;&nbsp;<i class="fa-solid fa-users"></i>
+                                <p>
+                                    &nbsp;&nbsp;{% translate "Client management" %}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'administration:message_list' %}" class="nav-link">
+                                &nbsp;&nbsp;<i class="fa-solid fa-comment"></i>
+                                <p>
+                                    &nbsp;&nbsp;{% translate "Message list" %}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'administration:help' %}" class="nav-link">
+                                &nbsp;&nbsp;<i class="fa-solid fa-hand"></i>
+                                <p>
+                                    &nbsp;&nbsp;{% translate "Help" %}
+                                </p>
+                            </a>
+                        </li>
+                    <li class="nav-item">
+                            <a href="/admin" class="nav-link">
+                                &nbsp;&nbsp;<i class="fa-solid fa-gears"></i>
+                                <p>
+                                    &nbsp;&nbsp;{% translate "Settings" %}
+                                </p>
+                            </a>
+                        </li>
+                    <li class="nav-item">
+                            <a href="" class="nav-link">
+                                &nbsp;&nbsp;<i class="fa-solid fa-user-secret"></i>
+                                <p>
+                                    &nbsp;&nbsp;{% translate "Change password" %}
+                                </p>
+                            </a>
+                        </li>
+                    <li class="nav-item">
+                            <a href="{% url 'client:logout' %}" class="nav-link">
+                                &nbsp;&nbsp;<i class="fa-solid fa-sign-out"></i>
+                                <p>
+                                    &nbsp;&nbsp;{% translate "Sign out" %}
+                                </p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+                {# TODO: add possibility here for the admin to change account authorization #}
+            {% endif %}
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+
+    {% block body %}{% endblock %}
+
+
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <div class="copyright">
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+            All rights reserved | CRUELTOUCH | Made with <i class="fa fa-heart" aria-hidden="true"></i>
+            by <a href="https://adamspierredavid.com" target="_blank">APD</a>
+        </div>
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+{% block js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- jQuery UI 1.13.2 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
+            integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <!-- Bootstrap 4 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.bundle.min.js"
+            integrity="sha512-9GacT4119eY3AcosfWtHMsT5JyZudrexyEVzTBWV3viP/YfB9e2pEy3N7WXL3SV6ASXpTU0vzzSxsbfsuUH4sQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- ChartJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
+            integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Sparkline -->
+    {#<script src="plugins/sparklines/sparkline.js"></script>#}
+    <!-- JQVMap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jquery.vmap.min.js"
+            integrity="sha512-Zk7h8Wpn6b9LpplWXq1qXpnzJl8gHPfZFf8+aR4aO/4bcOD5+/Si4iNu9qE38/t/j1qFKJ08KWX34d2xmG0jrA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {#<script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script>#}
+    <!-- jQuery Knob Chart -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Knob/1.2.13/jquery.knob.min.js"
+            integrity="sha512-NhRZzPdzMOMf005Xmd4JonwPftz4Pe99mRVcFeRDcdCtfjv46zPIi/7ZKScbpHD/V0HB1Eb+ZWigMqw94VUVaw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- daterangepicker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"
+            integrity="sha512-CryKbMe7sjSCDPl18jtJI5DR5jtkUWxPXWaLCst6QjH8wxDexfRJic2WRmRXmstr2Y8SxDDWuBO6CQC6IE4KTA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.js"
+            integrity="sha512-W76C8qrNYavcaycIH9EijxRuswoS+LCqA1+hq+ECrmjzAbe/SHhTgrwA1uc84husS/Gz50mxOEHPzrcd3sxBqQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js"
+            integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Summernote -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.js"
+            integrity="sha512-ZESy0bnJYbtgTNGlAD+C2hIZCt4jKGF41T5jZnIXy4oP8CQqcrBGWyxNP16z70z/5Xy6TS/nUZ026WmvOcjNIQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- overlayScrollbars -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.3/js/jquery.overlayScrollbars.min.js"
+            integrity="sha512-PviP63d43OXLyLjCv3TawK1Rw4LQQsnH6yschHgK63LBvLpd1U1+7LM/OESlV/cSze5lFI3+f7JwKFEBEWNp1w=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="{% static 'administration/dist/js/adminlte.js' %}"></script>
+    <!-- AdminLTE for demo purposes -->
+    {#<script src="{% static 'administration/dist/js/demo.js' %}"></script>#}
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+{% endblock %}
+{% block customJS %}{% endblock %}
+</body>
+</html>

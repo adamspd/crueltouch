@@ -1,0 +1,73 @@
+{% extends 'administration/list/data.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}CRUELTOUCH | {% translate "Requested photoshoot list" %}{% endblock %}
+
+{% block pageTitle %}
+    {% translate "Requested photoshoot list" %}
+{% endblock %}
+{% block pageLink %}
+    {% translate "Requested photoshoot list" %}
+{% endblock %}
+
+
+{% block table %}
+    <!-- Main content -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{% translate "Reqeusted Photoshoot Session" %}</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>{% translate "Name" %}</th>
+                    <th>{% translate "Email" %}</th>
+                    <th>{% translate "Date" %}</th>
+                    <th>{% translate "Place" %}</th>
+                    <th>{% translate "Status" %}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for rs in request_session %}
+                    <tr>
+                        <td>
+                            &nbsp;&nbsp;&nbsp;{{ rs.full_name }}
+                        </td>
+                        <td>
+                            <a href="mailto:{{ rs.email }}">
+                                &nbsp;&nbsp;&nbsp;{{ rs.email }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ rs.time_book_taken }}
+                        </td>
+                        <td>{{ rs.place }}</td>
+                        <td>{{ rs.status }}</td>
+                        <td>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-edit"></i>&nbsp;Update
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>{% translate "Name" %}</th>
+                    <th>{% translate "Email" %}</th>
+                    <th>{% translate "Date" %}</th>
+                    <th>{% translate "Place" %}</th>
+                    <th>{% translate "Status" %}</th>
+                    <th></th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <!-- /.table-responsive -->
+    </div>
+    <!-- /.card-body -->
+{% endblock %}
