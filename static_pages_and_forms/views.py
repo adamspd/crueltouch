@@ -6,6 +6,8 @@ from crueltouch import settings
 from utils.crueltouch_utils import c_print
 from .form import Contact
 
+from googlevoice import Voice
+
 
 # Create your views here.
 
@@ -30,6 +32,7 @@ def contact(request):
                                 f'Message => \n{form.cleaned_data["message"]}'
                 # send_mail(subject=email_subject, message=email_message,
                 #           from_email=settings.CONTACT_EMAIL, recipient_list=settings.ADMIN_EMAILS)
+
                 return redirect('flatpages:success')
     else:
         form = Contact()
@@ -64,6 +67,15 @@ def check_message(data):
                 or "Invest $1" in data \
                 or "Passive income" in data \
                 or "NFT" in data \
+                or "Marketing" in data \
+                or "marketing" in data \
+                or "Trading" in data \
+                or "trading" in data \
+                or "Crypto" in data \
+                or "crypto" in data \
+                or "Forex" in data \
+                or "forex" in data \
+                or "crueltouch.com" in data \
                 or "bot" in data \
                 or "Bot" in data:
             return True
@@ -79,6 +91,15 @@ def check_subject(data):
                 or " earn" in data \
                 or "#1" in data \
                 or "# 1" in data \
+                or "crueltouch.com" in data \
+                or "Marketing" in data \
+                or "marketing" in data \
+                or "Trading" in data \
+                or "trading" in data \
+                or "Crypto" in data \
+                or "crypto" in data \
+                or "Forex" in data \
+                or "forex" in data \
                 or "Financial" in data \
                 or "financial" in data:
             return True
@@ -87,6 +108,7 @@ def check_subject(data):
 def check_email(data):
     if data is not None:
         if "no-reply" in data \
+                or "+" in data \
                 or "noreply" in data:
             return True
 
@@ -97,3 +119,13 @@ def check_full_name(data):
                 or "Eric Jones" in data \
                 or "BusinessLoans" in data:
             return True
+
+
+def send_sms():
+    voice = Voice()
+    voice.login()
+
+    phoneNumber = "+33769992738"
+    text = "Testing SMS for crueltouch"
+
+    voice.send_sms(phoneNumber, text)
