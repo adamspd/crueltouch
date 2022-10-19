@@ -3,6 +3,8 @@ import random
 from django.shortcuts import render
 
 from django.views import generic
+
+from utils.crueltouch_utils import c_print
 from .models import Photo
 
 

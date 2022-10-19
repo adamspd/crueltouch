@@ -27,6 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('', include('homepage.urls')),
     path('client/', include('client.urls')),
+    path('administration/', include('administration.urls')),
     path('contact/', include('static_pages_and_forms.urls'), name='flatpages'),
     path('portfolio/', include('portfolio.urls'))
 ]

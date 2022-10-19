@@ -70,39 +70,39 @@ def index(request):
         return render(request, 'client/login_registration/login.html')
 
 
-@login_required(login_url='login')
-def user_album_details(request, pk):
-    selected_album = Album.objects.get(id=pk)
-    return render(request, 'client/client_view/photo_details.html', {
-        'album': selected_album
-    })
+# @login_required(login_url='login')
+# def user_album_details(request, pk):
+#     selected_album = Album.objects.get(id=pk)
+#     return render(request, 'client/client_view/photo_details.html', {
+#         'album': selected_album
+#     })
 
 
 # user defining a photo as favorite
-@login_required(login_url='login')
-def favorite(request, pk):
-    print("I was called")
-    album = get_object_or_404(Album, pk=pk)
-    print("the pictures id are: ", request.POST['photofav'])
-    print("the album id is: ", pk)
-    print("getting album, ", album)
-    try:
-        selected_photo = album.photo_set.get(pk=request.POST['photofav'])
-        print("La liste des ids des photos liké: ", request.POST['photofav'])
-
-        print("selected photo: ", selected_photo)
-    except (KeyError, Photo.DoesNotExist):
-        return render(request, 'client/client_view/photo_details.html', {
-            'album': album,
-            'error_message': "You didn't like a photo",
-        })
-    else:
-        selected_photo.is_favorite = True
-        selected_photo.save()
-        redirect('client:album_details', album.pk)
-        return render(request, 'client/client_view/photo_details.html', {
-            'album': album,
-        })
+# @login_required(login_url='login')
+# def favorite(request, pk):
+#     print("I was called")
+#     album = get_object_or_404(Album, pk=pk)
+#     print("the pictures id are: ", request.POST['photofav'])
+#     print("the album id is: ", pk)
+#     print("getting album, ", album)
+#     try:
+#         selected_photo = album.photo_set.get(pk=request.POST['photofav'])
+#         print("La liste des ids des photos liké: ", request.POST['photofav'])
+#
+#         print("selected photo: ", selected_photo)
+#     except (KeyError, Photo.DoesNotExist):
+#         return render(request, 'client/client_view/photo_details.html', {
+#             'album': album,
+#             'error_message': "You didn't like a photo",
+#         })
+#     else:
+#         selected_photo.is_favorite = True
+#         selected_photo.save()
+#         redirect('client:album_details', album.pk)
+#         return render(request, 'client/client_view/photo_details.html', {
+#             'album': album,
+#         })
 
 
 # ----------- Useful functions ----------- #
@@ -148,219 +148,219 @@ def owner(request):
     return render(request, 'client/login_registration/log_as_owner.html', contexts)
 
 
-@login_required(login_url='/client/rooslaurore/')
-@user_passes_test(email_check, login_url='/client/rooslaurore/')
-def when_owner_logged(request):
-    if request.user.is_authenticated:
-        contexts = context(request)
-        print('owner is logged')
-        return render(request, 'client/owners_view/owner_dashboard.html', contexts)
-    else:
-        messages.error(request, "Can't login")
-        c_print("Can't login")
-        return render(request, 'client/login_registration/log_as_owner.html')
+# @login_required(login_url='/client/rooslaurore/')
+# @user_passes_test(email_check, login_url='/client/rooslaurore/')
+# def when_owner_logged(request):
+#     if request.user.is_authenticated:
+#         contexts = context(request)
+#         print('owner is logged')
+#         return render(request, 'client/owners_view/owner_dashboard.html', contexts)
+#     else:
+#         messages.error(request, "Can't login")
+#         c_print("Can't login")
+#         return render(request, 'client/login_registration/log_as_owner.html')
 
 
 # ----------- Owner's dashboard ----------- #
 # add photo to homepage
-@login_required(login_url='/client/rooslaurore/')
-@user_passes_test(email_check, login_url='/client/rooslaurore/')
-def add_photos_homepage(request):
-    if request.user.is_authenticated:
-        albums = AlbumHomepage.objects.all()
-        photos = PhotoHomepage.objects.all()
-
-        if request.method == "POST":
-            data = request.POST
-            images = request.FILES.getlist('images')
-            for image in images:
-                post_photos = PhotoHomepage.objects.create(
-                    album_id=data['row'],
-                    file=image
-                )
-            redirect('client:ownerislogged')
-
-        return render(request, 'client/owners_view/addphotos_website.html', {
-            'albums': albums,
-            'photos': photos,
-        })
-    else:
-        return render(request, 'client/login_registration/log_as_owner.html')
+# @login_required(login_url='/client/rooslaurore/')
+# @user_passes_test(email_check, login_url='/client/rooslaurore/')
+# def add_photos_homepage(request):
+#     if request.user.is_authenticated:
+#         albums = AlbumHomepage.objects.all()
+#         photos = PhotoHomepage.objects.all()
+#
+#         if request.method == "POST":
+#             data = request.POST
+#             images = request.FILES.getlist('images')
+#             for image in images:
+#                 post_photos = PhotoHomepage.objects.create(
+#                     album_id=data['row'],
+#                     file=image
+#                 )
+#             redirect('client:ownerislogged')
+#
+#         return render(request, 'client/owners_view/addphotos_website.html', {
+#             'albums': albums,
+#             'photos': photos,
+#         })
+#     else:
+#         return render(request, 'client/login_registration/log_as_owner.html')
 
 
 # add photo to portfolio page
-@login_required(login_url='/client/rooslaurore/')
-@user_passes_test(email_check, login_url='/client/rooslaurore/')
-def add_photos_portfolio(request):
-    if request.user.is_authenticated:
-        albums = AlbumPortfolio.objects.all()
-        photos = PhotoPortfolio.objects.all()
-
-        if request.method == "POST":
-            data = request.POST
-            images = request.FILES.getlist('images')
-            for image in images:
-                PhotoPortfolio.objects.create(
-                    album_id=data['alb'],
-                    file=image
-                )
-            redirect('client:ownerislogged')
-
-        return render(request, 'client/owners_view/addphotos_portfolio.html', {
-            'albums': albums,
-            'photos': photos,
-        })
-    else:
-        return render(request, 'client/login_registration/log_as_owner.html')
+# @login_required(login_url='/client/rooslaurore/')
+# @user_passes_test(email_check, login_url='/client/rooslaurore/')
+# def add_photos_portfolio(request):
+#     if request.user.is_authenticated:
+#         albums = AlbumPortfolio.objects.all()
+#         photos = PhotoPortfolio.objects.all()
+#
+#         if request.method == "POST":
+#             data = request.POST
+#             images = request.FILES.getlist('images')
+#             for image in images:
+#                 PhotoPortfolio.objects.create(
+#                     album_id=data['alb'],
+#                     file=image
+#                 )
+#             redirect('client:ownerislogged')
+#
+#         return render(request, 'client/owners_view/addphotos_portfolio.html', {
+#             'albums': albums,
+#             'photos': photos,
+#         })
+#     else:
+#         return render(request, 'client/login_registration/log_as_owner.html')
 
 
 # Owner help dashboard
-@login_required(login_url='/client/rooslaurore/')
-@user_passes_test(email_check, login_url='/client/rooslaurore/')
-def owner_help(request):
-    if request.user.is_authenticated:
-        contexts = context(request)
-        return render(request, 'client/owners_view/owner_help.html', contexts)
-    else:
-        return render(request, 'client/login_registration/log_as_owner.html')
+# @login_required(login_url='/client/rooslaurore/')
+# @user_passes_test(email_check, login_url='/client/rooslaurore/')
+# def owner_help(request):
+#     if request.user.is_authenticated:
+#         contexts = context(request)
+#         return render(request, 'client/owners_view/owner_help.html', contexts)
+#     else:
+#         return render(request, 'client/login_registration/log_as_owner.html')
 
 
 # Owner list of client
-@login_required(login_url='/client/rooslaurore/')
-@user_passes_test(email_check, login_url='/client/rooslaurore/')
-def owner_client(request):
-    if request.user.is_authenticated:
-        contexts = context(request)
-        return render(request, 'client/owners_view/owner_client.html', contexts)
-    else:
-        return render(request, 'client/login_registration/log_as_owner.html')
+# @login_required(login_url='/client/rooslaurore/')
+# @user_passes_test(email_check, login_url='/client/rooslaurore/')
+# def owner_client(request):
+#     if request.user.is_authenticated:
+#         contexts = context(request)
+#         return render(request, 'client/owners_view/owner_client.html', contexts)
+#     else:
+#         return render(request, 'client/login_registration/log_as_owner.html')
 
 
 # manage contact form
-@login_required(login_url='/client/rooslaurore/')
-@user_passes_test(email_check, login_url='/client/rooslaurore/')
-def owner_contact_form(request):
-    if request.user.is_authenticated:
-        all_contact = ContactForm.objects.all()
-        return render(request, 'client/owners_view/owner_contact_form.html', {'all_contact': all_contact})
-    else:
-        return render(request, 'client/login_registration/log_as_owner.html')
+# @login_required(login_url='/client/rooslaurore/')
+# @user_passes_test(email_check, login_url='/client/rooslaurore/')
+# def owner_contact_form(request):
+#     if request.user.is_authenticated:
+#         all_contact = ContactForm.objects.all()
+#         return render(request, 'client/owners_view/owner_contact_form.html', {'all_contact': all_contact})
+#     else:
+#         return render(request, 'client/login_registration/log_as_owner.html')
 
 
 # views all booking
-@login_required(login_url='/client/rooslaurore/')
-@user_passes_test(email_check, login_url='/client/rooslaurore/')
-def owner_bookme(request):
-    if request.user.is_authenticated:
-        all_book = BookMe.objects.all()
-        return render(request, 'client/owners_view/owner_bookmes.html', {'all_book': all_book})
-    else:
-        return render(request, 'client/login_registration/log_as_owner.html')
+# @login_required(login_url='/client/rooslaurore/')
+# @user_passes_test(email_check, login_url='/client/rooslaurore/')
+# def owner_bookme(request):
+#     if request.user.is_authenticated:
+#         all_book = BookMe.objects.all()
+#         return render(request, 'client/owners_view/owner_bookmes.html', {'all_book': all_book})
+#     else:
+#         return render(request, 'client/login_registration/log_as_owner.html')
 
 
 # manage users
-@login_required(login_url='/client/rooslaurore/')
-@user_passes_test(email_check, login_url='/client/rooslaurore/')
-def user_details(request, pk):
-    if request.user.is_authenticated:
-        user_client = UserClient.objects.get(id=pk)
-        album = Album.objects.filter(owner_id=user_client.id)
-        if len(album) != 0:
-            id_album = album[0].id
-            all_photos = Photo.objects.filter(album_id=id_album)
-            contexts = {
-                'user_client': user_client,
-                'all_photos': all_photos,
-            }
-            return render(request, 'client/user_details.html', contexts)
-        else:
-            print(len(album))
-            return render(request, 'client/user_details.html', {
-                'user_client': user_client,
-            })
-    else:
-        return render(request, 'client/login_registration/log_as_owner.html')
+# @login_required(login_url='/client/rooslaurore/')
+# @user_passes_test(email_check, login_url='/client/rooslaurore/')
+# def user_details(request, pk):
+#     if request.user.is_authenticated:
+#         user_client = UserClient.objects.get(id=pk)
+#         album = Album.objects.filter(owner_id=user_client.id)
+#         if len(album) != 0:
+#             id_album = album[0].id
+#             all_photos = Photo.objects.filter(album_id=id_album)
+#             contexts = {
+#                 'user_client': user_client,
+#                 'all_photos': all_photos,
+#             }
+#             return render(request, 'client/user_details.html', contexts)
+#         else:
+#             print(len(album))
+#             return render(request, 'client/user_details.html', {
+#                 'user_client': user_client,
+#             })
+#     else:
+#         return render(request, 'client/login_registration/log_as_owner.html')
 
 
 # MANAGE BOOKING
 # update booking
-@login_required(login_url='/client/rooslaurore/')
-@user_passes_test(email_check, login_url='/client/rooslaurore/')
-def updateBookme(request, pk):
-    book = BookMe.objects.get(id=pk)
-    form = UpdateBook(instance=book)
-    if request.method == 'POST':
-        form = UpdateBook(request.POST, instance=book)
-        if form.is_valid():
-            form.save()
-            return redirect('client:ownerislogged')
-
-    context = {'form': form}
-    return render(request, 'client/owners_view/owner_update_bookme.html', context)
+# @login_required(login_url='/client/rooslaurore/')
+# @user_passes_test(email_check, login_url='/client/rooslaurore/')
+# def updateBookme(request, pk):
+#     book = BookMe.objects.get(id=pk)
+#     form = UpdateBook(instance=book)
+#     if request.method == 'POST':
+#         form = UpdateBook(request.POST, instance=book)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('client:ownerislogged')
+#
+#     context = {'form': form}
+#     return render(request, 'client/owners_view/owner_update_bookme.html', context)
 
 
 # delete booking
-@login_required(login_url='/client/rooslaurore/')
-@user_passes_test(email_check, login_url='/client/rooslaurore/')
-def delete_book(request, pk):
-    book = BookMe.objects.get(id=pk)
-    if request.method == 'POST':
-        book.delete()
-        return redirect('client:ownerislogged')
-    context = {'book': book}
-    return render(request, 'client/owners_view/delete_book.html', context)
+# @login_required(login_url='/client/rooslaurore/')
+# @user_passes_test(email_check, login_url='/client/rooslaurore/')
+# def delete_book(request, pk):
+#     book = BookMe.objects.get(id=pk)
+#     if request.method == 'POST':
+#         book.delete()
+#         return redirect('client:ownerislogged')
+#     context = {'book': book}
+#     return render(request, 'client/owners_view/delete_book.html', context)
 
 
 # add pictures for users
-@login_required(login_url='/client/rooslaurore/')
-@user_passes_test(email_check, login_url='/client/rooslaurore/')
-def add_photos(request, pk):
-    if request.user.is_authenticated:
-        albums = Album.objects.all()
-        photos = Photo.objects.all()
-        if request.method == "POST":
-            data = request.POST
-            images = request.FILES.getlist('images')
-            for image in images:
-                Photo.objects.create(
-                    album_id=data['category'],
-                    file=image
-                )
-            redirect('client:ownerislogged')
-
-        return render(request, 'client/owners_view/owner_addphotos.html', {
-            'albums': albums,
-            'photos': photos,
-        })
-    else:
-        return render(request, 'client/login_registration/log_as_owner.html')
+# @login_required(login_url='/client/rooslaurore/')
+# @user_passes_test(email_check, login_url='/client/rooslaurore/')
+# def add_photos(request, pk):
+#     if request.user.is_authenticated:
+#         albums = Album.objects.all()
+#         photos = Photo.objects.all()
+#         if request.method == "POST":
+#             data = request.POST
+#             images = request.FILES.getlist('images')
+#             for image in images:
+#                 Photo.objects.create(
+#                     album_id=data['category'],
+#                     file=image
+#                 )
+#             redirect('client:ownerislogged')
+#
+#         return render(request, 'client/owners_view/owner_addphotos.html', {
+#             'albums': albums,
+#             'photos': photos,
+#         })
+#     else:
+#         return render(request, 'client/login_registration/log_as_owner.html')
 
 
 # Creation of albums
-@login_required(login_url='/client/rooslaurore/')
-@user_passes_test(email_check, login_url='/client/rooslaurore/')
-def creationofalbum(request):
-    if request.method == 'POST':
-        form = CreateAlbumForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('client:add_photos_portfolio')
-    else:
-        form = CreateAlbumForm()
-    context = {'form': form}
-    return render(request, 'client/owners_view/create_album_portfolio.html', context)
+# @login_required(login_url='/client/rooslaurore/')
+# @user_passes_test(email_check, login_url='/client/rooslaurore/')
+# def creationofalbum(request):
+#     if request.method == 'POST':
+#         form = CreateAlbumForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('client:add_photos_portfolio')
+#     else:
+#         form = CreateAlbumForm()
+#     context = {'form': form}
+#     return render(request, 'client/owners_view/create_album_portfolio.html', context)
 
 
 # delete a picture from portfolio page
-@login_required(login_url='/client/rooslaurore/')
-@user_passes_test(email_check, login_url='/client/rooslaurore/')
-def delete_photo(request, pk):
-    photo = PhotoPortfolio.objects.get(id=pk)
-    if request.method == 'POST':
-        photo.delete()
-        return redirect('client:add_photos_portfolio')
-    context = {'photo': photo}
-    return render(request, 'client/owners_view/delete_photo_portfolio.html', context)
+# @login_required(login_url='/client/rooslaurore/')
+# @user_passes_test(email_check, login_url='/client/rooslaurore/')
+# def delete_photo(request, pk):
+#     photo = PhotoPortfolio.objects.get(id=pk)
+#     if request.method == 'POST':
+#         photo.delete()
+#         return redirect('client:add_photos_portfolio')
+#     context = {'photo': photo}
+#     return render(request, 'client/owners_view/delete_photo_portfolio.html', context)
 
 
 def superuserlogin(request):
@@ -378,6 +378,7 @@ def logout_user(request):
 
 # ----------- Booking ----------- #d
 def bookme(request):
+    request.session.delete()
     return form_bookme(request)
 
 

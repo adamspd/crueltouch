@@ -1,0 +1,29 @@
+/* Custom dropdown */
+.custom-sel {
+    text-decoration: none;
+    text-transform: uppercase;
+    margin: 7px 0 0;
+    padding: 5px;
+    text-align: left;
+    font-family: Raleway;
+    color: #546e7a;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 15px;
+    display: block;
+}
+
+.custom-sel:hover {
+    text-decoration: none;
+    background-color: #EDF0F2;
+    color: #152850;
+}
+
+.custom-sel.selected {
+    background-color: transparent;
+}
+
+.custom-sel.selected:hover {
+    background-color: transparent;
+    color: #546e7a;
+}

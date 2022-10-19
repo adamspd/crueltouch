@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 
 from client.models import UserClient, BookMe, Album, Photo, OwnerProfilePhoto
 
+
 # class InlinePhoto(admin.TabularInline):
 #     model = Photo
 
@@ -41,28 +42,13 @@ from client.models import UserClient, BookMe, Album, Photo, OwnerProfilePhoto
 #     cant_be_downloaded.short_description = "Can't Be Downloaded"
 #
 #
-# class UserAdminConfig(admin.ModelAdmin):
-#     model = UserClient
-#     inlines = [
-#         InlinePhoto,
-#         # InlineBook
-#     ]
-#     search_fields = ('email', 'first_name',)
-#     list_filter = ('email', 'first_name', 'active', 'staff')
-#     ordering = ('-start_date',)
-#     list_display = ('first_name', 'email',
-#                     'active', 'admin')
-#     fieldsets = (
-#         (None, {'fields': ('email', 'first_name',)}),
-#         ('CAN LOGIN', {'fields': ('active',)}),
-#         # ('Personal', {'fields': ('about',)}),
-#     )
-#     add_fieldsets = (
-#         (None, {
-#             'classes': ('wide',),
-#             'fields': ('email', 'first_name', 'password1', 'password2', 'active', 'staff')}
-#          ),
-#     )
+
+class BookMeConfig(admin.ModelAdmin):
+    model = BookMe
+    search_fields = ('full_name', 'email', 'time_book_taken')
+    list_filter = ('time_book_taken', 'full_name', 'status', 'package')
+    ordering = ('-time_book_taken',)
+    list_display = ('full_name', 'time_book_taken', 'package', 'session_type', 'place')
 
 
 User = get_user_model()
@@ -70,7 +56,7 @@ User = get_user_model()
 # admin.site.register(Photo, PhotoAdmin)
 # admin.site.register(UserClient, UserAdminConfig)
 admin.site.register(UserClient)
-admin.site.register(BookMe)
+admin.site.register(BookMe, BookMeConfig)
 admin.site.register(Album)
 admin.site.register(Photo)
 admin.site.register(OwnerProfilePhoto)
