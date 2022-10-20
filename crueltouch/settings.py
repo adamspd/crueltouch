@@ -170,6 +170,9 @@ MANAGERS = [
     ('Adams', 'adamspd.developer@gmail.com'),
 ]
 
+if not DEBUG:
+    MANAGERS += ('Roos', 'crueltouchphoto@gmail.com ')
+
 ADMIN_EMAIL = 'adamspd.developer@gmail.com'
 
 # Language translation settings
