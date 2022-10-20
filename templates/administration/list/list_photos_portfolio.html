@@ -1,0 +1,65 @@
+{% extends 'administration/list/data.html' %}
+{% load i18n %}
+{% load static %}
+{% block customCSS %}
+    <link rel="stylesheet" href="{% static 'client/modifying_photos_albums.css' %}">
+{% endblock %}
+
+{% block title %}CRUELTOUCH | {{ title }}{% endblock %}
+
+{% block pageTitle %}
+
+{% endblock %}
+{% block pageLink %}
+    {{ title }}
+{% endblock %}
+
+
+{% block table %}
+    <!-- Main content -->
+    <div>
+        <div class="cardHeader">
+            <h2>{{ total_photos_label }}</h2> <span class="badge badge-pill badge-primary">{{ photos|length }}</span>
+            <small class="text-muted">{% if messages %}
+                {% for message in messages %}
+                    <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}"
+                         role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            </small>
+        </div>
+        <br>
+        <div class="" style="padding: 5px;">
+            {% if photos %}
+                <div style="display: flex; flex-flow: row wrap; justify-items: flex-start; padding: 5px;">
+                    {% for photo in photos %}
+                        <div style="margin: 5px">
+                            <div>
+                                <img src="{{ photo.file.url }}" alt="" style="height: 150px">
+                            </div>
+                            <br>
+                            <div>
+                                {% if portfolio == True %}
+                                    <a class="btn btn-danger" style="background-color: red"
+                                       href="{% url 'administration:delete_photo_portfolio' photo.pk %}">Remove</a>
+                                {% else %}
+                                    <a class="btn btn-danger" style="background-color: red"
+                                       href="{% url 'administration:delete_photo_homepage' photo.pk %}">Remove</a>
+                                {% endif %}
+                            </div>
+                            <br><br>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert-info" id="info" style="text-align: center; margin-top: auto">
+                    <p>No photos to portfolio.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <!-- /.card-body -->
+{% endblock %}
+
+{% block dataTableJs %}
+{% endblock %}

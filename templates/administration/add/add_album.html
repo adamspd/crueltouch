@@ -1,0 +1,79 @@
+{% extends 'administration/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block title %}Crueltouch | {% translate "Create new album" %}{% endblock %}
+{% block body %}
+    <style>
+        .container-photos {
+            padding-left: 20px;
+            padding-top: 55px;
+            padding-right: 20px;
+        }
+
+        input[type=text], input[type=email] {
+            width: 100%;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 500;
+            border-bottom: 1px solid #b2b2b2;
+            padding-bottom: 14px;
+            margin-bottom: 20px;
+            background: transparent;
+        }
+
+        textarea {
+            height: 165px;
+            min-height: 165px;
+            margin-bottom: 38px;
+        }
+
+        label {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        input select option {
+            height: 15px;
+        }
+
+        h3 {
+            text-transform: uppercase;
+            color: black;
+        }
+
+        a#goback {
+            background-color: red;
+        }
+    </style>
+    <section class="content content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <br>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-4">
+                        <div class="container-photos">
+                            <form method='POST' action="" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <h3>Create a new album</h3><br>
+                                <label for="">Album name</label><br><br>
+                                {{ form.album_title }}
+
+                                <br>
+                                <input type="hidden" name="next" value="{{ request.META.HTTP_REFERER }}">
+
+                                <button id="createalbum" type='submit' class="btn btn-primary">Create Album</button>
+                                <a id="goback" href="{{ request.META.HTTP_REFERER }}" class="btn btn-dark float-right">
+                                    < Go Back</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+

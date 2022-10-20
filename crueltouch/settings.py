@@ -11,23 +11,29 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
-import os
+
+from django.conf import global_settings
+# Add custom languages not provided by Django
+from django.conf import locale
+from django.utils.translation import gettext_lazy as _
+
+from crueltouch.productions import production_debug, production_secret_key
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-hipxqs_d-lcs4jqe1lfc#nzi=ic0id@c6894nz!^8$!ibv&_fh'
+SECRET_KEY = production_secret_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = production_debug
 
-ALLOWED_HOSTS = ['144.217.7.48', 'crueltouch.com', '127.0.0.1', 'localhost', '*']
+ALLOWED_HOSTS = ["*"] if DEBUG else ['144.217.7.48', 'crueltouch.com', 'www.crueltouch.com']
 
+AUTH_USER_MODEL = 'client.UserClient'
 
 # Application definition
 
@@ -38,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'homepage',
     'client',
     'static_pages_and_forms',
@@ -74,12 +81,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'crueltouch.wsgi.application'
 
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-
-SESSION_COOKIE_SECURE = True
-
-# SESSION_COOKIE_AGE = 900
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -89,9 +90,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -111,49 +109,129 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/3.2/howto/static-files/
+
+if DEBUG:
+    STATICFILES_DIRS = [
+        BASE_DIR / "static",
+    ]
+
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATIC_URL = 'static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = 'media/'
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Message storage
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+# Number of seconds of inactivity before a user is marked offline
+USER_ONLINE_TIMEOUT = 300
+
+# Number of seconds that we will keep track of inactive users for before
+# their last seen is removed from the cache
+USER_LASTSEEN_TIMEOUT = 60 * 60 * 24 * 7
+
+# Caches settings
+CACHES_LOCATION = os.path.join(BASE_DIR, '.cache') if DEBUG else "/home/debian/.cache/crueltouch"
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': CACHES_LOCATION,
+    }
+}
+
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'crueltouch.webmaster@gmail.com'
+EMAIL_HOST_PASSWORD = 'cuhrgxlgenvqfoto'
+EMAIL_USE_TLS = True
+EMAIL_SUBJECT_PREFIX = ""
+EMAIL_USE_LOCALTIME = True
+
+ADMINS = [
+    ('Adams', 'adamspd.developer@gmail.com'),
+]
+if not DEBUG:
+    ADMINS += ('Roos', 'roos.laurore5@gmail.com ')
+
+MANAGERS = [
+    ('Adams', 'adamspd.developer@gmail.com'),
+]
+
+ADMIN_EMAIL = 'adamspd.developer@gmail.com'
+
+# Language translation settings
+
+EXTRA_LANG_INFO = {
+    'cr-ht': {
+        'bidi': False,  # right-to-left
+        'code': 'cr-ht',
+        'name': 'Haitian Creole',
+        'name_local': "Kreyòl",
+    },
+}
+
+LANG_INFO = dict(locale.LANG_INFO, **EXTRA_LANG_INFO)
+locale.LANG_INFO = LANG_INFO
+
+LANGUAGES = (
+    ('cr-ht', _('Kreyòl')),
+    ('fr', _('Français')),
+    ('en', _('English')),
+)
+
+# Languages using BiDi (right-to-left) layout
+LANGUAGES_BIDI = global_settings.LANGUAGES_BIDI + ["cr-ht"]
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR / 'locale'),
+)
 
 # Internationalization
-# https://docs.djangoproject.com/en/3.2/topics/i18n/
+# https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr'
 
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_L10N = True
-
 USE_TZ = True
 
+USE_L10N = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
+# Extra deployment parameters
+if not DEBUG:
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
 
+    SECURE_HSTS_SECONDS = 60
+    SECURE_HSTS_PRELOAD = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
+    SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+    SESSION_COOKIE_AGE = 900  # 15 minutes
 
-# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+LOGIN_URL = '/login/'
+LOGOUT_REDIRECT_URL = LOGIN_URL
 
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-AUTH_USER_MODEL = 'client.UserClient'
+# The number of seconds a password reset link is valid for (in second)
+PASSWORD_RESET_TIMEOUT = 3600  # 1 hour
 
 CONTACT_EMAIL = 'adams.pierre-david@outlook.fr'
 ADMIN_EMAILS = ['adamspierredavid@gmail.com', 'roos.laurore5@gmail.com', 'adams.pierre-david@outlook.fr',
                 'adamspd.developer@gmail.com']
 
-
-# Twilio SendGrid
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_API_KEY')

@@ -1,0 +1,83 @@
+{% extends 'administration/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block title %}Crueltouch | {{ title }}{% endblock %}
+
+{% block body %}
+    <section class="content content-wrapper">
+        <div class="container-fluid">
+            <div class="row" style="max-width: 600px; margin: 0 auto; padding-top: 20px">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">{{ title }} </h3>
+                            <small class="float-right">{% translate "Total pictures uploaded" %}: {{ number_of_photos }}</small>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <div class="form-group">
+                                    {% if not homepage %}
+                                        <button type="reset" class="btn btn-outline-info btn-sm float-right">
+                                            <a href="{% url 'administration:add_album' %}">{% translate "Create new album" %}</a>
+                                        </button>
+                                    {% endif %}
+                                    <label>{{ select }}</label><br>
+                                    <select name="row" class="form-control">
+                                        <option value='none'>{{ select }}...</option>
+
+                                        {% for album in albums %}
+                                            <option value='{{ album.id }}'>{{ album.album_title }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputFile">{% translate "Upload image" %}</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input required name="images_homepage" type="file" multiple
+                                                   class="form-control-file"
+                                                   id="uploadFileHome">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-info">{% translate "Envoyer" %}</button>
+                                <button type="reset" class="btn btn-default float-right">
+                                    <a href="{% url 'administration:index' %}">{% translate "Annuler" %}</a>
+                                </button>
+                            </div>
+
+                            <br>
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}"
+                                         role="alert">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+                            {% if form.errors %}
+                                {% for field, errors in form.errors.items %}
+                                    {% for error in errors %}
+                                        <p style="color: darkred">{{ error }}</p>
+                                    {% endfor %}
+                                {% endfor %}
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block customJS %}
+    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+{% endblock %}

@@ -1,10 +1,11 @@
 import random
 
+from django.http import HttpResponse, Http404
 from django.shortcuts import render
 
 from django.views import generic
 
-from utils.crueltouch_utils import c_print
+from crueltouch import settings
 from .models import Photo
 
 
@@ -35,3 +36,19 @@ class AboutView(generic.ListView):
 
     def get_queryset(self):
         return Photo.objects.all()
+
+
+def get_logo(request):
+    try:
+        with open(settings.BASE_DIR / 'static/homepage/img/logos/logo.png', 'rb') as f:
+            return HttpResponse(f.read(), content_type="image/png")
+    except IOError:
+        raise Http404
+
+
+def get_logo_mini(request):
+    try:
+        with open(settings.BASE_DIR / 'static/homepage/img/logos/logo-mini.png', 'rb') as f:
+            return HttpResponse(f.read(), content_type="image/png")
+    except IOError:
+        raise Http404

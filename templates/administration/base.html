@@ -132,7 +132,8 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="{% url 'homepage:index' %}" class="brand-link">
-            <img src="{% static 'homepage/img/icon/android-icon-48x48.png' %}" alt="" class="brand-image img-circle elevation-3"
+            <img src="{% static 'homepage/img/icon/android-icon-48x48.png' %}" alt=""
+                 class="brand-image img-circle elevation-3"
                  style="opacity: .8">
             <span class="brand-text font-weight-light">CRUELTOUCH</span>
         </a>
@@ -183,7 +184,7 @@
                             </a>
                         </li>
                         {# Only Adams here #}
-                        {% if user.username == "adamspierredavid" %}
+                        {% if user.email == "adamspierredavid@gmail.com" %}
                             <li class="nav-item">
                                 <a href="/admin" class="nav-link">
                                     <i class="nav-icon fas fa-lock"></i>
@@ -194,13 +195,71 @@
                             </li>
                         {% endif %}
                         <li class="nav-item">
-                            {# TODO: add possibility here for the admin to change visual website from here #}
+                            <a href="{% url 'administration:session_list' %}" class="nav-link">
+                                &nbsp;&nbsp;<i class="fa-solid fa-list"></i>
+                                <p>
+                                    &nbsp;&nbsp;{% translate "Session list" %}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-home"></i>
+                                <p>
+                                    {% translate "Homepage" %}
+                                    <i class="fas fa-angle-left right"></i>
+                                    <span class="badge badge-info right">2</span>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{% url 'administration:add_photos_homepage' %}" class="nav-link">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="far fa-plus-square nav-icon"></i>
+                                        <p>{% translate "Add photos" %}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'administration:list_photos_homepage' %}" class="nav-link">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="far fa-copy nav-icon"></i>
+                                        <p>{% translate "View all photos" %}</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-image"></i>
                                 <p>
-                                    {% translate "Add photo to portfolio" %}
+                                    {% translate "Portfolio" %}
+                                    <i class="fas fa-angle-left right"></i>
+                                    <span class="badge badge-info right">3</span>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{% url 'administration:add_photos_portfolio' %}" class="nav-link">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="far fa-plus-square nav-icon"></i>
+                                        <p>{% translate "Add photos" %}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'administration:list_photos_portfolio' %}" class="nav-link">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="far fa-file nav-icon"></i>
+                                        <p>{% translate "View all photos" %}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'administration:add_album' %}" class="nav-link">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="far fa-edit nav-icon"></i>
+                                        <p>{% translate "Create new album" %}</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a href="{% url 'administration:user_list' %}" class="nav-link">
@@ -226,23 +285,23 @@
                                 </p>
                             </a>
                         </li>
-                    <li class="nav-item">
-                            <a href="/admin" class="nav-link">
+                        <li class="nav-item">
+                            <a href="/admin" class="nav-link disabled">
                                 &nbsp;&nbsp;<i class="fa-solid fa-gears"></i>
                                 <p>
                                     &nbsp;&nbsp;{% translate "Settings" %}
                                 </p>
                             </a>
                         </li>
-                    <li class="nav-item">
-                            <a href="" class="nav-link">
+                        <li class="nav-item">
+                            <a href="" class="nav-link disabled">
                                 &nbsp;&nbsp;<i class="fa-solid fa-user-secret"></i>
                                 <p>
                                     &nbsp;&nbsp;{% translate "Change password" %}
                                 </p>
                             </a>
                         </li>
-                    <li class="nav-item">
+                        <li class="nav-item">
                             <a href="{% url 'client:logout' %}" class="nav-link">
                                 &nbsp;&nbsp;<i class="fa-solid fa-sign-out"></i>
                                 <p>
@@ -316,12 +375,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"
             integrity="sha512-CryKbMe7sjSCDPl18jtJI5DR5jtkUWxPXWaLCst6QjH8wxDexfRJic2WRmRXmstr2Y8SxDDWuBO6CQC6IE4KTA=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {#    <!-- Tempusdominus Bootstrap 4 -->#}
+    {#    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js"#}
+    {#            integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA=="#}
+    {#            crossorigin="anonymous" referrerpolicy="no-referrer"></script>#}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.js"
             integrity="sha512-W76C8qrNYavcaycIH9EijxRuswoS+LCqA1+hq+ECrmjzAbe/SHhTgrwA1uc84husS/Gz50mxOEHPzrcd3sxBqQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- Tempusdominus Bootstrap 4 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js"
-            integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Summernote -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.js"

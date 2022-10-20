@@ -2,8 +2,13 @@ from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import User, PermissionsMixin
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
+
+from utils.crueltouch_utils import c_print, notify_admin_session_request_received_via_email, \
+    send_session_request_received_email, get_estimated_response_time, get_today_date
 
 
 class UserManager(BaseUserManager):
@@ -143,3 +148,69 @@ class OwnerProfilePhoto(models.Model):
 
     def __str__(self):
         return self.name
+
+
+def get_estimated_total(session_type, package, place):
+    if session_type == 'portrait' and place == 'outdoor' and package == "7":
+        return "$200"
+    elif session_type == 'portrait' and place == 'outdoor' and package == "15":
+        return "$300"
+    elif session_type == 'portrait' and place == 'outdoor' and package == "35":
+        return "$500"
+    elif session_type == 'birthday' and place == 'outdoor' and package == "7":
+        return "$250"
+    elif session_type == 'birthday' and place == 'outdoor' and package == "15":
+        return "$300"
+    elif session_type == 'birthday' and place == 'outdoor' and package == "35":
+        return "$500"
+    # studio
+    elif session_type == 'portrait' and place == 'studio' and package == "7":
+        return "$245"
+    elif session_type == 'portrait' and place == 'studio' and package == "15":
+        return "$345"
+    elif session_type == 'portrait' and place == 'studio' and package == "35":
+        return "$545"
+    elif session_type == 'birthday' and place == 'studio' and package == "7":
+        return "$245"
+    elif session_type == 'birthday' and place == 'studio' and package == "15":
+        return "$345"
+    elif session_type == 'birthday' and place == 'studio' and package == "35":
+        return "$545"
+    else:
+        return "Contact us for more information"
+
+
+# return one week from today to string
+
+
+@receiver(post_save, sender=BookMe)
+def account_authorization_status_handler(sender, instance, created, *args, **kwargs):
+    c_print("We saw the creation of the object")
+    if created:
+        c_print("Sending email to admin to notify of a session request")
+        notify_admin_session_request_received_via_email(
+            today=get_today_date(),
+            client_name=instance.full_name,
+            client_email=instance.email,
+            session_type=instance.session_type,
+            place=instance.place,
+            package=instance.package,
+            status=instance.status,
+            total=get_estimated_total(instance.session_type, instance.package, instance.place),
+            estimated_response_time=get_estimated_response_time(),
+            subject="New booking request received"
+        )
+
+        c_print("Sending email to user to thank them for their request")
+        send_session_request_received_email(
+            full_name=instance.full_name,
+            email_address=instance.email,
+            session_type=instance.session_type,
+            place=instance.place,
+            package=instance.package,
+            status=instance.status,
+            total=get_estimated_total(session_type=instance.session_type, package=instance.package,
+                                      place=instance.place),
+            estimated_response_time=get_estimated_response_time(),
+            subject="Thank you for your booking!"
+        )
