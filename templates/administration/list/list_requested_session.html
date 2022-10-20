@@ -16,24 +16,35 @@
     <!-- Main content -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">{% translate "Reqeusted Photoshoot Session" %}</h3>
+            <h3 class="card-title">{% translate "Requested Photoshoot Session" %}</h3><br>
+            <small class="text-muted">{% if messages %}
+                {% for message in messages %}
+                    <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}"
+                         role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            </small>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="example2" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                    <th>{% translate "Date" %}</th>
                     <th>{% translate "Name" %}</th>
                     <th>{% translate "Email" %}</th>
-                    <th>{% translate "Date" %}</th>
                     <th>{% translate "Place" %}</th>
                     <th>{% translate "Status" %}</th>
+                    <th></th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for rs in request_session %}
                     <tr>
+                        <td>
+                            {{ rs.time_book_taken }}
+                        </td>
                         <td>
                             &nbsp;&nbsp;&nbsp;{{ rs.full_name }}
                         </td>
@@ -42,26 +53,29 @@
                                 &nbsp;&nbsp;&nbsp;{{ rs.email }}
                             </a>
                         </td>
-                        <td>
-                            {{ rs.time_book_taken }}
-                        </td>
                         <td>{{ rs.place }}</td>
                         <td>{{ rs.status }}</td>
                         <td>
-                            <button class="btn btn-primary">
+                            <a href="{% url 'administration:session_update' rs.pk %}" class="btn btn-primary">
                                 <i class="fas fa-edit"></i>&nbsp;Update
-                            </button>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{% url 'administration:session_delete' rs.pk %}" class="btn btn-danger">
+                                <i class="fas fa-fire"></i>&nbsp;Delete
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}
                 </tbody>
                 <tfoot>
                 <tr>
+                    <th>{% translate "Date" %}</th>
                     <th>{% translate "Name" %}</th>
                     <th>{% translate "Email" %}</th>
-                    <th>{% translate "Date" %}</th>
                     <th>{% translate "Place" %}</th>
                     <th>{% translate "Status" %}</th>
+                    <th></th>
                     <th></th>
                 </tr>
                 </tfoot>

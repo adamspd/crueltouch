@@ -46,9 +46,9 @@
                         <td>
                             {{ rs.message }}
                         <td>
-                            <button class="btn btn-primary">
-                                <i class="fas fa-edit"></i>&nbsp;Update
-                            </button>
+                            <a href="{% url 'administration:message_delete' rs.pk %}" class="btn btn-danger">
+                                <i class="fas fa-fire"></i>&nbsp;Delete
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -67,4 +67,10 @@
         <!-- /.table-responsive -->
     </div>
     <!-- /.card-body -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}"
+                 role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
 {% endblock %}
