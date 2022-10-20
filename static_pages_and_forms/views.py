@@ -1,12 +1,8 @@
 from django.contrib import messages
-from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 
-from crueltouch import settings
 from utils.crueltouch_utils import c_print
 from .form import Contact
-
-from googlevoice import Voice
 
 
 # Create your views here.
