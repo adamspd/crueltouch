@@ -116,12 +116,3 @@ def check_full_name(data):
                 or "BusinessLoans" in data:
             return True
 
-
-def send_sms():
-    voice = Voice()
-    voice.login()
-
-    phoneNumber = "+33769992738"
-    text = "Testing SMS for crueltouch"
-
-    voice.send_sms(phoneNumber, text)

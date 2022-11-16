@@ -138,7 +138,7 @@ USER_ONLINE_TIMEOUT = 300
 
 # Number of seconds that we will keep track of inactive users for before
 # their last seen is removed from the cache
-USER_LASTSEEN_TIMEOUT = 60 * 60 * 24 * 7
+USER_LAST_SEEN_TIMEOUT = 60 * 60 * 24 * 7
 
 # Caches settings
 CACHES_LOCATION = os.path.join(BASE_DIR, '.cache') if DEBUG else "/home/debian/.cache/crueltouch"
@@ -154,8 +154,8 @@ CACHES = {
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'crueltouch.webmaster@gmail.com'
-EMAIL_HOST_PASSWORD = 'cuhrgxlgenvqfoto'
+EMAIL_HOST_USER = 'adamspd.webmaster@gmail.com'
+EMAIL_HOST_PASSWORD = 'jjeimwqqoszjqasf'
 EMAIL_USE_TLS = True
 EMAIL_SUBJECT_PREFIX = ""
 EMAIL_USE_LOCALTIME = True
@@ -164,14 +164,14 @@ ADMINS = [
     ('Adams', 'adamspd.developer@gmail.com'),
 ]
 if not DEBUG:
-    ADMINS += ('Roos', 'roos.laurore5@gmail.com ')
+    ADMINS.append(('Roos', 'roos.laurore5@gmail.com '))
 
 MANAGERS = [
     ('Adams', 'adamspd.developer@gmail.com'),
 ]
 
 if not DEBUG:
-    MANAGERS += ('Roos', 'crueltouchphoto@gmail.com ')
+    MANAGERS.append(('Roos', 'crueltouchphoto@gmail.com '))
 
 ADMIN_EMAIL = 'adamspd.developer@gmail.com'
 
@@ -190,9 +190,9 @@ LANG_INFO = dict(locale.LANG_INFO, **EXTRA_LANG_INFO)
 locale.LANG_INFO = LANG_INFO
 
 LANGUAGES = (
-    ('cr-ht', _('Kreyòl')),
-    ('fr', _('Français')),
     ('en', _('English')),
+    # ('fr', _('Français')),
+    # ('cr-ht', _('Kreyòl')),
 )
 
 # Languages using BiDi (right-to-left) layout
@@ -205,7 +205,7 @@ LOCALE_PATHS = (
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'fr'
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
@@ -233,8 +233,3 @@ LOGOUT_REDIRECT_URL = LOGIN_URL
 
 # The number of seconds a password reset link is valid for (in second)
 PASSWORD_RESET_TIMEOUT = 3600  # 1 hour
-
-CONTACT_EMAIL = 'adams.pierre-david@outlook.fr'
-ADMIN_EMAILS = ['adamspierredavid@gmail.com', 'roos.laurore5@gmail.com', 'adams.pierre-david@outlook.fr',
-                'adamspd.developer@gmail.com']
-

@@ -70,7 +70,8 @@
                                 {% endfor %}
                             {% endfor %}
                         {% endif %}
-                        <input class="btn btn-primary" type="submit" value="Submit" style="width: 100px">
+                        <input class="btn btn-primary prevent_multiple" type="submit" value="Submit"
+                               style="width: 100px"><i class="fa fa-refresh fa-lg fa-spin"></i>
                     </form>
                 </div>
             </div>
@@ -90,18 +91,30 @@
 */
 
         //Query All input fields
-        var form_fields = document.getElementsByTagName('input')
+        let form_fields = document.getElementsByTagName('input')
         form_fields[1].placeholder = 'How do I call you ? ';
         form_fields[2].placeholder = 'A valid email address, please... !';
         form_fields[3].placeholder = "What is the subject of your message... ?";
 
-        var form_field_text_area = document.getElementsByTagName('textarea')
+        let form_field_text_area = document.getElementsByTagName('textarea')
         form_field_text_area[0].placeholder = "I'm listening... ";
 
 
-        for (var field in form_fields) {
+        for (let field in form_fields) {
             form_fields[field].className += ' form-control'
         }
     </script>
 
+{% endblock %}
+
+{% block customJS %}
+    <script>
+        $('.prevent_multiple').click(function () {
+            const old_width = $(this).width();                              // store original width
+            $(this).html('<i class="fa fa-refresh fa-lg fa-spin"></i>');    // replace button text with icon
+            $(this).width(old_width);                                       // restore original width
+            $(this).prop('disabled', true);                                 // disable the button
+            $(this).parents('form:first').submit();                         // submit the form
+        });
+    </script>
 {% endblock %}
