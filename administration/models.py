@@ -15,7 +15,7 @@ class PermissionsEmails(models.Model):
 
     @property
     def can_send_email(self):
-        return self.number_of_emails < 120
+        return self.number_of_emails < 300
 
 
 

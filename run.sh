@@ -39,6 +39,7 @@ python3 manage.py makemigrations homepage
 python3 manage.py makemigrations client
 python3 manage.py makemigrations static_pages_and_forms
 python3 manage.py makemigrations portfolio
+python3 manage.py makemigrations administration
 
 print_style "\nApplying the migrations" "warning"
 python3 manage.py migrate
