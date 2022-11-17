@@ -1,6 +1,6 @@
 import random
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from portfolio.models import Photo, Album
 
 
@@ -14,7 +14,3 @@ def index_portfolio(request):
         'all_albums': all_albums,
     })
 
-
-def detailed_view(request, pk):
-    photo = Photo.objects.get(id=pk)
-    return render(request, 'homepage/../templates/homepage/detailed.html', {'photo': photo})
