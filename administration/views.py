@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.utils.translation import gettext_lazy as _
 
 from client.form import CreateAlbumForm, UpdateBook
 from client.models import BookMe, UserClient, Photo
@@ -162,6 +163,24 @@ def list_requested_user(request):
     context = {'clients': all_clients,
                'user': user}
     return render(request, 'administration/list/list_user.html', context)
+
+
+@login_required(login_url='/administration/login/')
+@user_passes_test(email_check, login_url='/administration/login/')
+def send_late_booking_confirmation_email_to_users(request, pk):
+    try:
+        user = BookMe.objects.get(pk=pk)
+        if not user.get_if_email_was_sent_boolean():
+            sent = user.send_late_booking_confirmation_email()
+            if sent:
+                messages.success(request, _("Email sent successfully"))
+            else:
+                messages.warning(request, _("Email not sent"))
+        else:
+            messages.warning(request, _("Email already sent"))
+    except BookMe.DoesNotExist:
+        messages.warning(request, _("Session request does not exist"))
+    return redirect('administration:session_list')
 
 
 @login_required(login_url='/administration/login/')

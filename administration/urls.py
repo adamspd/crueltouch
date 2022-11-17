@@ -17,6 +17,7 @@ user_patterns = [
 message_patterns = [
     path('list/', list_contact_form, name='message_list'),
     path('delete/<int:pk>/', delete_contact_form, name='message_delete'),
+    path('send-reply/<int:pk>/', send_late_booking_confirmation_email_to_users, name='send_email'),
 ]
 
 add_photos_patterns = [

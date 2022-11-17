@@ -1,0 +1,7 @@
+Django==4.1
+django-js-asset==2.0.0
+dnspython==2.2.1
+docutils==0.19
+markdown2==2.4.6
+Pillow==9.2.0
+py3-validate-email==1.0.8

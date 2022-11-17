@@ -11,6 +11,7 @@ client/migrations
 homepage/migrations
 portfolio/migrations
 static_pages_and_forms/migrations
+administration/migrations
 
 # DS_Store file
 .DS_Store
@@ -36,4 +37,4 @@ db.sqlite3
 media
 
 
-
+crueltouch/email_secrets.py
