@@ -10,6 +10,7 @@ from client.models import UserClient, BookMe, Album, Photo
 from static_pages_and_forms.models import ContactForm
 from utils.crueltouch_utils import c_print, check_user_login
 from .form import CustomRegisterForm, BookME
+from validate_email import validate_email
 
 User = get_user_model()
 
@@ -218,29 +219,26 @@ def form_bookme(request_client):
     if request_client.method == 'POST':
         form = BookME(request_client.POST)
         if form.is_valid():
-            # form.save()
-            c_print(f"data from form: {form.cleaned_data}")
+            c_print(f"client.views:222 | data from form: {form.cleaned_data}")
             full_name = form.cleaned_data['full_name']
             email = form.cleaned_data['email']
             session_type = form.cleaned_data['session_type']
             place = form.cleaned_data['place']
             package = form.cleaned_data['package']
-            obj = BookMe.objects.create(
-                full_name=full_name,
-                email=email,
-                session_type=session_type,
-                place=place,
-                package=package,
-            )
+            # validate email exists in real world
+            valid = validate_email(email)
+            c_print(f"client.views:230 | email is valid: {valid}")
+            if not valid:
+                messages.error(request_client, 'Email is not valid')
+                return redirect('client:bookme')
+            obj = BookMe.objects.create(full_name=full_name, email=email, session_type=session_type, place=place,
+                                        package=package)
             obj.save()
-            c_print(f"object created: {obj}")
-            messages.success(request_client, 'Thank you, your booking has been sent successfully!')
+            c_print(f"client.views:237 | object created: {obj}")
+            messages.success(request_client,
+                             'Thank you, your booking has been registered successfully, you will receive an email'
+                             ' shortly!')
             return redirect('client:bookme')
-        # return render(request=request_client, template_name='client/booking_and_promotions/scheduletimewithme.html',
-        #               context={
-        #                   "client_name": client_name,
-        #                   "client_email": client_email
-        #               })
     else:
         form = BookME()
     contexts = {'form': form}

@@ -8,7 +8,7 @@ from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
 from utils.crueltouch_utils import c_print, notify_admin_session_request_received_via_email, \
-    send_session_request_received_email, get_estimated_response_time, get_today_date
+    send_session_request_received_email, get_estimated_response_time, get_today_date, status_change_email
 
 
 class UserManager(BaseUserManager):
@@ -136,10 +136,65 @@ class BookMe(models.Model):
     place = models.CharField(max_length=200, null=True, choices=WHERE)
     package = models.CharField(max_length=200, null=True, choices=PACKAGE)
     status = models.CharField(max_length=200, null=True, choices=STATUS, default=_("pending"))
+    old_status = models.CharField(max_length=200, null=True, choices=STATUS, default=_("pending"))
     time_book_taken = models.DateTimeField(default=now)
+    time_book_accepted = models.DateTimeField(null=True, blank=True)
+    email_sent = models.BooleanField(default=False)
+    estimated_total = models.CharField(max_length=5, null=True, blank=True)
 
     def __str__(self):
         return self.full_name
+
+    def send_late_booking_confirmation_email(self) -> bool:
+        if not self.email_sent:
+            # send email to user
+            sent = send_session_request_received_email(
+                email_address=self.email, full_name=self.full_name,
+                session_type=self.session_type, place=self.place, package=self.package,
+                status=self.status, total=self.estimated_total,
+                estimated_response_time=get_estimated_response_time(),
+                subject=_("Thank you for your booking!"), late=True)
+            self.email_sent = True
+            self.save()
+            # send email to admin
+            notify_admin_session_request_received_via_email(
+                today=get_today_date(), client_name=self.full_name,
+                client_email=self.email, session_type=self.session_type,
+                place=self.place, package=self.package, status=self.status,
+                total=self.estimated_total,
+                estimated_response_time=get_estimated_response_time(), subject=_("New booking request received"))
+            return sent
+
+    def get_if_email_was_sent_string(self):
+        if self.email_sent:
+            return _("Yes")
+        else:
+            return _("No")
+
+    def get_if_email_was_sent_boolean(self):
+        return self.email_sent
+
+    def get_estimated_total(self):
+        return self.estimated_total
+
+    def save(self, *args, **kwargs):
+        if not self.estimated_total:
+            self.estimated_total = get_estimated_total(self.session_type, self.package, self.place)
+        # if existing object
+        if self.pk:
+            if self.status != self.old_status and self.email_sent and self.status != _("pending"):
+                status_change_email(
+                    book_me=self, subject=_("Your booking request status has changed!")
+                )
+                self.old_status = self.status
+        return super().save(*args, **kwargs)
+
+    @property
+    def status_changed(self):
+        if self.status != "pending":
+            return True
+        else:
+            return False
 
 
 class OwnerProfilePhoto(models.Model):
@@ -185,9 +240,8 @@ def get_estimated_total(session_type, package, place):
 
 @receiver(post_save, sender=BookMe)
 def account_authorization_status_handler(sender, instance, created, *args, **kwargs):
-    c_print("We saw the creation of the object")
     if created:
-        c_print("Sending email to admin to notify of a session request")
+        c_print("client.models:235 | Sending email to admin to notify of a session request")
         notify_admin_session_request_received_via_email(
             today=get_today_date(),
             client_name=instance.full_name,
@@ -196,21 +250,25 @@ def account_authorization_status_handler(sender, instance, created, *args, **kwa
             place=instance.place,
             package=instance.package,
             status=instance.status,
-            total=get_estimated_total(instance.session_type, instance.package, instance.place),
+            total=instance.estimated_total,
             estimated_response_time=get_estimated_response_time(),
-            subject="New booking request received"
+            subject=_("New booking request received")
         )
 
-        c_print("Sending email to user to thank them for their request")
-        send_session_request_received_email(
+        c_print("client.models:249 | Sending email to user to thank them for their request")
+        sent = send_session_request_received_email(
             full_name=instance.full_name,
             email_address=instance.email,
             session_type=instance.session_type,
             place=instance.place,
             package=instance.package,
             status=instance.status,
-            total=get_estimated_total(session_type=instance.session_type, package=instance.package,
-                                      place=instance.place),
+            total=instance.estimated_total,
             estimated_response_time=get_estimated_response_time(),
-            subject="Thank you for your booking!"
+            subject=_("Thank you for your booking!"),
+            late=False
         )
+        if sent:  # if email was sent
+            c_print("client.models:263 | Email sent to user")
+            instance.email_sent = True
+            instance.save()

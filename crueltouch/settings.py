@@ -17,6 +17,7 @@ from django.conf import global_settings
 from django.conf import locale
 from django.utils.translation import gettext_lazy as _
 
+from crueltouch import email_secrets
 from crueltouch.productions import production_debug, production_secret_key
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -31,7 +32,7 @@ SECRET_KEY = production_secret_key
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = production_debug
 
-ALLOWED_HOSTS = ["*"] if DEBUG else ['144.217.7.48', 'crueltouch.com', 'www.crueltouch.com']
+ALLOWED_HOSTS = ["*"] if DEBUG else email_secrets.LIST_OF_ALLOWED_HOSTS
 
 AUTH_USER_MODEL = 'client.UserClient'
 
@@ -48,7 +49,8 @@ INSTALLED_APPS = [
     'homepage',
     'client',
     'static_pages_and_forms',
-    'portfolio'
+    'portfolio',
+    'administration',
 ]
 
 MIDDLEWARE = [
@@ -154,26 +156,23 @@ CACHES = {
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'adamspd.webmaster@gmail.com'
-EMAIL_HOST_PASSWORD = 'jjeimwqqoszjqasf'
+EMAIL_HOST_USER = email_secrets.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = email_secrets.EMAIL_HOST_PASSWORD
 EMAIL_USE_TLS = True
 EMAIL_SUBJECT_PREFIX = ""
 EMAIL_USE_LOCALTIME = True
 
 ADMINS = [
-    ('Adams', 'adamspd.developer@gmail.com'),
+    ('Adams', email_secrets.ADMIN_EMAIL),
 ]
 if not DEBUG:
-    ADMINS.append(('Roos', 'roos.laurore5@gmail.com '))
+    ADMINS.append(('Roos', email_secrets.OTHER_ADMIN_EMAIL))
 
 MANAGERS = [
-    ('Adams', 'adamspd.developer@gmail.com'),
+    ('Adams', email_secrets.ADMIN_EMAIL),
 ]
 
-if not DEBUG:
-    MANAGERS.append(('Roos', 'crueltouchphoto@gmail.com '))
-
-ADMIN_EMAIL = 'adamspd.developer@gmail.com'
+ADMIN_EMAIL = email_secrets.ADMIN_EMAIL
 
 # Language translation settings
 
