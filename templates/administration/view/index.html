@@ -182,8 +182,7 @@
                                         <th>{% translate "Email" %}</th>
                                         <th>{% translate "Status" %}</th>
                                         <th>{% translate "Email sent" %}</th>
-                                        <th>{% translate "Action" %}</th>
-                                        <th></th>
+                                        <th>{% translate "Actions" %}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -209,19 +208,21 @@
                                                     <a href="{% url 'administration:send_email' rs.id %}"
                                                        class="btn btn-primary btn-sm">
                                                         <i class="fas fa-envelope"></i>
-                                                        {% translate "Send email" %}
+                                                        {% translate "Send" %}
                                                     </a>
                                                 {% else %}
                                                     <a href="" class="btn btn-primary btn-sm disabled">
                                                         <i class="fas fa-envelope"></i>
-                                                        {% translate "Send email" %}
+                                                        {% translate "Send" %}
                                                     </a>
-                                                {% endif %}
-                                            <td>
-                                            <td>
+                                                {% endif %}&nbsp;
                                                 <a href="{% url 'administration:session_update' rs.pk %}"
-                                                   class="btn btn-primary">
-                                                    <i class="fas fa-edit"></i>&nbsp;Update
+                                                   class="btn btn-success btn-sm">
+                                                    <i class="fas fa-edit"></i>&nbsp;Edit
+                                                </a>&nbsp;
+                                                <a href="{% url 'administration:session_delete' rs.pk %}"
+                                                   class="btn btn-danger btn-sm">
+                                                    <i class="fas fa-trash"></i>&nbsp;Delete
                                                 </a>
                                             </td>
                                         </tr>
@@ -234,8 +235,7 @@
                                         <th>{% translate "Email" %}</th>
                                         <th>{% translate "Status" %}</th>
                                         <th>{% translate "Email sent" %}</th>
-                                        <th>{% translate "Action" %}</th>
-                                        <th></th>
+                                        <th>{% translate "Actions" %}</th>
                                     </tr>
                                     </tfoot>
                                 </table>
