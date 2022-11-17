@@ -8,7 +8,7 @@ from django.views.generic import RedirectView
 
 from client.models import UserClient, BookMe, Album, Photo
 from static_pages_and_forms.models import ContactForm
-from utils.crueltouch_utils import c_print, check_user_login
+from utils.crueltouch_utils import c_print, check_user_login, check
 from .form import CustomRegisterForm, BookME
 from validate_email import validate_email
 
@@ -20,6 +20,16 @@ User = get_user_model()
 def register_page(request):
     if request.method == 'POST':
         form = CustomRegisterForm(request.POST)
+        email = request.POST['email']
+        # check email
+        valid = validate_email(email)
+        c_print(f"client.views:230 | email is valid: {valid}")
+        if not valid:
+            messages.error(request, 'Email is not valid')
+            return redirect('client:register')
+        if check(data=request.POST['first_name']):
+            messages.error(request, 'First name is not valid')
+            return redirect('client:register')
         if form.is_valid():
             form.save()
             user = form.cleaned_data.get('first_name')

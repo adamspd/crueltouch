@@ -1,3 +1,4 @@
+import re
 from datetime import datetime
 
 from django.contrib import messages
@@ -211,3 +212,14 @@ def status_change_email(book_me, subject: str) -> bool:
         return True
     else:
         return False
+
+
+def check(data) -> bool:
+    if data is not None:
+        search_list = [
+            "http", "https", "www.", "%", "Contact us", "contact", "business", "robot", " earn", "#1",
+            "# 1", "financial", "Make money", "Making money", "Invest $1", "Passive income", "NFT",
+            "marketing", "trading", "crypto", "forex", "crueltouch.com", "bot", ".com"
+        ]
+        if re.compile('|'.join(search_list), re.IGNORECASE).search(data):
+            return True
