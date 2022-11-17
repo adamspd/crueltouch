@@ -17,6 +17,11 @@
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">{% translate "Requested Photoshoot Session" %}</h3><br>
+            <small class="text-muted">
+                {% translate "To send customized email to client, just click on the email, even if it's not complete." %}
+                <br>
+                {% translate "It is displayed like (email...) for space management purpose on the screen." %}
+            </small>
             <small class="text-muted">{% if messages %}
                 {% for message in messages %}
                     <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}"
@@ -33,6 +38,8 @@
                     <th>{% translate "Date" %}</th>
                     <th>{% translate "Name" %}</th>
                     <th>{% translate "Email" %}</th>
+                    <th>{% translate "Type" %}</th>
+                    <th>{% translate "Package" %}</th>
                     <th>{% translate "Place" %}</th>
                     <th>{% translate "Status" %}</th>
                     <th>{% translate "Email sent" %}</th>
@@ -45,15 +52,21 @@
                 {% for rs in request_session %}
                     <tr>
                         <td>
-                            {{ rs.time_book_taken }}
+                            {{ rs.time_book_taken|date }}
                         </td>
                         <td>
-                            &nbsp;&nbsp;&nbsp;{{ rs.full_name }}
+                            {{ rs.full_name }}
                         </td>
                         <td>
                             <a href="mailto:{{ rs.email }}">
-                                &nbsp;&nbsp;&nbsp;{{ rs.email }}
+                                {{ rs.email|truncatechars:10 }}
                             </a>
+                        </td>
+                        <td>
+                            {{ rs.get_session_type_display }}
+                        </td>
+                        <td>
+                            {{ rs.get_package_display }}
                         </td>
                         <td>{{ rs.place }}</td>
                         <td>{{ rs.status }}</td>
@@ -88,6 +101,8 @@
                     <th>{% translate "Date" %}</th>
                     <th>{% translate "Name" %}</th>
                     <th>{% translate "Email" %}</th>
+                    <th>{% translate "Type" %}</th>
+                    <th>{% translate "Package" %}</th>
                     <th>{% translate "Place" %}</th>
                     <th>{% translate "Status" %}</th>
                     <th>{% translate "Email sent" %}</th>
