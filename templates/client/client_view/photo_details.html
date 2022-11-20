@@ -1,43 +1,33 @@
-{% extends 'homepage/base.html' %}
+{% extends 'client/client_view/base.html' %}
 {% load static %}
 {% block title %}Client | Photos{% endblock %}
-{% block login %}
-    <li>
-        <a href="" style="color:green">Hello, {{ user.first_name }}</a>
-        <ul class="sub-menu">
-            <li><a href="{% url 'client:logout' %}" style="color:darkred">LOGOUT</a></li>
-        </ul>
-    </li>
-{% endblock %}
-<head>
-    {% block customCSS %}
-        <link rel="stylesheet" type="text/css" href="{% static 'client/index.css' %}"/>
-        <link rel="stylesheet" type="text/css" href="{% static 'client/likes.css' %}"/>
-        <link rel="stylesheet" type="text/css" href="{% static 'client/gallery.css' %}">
-    {% endblock %}
+{% block customCSS %}
+    <link rel="stylesheet" type="text/css" href="{% static 'client/index.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'client/likes.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'client/gallery.css' %}">
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
           integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-    <link rel="script" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js">
-</head>
+{% endblock %}
 
 {% block body %}
     <form action="{% url 'client:favorite' album.pk %}" method="post">
         {% csrf_token %}
         {% if album %}
             {% for photo in album.photo_set.all %}
-                 <div class="container-all">
-                        <div class="containers">
-                            <input type="radio" id="photofav{{  forloop.counter }}" name="photofav" value="{{ photo.id }}">
-                            <label for="photofav{{  forloop.counter }}">
-                                <img src="{{ photo.file.url }}" alt="" >
-                                <h2>{{ photo.id }}</h2>
-                                {% if photo.is_favorite %}
-                                    <p>It's a favorite</p>
-                                {% endif %}
-                            </label>
-                        </div>
+                <div class="container-all">
+                    <div class="containers">
+                        <input type="radio" id="photofav{{ forloop.counter }}" name="photofav" value="{{ photo.id }}">
+                        <label for="photofav{{ forloop.counter }}">
+                            <img src="{{ photo.file.url }}" alt="">
+                            <h2>{{ photo.id }}</h2>
+                            {% if photo.is_favorite %}
+                                <p>It's a favorite</p>
+                            {% endif %}
+                        </label>
                     </div>
+                </div>
 
             {% endfor %}
             <input type="submit" value="Favorite">
@@ -95,6 +85,13 @@
         }
     </style>
 
+
+
+{% endblock body %}
+
+{% block customJS %}
+    <script src="{% static 'client/index.js' %}"></script>
+    <script src="{% static 'client/likes.js' %}"></script>
     <script>
         // Centring function:
         jQuery.fn.center = function () {
@@ -120,8 +117,4 @@
             $('.favorite-text,.unfavorite-text').toggle();
         });
     </script>
-
-    <script src="{% static 'client/index.js' %}"></script>
-    <script src="{% static 'client/likes.js' %}"></script>
-
-{% endblock body %}
+{% endblock %}

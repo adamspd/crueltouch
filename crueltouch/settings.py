@@ -227,8 +227,8 @@ if not DEBUG:
     SESSION_EXPIRE_AT_BROWSER_CLOSE = True
     SESSION_COOKIE_AGE = 900  # 15 minutes
 
-LOGIN_URL = '/login/'
-LOGOUT_REDIRECT_URL = LOGIN_URL
+LOGIN_URL = 'client/login/'
+LOGIN_REDIRECT_URL = 'client/'
 
 # The number of seconds a password reset link is valid for (in second)
 PASSWORD_RESET_TIMEOUT = 3600  # 1 hour
