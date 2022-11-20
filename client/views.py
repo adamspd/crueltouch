@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import RedirectView
 
@@ -77,39 +77,39 @@ def index(request):
         return render(request, 'client/login_registration/login.html')
 
 
-# @login_required(login_url='login')
-# def user_album_details(request, pk):
-#     selected_album = Album.objects.get(id=pk)
-#     return render(request, 'client/client_view/photo_details.html', {
-#         'album': selected_album
-#     })
+@login_required(login_url='login')
+def user_album_details(request, pk):
+    selected_album = Album.objects.get(id=pk)
+    return render(request, 'client/client_view/photo_details.html', {
+        'album': selected_album
+    })
 
 
 # user defining a photo as favorite
-# @login_required(login_url='login')
-# def favorite(request, pk):
-#     print("I was called")
-#     album = get_object_or_404(Album, pk=pk)
-#     print("the pictures id are: ", request.POST['photofav'])
-#     print("the album id is: ", pk)
-#     print("getting album, ", album)
-#     try:
-#         selected_photo = album.photo_set.get(pk=request.POST['photofav'])
-#         print("La liste des ids des photos liké: ", request.POST['photofav'])
-#
-#         print("selected photo: ", selected_photo)
-#     except (KeyError, Photo.DoesNotExist):
-#         return render(request, 'client/client_view/photo_details.html', {
-#             'album': album,
-#             'error_message': "You didn't like a photo",
-#         })
-#     else:
-#         selected_photo.is_favorite = True
-#         selected_photo.save()
-#         redirect('client:album_details', album.pk)
-#         return render(request, 'client/client_view/photo_details.html', {
-#             'album': album,
-#         })
+@login_required(login_url='login')
+def favorite(request, pk):
+    print("I was called")
+    album = get_object_or_404(Album, pk=pk)
+    print("the pictures id are: ", request.POST['photofav'])
+    print("the album id is: ", pk)
+    print("getting album, ", album)
+    try:
+        selected_photo = album.photo_set.get(pk=request.POST['photofav'])
+        print("La liste des ids des photos liké: ", request.POST['photofav'])
+
+        print("selected photo: ", selected_photo)
+    except (KeyError, Photo.DoesNotExist):
+        return render(request, 'client/client_view/photo_details.html', {
+            'album': album,
+            'error_message': "You didn't like a photo",
+        })
+    else:
+        selected_photo.is_favorite = True
+        selected_photo.save()
+        redirect('client:album_details', album.pk)
+        return render(request, 'client/client_view/photo_details.html', {
+            'album': album,
+        })
 
 
 # ----------- Useful functions ----------- #
@@ -208,12 +208,14 @@ def owner(request):
 
 
 def logout_user(request):
-    if request.user.is_superuser:
-        logout(request)
-        return redirect('client:owner')
-    else:
-        logout(request)
-        return redirect('client:login')
+    if request.user.is_authenticated:
+        if request.user.is_superuser:
+            logout(request)
+            return redirect('administration:login')
+        else:
+            logout(request)
+            return redirect('client:login')
+    return redirect('client:register')
 
 
 # ----------- Booking ----------- #d

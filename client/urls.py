@@ -6,13 +6,10 @@ app_name = 'client'
 
 urlpatterns = [
     # client/
-    path('', login_page, name='login'),
+    path('login/', login_page, name='login'),
 
     # client/register/
     path('register/', register_page, name='register'),
-
-    # client/clientID/
-    path('user/', index, name='client_homepage'),
 
     # log out/
     path('logout/', logout_user, name='logout'),
@@ -23,11 +20,11 @@ urlpatterns = [
     # Book anyway
     path('bookanyway/', book_anyway, name='book_anyway'),
 
-    # # client album details
-    # re_path(r'^user/(?P<pk>\d+)/$', user_album_details, name='album_details'),
-    #
-    # # favorite
-    # re_path(r'^user/(?P<pk>\d+)/favorite$', favorite, name='favorite'),
+    # client album details
+    re_path(r'^(?P<pk>\d+)/$', user_album_details, name='album_details'),
+
+    # favorite
+    re_path(r'^(?P<pk>\d+)/favorite$', favorite, name='favorite'),
 
     # Owner help
     # path('ahelp/', owner_help, name='help_owner'),
@@ -70,4 +67,7 @@ urlpatterns = [
     #
     # # delete photo from portfolio
     # path('deletephoto/<str:pk>', delete_photo, name="deletephotoportfolio"),
+
+    # client/clientID/
+    path('', index, name='client_homepage'),
 ]

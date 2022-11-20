@@ -1,0 +1,28 @@
+{% extends 'homepage/base.html' %}
+{% load static %}
+{% block title %}CRUELTOUCH | Client{% endblock %}
+{% block login %}
+    <li>
+        <a href="{% url 'client:client_homepage' %}">Dashboard</a>
+    </li>
+    <li>
+        <a href="{% url 'client:client_homepage' %}" style="color:green">Hello, {{ user.first_name }}</a>
+        <ul class="sub-menu">
+            <li><a href="{% url 'client:logout' %}" style="color:darkred">LOGOUT</a></li>
+        </ul>
+    </li>
+{% endblock %}
+{% block customCSS %}
+    <link rel="stylesheet" type="text/css" href="{% static 'client/index.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'client/likes.css' %}"/>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+          integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="script" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js">
+{% endblock %}
+
+{% block body %}
+
+
+{% endblock body %}
