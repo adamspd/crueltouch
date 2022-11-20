@@ -207,10 +207,6 @@ def owner(request):
 #         return render(request, 'client/login_registration/log_as_owner.html')
 
 
-def superuserlogin(request):
-    return render(request, 'client/login_registration/superusers.html')
-
-
 def logout_user(request):
     if request.user.is_superuser:
         logout(request)
