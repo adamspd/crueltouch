@@ -17,11 +17,6 @@ urlpatterns = [
     # log out/
     path('logout/', logout_user, name='logout'),
 
-    # owner vs superuser
-    # path('admin/', owner, name='owner'),
-    # path('adashboard/', when_owner_logged, name='ownerislogged'),
-    path('superuser/', superuserlogin, name='superuserlogin'),
-
     # Book me
     path('bookme/', bookme, name='bookme'),
 
