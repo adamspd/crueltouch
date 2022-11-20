@@ -62,7 +62,7 @@ def login_page(request):
 
 
 # client dashboard after login
-@login_required(login_url='login')
+@login_required(login_url='/client/login')
 def index(request):
     if request.user.is_authenticated:
         user = request.user
@@ -77,7 +77,7 @@ def index(request):
         return render(request, 'client/login_registration/login.html')
 
 
-@login_required(login_url='login')
+@login_required(login_url='/client/login')
 def user_album_details(request, pk):
     selected_album = Album.objects.get(id=pk)
     return render(request, 'client/client_view/photo_details.html', {
@@ -86,7 +86,7 @@ def user_album_details(request, pk):
 
 
 # user defining a photo as favorite
-@login_required(login_url='login')
+@login_required(login_url='/client/login')
 def favorite(request, pk):
     print("I was called")
     album = get_object_or_404(Album, pk=pk)
