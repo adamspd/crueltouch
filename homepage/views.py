@@ -26,11 +26,6 @@ def index(request):
     return render(request, 'homepage/index.html', context)
 
 
-def detailed_view(request, pk):
-    photo = Photo.objects.get(id=pk)
-    return render(request, 'homepage/detailed.html', {'photo': photo})
-
-
 class AboutView(generic.ListView):
     template_name = 'homepage/index_about_me.html'
 
