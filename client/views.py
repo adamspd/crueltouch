@@ -233,6 +233,9 @@ def form_bookme(request_client):
             session_type = form.cleaned_data['session_type']
             place = form.cleaned_data['place']
             package = form.cleaned_data['package']
+            if check(full_name):
+                messages.error(request_client, "Form not valid, try again !")
+                return redirect('client:bookme')
             # validate email exists in real world
             valid = validate_email(email)
             c_print(f"client.views:230 | email is valid: {valid}")
