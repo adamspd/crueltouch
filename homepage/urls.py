@@ -15,4 +15,6 @@ urlpatterns = [
     path('about/', AboutView.as_view(), name='about'),
     # /promotions/
     path('promotions/', promotions, name='promotions'),
+    # /favicon.ico
+    path('favicon.ico', get_favicon, name="get_favicon"),
 ]
