@@ -56,7 +56,9 @@ def login_page(request):
         else:
             # Return an 'invalid login' error message.
             messages.info(request, 'Username or Password is incorrect')
-
+    else:
+        if request.user.is_authenticated:
+            return redirect('client:client_homepage')
     contexts = {}
     return render(request, 'client/login_registration/login.html', contexts)
 
@@ -219,11 +221,28 @@ def logout_user(request):
 
 
 # ----------- Booking ----------- #d
-def bookme(request):
-    return form_bookme(request)
+def book_me(request):
+    return form_book_me(request)
 
 
-def form_bookme(request_client):
+def book_me_session(request, click_id):
+    if click_id == 1:
+        request.session['click_id'] = click_id
+        request.session['location'] = "orlando"
+        request.session['package'] = "3"
+    elif click_id == 2:
+        request.session['click_id'] = click_id
+        request.session['package'] = "7"
+    elif click_id == 3:
+        request.session['click_id'] = click_id
+        request.session['package'] = "15"
+    elif click_id == 4:
+        request.session['click_id'] = click_id
+        request.session['package'] = "30"
+    return form_book_me(request)
+
+
+def form_book_me(request_client):
     if request_client.method == 'POST':
         form = BookME(request_client.POST)
         c_print(f"form is valid: {form.is_valid()}")
@@ -266,9 +285,28 @@ def form_bookme(request_client):
                              ' shortly!')
             return redirect('client:bookme')
     else:
-        form = BookME()
+        if request_client.session.get('click_id') == 1:
+            form = BookME(initial={'place': request_client.session.get('location'),
+                                   'package': request_client.session.get('package')})
+            clear_session(request_client)
+        elif request_client.session.get('click_id') == 2:
+            form = BookME(initial={'package': request_client.session.get('package')})
+            clear_session(request_client)
+        elif request_client.session.get('click_id') == 3:
+            form = BookME(initial={'package': request_client.session.get('package')})
+            clear_session(request_client)
+        elif request_client.session.get('click_id') == 4:
+            form = BookME(initial={'package': request_client.session.get('package')})
+            clear_session(request_client)
+            # clear session
+        else:
+            form = BookME()
     contexts = {'form': form}
     return render(request_client, 'client/booking_and_promotions/bookme.html', contexts)
+
+
+def clear_session(request):
+    request.session.clear()
 
 
 def information(request):
@@ -286,7 +324,7 @@ def information(request):
 
 
 def book_anyway(request):
-    return form_bookme(request)
+    return form_book_me(request)
 
 
 # ----------- Payment ----------- #

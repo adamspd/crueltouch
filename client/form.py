@@ -59,6 +59,7 @@ class BookME(forms.Form):
         self.fields['phone_number'].widget.attrs.update(
             {
                 'class': 'form-control',
+                'type': 'tel',
                 'placeholder': 'No spaces, letters or special characters, only 10 digits...',
                 'onkeyup': 'return forceNumber(this);'
             })

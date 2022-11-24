@@ -33,22 +33,10 @@ function display() {
     if (session !== "wOthers") {
         if (place === 'studio') {
             document.getElementById('note').innerHTML = "+40$ for studio rental";
-            if (packages === "7") {
-                document.getElementById('totalPrice').innerHTML = "Total: 220$";
-            } else if (packages === "15") {
-                document.getElementById('totalPrice').innerHTML = "Total: 325$";
-            } else if (packages === "30") {
-                document.getElementById('totalPrice').innerHTML = "Total: 460$";
-            }
+            display_basic_price(packages);
         } else if (place === 'outdoor') {
             document.getElementById('note').innerHTML = "";
-            if (packages === "7") {
-                document.getElementById('totalPrice').innerHTML = "Total: 220$";
-            } else if (packages === "15") {
-                document.getElementById('totalPrice').innerHTML = "Total: 325$";
-            } else if (packages === "30") {
-                document.getElementById('totalPrice').innerHTML = "Total: 460$";
-            }
+            display_basic_price(packages);
         } else if (place === 'orlando') {
             // if element packages doesn't contains value 3, append it
             let exists = false;
@@ -65,16 +53,9 @@ function display() {
             }
             document.getElementById('note').innerHTML = "+40$ if studio rental";
             if (packages === "3") {
-                document.getElementById('totalPrice').innerHTML = "Total: 130$";
-                document.getElementById('note').innerHTML = "Orlando ONLY. +40$ for studio rental";
-                // style="color: red"
-                document.getElementById('note').style.color = "red";
-            } else if (packages === "7") {
-                document.getElementById('totalPrice').innerHTML = "Total: 220$";
-            } else if (packages === "15") {
-                document.getElementById('totalPrice').innerHTML = "Total: 325$";
-            } else if (packages === "30") {
-                document.getElementById('totalPrice').innerHTML = "Total: 460$";
+                display_promotion();
+            } else {
+                display_basic_price(packages);
             }
         } else {
             document.getElementById('totalPrice').innerHTML = "";
@@ -86,9 +67,36 @@ function display() {
     }
 }
 
+function display_promotion() {
+    document.getElementById('totalPrice').innerHTML = "Total: 130$";
+    document.getElementById('note').innerHTML = "Orlando ONLY. +40$ for studio rental";
+    // style="color: red"
+    document.getElementById('note').style.color = "red";
+}
+
+function display_basic_price(packages) {
+    if (packages === "7") {
+        document.getElementById('totalPrice').innerHTML = "Total: 220$";
+    } else if (packages === "15") {
+        document.getElementById('totalPrice').innerHTML = "Total: 325$";
+    } else if (packages === "30") {
+        document.getElementById('totalPrice').innerHTML = "Total: 460$";
+    }
+}
+
 // on ready
 $(document).ready(function () {
-    $("#id_package option[value='3']").remove();
+    // activate type phone number
+    const phone = $('#id_phone_number');
+    phone.attr('type', 'tel');
+    // if option is selected
+    const selected_option = $('#id_place option:selected');
+    console.log(selected_option);
+    if (selected_option.val() !== 'orlando') {
+        $("#id_package option[value='3']").remove();
+    } else {
+        display_promotion();
+    }
     $(document).ready(function () {
         const date_input = $("#id_desired_date"); //our date input has the name "date"
         const container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";

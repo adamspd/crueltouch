@@ -15,7 +15,10 @@ urlpatterns = [
     path('logout/', logout_user, name='logout'),
 
     # Book me
-    path('bookme/', bookme, name='bookme'),
+    path('bookme/', book_me, name='bookme'),
+
+    # Book me with session
+    path('bookme/session/<int:click_id>/', book_me_session, name='book_me_session'),
 
     # Book anyway
     path('bookanyway/', book_anyway, name='book_anyway'),
