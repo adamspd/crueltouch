@@ -50,14 +50,6 @@ def get_logo_mini(request):
         raise Http404
 
 
-def get_favicon(request):
-    try:
-        with open(settings.BASE_DIR / 'static/homepage/img/icon/favicon.ico', 'rb') as f:
-            return HttpResponse(f.read(), content_type="image/x-icon")
-    except IOError:
-        raise Http404
-
-
 @login_required(login_url='/administration/login/')
 def promotions(request):
     return render(request, 'client/booking_and_promotions/promotions.html')
