@@ -35,9 +35,12 @@
             <table id="example2" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th>{% translate "Date" %}</th>
+                    <th>{% translate "Date taken" %}</th>
+                    <th>{% translate "Desired date" %}</th>
                     <th>{% translate "Name" %}</th>
                     <th>{% translate "Email" %}</th>
+                    <th>{% translate "Phone" %}</th>
+                    <th>{% translate "Address" %}</th>
                     <th>{% translate "Type" %}</th>
                     <th>{% translate "Package" %}</th>
                     <th>{% translate "Place" %}</th>
@@ -53,12 +56,27 @@
                             {{ rs.time_book_taken|date }}
                         </td>
                         <td>
+                            {{ rs.get_desired_date }}
+                        </td>
+                        <td>
                             {{ rs.full_name }}
                         </td>
                         <td>
                             <a href="mailto:{{ rs.email }}">
                                 {{ rs.email|truncatechars:10 }}
                             </a>
+                        </td>
+                        <td>
+                            {% if rs.is_phone %}
+                                <a href="tel:{{ rs.get_phone_number }}">
+                                    {{ rs.get_phone_number }}
+                                </a>
+                            {% else %}
+                                {{ rs.get_phone_number }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ rs.get_address }}
                         </td>
                         <td>
                             {{ rs.get_session_type_display }}
@@ -93,9 +111,12 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <th>{% translate "Date" %}</th>
+                    <th>{% translate "Date taken" %}</th>
+                    <th>{% translate "Desired date" %}</th>
                     <th>{% translate "Name" %}</th>
                     <th>{% translate "Email" %}</th>
+                    <th>{% translate "Phone" %}</th>
+                    <th>{% translate "Address" %}</th>
                     <th>{% translate "Type" %}</th>
                     <th>{% translate "Package" %}</th>
                     <th>{% translate "Place" %}</th>

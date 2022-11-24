@@ -171,8 +171,9 @@ def send_session_request_received_email(email_address, full_name: str, session_t
 
 # send notification to admin when request session received
 def notify_admin_session_request_received_via_email(today: str, client_name: str, client_email: str, session_type: str,
-                                                    place: str, package: str, status: str, total: str,
-                                                    estimated_response_time: str, subject: str) -> bool:
+                                                    place: str, package: str, status: str, total: str, phone: str,
+                                                    estimated_response_time: str, subject: str, desired_date: str,
+                                                    address: str) -> bool:
     """
     Send email to admin when session request is received
     :param today: today's date
@@ -183,8 +184,11 @@ def notify_admin_session_request_received_via_email(today: str, client_name: str
     :param package: session package
     :param status: session status
     :param total: session total estimated cost
+    :param phone: client's phone number
     :param estimated_response_time: estimated response time
     :param subject: email subject
+    :param desired_date: desired date
+    :param address: client's address
     :return: bool
     """
     if get_permissions(is_booking=True, is_contact_form=False, is_other=False):
@@ -198,7 +202,10 @@ def notify_admin_session_request_received_via_email(today: str, client_name: str
                 'place': place.title(),
                 'package': package,
                 'status': status,
+                'phone': phone,
                 'total': total,
+                'desired_date': desired_date,
+                'address': address,
                 'estimated_response_time': estimated_response_time,
             }
         )
@@ -227,6 +234,16 @@ def get_today_date():
     """
     from datetime import datetime
     return datetime.now().strftime("%B %d, %Y")
+
+
+def get_today_date_formatted(date_format: str):
+    """
+    Get today's date
+    :param date_format: format of the date
+    :return: today's date
+    """
+    from datetime import datetime
+    return datetime.now().strftime(date_format)
 
 
 # status of session request changed
@@ -370,3 +387,17 @@ def send_email_admin(subject: str, message: str, is_contact_form: bool, is_other
                 message="",
                 html_message=html_message)
     return True
+
+
+# phone number validation
+def phone_number_validation(phone_number: str) -> bool:
+    """
+    Check if phone number is valid
+    :param phone_number: phone number
+    :return: bool
+    """
+    phone_number_regex = re.compile(r"^[0-9]{10}$")
+    if phone_number_regex.search(phone_number):
+        return True
+    else:
+        return False
