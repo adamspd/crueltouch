@@ -226,6 +226,8 @@ def bookme(request):
 def form_bookme(request_client):
     if request_client.method == 'POST':
         form = BookME(request_client.POST)
+        c_print(f"form is valid: {form.is_valid()}")
+        c_print(f"form errors: {form.errors}")
         if form.is_valid():
             c_print(f"client.views:222 | data from form: {form.cleaned_data}")
             full_name = form.cleaned_data['full_name']
@@ -233,6 +235,11 @@ def form_bookme(request_client):
             session_type = form.cleaned_data['session_type']
             place = form.cleaned_data['place']
             package = form.cleaned_data['package']
+            desired_date = form.cleaned_data['desired_date']
+            address = form.cleaned_data['address']
+            phone_number = form.cleaned_data['phone_number']
+            c_print(
+                f"client.views:232 | data from form: {full_name}, {email}, {session_type}, {place}, {package}, {desired_date}, {address}, {phone_number}")
             if check(full_name):
                 messages.error(request_client, "Form not valid, try again !")
                 return redirect('client:bookme')
@@ -242,10 +249,18 @@ def form_bookme(request_client):
             if not valid:
                 messages.error(request_client, 'Email is not valid')
                 return redirect('client:bookme')
-            obj = BookMe.objects.create(full_name=full_name, email=email, session_type=session_type, place=place,
-                                        package=package)
+            obj = BookMe.objects.create(
+                full_name=full_name,
+                email=email,
+                session_type=session_type,
+                place=place,
+                package=package,
+                desired_date=desired_date,
+                address=address,
+                phone_number=phone_number,
+            )
             obj.save()
-            c_print(f"client.views:237 | object created: {obj}")
+            c_print(f"client.views:263 | object saved: {obj}")
             messages.success(request_client,
                              'Thank you, your booking has been registered successfully, you will receive an email'
                              ' shortly!')
