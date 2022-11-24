@@ -71,7 +71,7 @@
                 <a href="{% url 'client:bookme' %}">Book Me</a>
                 <ul class="sub-menu">
                     <li><a href="{% url 'client:bookme' %}">Book Me</a></li>
-                    <li><a href="{% url 'homepage:index' %}">Latest Promotions</a></li>
+                    <li><a href="{% url 'homepage:promotions' %}">Latest Promotions</a></li>
                 </ul>
             </li>
 
@@ -81,6 +81,9 @@
                     <li><a href="{% url 'client:login' %}">View Your Images</a></li>
                     <li><a href="{% url 'client:register' %}">Registration</a></li>
                     <li><a href="{% url 'administration:login' %}">Admin Login</a></li>
+                    {% if request.user.is_authenticated %}
+                        <li><a href="{% url 'client:logout' %}">Logout</a></li>
+                    {% endif %}
                 </ul>
             </li>
         {% endblock %}

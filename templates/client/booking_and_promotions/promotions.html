@@ -1,0 +1,97 @@
+{% extends 'homepage/base.html' %}
+{% load static %}
+{% block title %}Latest promotions{% endblock %}
+{% block customCSS %}
+    <link rel="stylesheet" href="{% static 'client/css/promotions.css' %}">
+{% endblock %}
+{% block body %}
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <h1 class="u-text u-text-1">Promotion Plans</h1>
+        <div class="u-expanded-width u-table u-table-responsive u-table-1">
+          <table class="u-table-entity">
+            <colgroup>
+              <col width="25%">
+              <col width="18%">
+              <col width="18%">
+              <col width="18.5%">
+              <col width="18.5%">
+            </colgroup>
+            <thead class="u-align-center u-table-header u-white u-table-header-1">
+              <tr style="height: 59px;">
+                <th class="u-align-left u-table-cell u-table-cell-1">Compare all plans </th>
+                <th class="u-border-1 u-border-grey-30 u-table-cell u-table-cell-2">Starter</th>
+                <th class="u-palette-3-base u-table-cell u-table-cell-2"><b>Basic</b>
+                </th>
+                <th class="u-palette-2-base u-table-cell u-table-cell-3"><b>Medium</b>
+                </th>
+                <th class="u-palette-4-base u-table-cell u-table-cell-4"><b>Premium</b>
+                  <br>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="u-align-center u-palette-5-dark-3 u-table-body u-table-body-1">
+              <tr style="height: 49px;">
+                <td class="u-align-left u-border-1 u-border-palette-5-dark-2 u-first-column u-table-cell">Price</td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">$ 130</td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">$ 220</td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">$ 325</td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">$ 460</td>
+              </tr>
+              <tr style="height: 48px;">
+                <td class="u-align-left u-border-1 u-border-palette-5-dark-2 u-table-cell">Studio</td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">+ $40</td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell u-text-palette-3-base u-table-cell-10">+$ 40</td>
+                <td class="u-border-2 u-border-no-left u-border-no-right u-border-palette-5-dark-2 u-table-cell u-text-palette-2-base u-table-cell-11">$ +40</td>
+                <td class="u-border-2 u-border-palette-5-dark-2 u-table-cell u-text-palette-4-base u-table-cell-12">$ +40</td>
+              </tr>
+              <tr style="height: 48px;">
+                <td class="u-align-left u-border-1 u-border-palette-5-dark-2 u-first-column u-table-cell">Package</td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">3 photos</td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">7 photos</td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">15 photos</td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">30 photos</td>
+              </tr>
+              <tr style="height: 48px;">
+                <td class="u-align-left u-border-1 u-border-palette-5-dark-2 u-first-column u-table-cell">Mini Video</td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell u-table-cell-18">-</td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell u-table-cell-18">-</td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell u-table-cell-18">-</td>
+                  <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell u-text-palette-1-base u-table-cell-20"><span class="u-icon u-text-palette-3-base"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 -46 417.81333 417" style="width: 1em; height: 1em;"><path d="m159.988281 318.582031c-3.988281 4.011719-9.429687 6.25-15.082031 6.25s-11.09375-2.238281-15.082031-6.25l-120.449219-120.46875c-12.5-12.5-12.5-32.769531 0-45.246093l15.082031-15.085938c12.503907-12.5 32.75-12.5 45.25 0l75.199219 75.203125 203.199219-203.203125c12.503906-12.5 32.769531-12.5 45.25 0l15.082031 15.085938c12.5 12.5 12.5 32.765624 0 45.246093zm0 0"></path></svg><img></span>
+                </td>
+              </tr>
+              <tr style="height: 48px;">
+                <td class="u-align-left u-border-1 u-border-palette-5-dark-2 u-first-column u-table-cell">Delivery Time frame</td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">4-5 days</td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">3-4 days</td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">3 days</td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">3 days</td>
+              </tr>
+              <tr style="height: 48px;">
+                <td class="u-align-left u-border-1 u-border-palette-5-dark-2 u-first-column u-table-cell">Location</td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">Only Orlando</td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">Negotiable</td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">Negotiable</td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">Negotiable</td>
+              </tr>
+              <tr style="height: 73px;">
+                <td class="u-align-left u-border-1 u-border-palette-5-dark-2 u-table-cell"></td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">
+                  <a href="{% url 'client:book_me_session' 1 %}" class="u-btn u-btn-round u-button-style u-palette-2-base u-radius-50 u-text-body-alt-color u-btn-1">book now</a>
+                </td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">
+                  <a href="{% url 'client:book_me_session' 2 %}" class="u-btn u-btn-round u-button-style u-palette-2-base u-radius-50 u-text-body-alt-color u-btn-2">book now</a>
+                </td>
+                <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">
+                  <a href="{% url 'client:book_me_session' 3 %}" class="u-btn u-btn-round u-button-style u-palette-2-base u-radius-50 u-text-body-alt-color u-btn-3">book now</a>
+                </td>
+                  <td class="u-border-1 u-border-palette-5-dark-2 u-table-cell">
+                  <a href="{% url 'client:book_me_session' 4 %}" class="u-btn u-btn-round u-button-style u-palette-2-base u-radius-50 u-text-body-alt-color u-btn-3">book now</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+{% endblock %}
+

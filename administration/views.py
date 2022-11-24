@@ -96,10 +96,19 @@ def login_admin(request):
                 login(request, user)
                 print("roos is logged in ")
                 # Redirect to a success page.
+                if request.GET.get('next') is not None:
+                    c_print(f"next is {request.GET.get('next')}")
+                    return redirect(request.GET.get('next'))
                 return redirect('administration:index')
         else:
             # Return an 'invalid login' error message.
             messages.info(request, "")
+    else:
+        if request.user.is_authenticated:
+            c_print(f"user is authenticated {request.user}, {request.user.is_staff}")
+            if request.user.is_staff:
+                c_print(f"user is superuser {request.user}")
+                return redirect('administration:index')
     contexts = {}
     return render(request, 'client/login_registration/log_as_owner.html', contexts)
 
