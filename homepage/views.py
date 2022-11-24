@@ -1,5 +1,6 @@
 import random
 
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
 
@@ -47,3 +48,8 @@ def get_logo_mini(request):
             return HttpResponse(f.read(), content_type="image/png")
     except IOError:
         raise Http404
+
+
+@login_required(login_url='/administration/login/')
+def promotions(request):
+    return render(request, 'client/booking_and_promotions/promotions.html')

@@ -13,4 +13,6 @@ urlpatterns = [
     path('logo-mini/', get_logo_mini, name="get_logo_mini"),
     # /about/
     path('about/', AboutView.as_view(), name='about'),
+    # /promotions/
+    path('promotions/', promotions, name='promotions'),
 ]
