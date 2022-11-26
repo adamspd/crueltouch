@@ -16,10 +16,12 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/bootstrap.min.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/font-awesome.min.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/magnific-popup.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/slicknav.min.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/owl.carousel.min.css' %}"/>
+    {% block homepageCSS %}
+        <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/font-awesome.min.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/magnific-popup.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/slicknav.min.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/owl.carousel.min.css' %}"/>
+    {% endblock %}
 
     <!-- Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/index.css' %}"/>
@@ -54,7 +56,7 @@
         <li><a href="{% url 'homepage:index' %}">Home</a></li>
 
         <li>
-            <a href="{% url 'client:bookme' %}">Meet & Contact</a>
+            <a href="#">Meet & Contact</a>
             <ul class="sub-menu">
                 <li><a href="{% url 'homepage:about' %}">Meet Crueltouch</a></li>
                 <li><a href="{% url 'flatpages:contact' %}">Contact Us</a></li>
@@ -68,9 +70,9 @@
 
         {% block login %}
             <li>
-                <a href="{% url 'client:bookme' %}">Book Me</a>
+                <a href="#">Book Me</a>
                 <ul class="sub-menu">
-                    <li><a href="{% url 'client:bookme' %}">Book Me</a></li>
+                    <li><a href="{% url 'client:book_me' %}">Book Me</a></li>
                     <li><a href="{% url 'homepage:promotions' %}">Latest Promotions</a></li>
                 </ul>
             </li>
@@ -122,8 +124,8 @@
                     <div class="copyright">
                         Copyright &copy;<script>document.write(new Date().getFullYear());</script>
                         All rights reserved | Roos Orlens Laurore | Made with <i class="fa fa-heart-o"
-                                                                               aria-hidden="true"></i> by <a
-                                href="https://adamspierredavid.com" target="_blank">APD</a>
+                                                                                 aria-hidden="true"></i> by <a
+                            href="https://adamspierredavid.com" target="_blank">APD</a>
                     </div>
                 </div>
             </div>
@@ -147,18 +149,20 @@
 {% endblock %}
 <!--====== Javascripts & Jquery ======-->
 <!-- Ion Icons -->
-<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script type="module" href="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule href="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 <script src="{% static 'homepage/js/jquery-3.2.1.min.js' %}"></script>
 <script src="{% static 'homepage/js/bootstrap.min.js' %}"></script>
-<script src="{% static 'homepage/js/jquery.slicknav.min.js' %}"></script>
-<script src="{% static 'homepage/js/owl.carousel.min.js' %}"></script>
-<script src="{% static 'homepage/js/jquery.magnific-popup.min.js' %}"></script>
-<script src="{% static 'homepage/js/circle-progress.min.js' %}"></script>
-<script src="{% static 'homepage/js/mixitup.min.js' %}"></script>
-<script src="{% static 'homepage/js/masonry.pkgd.min.js' %}"></script>
-<script src="{% static 'homepage/js/main.js' %}"></script>
+{% block js %}
+    <script src="{% static 'homepage/js/jquery.slicknav.min.js' %}"></script>
+    <script src="{% static 'homepage/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'homepage/js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'homepage/js/circle-progress.min.js' %}"></script>
+    <script src="{% static 'homepage/js/mixitup.min.js' %}"></script>
+    <script src="{% static 'homepage/js/masonry.pkgd.min.js' %}"></script>
+    <script src="{% static 'homepage/js/main.js' %}"></script>
+{% endblock %}
 {% block customJS %}{% endblock %}
 
 <!--end footer-->

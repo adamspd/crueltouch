@@ -1,34 +1,28 @@
 {% extends 'homepage/base.html' %}
 {% load static %}
 {% block title %}Portfolio{% endblock %}
+{% block homepageCSS %}
+    <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/magnific-popup.css' %}"/>
+{% endblock %}
 
 {% block body %}
     <!-- Portfolio section  -->
-	<div class="portfolio-section">
-		<ul class="portfolio-filter controls text-center">
-			<li class="control" data-filter="all">All</li>
+    <div class="portfolio-section">
+        <ul class="portfolio-filter controls text-center">
+            <li class="control" data-filter="all">All</li>
             {% for album in all_albums %}
-			<li class="control" data-filter=".{{ album.album_title }}">{{ album.album_title.capitalize }}</li>
+                <li class="control" data-filter=".{{ album.album_title }}">{{ album.album_title.capitalize }}</li>
             {% endfor %}
-		</ul>
-		<div class="row portfolio-gallery m-0">
+        </ul>
+        <div class="row portfolio-gallery m-0">
             {% for photo in all_photos %}
-			<div class="mix col-xl-2 col-md-3 col-sm-4 col-6 p-0 {{ photo.album }}">
-            <a href="{{ photo.file.url }}" class="portfolio-item img-popup set-bg" data-setbg="{{ photo.file.url }}">
-                </a>
-				{% comment %}<a href="{% url 'pf:detail' photo.id %}" class="portfolio-item set-bg" data-setbg="{{ photo.file.url }}">
-                </a>{% endcomment %}
-			</div>
+                <div class="mix col-xl-2 col-md-3 col-sm-4 col-6 p-0 {{ photo.album }}">
+                    <a href="{{ photo.file.url }}" class="portfolio-item img-popup set-bg"
+                       data-setbg="{{ photo.file.url }}">
+                    </a>
+                </div>
             {% endfor %}
 
         </div>
     </div>
-            <!--
-			<div class="mix col-xl-2 col-md-3 col-sm-4 col-6 p-0">
-				<div class="portfolio-item  next-btn">
-					<h2>Next</h2>
-				</div>
-			</div>
-		</div>
-	</div>Portfolio section end  -->
 {% endblock body %}

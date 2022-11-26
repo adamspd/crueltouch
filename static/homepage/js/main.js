@@ -240,24 +240,4 @@ $(window).on('load', function() {
 		}
 
 	});
-
-
-	/*------------------
-		Instafeed
-	// --------------------*/
-	// var userFeed = new Instafeed({
-    //     get: 'user',
-    //     userId: '19261155319', // User your ID
-    //     limit: 12,
-    //     resolution: 'standard_resolution',
-    //     accessToken: '19261155319.1677ed0.3640b426adf9468daaa26b64b1496040', // User your accessToken
-	// 	sortBy: 'least-recent',
-	// 	limit: 15,
-    //     template: '<div class="instaimg"><a href="{{link}}" title="{{caption}}" target="_blank"><img src="{{image}}" alt="{{caption}}" class="img-fluid"/></a></div>',
-	// });
-	//
-	// if($('#instafeed').length > 0) {
-	// 	userFeed.run();
-	// }
-
 })(jQuery);
