@@ -15,7 +15,8 @@
     <link href="{% static 'homepage/img/icon/android-icon-48x48.png' %}" rel="shortcut icon"/>
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/bootstrap.min.css' %}"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     {% block homepageCSS %}
         <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/font-awesome.min.css' %}"/>
         <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/magnific-popup.css' %}"/>
@@ -152,8 +153,12 @@
 <script type="module" href="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule href="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-<script src="{% static 'homepage/js/jquery-3.2.1.min.js' %}"></script>
-<script src="{% static 'homepage/js/bootstrap.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+        integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"
+        integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 {% block js %}
     <script src="{% static 'homepage/js/jquery.slicknav.min.js' %}"></script>
     <script src="{% static 'homepage/js/owl.carousel.min.js' %}"></script>
