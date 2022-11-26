@@ -1,45 +1,38 @@
 {% extends 'homepage/base.html' %}
 {% load static %}
-{% block priceTableCSS %}<link rel="stylesheet" type="text/css" href="{% static 'homepage/css/priceCards.css' %}" />{% endblock %}
+{% block priceTableCSS %}
+    <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/priceCards.css' %}"/>{% endblock %}
 {% block body %}
-    <!--Change the href photo.file_url to photo.id when finished-->
     <!-- Hero section  -->
     <div class="hero-section">
         <div class="hero-slider owl-carousel">
             {% for photo in album1 %}
-                <div class="hero-item portfolio-item set-bg" data-setbg="{{ photo.file.url }}">
-                    {% comment %}<a href="{% url 'homepage:detail' photo.id %}" class="hero-link">
-                        <h2>Click</h2>
-                    </a>{% endcomment %}
-                </div>
+                <div class="hero-item portfolio-item set-bg" data-setbg="{{ photo.file.url }}"></div>
+            {% endfor %}
+        </div>
+
+        <div class="hero-slider owl-carousel">
+            {% for photo in album2 %}
+                <div class="hero-item portfolio-item set-bg" data-setbg="{{ photo.file.url }}"></div>
             {% endfor %}
         </div>
     </div>
-    <div class="hero-slider owl-carousel">
-        {% for photo in album2 %}
-            <div class="hero-item portfolio-item set-bg" data-setbg="{{ photo.file.url }}">
-                {% comment %}<a href="{% url 'homepage:detail' photo.id %}" class="hero-link">
-                    <h2>Click</h2>
-                </a>{% endcomment %}
-            </div>
-        {% endfor %}
-    </div>
-
     <!-- Hero section end  -->
 
-     <!-- Promotion Cards -->
+    <!-- Promotion Cards -->
     <section class="pricing-table">
-			<div class="container">
-				<div class="block-heading">
-					<h2>Promotions</h2>
-					<p class="text-black important" style="color: black; font-weight: 600">
-                        For a limited time, only in <b>Orlando</b>, I am offering a 3 photos package for only $130.
-                    </p>
-                    <a href="{% url 'client:book_me_session' 1 %}" class="btn btn-primary btn-xl js-scroll-trigger" style="background-color: #6c757d;">Book Now</a>
-				</div>
-
-			</div>
-		</section>
+        <div class="container">
+            <div class="block-heading">
+                <h2>Promotions</h2>
+                <p class="text-black important" style="color: black; font-weight: 600">
+                    For a limited time, only in <b>Orlando</b>, I am offering a 3 photos package for only $130.
+                </p>
+                <a href="{% url 'client:book_me_session' 1 %}" class="btn btn-primary btn-xl js-scroll-trigger"
+                   style="background-color: #6c757d;">Book Now</a>
+            </div>
+        </div>
+    </section>
+    <!-- Promotion Cards finished-->
 
     <!-- Intro section   -->
     <section class="intro-section">

@@ -757,29 +757,3 @@ ol {
 .text-msg:-ms-input-placeholder {
 	padding-top: 130px;
 }
-
-/* ----------------
-  Detailed page
----------------------*/
-.detailed-img {
-	width: 35em;
-	position: center;
-	flex-grow: 1;
-	margin-left: 150px;
-}
-
-
-.row {
-  display: flex;
-}
-
-.column {
-  flex: 50%;
-}
-
-.photo-album {
-	text-align: center;
-}
-
-
-
