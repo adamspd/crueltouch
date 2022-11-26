@@ -2,15 +2,18 @@
 :author: Adams Pierre David
 :version: 1.0
 """
+import os
 import re
 from datetime import datetime
 
+from PIL import Image
 from django.contrib import messages
 from django.core.mail import mail_admins, send_mail
 from django.shortcuts import redirect
 from django.template import loader
 
 from administration.models import PermissionsEmails
+from crueltouch import settings
 
 
 def c_print(msg, *args, **kwargs):
@@ -401,3 +404,51 @@ def phone_number_validation(phone_number: str) -> bool:
         return True
     else:
         return False
+
+
+def change_img_format_to_webp(img_path: str, quality: int = 80, method: int = 6, lossless: bool = True,
+                              media_sub_folder: str = "", delete_old_img: bool = False) -> str:
+    """
+    Change image format to webp
+    :param img_path: path to image
+    :param quality: quality of the image, default is 80
+    :param method: method of the image, default is 6
+    :param lossless: lossless of the image, default is True
+    :param media_sub_folder: sub folder in media folder, default is empty string, without the starting / and ending /
+    :param delete_old_img: True if old image should be deleted, default is False
+    :return: str
+    """
+    if os.path.exists(img_path):
+        c_print(f"Image {img_path} exists")
+        if not img_path.endswith(".webp"):
+            # change image format to webp
+            img = Image.open(img_path)
+            # get image name
+            img_name = img_path.split("/")[-1]
+            # get image name without extension
+            img_name_without_extension = img_name.split(".")[0]
+            # convert image to RGB and webp
+            img = img.convert("RGB")
+            if media_sub_folder == "":
+                img.save(f"{settings.MEDIA_ROOT}/{img_name_without_extension}.webp", "WEBP", quality=quality,
+                         method=method, lossless=lossless)
+            img.save(f"{settings.MEDIA_ROOT}/{media_sub_folder}/{img_name_without_extension}.webp", "WEBP",
+                     quality=quality, method=method, lossless=lossless)
+            img.close()
+            # delete old image
+            if delete_old_img:
+                os.remove(img_path)
+                c_print(f"Image {img_path} deleted")
+            # return img name with webp extension
+            if media_sub_folder == "":
+                return f"{img_name_without_extension}.webp"
+            return f"{media_sub_folder}/{img_name_without_extension}.webp"
+        else:
+            c_print(f"Image {img_path} is already webp")
+            img = img_path.split("/")[-1]
+            if media_sub_folder == "":
+                return img
+            return f"{media_sub_folder}/{img}"
+    else:
+        c_print(f"Image {img_path} does not exist")
+        return ""
