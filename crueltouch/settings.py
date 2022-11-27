@@ -53,14 +53,18 @@ INSTALLED_APPS = [
     'administration',
 ]
 
+SITE_ID = 1
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.admindocs.middleware.XViewMiddleware',
 ]
 
 ROOT_URLCONF = 'crueltouch.urls'
@@ -190,7 +194,8 @@ locale.LANG_INFO = LANG_INFO
 
 LANGUAGES = (
     ('en', _('English')),
-    # ('fr', _('Français')),
+    ('es', _('Spanish')),
+    ('fr', _('French')),
     # ('cr-ht', _('Kreyòl')),
 )
 
@@ -200,6 +205,23 @@ LANGUAGES_BIDI = global_settings.LANGUAGES_BIDI + ["cr-ht"]
 LOCALE_PATHS = (
     os.path.join(BASE_DIR / 'locale'),
 )
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'logging.NullHandler',
+        },
+    },
+    'loggers': {
+        'django.security.DisallowedHost': {
+            'handlers': ['null'],
+            'propagate': False,
+        },
+    },
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

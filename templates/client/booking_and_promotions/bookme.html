@@ -1,6 +1,7 @@
 {% extends 'homepage/base.html' %}
+{% load i18n %}
 {% load static %}
-{% block title %}Book me{% endblock %}
+{% block title %}CRUELTOUCH | {% trans "Book me" %}{% endblock %}
 {% block customCSS %}
     <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css"/>
     <link rel="stylesheet"
@@ -11,12 +12,6 @@
 {% block body %}
     <div class="clearfix"></div>
     <!-- Header section end  -->
-
-    <!-- Google Map
-    <div class="map">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14376.077865872314!2d-73.879277264103!3d40.757667781624285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sbd!4v1546528920522" style="border:0" allowfullscreen></iframe>
-    </div>
-    Google Map end -->
     <style>
         * {
             background-size: cover;
@@ -115,66 +110,66 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="contact-text">
-                        <h3>Note</h3>
+                        <h3>{% trans "Note" %}</h3>
                         <h6>
-                            The price vary according to :
+                            {% trans "The price vary according to" %} :
                         </h6>
                         <ul style="text-align: left; padding-left: 1.5em;">
-                            <li>The place you want to do the photoshoot.</li>
-                            <li>The session type.</li>
-                            <li>The number of pictures you want (the packages).</li>
+                            <li>{% trans "The place you want to do the photoshoot" %}.</li>
+                            <li>{% trans "The session type" %}.</li>
+                            <li>{% trans "The number of pictures you want (the packages)" %}.</li>
                         </ul>
                         <p class="small">
-                            In order to have a better user experience,
-                            we recommend you to register first.
+                            {% trans "In order to have a better user experience, we recommend you to register first" %}.
                         </p>
-                        <p class="important" style="font-size: 16px; font-weight: 700; line-height: 24px; color: #777777;">
-                            NB: A $100 deposit is required to book the date. No deposit, no obligation.
+                        <p class="important"
+                           style="font-size: 16px; font-weight: 700; line-height: 24px; color: #777777;">
+                            {% trans "NB: A $100 deposit is required to book the date. No deposit, no obligation" %}.
                         </p>
 
                     </div>
                 </div>
                 <div class="col-lg-8" id="form-container">
-                    <form action="" method="post">
+                    <form action="" method="post" id="book_me_form">
                         {% csrf_token %}
                         <div>
-                            <label for="fullname">Full Name * : </label>
+                            <label for="fullname">{% trans "Full name" %} * : </label>
                             {{ form.full_name }}
                         </div>
                         <div>
-                            <label for="email">Email address * : </label>
+                            <label for="email">{% trans "Email address" %} * : </label>
                             {{ form.email }}
                         </div>
                         <div>
-                            <label for="email">Phone number * : </label>
+                            <label for="email">{% trans "Phone number" %} * : </label>
                             {{ form.phone_number }}
                         </div>
                         <div class="bootstrap-iso form">
-                            <label for="email">Desired date * : </label>
+                            <label for="email">{% trans "Desired date" %} * : </label>
                             {{ form.desired_date }}
                         </div>
                         <div>
-                            <label for="email">Your address * : </label>
+                            <label for="email">{% trans "City and State" %} * : </label>
                             {{ form.address }}
                         </div>
                         <div>
                             <div onchange="display();">
-                                <label for="sessiontype"> Type of photo session * :
+                                <label for="sessiontype">{% trans "Type of photo session" %} * :
                                     {{ form.session_type }}
                                 </label>
                             </div>
                             <div onchange="display();">
-                                <label for="place"> Location * :
+                                <label for="place">{% trans "Location" %} * :
                                     {{ form.place }}
                                 </label>
                             </div>
                             <div onchange="display();">
-                                <label for="package"> Select a package * :
+                                <label for="package">{% trans "Select a package" %} * :
                                     {{ form.package }}
                                 </label>
                             </div>
                             <p class="small">
-                                * : required
+                                * : {% trans "required" %}
                             </p>
                         </div>
                         <div class="info">
@@ -183,7 +178,7 @@
                         </div>
 
                         <br>
-                        <input class="button" type="submit" value="Request">
+                        <input class="button" type="submit" value="{% trans 'Request' %}">
                     </form>
                 </div>
             </div>
@@ -193,6 +188,15 @@
                         <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}"
                              role="alert">{{ message }}</div>
                     {% endfor %}
+                {% endif %}
+                {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
                 {% endif %}
             </div>
         </div>

@@ -24,6 +24,7 @@ admin.site.index_title = 'Roos Laurore | Owner | Administration Staff'
 
 
 urlpatterns = [
+    path('i18n/', include('django.conf.urls.i18n')),
     path('admin/', admin.site.urls, name='admin'),
     path('', include('homepage.urls')),
     path('client/', include('client.urls')),

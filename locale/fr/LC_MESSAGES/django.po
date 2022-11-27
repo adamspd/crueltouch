@@ -1,0 +1,1114 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-27 05:31+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: administration/models.py:8
+msgid "The date"
+msgstr "La date"
+
+#: administration/models.py:9
+msgid "Number of emails sent for booking request"
+msgstr "Le nombre d'emails envoyés pour les demandes de réservation"
+
+#: administration/models.py:10
+msgid "Number of emails sent for contact form"
+msgstr "Le nombre d'emails envoyés pour le formulaire de contact"
+
+#: administration/models.py:11
+msgid "Other emails sent"
+msgstr "Autres emails envoyés"
+
+#: administration/models.py:12
+msgid "Total number of emails sent"
+msgstr "Nombre total d'emails envoyés"
+
+#: administration/models.py:18
+msgid "Permissions Emails"
+msgstr "Permissions pour les emails"
+
+#: administration/views.py:185
+msgid "Email sent successfully"
+msgstr "Email envoyé avec succès"
+
+#: administration/views.py:187
+msgid "Email not sent"
+msgstr "Email non envoyé"
+
+#: administration/views.py:189
+msgid "Email already sent"
+msgstr "Email déjà envoyé"
+
+#: administration/views.py:191
+msgid "Session request does not exist"
+msgstr "La demande de reservation n'existe pas"
+
+#: client/form.py:10
+msgid "--- Select a package ---"
+msgstr "--- Sélectionnez un forfait ---"
+
+#: client/form.py:11 client/models.py:243
+#: templates/client/booking_and_promotions/promotions.html:61
+msgid "7 photos"
+msgstr "7 photos"
+
+#: client/form.py:12 client/models.py:245
+#: templates/client/booking_and_promotions/promotions.html:62
+msgid "15 photos"
+msgstr "15 photos"
+
+#: client/form.py:13
+msgid "30 photos + mini video"
+msgstr "30 photos + mini vidéo"
+
+#: client/form.py:14 client/models.py:241
+#: templates/client/booking_and_promotions/promotions.html:60
+msgid "3 photos"
+msgstr "3 photos"
+
+#: client/form.py:17
+msgid "--- Select a session type ---"
+msgstr "--- Sélectionnez un type de séance ---"
+
+#: client/form.py:18
+msgid "Portrait"
+msgstr "Portrait"
+
+#: client/form.py:19
+msgid "Birthday"
+msgstr "Anniversaire"
+
+#: client/form.py:20
+msgid "Wedding and other events"
+msgstr "Mariage et autres événements"
+
+#: client/form.py:23
+msgid "--- Select a location ---"
+msgstr "--- Sélectionnez un lieu ---"
+
+#: client/form.py:24 templates/client/booking_and_promotions/promotions.html:44
+msgid "Studio"
+msgstr "Studio"
+
+#: client/form.py:25
+msgid "Outdoor"
+msgstr "Extérieur"
+
+#: client/form.py:26
+msgid "Orlando"
+msgstr "Orlando"
+
+#: client/form.py:27
+msgid "Others"
+msgstr "Autres"
+
+#: client/form.py:42 templates/administration/list/list_user.html:26
+#: templates/administration/list/list_user.html:56
+msgid "First name"
+msgstr "Prénom"
+
+#: client/form.py:47 templates/client/booking_and_promotions/bookme.html:140
+#: templates/client/login_registration/log_as_owner.html:24
+msgid "Email address"
+msgstr "Adresse email"
+
+#: client/form.py:53 templates/client/login_registration/log_as_owner.html:33
+#: templates/client/login_registration/login.html:32
+msgid "Password"
+msgstr "Mot de passe"
+
+#: client/form.py:58
+msgid "Confirm password"
+msgstr "Confirmation mot de passe"
+
+#: client/form.py:63
+msgid "Full Name"
+msgstr "Nom complet"
+
+#: client/form.py:64 templates/administration/list/list_contact_forms.html:26
+#: templates/administration/list/list_contact_forms.html:59
+#: templates/administration/list/list_requested_session.html:41
+#: templates/administration/list/list_requested_session.html:117
+#: templates/administration/list/list_user.html:27
+#: templates/administration/list/list_user.html:57
+#: templates/administration/view/index.html:183
+#: templates/administration/view/index.html:254
+#: templates/client/login_registration/login.html:24
+msgid "Email"
+msgstr "Courriel"
+
+#: client/form.py:66 templates/client/booking_and_promotions/bookme.html:157
+msgid "Type of photo session"
+msgstr "Type de séance photo"
+
+#: client/form.py:67 templates/client/booking_and_promotions/bookme.html:162
+#: templates/client/booking_and_promotions/promotions.html:95
+msgid "Location"
+msgstr "Lieu"
+
+#: client/form.py:68
+#: templates/administration/email_template/session_request_received.html:195
+#: templates/administration/list/list_requested_session.html:45
+#: templates/administration/list/list_requested_session.html:121
+#: templates/client/booking_and_promotions/promotions.html:58
+msgid "Package"
+msgstr "Pack"
+
+#: client/form.py:69
+msgid "Desired Date"
+msgstr "Date souhaitée"
+
+#: client/form.py:70
+#: templates/administration/list/list_requested_session.html:43
+#: templates/administration/list/list_requested_session.html:119
+#: templates/administration/view/index.html:185
+#: templates/administration/view/index.html:256
+msgid "Address"
+msgstr "Adresse"
+
+#: client/form.py:78 templates/administration/list/list_contact_forms.html:25
+#: templates/administration/list/list_contact_forms.html:58
+#: templates/client/booking_and_promotions/bookme.html:136
+msgid "Full name"
+msgstr "Nom complet"
+
+#: client/form.py:83 static_pages_and_forms/form.py:26
+msgid "A valid email address, please... !"
+msgstr "Une adresse email valide, s'il vous plaît...!"
+
+#: client/form.py:90
+msgid "No spaces, letters or special characters, only 10 digits..."
+msgstr ""
+"Pas d'espaces, de lettres ou de caractères spéciaux, seulement 10 chiffres..."
+
+#: client/form.py:113 client/models.py:146
+msgid "Does not have to be specific, just the city and the state"
+msgstr "Pas besoin d'être spécifique, juste la ville et l'état"
+
+#: client/form.py:122
+msgid "Fill in all the fields"
+msgstr "Remplissez tous les champs"
+
+#: client/form.py:124
+msgid "Sorry, we only offer this package in Orlando"
+msgstr "Désolé, nous offrons seulement ce forfait à Orlando"
+
+#: client/models.py:19 client/models.py:142
+msgid ""
+"Phone number must not contain spaces, letters, parentheses or dashes. It "
+"must contain 10 digits."
+msgstr ""
+"Le numéro de téléphone ne doit pas contenir d'espaces, de lettres, de "
+"parenthèses ou de tirets. Il doit contenir 10 chiffres."
+
+#: client/models.py:27
+msgid "You must provide an email address"
+msgstr "Vous devez fournir une adresse email"
+
+#: client/models.py:29
+msgid "User must have a firstname"
+msgstr "Un utilisateur doit avoir un prénom"
+
+#: client/models.py:51 client/models.py:138
+msgid "A valid email address, please"
+msgstr "Une adresse email valide, s'il vous plaît"
+
+#: client/models.py:148 client/models.py:149 client/models.py:196
+msgid "pending"
+msgstr "en attente"
+
+#: client/models.py:166 client/models.py:325
+msgid "Thank you for your booking!"
+msgstr "Merci pour votre réservation !"
+
+#: client/models.py:176 client/models.py:312
+msgid "New booking request received"
+msgstr "Nouvelle demande de réservation reçue"
+
+#: client/models.py:181
+msgid "Yes"
+msgstr "Oui"
+
+#: client/models.py:183
+msgid "No"
+msgstr "Non"
+
+#: client/models.py:198
+msgid "Your booking request status has changed!"
+msgstr "Votre demande de réservation a changé de statut !"
+
+#: client/models.py:221 client/models.py:227 client/models.py:233
+#: client/models.py:249
+msgid "No data"
+msgstr "Pas de données"
+
+#: client/models.py:247
+#: templates/client/booking_and_promotions/promotions.html:63
+msgid "30 photos"
+msgstr "30 photos"
+
+#: client/models.py:289
+msgid "Contact us for more information"
+msgstr "Contactez-nous pour plus d'informations"
+
+#: client/views.py:285
+msgid ""
+"Thank you, your booking has been registered successfully, you will receive "
+"an email shortly!"
+msgstr ""
+"Merci, votre réservation a été enregistrée avec succès, vous recevrez un "
+"courriel sous peu !"
+
+#: crueltouch/settings.py:196
+msgid "English"
+msgstr "Anglais"
+
+#: crueltouch/settings.py:197
+msgid "Spanish"
+msgstr "Espagnol"
+
+#: crueltouch/settings.py:198
+msgid "French"
+msgstr "Français"
+
+#: static_pages_and_forms/form.py:19
+msgid "How do I call you ?"
+msgstr "Comment puis-je vous appeler ?"
+
+#: static_pages_and_forms/form.py:32
+msgid "What is the subject of your message... ?"
+msgstr "C'est quoi le sujet de votre message... ?"
+
+#: static_pages_and_forms/form.py:38
+msgid "I'm listening... !"
+msgstr "J'écoute... !"
+
+#: static_pages_and_forms/models.py:27
+msgid "Your message has been received"
+msgstr "Votre message a été reçu"
+
+#: static_pages_and_forms/models.py:29
+msgid "Thank you for reaching out to us"
+msgstr "Merci de nous avoir contacté"
+
+#: static_pages_and_forms/models.py:30
+#, python-brace-format
+msgid ""
+"Hi {instance.full_name}, thank you for reaching out to us. We will get back "
+"to you as soon as possible. "
+msgstr ""
+"Bonjour {instance.full_name}, merci de nous avoir contacté. Nous vous "
+"recontacterons dès que possible. "
+
+#: static_pages_and_forms/models.py:32
+msgid "Have a great day! CruelTouch Team"
+msgstr "Bonne journée ! L'équipe CruelTouch"
+
+#: static_pages_and_forms/views.py:19
+msgid "Thank you for your message, but it didn't went through !"
+msgstr "Merci pour votre message, mais il n'a pas été envoyé !"
+
+#: templates/administration/add/add_album.html:4
+#: templates/administration/add/add_photos.html:26
+#: templates/administration/base.html:259
+msgid "Create new album"
+msgstr "Créer un nouvel album"
+
+#: templates/administration/add/add_photos.html:16
+msgid "Total pictures uploaded"
+msgstr "Total des photos envoyées"
+
+#: templates/administration/add/add_photos.html:39
+msgid "Upload image"
+msgstr "Envoyer une image"
+
+#: templates/administration/add/add_photos.html:52
+#: templates/administration/list/list_requested_session.html:94
+#: templates/administration/list/list_requested_session.html:99
+#: templates/administration/view/index.html:229
+#: templates/administration/view/index.html:234
+msgid "Send"
+msgstr "Envoyer"
+
+#: templates/administration/add/add_photos.html:54
+#: templates/administration/edit/update_requested_session.html:17
+msgid "Cancel"
+msgstr "Annuler"
+
+#: templates/administration/base.html:9 templates/administration/base.html:181
+#: templates/administration/view/index.html:28
+#: templates/administration/view/index.html:36
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#: templates/administration/base.html:64 templates/administration/base.html:209
+#: templates/homepage/base.html:8
+msgid "Homepage"
+msgstr "Accueil"
+
+#: templates/administration/base.html:67 templates/homepage/base.html:90
+msgid "Logout"
+msgstr "Déconnexion"
+
+#: templates/administration/base.html:192
+msgid "Django Admin"
+msgstr "Django Admin"
+
+#: templates/administration/base.html:201
+msgid "Session list"
+msgstr "Liste photoshoot"
+
+#: templates/administration/base.html:219
+#: templates/administration/base.html:245
+msgid "Add photos"
+msgstr "Ajouter photos"
+
+#: templates/administration/base.html:226
+#: templates/administration/base.html:252
+msgid "View all photos"
+msgstr "Voir toutes les photos"
+
+#: templates/administration/base.html:235 templates/homepage/base.html:70
+#: templates/portfolio/index_portfolio.html:4
+msgid "Portfolio"
+msgstr "Portfolio"
+
+#: templates/administration/base.html:268
+msgid "Client management"
+msgstr "Gestion clients"
+
+#: templates/administration/base.html:276
+msgid "Message list"
+msgstr "Liste messages"
+
+#: templates/administration/base.html:284
+msgid "Help"
+msgstr "Aide"
+
+#: templates/administration/base.html:292
+msgid "Settings"
+msgstr "Paramètres"
+
+#: templates/administration/base.html:300
+msgid "Change password"
+msgstr "Changer mot de passe"
+
+#: templates/administration/base.html:308
+msgid "Sign out"
+msgstr "Déconnexion"
+
+#: templates/administration/edit/update_requested_session.html:4
+#: templates/administration/edit/update_requested_session.html:12
+msgid "Update requested session"
+msgstr "Mise à jour photoshoot demandé"
+
+#: templates/administration/edit/update_requested_session.html:18
+msgid "Update"
+msgstr "Mise à jour"
+
+#: templates/administration/email_template/session_request_received.html:76
+#, python-format
+msgid ""
+"\n"
+"        Hi %(full_name)s, the crueltouch team is pleased to announce that "
+"your reservation has been processed.\n"
+"    "
+msgstr ""
+"\n"
+"        Bonjour %(full_name)s, l'équipe CruelTouch est heureuse de vous "
+"annoncer que votre réservation a été traitée.\n"
+"    "
+
+#: templates/administration/email_template/session_request_received.html:141
+msgid "Thank you for booking Crueltouch!"
+msgstr "Merci d'avoir réservé avec Crueltouch !"
+
+#: templates/administration/email_template/session_request_received.html:149
+#, python-format
+msgid ""
+"\n"
+"                                            Hi %(full_name)s, the crueltouch "
+"team is pleased to announce that your\n"
+"                                            reservation has been "
+"successfully submitted. We will do our best to process\n"
+"                                            it. You will receive an email "
+"shortly with the next steps.\n"
+"                                        "
+msgstr ""
+"\n"
+"                                            Bonjour %(full_name)s, l'équipe "
+"crueltouch est heureuse d'annoncer que votre\n"
+"                                            réservation a été soumise avec "
+"succès. Nous ferons de notre mieux pour la traiter.\n"
+"                                            Vous recevrez un email sous peu "
+"avec les prochaines étapes.\n"
+"                                        "
+
+#: templates/administration/email_template/session_request_received.html:156
+#: templates/client/booking_and_promotions/bookme.html:127
+msgid ""
+"NB: A $100 deposit is required to book the date. No deposit, no obligation"
+msgstr ""
+"NB: Un dépôt de 100$ est requis pour réserver la date. Pas de dépôt, pas "
+"d'obligation"
+
+#: templates/administration/email_template/session_request_received.html:166
+msgid "Booking Confirmation"
+msgstr "Confirmation de réservation"
+
+#: templates/administration/email_template/session_request_received.html:175
+msgid "Session type"
+msgstr "Type de session"
+
+#: templates/administration/email_template/session_request_received.html:185
+#: templates/administration/list/list_requested_session.html:46
+#: templates/administration/list/list_requested_session.html:122
+msgid "Place"
+msgstr "Lieu"
+
+#: templates/administration/email_template/session_request_received.html:205
+#: templates/administration/list/list_requested_session.html:47
+#: templates/administration/list/list_requested_session.html:123
+#: templates/administration/view/index.html:186
+#: templates/administration/view/index.html:257
+msgid "Status"
+msgstr "Statut"
+
+#: templates/administration/email_template/session_request_received.html:221
+msgid "ESTIMATED COST"
+msgstr "COÛT ESTIMÉ"
+
+#: templates/administration/email_template/session_request_received.html:261
+msgid "Estimated Response Date"
+msgstr "Date de réponse estimée"
+
+#: templates/administration/email_template/session_request_received.html:295
+msgid "See my latest works"
+msgstr "Voir mes derniers posts"
+
+#: templates/administration/email_template/session_request_received.html:305
+msgid "Awesome"
+msgstr "Cool"
+
+#: templates/administration/email_template/session_request_received.html:346
+msgid "If you don't want to receive any more email from us"
+msgstr "Si vous ne voulez plus recevoir d'email de notre part"
+
+#: templates/administration/email_template/session_request_received.html:348
+msgid "please let us know"
+msgstr "laissez-nous le savoir"
+
+#: templates/administration/email_template/session_request_received.html:392
+#: templates/homepage/base.html:148
+msgid "All rights reserved"
+msgstr "Tous droits réservés"
+
+#: templates/administration/email_template/session_request_received.html:394
+msgid "Made with love by"
+msgstr "Fait avec amour par"
+
+#: templates/administration/list/list_contact_forms.html:4
+#: templates/administration/list/list_contact_forms.html:7
+#: templates/administration/list/list_contact_forms.html:10
+#: templates/administration/list/list_contact_forms.html:18
+#: templates/administration/view/index.html:73
+msgid "Contact Forms"
+msgstr "Formulaires de contact"
+
+#: templates/administration/list/list_contact_forms.html:27
+#: templates/administration/list/list_contact_forms.html:60
+msgid "Subject"
+msgstr "Sujet"
+
+#: templates/administration/list/list_contact_forms.html:28
+#: templates/administration/list/list_contact_forms.html:61
+msgid "Message"
+msgstr "Message"
+
+#: templates/administration/list/list_requested_session.html:5
+#: templates/administration/list/list_requested_session.html:8
+#: templates/administration/list/list_requested_session.html:11
+msgid "Requested photoshoot list"
+msgstr "Liste photoshoot demandés"
+
+#: templates/administration/list/list_requested_session.html:19
+msgid "Requested Photoshoot Session"
+msgstr "Demande photoshoot"
+
+#: templates/administration/list/list_requested_session.html:21
+msgid ""
+"To send customized email to client, just click on the email, even if it's "
+"not complete."
+msgstr ""
+"Pour envoyer un email personnalisé au client, cliquez sur l'email, même si "
+"il n'est pas complet."
+
+#: templates/administration/list/list_requested_session.html:23
+msgid ""
+"It is displayed like (email...) for space management purpose on the screen."
+msgstr ""
+"Il est affiché comme (email...) pour des raisons de gestion de l'espace à "
+"l'écran."
+
+#: templates/administration/list/list_requested_session.html:38
+#: templates/administration/list/list_requested_session.html:114
+#: templates/administration/view/index.html:180
+#: templates/administration/view/index.html:251
+msgid "Date taken"
+msgstr "Date prise"
+
+#: templates/administration/list/list_requested_session.html:39
+#: templates/administration/list/list_requested_session.html:115
+#: templates/administration/view/index.html:181
+#: templates/administration/view/index.html:252
+#: templates/client/booking_and_promotions/bookme.html:148
+msgid "Desired date"
+msgstr "Date souhaitée"
+
+#: templates/administration/list/list_requested_session.html:40
+#: templates/administration/list/list_requested_session.html:116
+#: templates/administration/view/index.html:182
+#: templates/administration/view/index.html:253
+msgid "Name"
+msgstr "Nom"
+
+#: templates/administration/list/list_requested_session.html:42
+#: templates/administration/list/list_requested_session.html:118
+#: templates/administration/view/index.html:184
+#: templates/administration/view/index.html:255
+msgid "Phone"
+msgstr "Téléphone"
+
+#: templates/administration/list/list_requested_session.html:44
+#: templates/administration/list/list_requested_session.html:120
+msgid "Type"
+msgstr "Type"
+
+#: templates/administration/list/list_requested_session.html:48
+#: templates/administration/list/list_requested_session.html:124
+#: templates/administration/view/index.html:187
+#: templates/administration/view/index.html:258
+msgid "Email sent"
+msgstr "Email envoyé"
+
+#: templates/administration/list/list_requested_session.html:49
+#: templates/administration/list/list_requested_session.html:125
+#: templates/administration/view/index.html:188
+#: templates/administration/view/index.html:259
+msgid "Actions"
+msgstr "Actions"
+
+#: templates/administration/list/list_user.html:5
+#: templates/administration/list/list_user.html:8
+#: templates/administration/list/list_user.html:11
+msgid "User List"
+msgstr "Liste utilisateurs"
+
+#: templates/administration/list/list_user.html:19
+#: templates/administration/view/index.html:173
+msgid "Last 10 requested photoshoot session"
+msgstr "Derniers 10 photoshoot demandés"
+
+#: templates/administration/list/list_user.html:28
+#: templates/administration/list/list_user.html:58
+msgid "Start date"
+msgstr "Date de début"
+
+#: templates/administration/view/index.html:39
+msgid "Index"
+msgstr "Index"
+
+#: templates/administration/view/index.html:57
+msgid "Request Session"
+msgstr "Demande photoshoot"
+
+#: templates/administration/view/index.html:63
+#: templates/administration/view/index.html:79
+#: templates/administration/view/index.html:94
+#: templates/administration/view/index.html:110
+msgid "More info"
+msgstr "Plus d'info"
+
+#: templates/administration/view/index.html:88
+msgid "Photos Delivered"
+msgstr "Photos livrées"
+
+#: templates/administration/view/index.html:104
+msgid "Clients"
+msgstr "Clients"
+
+#: templates/client/booking_and_promotions/bookme.html:4
+msgid "Book me"
+msgstr "Me réserver"
+
+#: templates/client/booking_and_promotions/bookme.html:113
+msgid "Note"
+msgstr "Note"
+
+#: templates/client/booking_and_promotions/bookme.html:115
+msgid "The price vary according to"
+msgstr "Le prix varie selon"
+
+#: templates/client/booking_and_promotions/bookme.html:118
+msgid "The place you want to do the photoshoot"
+msgstr "Le lieu où vous voulez faire le photoshoot"
+
+#: templates/client/booking_and_promotions/bookme.html:119
+msgid "The session type"
+msgstr "Le type de session"
+
+#: templates/client/booking_and_promotions/bookme.html:120
+msgid "The number of pictures you want (the packages)"
+msgstr "Le nombre de photos que vous voulez (les packages)"
+
+#: templates/client/booking_and_promotions/bookme.html:123
+msgid ""
+"In order to have a better user experience, we recommend you to register first"
+msgstr ""
+"Pour une meilleure expérience utilisateur, nous vous recommandons de vous "
+"inscrire d'abord"
+
+#: templates/client/booking_and_promotions/bookme.html:144
+msgid "Phone number"
+msgstr "Téléphone"
+
+#: templates/client/booking_and_promotions/bookme.html:152
+msgid "City and State"
+msgstr "Ville et état"
+
+#: templates/client/booking_and_promotions/bookme.html:167
+msgid "Select a package"
+msgstr "Sélectionnez un forfait"
+
+#: templates/client/booking_and_promotions/bookme.html:172
+msgid "required"
+msgstr "requis"
+
+#: templates/client/booking_and_promotions/bookme.html:181
+msgid "Request"
+msgstr "Demande"
+
+#: templates/client/booking_and_promotions/promotions.html:4
+msgid "Latest promotions"
+msgstr "Dernières promotions"
+
+#: templates/client/booking_and_promotions/promotions.html:10
+msgid "Promotion Plans"
+msgstr "Plans promotionnels"
+
+#: templates/client/booking_and_promotions/promotions.html:22
+msgid "Compare all plans"
+msgstr "Comparer tous les plans"
+
+#: templates/client/booking_and_promotions/promotions.html:23
+msgid "Starter"
+msgstr "Starter"
+
+#: templates/client/booking_and_promotions/promotions.html:24
+msgid "Basic"
+msgstr "Basique"
+
+#: templates/client/booking_and_promotions/promotions.html:26
+msgid "Medium"
+msgstr "Moyen"
+
+#: templates/client/booking_and_promotions/promotions.html:28
+msgid "Premium"
+msgstr "Premium"
+
+#: templates/client/booking_and_promotions/promotions.html:36
+msgid "Price"
+msgstr "Prix"
+
+#: templates/client/booking_and_promotions/promotions.html:67
+msgid "Mini Video"
+msgstr "Mini vidéo"
+
+#: templates/client/booking_and_promotions/promotions.html:86
+msgid "Delivery Time frame"
+msgstr "Temps de livraison"
+
+#: templates/client/booking_and_promotions/promotions.html:88
+#: templates/client/booking_and_promotions/promotions.html:89
+#: templates/client/booking_and_promotions/promotions.html:90
+#: templates/client/booking_and_promotions/promotions.html:91
+msgid "day"
+msgid_plural "days"
+msgstr[0] "jour"
+msgstr[1] "jours"
+
+#: templates/client/booking_and_promotions/promotions.html:97
+msgid "Only Orlando"
+msgstr "Seulement Orlando"
+
+#: templates/client/booking_and_promotions/promotions.html:98
+#: templates/client/booking_and_promotions/promotions.html:99
+#: templates/client/booking_and_promotions/promotions.html:100
+msgid "Florida"
+msgstr "Florida"
+
+#: templates/client/booking_and_promotions/promotions.html:107
+#: templates/client/booking_and_promotions/promotions.html:113
+#: templates/client/booking_and_promotions/promotions.html:119
+#: templates/client/booking_and_promotions/promotions.html:125
+msgid "book now"
+msgstr "réserver maintenant"
+
+#: templates/client/login_registration/log_as_owner.html:4
+#: templates/client/login_registration/log_as_owner.html:38
+#: templates/client/login_registration/login.html:4
+#: templates/client/login_registration/login.html:37
+#: templates/client/login_registration/register.html:77
+msgid "Login"
+msgstr "Se connecter"
+
+#: templates/client/login_registration/log_as_owner.html:13
+msgid "ADMIN LOGIN"
+msgstr "CONNEXION ADMIN"
+
+#: templates/client/login_registration/login.html:13
+msgid "LOGIN"
+msgstr "SE CONNECTER"
+
+#: templates/client/login_registration/login.html:59
+msgid "Don't have an account"
+msgstr "Pas encore inscrit"
+
+#: templates/client/login_registration/login.html:61
+msgid "Sign Up"
+msgstr "Créer un compte"
+
+#: templates/client/login_registration/register.html:4
+msgid "Register"
+msgstr "Créer un compte"
+
+#: templates/client/login_registration/register.html:15
+msgid "REGISTER ACCOUNT"
+msgstr "CRÉATION DE COMPTE"
+
+#: templates/client/login_registration/register.html:54
+msgid "Register Account"
+msgstr "Créer un compte"
+
+#: templates/client/login_registration/register.html:75
+msgid "Already have an account"
+msgstr "Déjà inscrit"
+
+#: templates/homepage/base.html:8
+msgid "CRUELTOUCH"
+msgstr "CRUELTOUCH"
+
+#: templates/homepage/base.html:59
+msgid "Home"
+msgstr "Accueil"
+
+#: templates/homepage/base.html:62
+msgid "Meet"
+msgstr "Rencontre"
+
+#: templates/homepage/base.html:62
+msgid "Contact"
+msgstr "Contact"
+
+#: templates/homepage/base.html:64
+msgid "Meet Crueltouch"
+msgstr "Rencontrer Crueltouch"
+
+#: templates/homepage/base.html:65
+msgid "Contact Us"
+msgstr "Contactez-nous"
+
+#: templates/homepage/base.html:76 templates/homepage/base.html:78
+msgid "Book Me"
+msgstr "Réservation"
+
+#: templates/homepage/base.html:79
+msgid "Latest Promotions"
+msgstr "Dernières promotions"
+
+#: templates/homepage/base.html:84
+msgid "Client Login"
+msgstr "Connexion client"
+
+#: templates/homepage/base.html:86
+msgid "View Your Images"
+msgstr "Voir vos images"
+
+#: templates/homepage/base.html:87
+msgid "Registration"
+msgstr "Créer un compte"
+
+#: templates/homepage/base.html:88
+msgid "Admin Login"
+msgstr "Connexion admin"
+
+#: templates/homepage/base.html:148
+msgid "Made with"
+msgstr "Fait avec"
+
+#: templates/homepage/base.html:149
+msgid "Love"
+msgstr "Amour"
+
+#: templates/homepage/base.html:149
+msgid "by"
+msgstr "par"
+
+#: templates/homepage/base.html:163
+msgid "Search here"
+msgstr "Rechercher ici"
+
+#: templates/homepage/index.html:27
+msgid "Promotions"
+msgstr "Promotions"
+
+#: templates/homepage/index.html:29
+msgid ""
+"For a limited time, only in <b>Orlando</b>, I am offering a 3 photos package "
+"for only $130."
+msgstr ""
+"Pour une durée limitée, seulement à <b>Orlando</b>, je vous offre un package "
+"de 3 photos pour seulement $130."
+
+#: templates/homepage/index.html:32
+msgid "Book Now"
+msgstr "Réserver maintenant"
+
+#: templates/homepage/index.html:45
+msgid "My name is Roos Laurore"
+msgstr "Mon nom est Roos Laurore"
+
+#: templates/homepage/index.html:46
+msgid "I’m a photographer"
+msgstr "Je suis photographe"
+
+#: templates/homepage/index.html:48
+msgid ""
+"\n"
+"                                    Born in the 90's, I am very passionate "
+"about everything related to art, music and\n"
+"                                    photography. I spent 1 year in France "
+"doing photography and sharing with others in\n"
+"                                    the field. I learned how to use "
+"Photoshop, and I'm really good at it. While in\n"
+"                                    France, I landed my first wedding gig on "
+"a yatch. I am actually interested in\n"
+"                                    computer science and long term "
+"investing. I'm planning to travel a little in the\n"
+"                                    next years in Indonesia, Greece and "
+"China. Long term goal : Digital Nomad.\n"
+"                                "
+msgstr ""
+"\n"
+"                                    Née dans les années 90, je suis très "
+"passionnée par tout ce qui est art, musique et\n"
+"                                    photographie. J'ai passé 1 an en France, "
+"faisant de la photographie et partageant avec les autres dans\n"
+"                                    le domaine. J'ai appris à utiliser "
+"Photoshop, et je suis très douée. Pendant mon séjour en\n"
+"                                    France, j'ai eu ma première prestation "
+"de mariage sur un yacht. Je suis vraiment intéressée par\n"
+"                                    l'informatique et l'investissement à "
+"long terme. Je compte voyager un peu dans les\n"
+"                                    prochaines années en Indonésie, en Grèce "
+"et en Chine. Objectif à long terme : Digital Nomad.\n"
+"                                "
+
+#: templates/homepage/index.html:57
+msgid "Take a look @my portfolio"
+msgstr "Voir @mon portfolio"
+
+#: templates/homepage/index.html:64
+msgid "Business"
+msgstr "Business"
+
+#: templates/homepage/index.html:68
+msgid "Passion"
+msgstr "Passion"
+
+#: templates/homepage/index.html:72
+msgid "Travels"
+msgstr "Voyages"
+
+#: templates/homepage/index_about_me.html:5
+msgid "About us"
+msgstr "À propos"
+
+#: templates/homepage/index_about_me.html:51
+#: templates/homepage/index_about_me.html:71
+msgid "HOME"
+msgstr "ACCUEIL"
+
+#: templates/homepage/index_about_me.html:55
+#: templates/homepage/index_about_me.html:72
+msgid "ABOUT"
+msgstr "À PROPOS"
+
+#: templates/homepage/index_about_me.html:59
+#: templates/homepage/index_about_me.html:73
+msgid "PORTFOLIO"
+msgstr "PORTFOLIO"
+
+#: templates/homepage/index_about_me.html:63
+#: templates/homepage/index_about_me.html:75
+msgid "CONTACT"
+msgstr "CONTACT"
+
+#: templates/homepage/index_about_me.html:83
+msgid "I'm Roos Laurore"
+msgstr "Je suis Roos Laurore"
+
+#: templates/homepage/index_about_me.html:84
+msgid "Photographer"
+msgstr "Photographe"
+
+#: templates/homepage/index_about_me.html:93
+msgid ""
+"\n"
+"                Born in the 90's, I am very passionate about everything "
+"related to art, music and\n"
+"                photography. I spent 1 year in France doing photography and "
+"sharing with others in\n"
+"                the field. I learned how to use Photoshop, and I'm really "
+"good at it. While in\n"
+"                France, I landed my first wedding gig on a yatch. I am "
+"actually interested in\n"
+"                computer science and long term investing. I'm planning to "
+"travel a little in the\n"
+"                next years in Indonesia, Greece and China. Long term goal : "
+"Digital Nomad.\n"
+"            "
+msgstr ""
+"\n"
+"                                    Née dans les années 90, je suis très "
+"passionnée par tout ce qui est art, musique et\n"
+"                                    photographie. J'ai passé 1 an en France, "
+"faisant de la photographie et partageant avec les autres dans\n"
+"                                    le domaine. J'ai appris à utiliser "
+"Photoshop, et je suis très douée. Pendant mon séjour en\n"
+"                                    France, j'ai eu ma première prestation "
+"de mariage sur un yacht. Je suis vraiment intéressée par\n"
+"                                    l'informatique et l'investissement à "
+"long terme. Je compte voyager un peu dans les\n"
+"                                    prochaines années en Indonésie, en Grèce "
+"et en Chine. Objectif à long terme : Digital Nomad.\n"
+"                                "
+
+#: templates/homepage/index_about_me.html:102
+msgid "My Skills"
+msgstr "Mes compétences"
+
+#: templates/homepage/index_about_me.html:103
+msgid "Photography"
+msgstr "Photographie"
+
+#: templates/homepage/index_about_me.html:107
+msgid "Photoshop"
+msgstr "Photoshop"
+
+#: templates/homepage/index_about_me.html:116
+msgid "Partners"
+msgstr "Partenaires"
+
+#: templates/homepage/index_about_me.html:120
+msgid "Projects Done"
+msgstr "Projets réalisés"
+
+#: templates/homepage/index_about_me.html:124
+msgid "Happy Clients"
+msgstr "Clients satisfaits"
+
+#: templates/homepage/index_about_me.html:128
+msgid "Photoshoot"
+msgstr "Photoshoot"
+
+#: templates/portfolio/index_portfolio.html:13
+msgid "All"
+msgstr "Tous"
+
+#: templates/static_pages_and_forms/contact.html:3
+msgid "Contact us"
+msgstr "Contactez-nous"
+
+#: templates/static_pages_and_forms/contact.html:34
+#: templates/static_pages_and_forms/success.html:34
+msgid "GET IN TOUCH"
+msgstr "NOUS CONTACTER"
+
+#: templates/static_pages_and_forms/contact.html:36
+#: templates/static_pages_and_forms/success.html:36
+msgid ""
+"\n"
+"                                They say a picture is worth a thousand "
+"words.\n"
+"                                But I wonder what else do “they” say?\n"
+"                                In photography there is a reality so subtle "
+"that it becomes more real than reality.\n"
+"                                Taking an image reveals how rich reality "
+"truly is.\n"
+"                                Photography is a way of feeling, of loving.\n"
+"                                What you have caught on film is captured "
+"forever…\n"
+"                                It remembers little things, long after you "
+"have forgotten everything.\n"
+"                            "
+msgstr ""
+"\n"
+"                                Ils disent qu'une photo vaut mille mots.\n"
+"                                Mais je me demande ce que disent  “les "
+"autres”.\n"
+"                                En photographie, il y a une réalité si "
+"sensible qu'elle devient plus réelle que la réalité.\n"
+"                                Prendre une image révèle à quel point la "
+"réalité est riche.\n"
+"                                La photographie est un moyen de ressentir, "
+"d'aimer.\n"
+"                                Ce que vous avez capturé sur film est "
+"capturé pour toujours…\n"
+"                                Il se souvient des petites choses, longtemps "
+"après que vous ayez tout oublié.\n"
+"                            "
+
+#: templates/static_pages_and_forms/contact.html:81
+msgid "Submit"
+msgstr "Envoyer"
+
+#: templates/static_pages_and_forms/success.html:3
+msgid "Success"
+msgstr "Succès"
+
+#: templates/static_pages_and_forms/success.html:65
+msgid "Thank you for your inquiry"
+msgstr "Merci pour votre demande"
+
+#: templates/static_pages_and_forms/success.html:67
+msgid "Your contact information and message was successfully submitted."
+msgstr ""
+"Vos informations de contact et votre message ont été envoyés avec succès."
+
+#: templates/static_pages_and_forms/success.html:70
+msgid "Wanna book me"
+msgstr "Voulez-vous faire appel à mes services"
+
+#: templates/static_pages_and_forms/success.html:70
+msgid "Click"
+msgstr "Cliquez"
+
+#: templates/static_pages_and_forms/success.html:71
+msgid "here"
+msgstr "ici"
