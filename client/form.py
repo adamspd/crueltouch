@@ -33,6 +33,31 @@ class CustomRegisterForm(UserCreationForm):
         model = UserClient
         fields = ['first_name', 'email', 'password1', 'password2']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['first_name'].widget.attrs.update(
+            {
+                'class': 'form-control',
+                'onkeyup': 'return forceTitle(this);',
+                'placeholder': _('First name')
+            })
+        self.fields['email'].widget.attrs.update(
+            {
+                'class': 'form-control',
+                'placeholder': _('Email address'),
+                'onkeyup': 'return forceLower(this);',
+            })
+        self.fields['password1'].widget.attrs.update(
+            {
+                'class': 'form-control',
+                'placeholder': _('Password'),
+            })
+        self.fields['password2'].widget.attrs.update(
+            {
+                'class': 'form-control',
+                'placeholder': _('Confirm password'),
+            })
+
 
 class BookME(forms.Form):
     full_name = forms.CharField(max_length=100, required=True, label=_("Full Name"))
