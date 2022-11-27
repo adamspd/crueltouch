@@ -57,6 +57,5 @@ def get_logo_mini(request):
         raise Http404
 
 
-@login_required(login_url='/administration/login/')
 def promotions(request):
     return render(request, 'client/booking_and_promotions/promotions.html')
