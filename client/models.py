@@ -286,7 +286,7 @@ def get_estimated_total(session_type, package, place):
             elif package == "30":
                 return premium + " +$40 if studio"
     else:
-        return "Contact us for more information"
+        return _("Contact us for more information")
 
 
 # return one week from today to string

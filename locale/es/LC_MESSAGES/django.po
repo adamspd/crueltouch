@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-27 02:33+0100\n"
+"POT-Creation-Date: 2022-11-27 03:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,11 +58,67 @@ msgstr "Correo ya enviado"
 msgid "Session request does not exist"
 msgstr "La solicitud de sesión no existe"
 
-#: client/form.py:36
+#: client/form.py:10
+msgid "--- Select a package ---"
+msgstr "--- Seleccione un paquete ---"
+
+#: client/form.py:11 client/models.py:243
+msgid "7 photos"
+msgstr "7 fotos"
+
+#: client/form.py:12 client/models.py:245
+msgid "15 photos"
+msgstr "15 fotos"
+
+#: client/form.py:13
+msgid "30 photos + mini video"
+msgstr "30 fotos + mini video"
+
+#: client/form.py:14 client/models.py:241
+msgid "3 photos"
+msgstr "3 fotos"
+
+#: client/form.py:17
+msgid "--- Select a session type ---"
+msgstr "--- Seleccione un tipo de sesión ---"
+
+#: client/form.py:18
+msgid "Portrait"
+msgstr "Portrato"
+
+#: client/form.py:19
+msgid "Birthday"
+msgstr "Aniversario"
+
+#: client/form.py:20
+msgid "Wedding and other events"
+msgstr "Bodas y otros eventos"
+
+#: client/form.py:23
+msgid "--- Select a location ---"
+msgstr "--- Selecciona una ubicación ---"
+
+#: client/form.py:24
+msgid "Studio"
+msgstr "Estudio"
+
+#: client/form.py:25
+msgid "Outdoor"
+msgstr "Al aire libre"
+
+#: client/form.py:26
+msgid "Orlando"
+msgstr "Orlando"
+
+#: client/form.py:27
+msgid "Others"
+msgstr "Otros"
+
+#: client/form.py:38
 msgid "Full Name"
 msgstr "Nombre completo"
 
-#: client/form.py:37 templates/administration/list/list_contact_forms.html:26
+#: client/form.py:39 templates/administration/list/list_contact_forms.html:26
 #: templates/administration/list/list_contact_forms.html:59
 #: templates/administration/list/list_requested_session.html:41
 #: templates/administration/list/list_requested_session.html:117
@@ -73,31 +129,53 @@ msgstr "Nombre completo"
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: client/form.py:39
+#: client/form.py:41 templates/client/booking_and_promotions/bookme.html:156
 msgid "Type of photo session"
 msgstr "Tipo de sesión fotográfica"
 
-#: client/form.py:40
+#: client/form.py:42 templates/client/booking_and_promotions/bookme.html:161
 msgid "Location"
 msgstr "Ubicación"
 
-#: client/form.py:41
+#: client/form.py:43
 #: templates/administration/list/list_requested_session.html:45
 #: templates/administration/list/list_requested_session.html:121
 msgid "Package"
 msgstr "Paquete"
 
-#: client/form.py:42
+#: client/form.py:44
 msgid "Desired Date"
 msgstr "Fecha deseada"
 
-#: client/form.py:43
+#: client/form.py:45
 #: templates/administration/list/list_requested_session.html:43
 #: templates/administration/list/list_requested_session.html:119
 #: templates/administration/view/index.html:185
 #: templates/administration/view/index.html:256
 msgid "Address"
 msgstr "Dirección"
+
+#: client/form.py:53 templates/administration/list/list_contact_forms.html:25
+#: templates/administration/list/list_contact_forms.html:58
+#: templates/client/booking_and_promotions/bookme.html:135
+msgid "Full name"
+msgstr "Nombre completo"
+
+#: client/form.py:58 static_pages_and_forms/form.py:26
+msgid "A valid email address, please... !"
+msgstr "Por favor, introduzca un correo electrónico válida...!"
+
+#: client/form.py:65
+msgid "No spaces, letters or special characters, only 10 digits..."
+msgstr "Sin espacios, letras o caracteres especiales, solo 10 dígitos..."
+
+#: client/form.py:88 client/models.py:146
+msgid "Does not have to be specific, just the city and the state"
+msgstr "No tiene que ser específico, solo la ciudad y el estado"
+
+#: client/form.py:96
+msgid "Sorry, we only offer this package in Orlando"
+msgstr "Lo sentimos, solo ofrecemos este paquete en Orlando"
 
 #: client/models.py:19 client/models.py:142
 msgid ""
@@ -118,10 +196,6 @@ msgstr "El usuario debe tener un nombre"
 #: client/models.py:51 client/models.py:138
 msgid "A valid email address, please"
 msgstr "Por favor, introduzca un correo electrónico válida"
-
-#: client/models.py:146
-msgid "Does not have to be specific, just the city and the state"
-msgstr "No tiene que ser específico, solo la ciudad y el estado"
 
 #: client/models.py:148 client/models.py:149 client/models.py:196
 msgid "pending"
@@ -152,21 +226,17 @@ msgstr "¡El estado de su solicitud de reserva ha cambiado!"
 msgid "No data"
 msgstr "Sin datos"
 
-#: client/models.py:241
-msgid "3 photos"
-msgstr "3 fotos"
-
-#: client/models.py:243
-msgid "7 photos"
-msgstr "7 fotos"
-
-#: client/models.py:245
-msgid "15 photos"
-msgstr "15 fotos"
-
 #: client/models.py:247
 msgid "30 photos"
 msgstr "30 fotos"
+
+#: client/views.py:285
+msgid ""
+"Thank you, your booking has been registered successfully, you will receive "
+"an email shortly!"
+msgstr ""
+"Gracias, su reserva se ha registrado correctamente, recibirá un correo "
+"pronto!"
 
 #: crueltouch/settings.py:196
 msgid "English"
@@ -183,10 +253,6 @@ msgstr "Francés"
 #: static_pages_and_forms/form.py:19
 msgid "How do I call you ?"
 msgstr "¿Cómo te llamas?"
-
-#: static_pages_and_forms/form.py:26
-msgid "A valid email address, please... !"
-msgstr "Por favor, introduzca un correo electrónico válida...!"
 
 #: static_pages_and_forms/form.py:32
 msgid "What is the subject of your message... ?"
@@ -329,11 +395,6 @@ msgstr "Actualizar"
 msgid "Contact Forms"
 msgstr "Formularios de contacto"
 
-#: templates/administration/list/list_contact_forms.html:25
-#: templates/administration/list/list_contact_forms.html:58
-msgid "Full name"
-msgstr "Nombre completo"
-
 #: templates/administration/list/list_contact_forms.html:27
 #: templates/administration/list/list_contact_forms.html:60
 msgid "Subject"
@@ -379,6 +440,7 @@ msgstr "Fecha tomada"
 #: templates/administration/list/list_requested_session.html:115
 #: templates/administration/view/index.html:181
 #: templates/administration/view/index.html:252
+#: templates/client/booking_and_promotions/bookme.html:147
 msgid "Desired date"
 msgstr "Fecha deseada"
 
@@ -471,9 +533,65 @@ msgstr "Fotos entregadas"
 msgid "Clients"
 msgstr "Clientes"
 
-#: templates/client/booking_and_promotions/bookme.html:158
+#: templates/client/booking_and_promotions/bookme.html:4
+msgid "Book me"
+msgstr "Reservame"
+
+#: templates/client/booking_and_promotions/bookme.html:113
+msgid "Note"
+msgstr "Nota"
+
+#: templates/client/booking_and_promotions/bookme.html:115
+msgid "The price vary according to"
+msgstr "El precio varía según"
+
+#: templates/client/booking_and_promotions/bookme.html:118
+msgid "The place you want to do the photoshoot"
+msgstr "El lugar donde desea hacer la sesión de fotos"
+
+#: templates/client/booking_and_promotions/bookme.html:119
+msgid "The session type"
+msgstr "El tipo de sesión"
+
+#: templates/client/booking_and_promotions/bookme.html:120
+msgid "The number of pictures you want (the packages)"
+msgstr "El número de fotos que desea (los paquetes)"
+
+#: templates/client/booking_and_promotions/bookme.html:123
+msgid ""
+"In order to have a better user experience, we recommend you to register first"
+msgstr ""
+"Para tener una mejor experiencia de usuario, le recomendamos que se registre "
+
+#: templates/client/booking_and_promotions/bookme.html:126
+msgid ""
+"NB: A $100 deposit is required to book the date. No deposit, no obligation"
+msgstr ""
+"N.B.: Se requiere un depósito de $ 100 para reservar la fecha. Sin depósito, "
+
+#: templates/client/booking_and_promotions/bookme.html:139
+msgid "Email address"
+msgstr "Dirección de correo electrónico"
+
+#: templates/client/booking_and_promotions/bookme.html:143
+msgid "Phone number"
+msgstr "Teléfono"
+
+#: templates/client/booking_and_promotions/bookme.html:151
 msgid "City and State"
 msgstr "Ciudad y estado"
+
+#: templates/client/booking_and_promotions/bookme.html:166
+msgid "Select a package"
+msgstr "Seleccione un paquete"
+
+#: templates/client/booking_and_promotions/bookme.html:171
+msgid "required"
+msgstr "requerido"
+
+#: templates/client/booking_and_promotions/bookme.html:180
+msgid "Request"
+msgstr "Solicitar"
 
 #: templates/homepage/base.html:9
 msgid "CRUELTOUCH"

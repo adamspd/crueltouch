@@ -5,24 +5,26 @@ from django.utils.translation import gettext_lazy as _
 
 from client.models import UserClient, BookMe
 from portfolio.models import Album as AlbumForm
-from utils.crueltouch_utils import c_print
 
 PACKAGE = (
-    ('7', '7 photos'),
-    ('15', '15 photos'),
-    ('30', '30 photos + mini video'),
-    ('3', '3 photos'),
+    ('_', _('--- Select a package ---')),
+    ('7', _('7 photos')),
+    ('15', _('15 photos')),
+    ('30', _('30 photos + mini video')),
+    ('3', _('3 photos')),
 )
 SESSION_TYPE = (
-    ('portrait', 'Portrait'),
-    ('birthday', 'Birthday'),
-    ('wOthers', 'Wedding and other events'),
+    ('_', _('--- Select a session type ---')),
+    ('portrait', _('Portrait')),
+    ('birthday', _('Birthday')),
+    ('wOthers', _('Wedding and other events')),
 )
 WHERE = (
-    ('studio', 'Studio'),
-    ('outdoor', 'Outdoor'),
-    ('orlando', 'Orlando'),
-    ('others', 'Others'),
+    ('_', _('--- Select a location ---')),
+    ('studio', _('Studio')),
+    ('outdoor', _('Outdoor')),
+    ('orlando', _('Orlando')),
+    ('others', _('Others')),
 )
 
 
@@ -48,19 +50,19 @@ class BookME(forms.Form):
             {
                 'class': 'form-control',
                 'onkeyup': 'return forceTitle(this);',
-                'placeholder': 'Full Name...'
+                'placeholder': _('Full name') + '...'
             })
         self.fields['email'].widget.attrs.update(
             {
                 'class': 'form-control',
-                'placeholder': 'A valid email address, please...',
+                'placeholder': _("A valid email address, please... !"),
                 'onkeyup': 'return forceLower(this);'
             })
         self.fields['phone_number'].widget.attrs.update(
             {
                 'class': 'form-control',
                 'type': 'tel',
-                'placeholder': 'No spaces, letters or special characters, only 10 digits...',
+                'placeholder': _('No spaces, letters or special characters, only 10 digits...'),
                 'onkeyup': 'return forceNumber(this);'
             })
         self.fields['session_type'].widget.attrs.update(
@@ -83,15 +85,18 @@ class BookME(forms.Form):
         self.fields['address'].widget.attrs.update(
             {
                 'class': 'form-control',
-                'placeholder': 'Does not have to be specific, just the city and the state...',
+                'placeholder': _('Does not have to be specific, just the city and the state') + '...',
             })
 
     def clean_package(self):
         super(BookME, self).clean()
         package = self.cleaned_data['package']
         place = self.cleaned_data['place']
+        session = self.cleaned_data['session_type']
+        if place == "_" or package == "_" or session == "_":
+            raise forms.ValidationError(_("Fill in all the fields"))
         if package == '3' and place != 'orlando':
-            raise forms.ValidationError("Sorry, we only offer this package in Orlando")
+            raise forms.ValidationError(_("Sorry, we only offer this package in Orlando"))
         return package
 
 
