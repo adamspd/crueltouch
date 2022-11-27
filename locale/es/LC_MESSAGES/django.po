@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-27 01:57+0100\n"
+"POT-Creation-Date: 2022-11-27 02:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -284,6 +284,7 @@ msgid "View all photos"
 msgstr "Ver todas las fotos"
 
 #: templates/administration/base.html:235 templates/homepage/base.html:69
+#: templates/portfolio/index_portfolio.html:4
 msgid "Portfolio"
 msgstr "Portafolio"
 
@@ -614,6 +615,10 @@ msgstr "Pasión"
 msgid "Travels"
 msgstr "Viajes"
 
+#: templates/portfolio/index_portfolio.html:13
+msgid "All"
+msgstr "Todo"
+
 #: templates/static_pages_and_forms/contact.html:3
 #, fuzzy
 #| msgid "Contact Us"
@@ -647,14 +652,16 @@ msgstr ""
 "                                Dicen que una imagen vale más que mil "
 "palabras.\n"
 "                                Pero me pregunto qué más dicen “ellos”.\n"
-"                                En la fotografía hay una realidad tan "
-"sutil que se vuelve más real que la realidad.\n"
+"                                En la fotografía hay una realidad tan sutil "
+"que se vuelve más real que la realidad.\n"
 "                                Tomar una imagen revela lo rico que es la "
 "verdad.\n"
 "                                La fotografía es una forma de sentir, de "
 "amar.\n"
-"                                Lo que has captado en la película queda capturado para siempre…\n"
-"Se acuerda de las pequeñas cosas, mucho después de que lo hayas olvidado todo.\n"
+"                                Lo que has captado en la película queda "
+"capturado para siempre…\n"
+"Se acuerda de las pequeñas cosas, mucho después de que lo hayas olvidado "
+"todo.\n"
 "                            "
 
 #: templates/static_pages_and_forms/contact.html:81
