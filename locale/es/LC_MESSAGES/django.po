@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-27 02:26+0100\n"
+"POT-Creation-Date: 2022-11-27 02:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -615,13 +615,103 @@ msgstr "Pasión"
 msgid "Travels"
 msgstr "Viajes"
 
+#: templates/homepage/index_about_me.html:5
+msgid "About us"
+msgstr "Sobre nosotros"
+
+#: templates/homepage/index_about_me.html:51
+#: templates/homepage/index_about_me.html:71
+msgid "HOME"
+msgstr "INICIO"
+
+#: templates/homepage/index_about_me.html:55
+#: templates/homepage/index_about_me.html:72
+msgid "ABOUT"
+msgstr "SOBRE"
+
+#: templates/homepage/index_about_me.html:59
+#: templates/homepage/index_about_me.html:73
+msgid "PORTFOLIO"
+msgstr "PORTAFOLIO"
+
+#: templates/homepage/index_about_me.html:63
+#: templates/homepage/index_about_me.html:75
+msgid "CONTACT"
+msgstr "CONTACTO"
+
+#: templates/homepage/index_about_me.html:83
+msgid "I'm Roos Laurore"
+msgstr "Soy Roos Laurore"
+
+#: templates/homepage/index_about_me.html:84
+msgid "Photographer"
+msgstr "Fotógrafa"
+
+#: templates/homepage/index_about_me.html:93
+msgid ""
+"\n"
+"                Born in the 90's, I am very passionate about everything "
+"related to art, music and\n"
+"                photography. I spent 1 year in France doing photography and "
+"sharing with others in\n"
+"                the field. I learned how to use Photoshop, and I'm really "
+"good at it. While in\n"
+"                France, I landed my first wedding gig on a yatch. I am "
+"actually interested in\n"
+"                computer science and long term investing. I'm planning to "
+"travel a little in the\n"
+"                next years in Indonesia, Greece and China. Long term goal : "
+"Digital Nomad.\n"
+"            "
+msgstr ""
+"\n"
+"                                    Nacida en los 90, estoy muy apasionada "
+"por todo lo relacionado con el arte, la música y\n"
+"                                    la fotografía. Pasé 1 año en Francia "
+"haciendo fotografía y compartiendo con otros en\n"
+"                                    el campo. Aprendí a usar Photoshop, y "
+"estoy muy buena en eso. Mientras estaba en\n"
+"                                    Francia, conseguí mi primer trabajo de "
+"boda en un yate. En realidad estoy interesada en\n"
+"                                    ciencias de la computación e inversiones "
+"a largo plazo. Planeo viajar un poco en los\n"
+"                                    próximos años en Indonesia, Grecia y "
+"China. Objetivo a largo plazo: Nomada digital.\n"
+"                                "
+
+#: templates/homepage/index_about_me.html:102
+msgid "My Skills"
+msgstr "Mis habilidades"
+
+#: templates/homepage/index_about_me.html:103
+msgid "Photography"
+msgstr "Fotografía"
+
+#: templates/homepage/index_about_me.html:107
+msgid "Photoshop"
+msgstr "Photoshop"
+
+#: templates/homepage/index_about_me.html:116
+msgid "Partners"
+msgstr "Socios"
+
+#: templates/homepage/index_about_me.html:120
+msgid "Projects Done"
+msgstr "Proyectos realizados"
+
+#: templates/homepage/index_about_me.html:124
+msgid "Happy Clients"
+msgstr "Clientes satisfechos"
+
+#: templates/homepage/index_about_me.html:128
+msgid "Photoshoot"
+msgstr "Sesión de fotos"
+
 #: templates/portfolio/index_portfolio.html:13
 msgid "All"
 msgstr "Todo"
 
 #: templates/static_pages_and_forms/contact.html:3
-#, fuzzy
-#| msgid "Contact Us"
 msgid "Contact us"
 msgstr "Contáctenos"
 
