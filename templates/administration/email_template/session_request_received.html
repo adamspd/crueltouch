@@ -73,7 +73,9 @@
 
 <!-- HIDDEN PREHEADER TEXT -->
 <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: Open Sans, Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
-    {% trans "Hi {{ full_name }}, the crueltouch team is pleased to announce that your reservation has been processed." %}
+    {% blocktranslate %}
+        Hi {{ full_name }}, the crueltouch team is pleased to announce that your reservation has been processed.
+    {% endblocktranslate %}
 </div>
 
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -151,7 +153,7 @@
                                         {% endblocktranslate %}
                                     </p>
                                     <p style="font-size: 16px; font-weight: 700; line-height: 24px; color: #777777;">
-                                        {% trans "NB: A $100 deposit is required to book the date. No deposit, no obligation." %}
+                                        {% trans "NB: A $100 deposit is required to book the date. No deposit, no obligation" %}.
                                     </p>
                                 </td>
                             </tr>
@@ -388,7 +390,8 @@
                         style="padding: 30px 30px 30px 30px; color: #666666; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px;">
                         <p style="margin: 0;">Copyright &copy;<script>document.write(new Date().getFullYear());</script>
                             {% trans 'All rights reserved' %} | <a href="https://crueltouch.com" target="_blank"
-                                                     style="text-decoration: none">Crueltouch</a> | {% trans 'Made with love by' %} <a
+                                                                   style="text-decoration: none">Crueltouch</a>
+                            | {% trans 'Made with love by' %} <a
                                     href="https://adamspierredavid.com" target="_blank" style="text-decoration: none">APD</a>
                         </p>
                     </td>

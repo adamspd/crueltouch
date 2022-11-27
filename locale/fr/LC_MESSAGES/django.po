@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-27 03:21+0100\n"
+"POT-Creation-Date: 2022-11-27 04:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -129,15 +129,16 @@ msgstr "Nom complet"
 msgid "Email"
 msgstr "Courriel"
 
-#: client/form.py:41 templates/client/booking_and_promotions/bookme.html:156
+#: client/form.py:41 templates/client/booking_and_promotions/bookme.html:157
 msgid "Type of photo session"
 msgstr "Type de séance photo"
 
-#: client/form.py:42 templates/client/booking_and_promotions/bookme.html:161
+#: client/form.py:42 templates/client/booking_and_promotions/bookme.html:162
 msgid "Location"
 msgstr "Lieu"
 
 #: client/form.py:43
+#: templates/administration/email_template/session_request_received.html:195
 #: templates/administration/list/list_requested_session.html:45
 #: templates/administration/list/list_requested_session.html:121
 msgid "Package"
@@ -157,7 +158,7 @@ msgstr "Adresse"
 
 #: client/form.py:53 templates/administration/list/list_contact_forms.html:25
 #: templates/administration/list/list_contact_forms.html:58
-#: templates/client/booking_and_promotions/bookme.html:135
+#: templates/client/booking_and_promotions/bookme.html:136
 msgid "Full name"
 msgstr "Nom complet"
 
@@ -174,7 +175,11 @@ msgstr ""
 msgid "Does not have to be specific, just the city and the state"
 msgstr "Pas besoin d'être spécifique, juste la ville et l'état"
 
-#: client/form.py:96
+#: client/form.py:97
+msgid "Fill in all the fields"
+msgstr "Remplissez tous les champs"
+
+#: client/form.py:99
 msgid "Sorry, we only offer this package in Orlando"
 msgstr "Désolé, nous offrons seulement ce forfait à Orlando"
 
@@ -230,6 +235,10 @@ msgstr "Pas de données"
 #: client/models.py:247
 msgid "30 photos"
 msgstr "30 photos"
+
+#: client/models.py:289
+msgid "Contact us for more information"
+msgstr "Contactez-nous pour plus d'informations"
 
 #: client/views.py:285
 msgid ""
@@ -386,6 +395,106 @@ msgstr "Mise à jour photoshoot demandé"
 msgid "Update"
 msgstr "Mise à jour"
 
+#: templates/administration/email_template/session_request_received.html:76
+msgid ""
+"\n"
+"        Hi %(full_name)s, the crueltouch team is pleased to announce that "
+"your reservation has been processed.\n"
+"    "
+msgstr ""
+"\n"
+"        Bonjour %(full_name)s, l'équipe CruelTouch est heureuse de vous "
+"annoncer que votre réservation a été traitée.\n"
+"    "
+
+#: templates/administration/email_template/session_request_received.html:141
+msgid "Thank you for booking Crueltouch!"
+msgstr "Merci d'avoir réservé avec Crueltouch !"
+
+#: templates/administration/email_template/session_request_received.html:149
+#, python-format
+msgid ""
+"\n"
+"                                            Hi %(full_name)s, the crueltouch "
+"team is pleased to announce that your\n"
+"                                            reservation has been "
+"successfully submitted. We will do our best to process\n"
+"                                            it. You will receive an email "
+"shortly with the next steps.\n"
+"                                        "
+msgstr ""
+"\n"
+"                                            Bonjour %(full_name)s, l'équipe "
+"crueltouch est heureuse d'annoncer que votre\n"
+"                                            réservation a été soumise avec "
+"succès. Nous ferons de notre mieux pour la traiter.\n"
+"                                            Vous recevrez un email sous peu "
+"avec les prochaines étapes.\n"
+"                                        "
+
+#: templates/administration/email_template/session_request_received.html:156
+#: templates/client/booking_and_promotions/bookme.html:127
+msgid ""
+"NB: A $100 deposit is required to book the date. No deposit, no obligation"
+msgstr ""
+"NB: Un dépôt de 100$ est requis pour réserver la date. Pas de dépôt, pas "
+"d'obligation"
+
+#: templates/administration/email_template/session_request_received.html:166
+msgid "Booking Confirmation"
+msgstr "Confirmation de réservation"
+
+#: templates/administration/email_template/session_request_received.html:175
+msgid "Session type"
+msgstr "Type de session"
+
+#: templates/administration/email_template/session_request_received.html:185
+#: templates/administration/list/list_requested_session.html:46
+#: templates/administration/list/list_requested_session.html:122
+msgid "Place"
+msgstr "Lieu"
+
+#: templates/administration/email_template/session_request_received.html:205
+#: templates/administration/list/list_requested_session.html:47
+#: templates/administration/list/list_requested_session.html:123
+#: templates/administration/view/index.html:186
+#: templates/administration/view/index.html:257
+msgid "Status"
+msgstr "Statut"
+
+#: templates/administration/email_template/session_request_received.html:221
+msgid "ESTIMATED COST"
+msgstr "COÛT ESTIMÉ"
+
+#: templates/administration/email_template/session_request_received.html:261
+msgid "Estimated Response Date"
+msgstr "Date de réponse estimée"
+
+#: templates/administration/email_template/session_request_received.html:295
+msgid "See my latest works"
+msgstr "Voir mes derniers posts"
+
+#: templates/administration/email_template/session_request_received.html:305
+msgid "Awesome"
+msgstr "Cool"
+
+#: templates/administration/email_template/session_request_received.html:346
+msgid "If you don't want to receive any more email from us"
+msgstr "Si vous ne voulez plus recevoir d'email de notre part"
+
+#: templates/administration/email_template/session_request_received.html:348
+msgid "please let us know"
+msgstr "laissez-nous le savoir"
+
+#: templates/administration/email_template/session_request_received.html:392
+#: templates/homepage/base.html:147
+msgid "All rights reserved"
+msgstr "Tous droits réservés"
+
+#: templates/administration/email_template/session_request_received.html:394
+msgid "Made with love by"
+msgstr "Fait avec amour par"
+
 #: templates/administration/list/list_contact_forms.html:4
 #: templates/administration/list/list_contact_forms.html:7
 #: templates/administration/list/list_contact_forms.html:10
@@ -440,7 +549,7 @@ msgstr "Date prise"
 #: templates/administration/list/list_requested_session.html:115
 #: templates/administration/view/index.html:181
 #: templates/administration/view/index.html:252
-#: templates/client/booking_and_promotions/bookme.html:147
+#: templates/client/booking_and_promotions/bookme.html:148
 msgid "Desired date"
 msgstr "Date souhaitée"
 
@@ -462,18 +571,6 @@ msgstr "Téléphone"
 #: templates/administration/list/list_requested_session.html:120
 msgid "Type"
 msgstr "Type"
-
-#: templates/administration/list/list_requested_session.html:46
-#: templates/administration/list/list_requested_session.html:122
-msgid "Place"
-msgstr "Lieu"
-
-#: templates/administration/list/list_requested_session.html:47
-#: templates/administration/list/list_requested_session.html:123
-#: templates/administration/view/index.html:186
-#: templates/administration/view/index.html:257
-msgid "Status"
-msgstr "Statut"
 
 #: templates/administration/list/list_requested_session.html:48
 #: templates/administration/list/list_requested_session.html:124
@@ -564,34 +661,27 @@ msgstr ""
 "Pour une meilleure expérience utilisateur, nous vous recommandons de vous "
 "inscrire d'abord"
 
-#: templates/client/booking_and_promotions/bookme.html:126
-msgid ""
-"NB: A $100 deposit is required to book the date. No deposit, no obligation"
-msgstr ""
-"NB: Un dépôt de 100$ est requis pour réserver la date. Pas de dépôt, pas "
-"d'obligation"
-
-#: templates/client/booking_and_promotions/bookme.html:139
+#: templates/client/booking_and_promotions/bookme.html:140
 msgid "Email address"
 msgstr "Adresse email"
 
-#: templates/client/booking_and_promotions/bookme.html:143
+#: templates/client/booking_and_promotions/bookme.html:144
 msgid "Phone number"
 msgstr "Téléphone"
 
-#: templates/client/booking_and_promotions/bookme.html:151
+#: templates/client/booking_and_promotions/bookme.html:152
 msgid "City and State"
 msgstr "Ville et état"
 
-#: templates/client/booking_and_promotions/bookme.html:166
+#: templates/client/booking_and_promotions/bookme.html:167
 msgid "Select a package"
 msgstr "Sélectionnez un forfait"
 
-#: templates/client/booking_and_promotions/bookme.html:171
+#: templates/client/booking_and_promotions/bookme.html:172
 msgid "required"
 msgstr "requis"
 
-#: templates/client/booking_and_promotions/bookme.html:180
+#: templates/client/booking_and_promotions/bookme.html:181
 msgid "Request"
 msgstr "Demande"
 
@@ -642,10 +732,6 @@ msgstr "Créer un compte"
 #: templates/homepage/base.html:87
 msgid "Admin Login"
 msgstr "Connexion admin"
-
-#: templates/homepage/base.html:147
-msgid "All rights reserved"
-msgstr "Tous droits réservés"
 
 #: templates/homepage/base.html:147
 msgid "Made with"
@@ -832,8 +918,6 @@ msgid "All"
 msgstr "Tous"
 
 #: templates/static_pages_and_forms/contact.html:3
-#, fuzzy
-#| msgid "Contact Us"
 msgid "Contact us"
 msgstr "Contactez-nous"
 
