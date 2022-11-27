@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -5,7 +6,7 @@
     <meta charset="UTF-8">
     <!--Generic title here to change later via the context dictionary in view-->
     <meta charset="UTF-8">
-    <title>{% block title %}CRUELTOUCH | Homepage{% endblock %}</title>
+    <title>{% block title %}{% trans "CRUELTOUCH" %} | {% trans "Homepage" %}{% endblock %}</title>
     <meta name="description" content="Crueltouch Website">
     <meta name="keywords" content="photographer, crueltouch, contact crueltouch, roos laurore">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,42 +55,61 @@
         <button class="search-btn"><i class="fa fa-search"></i></button>
     </div>
     <ul class="main-menu">
-        <li><a href="{% url 'homepage:index' %}">Home</a></li>
+        <li><a href="{% url 'homepage:index' %}">{% trans "Home" %}</a></li>
 
         <li>
-            <a href="#">Meet & Contact</a>
+            <a href="#">{% trans "Meet" %} & {% trans "Contact" %}</a>
             <ul class="sub-menu">
-                <li><a href="{% url 'homepage:about' %}">Meet Crueltouch</a></li>
-                <li><a href="{% url 'flatpages:contact' %}">Contact Us</a></li>
+                <li><a href="{% url 'homepage:about' %}">{% trans "Meet Crueltouch" %}</a></li>
+                <li><a href="{% url 'flatpages:contact' %}">{% trans "Contact Us" %}</a></li>
             </ul>
         </li>
 
         <li>
-            <a href="{% url 'pf:index_portfolio' %}">Portfolio</a>
+            <a href="{% url 'pf:index_portfolio' %}">{% trans "Portfolio" %}</a>
         </li>
 
 
         {% block login %}
             <li>
-                <a href="#">Book Me</a>
+                <a href="#">{% trans "Book Me" %}</a>
                 <ul class="sub-menu">
-                    <li><a href="{% url 'client:book_me' %}">Book Me</a></li>
-                    <li><a href="{% url 'homepage:promotions' %}">Latest Promotions</a></li>
+                    <li><a href="{% url 'client:book_me' %}">{% trans "Book Me" %}</a></li>
+                    <li><a href="{% url 'homepage:promotions' %}">{% trans "Latest Promotions" %}</a></li>
                 </ul>
             </li>
 
             <li>
-                <a href="#">Client Login</a>
+                <a href="#">{% trans "Client Login" %}</a>
                 <ul class="sub-menu">
-                    <li><a href="{% url 'client:login' %}">View Your Images</a></li>
-                    <li><a href="{% url 'client:register' %}">Registration</a></li>
-                    <li><a href="{% url 'administration:login' %}">Admin Login</a></li>
+                    <li><a href="{% url 'client:login' %}">{% trans "View Your Images" %}</a></li>
+                    <li><a href="{% url 'client:register' %}">{% trans "Registration" %}</a></li>
+                    <li><a href="{% url 'administration:login' %}">{% trans "Admin Login" %}</a></li>
                     {% if request.user.is_authenticated %}
-                        <li><a href="{% url 'client:logout' %}">Logout</a></li>
+                        <li><a href="{% url 'client:logout' %}">{% trans "Logout" %}</a></li>
                     {% endif %}
                 </ul>
             </li>
         {% endblock %}
+        <li>
+            <div class="language_fr ml-auto">
+                {% get_current_language as LANGUAGE_CODE %}
+                <form action="{% url 'set_language' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ redirect_to }}">
+                    <select name="language" id="languages" onchange="this.form.submit()" class="custom-sel">
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                            <option value="{{ language.code }}"
+                                    {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
+                                {{ language.name_local.title }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+        </li>
 
         <li class="search-mobile">
             <button class="search-btn"><i class="fa fa-search"></i></button>
@@ -124,8 +144,8 @@
                 <div class="col-md-6 order-2 order-md-1">
                     <div class="copyright">
                         Copyright &copy;<script>document.write(new Date().getFullYear());</script>
-                        All rights reserved | Roos Orlens Laurore | Made with <i class="fa fa-heart-o"
-                                                                                 aria-hidden="true"></i> by <a
+                        {% trans 'All rights reserved' %} | Roos Orlens Laurore | {% trans 'Made with' %}
+                        <i class="fa fa-heart-o" aria-hidden="true">{% trans 'Love' %}</i> {% trans "by" %} <a
                             href="https://adamspierredavid.com" target="_blank">APD</a>
                     </div>
                 </div>
@@ -139,7 +159,7 @@
             <div class="h-100 d-flex align-items-center justify-content-center">
                 <div class="search-close-switch">+</div>
                 <form class="search-model-form">
-                    <input type="text" id="search-input" placeholder="Search here.....">
+                    <input type="text" id="search-input" placeholder="{% trans 'Search here' %}...">
                 </form>
             </div>
         </div>

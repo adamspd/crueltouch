@@ -135,7 +135,7 @@ class BookMe(models.Model):
     # who = models.ForeignKey(settings.AUTH_USER_MODEL,
     #                         on_delete=models.CASCADE, null=True)
     full_name = models.CharField(max_length=255, blank=False, null=False)
-    email = models.EmailField(default="", null=False, blank=False, help_text=_("A valid email address, please !"))
+    email = models.EmailField(default="", null=False, blank=False, help_text=_("A valid email address, please"))
     session_type = models.CharField(max_length=200, null=True, choices=SESSION_TYPE)
     place = models.CharField(max_length=200, null=True, choices=WHERE)
     phone_number = models.CharField(validators=[phone_regex], max_length=10, blank=False, null=False, default="",
