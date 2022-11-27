@@ -160,7 +160,7 @@ def send_session_request_received_email(email_address, full_name: str, session_t
         mail = send_mail(
             subject=subject,
             message="",
-            from_email="adamspd.webmaster@gmail.com",
+            from_email="Crueltouch",
             html_message=html_message,
             recipient_list=recipient_list
         )

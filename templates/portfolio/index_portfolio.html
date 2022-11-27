@@ -1,6 +1,7 @@
 {% extends 'homepage/base.html' %}
+{% load i18n %}
 {% load static %}
-{% block title %}Portfolio{% endblock %}
+{% block title %}CRUELTOUCH | {% trans "Portfolio" %}{% endblock %}
 {% block homepageCSS %}
     <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/magnific-popup.css' %}"/>
 {% endblock %}
@@ -9,7 +10,7 @@
     <!-- Portfolio section  -->
     <div class="portfolio-section">
         <ul class="portfolio-filter controls text-center">
-            <li class="control" data-filter="all">All</li>
+            <li class="control" data-filter="all">{% trans "All" %}</li>
             {% for album in all_albums %}
                 <li class="control" data-filter=".{{ album.album_title }}">{{ album.album_title.capitalize }}</li>
             {% endfor %}
@@ -22,7 +23,6 @@
                     </a>
                 </div>
             {% endfor %}
-
         </div>
     </div>
 {% endblock body %}

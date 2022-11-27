@@ -118,6 +118,6 @@ $(document).ready(function () {
             clearBtn: true,
         };
         date_input.datepicker(options);
-
     })
+
 });
