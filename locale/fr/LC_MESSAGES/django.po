@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# FIRST AUTHOR <adamspd.developer@gmail.com>, 2022.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-27 12:53+0100\n"
+"POT-Creation-Date: 2022-11-27 13:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,10 +43,11 @@ msgid "Permissions Emails"
 msgstr "Permissions pour les emails"
 
 #: administration/models.py:34
+#, fuzzy
+#| msgid "Photo"
+#| msgid_plural "Photos"
 msgid "Photo"
-msgid_plural "Photos"
-msgstr[0] "Photo"
-msgstr[1] "Photos"
+msgstr "Photo"
 
 #: administration/models.py:35 administration/models.py:64
 msgid "Is active"
@@ -55,6 +56,13 @@ msgstr "Est actif"
 #: administration/models.py:36 administration/models.py:66
 msgid "Was downloaded"
 msgstr "A été téléchargé"
+
+#: administration/models.py:62
+#, fuzzy
+#| msgid "Photo"
+#| msgid_plural "Photos"
+msgid "Photos"
+msgstr "Photo"
 
 #: administration/models.py:63
 msgid "Date"
@@ -501,11 +509,23 @@ msgstr "Téléchargements"
 msgid "Hi"
 msgstr "Bonjour"
 
-#: templates/administration/download/downloadable_images.html:17
+#: templates/administration/download/downloadable_images.html:12
+msgid ""
+"\n"
+"                        you can download the following files either in zip "
+"format or file by file.\n"
+"                    "
+msgstr ""
+"\n"
+"                        vous pouvez télécharger les fichiers suivants soit "
+"en format zip soit fichier par fichier.\n"
+"                    "
+
+#: templates/administration/download/downloadable_images.html:21
 msgid "Zipped version"
 msgstr "Version zip"
 
-#: templates/administration/download/downloadable_images.html:19
+#: templates/administration/download/downloadable_images.html:23
 msgid ""
 "\n"
 "                                            You can download your copy of "
@@ -525,15 +545,15 @@ msgstr ""
 "veuillez nous contacter. Format zip.\n"
 "                                        "
 
-#: templates/administration/download/downloadable_images.html:26
+#: templates/administration/download/downloadable_images.html:30
 msgid "Download zip"
 msgstr "Télécharger zip"
 
-#: templates/administration/download/downloadable_images.html:35
+#: templates/administration/download/downloadable_images.html:39
 msgid "Individual photos"
 msgstr "Photos individuelles"
 
-#: templates/administration/download/downloadable_images.html:37
+#: templates/administration/download/downloadable_images.html:41
 msgid ""
 "\n"
 "                                            You can download your copy of "
@@ -552,6 +572,10 @@ msgstr ""
 "                                            télécharger les photos encore, "
 "veuillez nous contacter. Photos individuelles.\n"
 "                                        "
+
+#: templates/administration/download/downloadable_images.html:54
+msgid "Download"
+msgstr "Téléchargement"
 
 #: templates/administration/edit/update_requested_session.html:4
 #: templates/administration/edit/update_requested_session.html:12
@@ -687,10 +711,11 @@ msgstr "Liens créés"
 
 #: templates/administration/list/list_created_link.html:27
 #: templates/administration/list/list_created_link.html:57
+#, fuzzy
+#| msgid "Link"
+#| msgid_plural "Links"
 msgid "Link"
-msgid_plural "Links"
-msgstr[0] "Lien"
-msgstr[1] "Liens"
+msgstr "Lien"
 
 #: templates/administration/list/list_created_link.html:28
 #: templates/administration/list/list_created_link.html:58
@@ -904,10 +929,8 @@ msgstr "Temps de livraison"
 #: templates/client/booking_and_promotions/promotions.html:89
 #: templates/client/booking_and_promotions/promotions.html:90
 #: templates/client/booking_and_promotions/promotions.html:91
-msgid "day"
-msgid_plural "days"
-msgstr[0] "jour"
-msgstr[1] "jours"
+msgid "days"
+msgstr "jours"
 
 #: templates/client/booking_and_promotions/promotions.html:97
 msgid "Only Orlando"
@@ -1269,3 +1292,8 @@ msgstr "Cliquez"
 #: templates/static_pages_and_forms/success.html:71
 msgid "here"
 msgstr "ici"
+
+#~ msgid "day"
+#~ msgid_plural "days"
+#~ msgstr[0] "jour"
+#~ msgstr[1] "jours"

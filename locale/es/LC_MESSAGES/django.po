@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# FIRST AUTHOR <adamspd.developer@gmail.com>, 2022.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-27 12:53+0100\n"
+"POT-Creation-Date: 2022-11-27 13:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,10 +43,11 @@ msgid "Permissions Emails"
 msgstr "Permisos de correos"
 
 #: administration/models.py:34
+#, fuzzy
+#| msgid "Photo"
+#| msgid_plural "Photos"
 msgid "Photo"
-msgid_plural "Photos"
-msgstr[0] "Foto"
-msgstr[1] "Fotos"
+msgstr "Foto"
 
 #: administration/models.py:35 administration/models.py:64
 msgid "Is active"
@@ -55,6 +56,13 @@ msgstr "Está activo"
 #: administration/models.py:36 administration/models.py:66
 msgid "Was downloaded"
 msgstr "Fue descargado"
+
+#: administration/models.py:62
+#, fuzzy
+#| msgid "Photo"
+#| msgid_plural "Photos"
+msgid "Photos"
+msgstr "Foto"
 
 #: administration/models.py:63
 msgid "Date"
@@ -105,8 +113,8 @@ msgid ""
 "If you want the website to send the link automatically to the client, "
 "please, put the client "
 msgstr ""
-"Si desea que el sitio web envíe el enlace automáticamente al cliente, "
-"por favor, ponga el cliente "
+"Si desea que el sitio web envíe el enlace automáticamente al cliente, por "
+"favor, ponga el cliente "
 
 #: administration/views.py:395
 msgid "Create downloadable file"
@@ -502,11 +510,23 @@ msgstr "Descargas"
 msgid "Hi"
 msgstr "Hola"
 
-#: templates/administration/download/downloadable_images.html:17
+#: templates/administration/download/downloadable_images.html:12
+msgid ""
+"\n"
+"                        you can download the following files either in zip "
+"format or file by file.\n"
+"                    "
+msgstr ""
+"\n"
+"                        puede descargar los siguientes archivos ya sea en "
+"formato zip o archivo por archivo.\n"
+"                    "
+
+#: templates/administration/download/downloadable_images.html:21
 msgid "Zipped version"
 msgstr "Versión comprimida"
 
-#: templates/administration/download/downloadable_images.html:19
+#: templates/administration/download/downloadable_images.html:23
 msgid ""
 "\n"
 "                                            You can download your copy of "
@@ -518,23 +538,23 @@ msgid ""
 "                                        "
 msgstr ""
 "\n"
-"                                            Puede descargar una copia de "
-"sus fotos editadas aquí. Este enlace caduca en\n"
+"                                            Puede descargar una copia de sus "
+"fotos editadas aquí. Este enlace caduca en\n"
 "                                            72 horas. Esta es una descarga "
 "única. Si necesita descargar las fotos\n"
-"                                            de nuevo, comuníquese con nosotros. "
-"Formato zip.\n"
+"                                            de nuevo, comuníquese con "
+"nosotros. Formato zip.\n"
 "                                        "
 
-#: templates/administration/download/downloadable_images.html:26
+#: templates/administration/download/downloadable_images.html:30
 msgid "Download zip"
 msgstr "Descargar zip"
 
-#: templates/administration/download/downloadable_images.html:35
+#: templates/administration/download/downloadable_images.html:39
 msgid "Individual photos"
 msgstr "Fotos individuales"
 
-#: templates/administration/download/downloadable_images.html:37
+#: templates/administration/download/downloadable_images.html:41
 msgid ""
 "\n"
 "                                            You can download your copy of "
@@ -546,13 +566,17 @@ msgid ""
 "                                        "
 msgstr ""
 "\n"
-"                                            Puede descargar una copia de "
-"sus fotos editadas aquí. Este enlace caduca en\n"
+"                                            Puede descargar una copia de sus "
+"fotos editadas aquí. Este enlace caduca en\n"
 "                                            72 horas. Esta es una descarga "
 "única. Si necesita descargar las fotos\n"
-"                                            de nuevo, comuníquese con nosotros. "
-"Fotos individuales.\n"
+"                                            de nuevo, comuníquese con "
+"nosotros. Fotos individuales.\n"
 "                                        "
+
+#: templates/administration/download/downloadable_images.html:54
+msgid "Download"
+msgstr "Descargar"
 
 #: templates/administration/edit/update_requested_session.html:4
 #: templates/administration/edit/update_requested_session.html:12

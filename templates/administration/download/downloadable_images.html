@@ -8,7 +8,11 @@
         <div class="row">
             <div class="col-md-12">
                 <h3 class="text-center">{% trans "Downloads" %}</h3>
-                <small class="text-muted">{% trans 'Hi' %}, {{ client_name }}</small>
+                <small class="text-center align-center align-content-center offset-md-3">{% trans 'Hi' %}, {{ client_name }},
+                    {% blocktranslate %}
+                        you can download the following files either in zip format or file by file.
+                    {% endblocktranslate %}
+                </small>
                 <div class="container" style="display: block; margin-left: auto; margin-right: auto;">
                     <div class="row">
                         <div class="col-md-8 offset-md-2">
