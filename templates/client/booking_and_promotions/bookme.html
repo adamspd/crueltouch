@@ -1,4 +1,5 @@
 {% extends 'homepage/base.html' %}
+{% load i18n %}
 {% load static %}
 {% block title %}Book me{% endblock %}
 {% block customCSS %}
@@ -154,7 +155,7 @@
                             {{ form.desired_date }}
                         </div>
                         <div>
-                            <label for="email">Your address * : </label>
+                            <label for="email">{% trans "City and State" %} * : </label>
                             {{ form.address }}
                         </div>
                         <div>
