@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-27 05:31+0100\n"
+"POT-Creation-Date: 2022-11-27 12:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,45 +18,103 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: administration/models.py:8
+#: administration/models.py:12
 msgid "The date"
 msgstr "La date"
 
-#: administration/models.py:9
+#: administration/models.py:13
 msgid "Number of emails sent for booking request"
 msgstr "Le nombre d'emails envoyés pour les demandes de réservation"
 
-#: administration/models.py:10
+#: administration/models.py:14
 msgid "Number of emails sent for contact form"
 msgstr "Le nombre d'emails envoyés pour le formulaire de contact"
 
-#: administration/models.py:11
+#: administration/models.py:15
 msgid "Other emails sent"
 msgstr "Autres emails envoyés"
 
-#: administration/models.py:12
+#: administration/models.py:16
 msgid "Total number of emails sent"
 msgstr "Nombre total d'emails envoyés"
 
-#: administration/models.py:18
+#: administration/models.py:22
 msgid "Permissions Emails"
 msgstr "Permissions pour les emails"
 
-#: administration/views.py:185
+#: administration/models.py:34
+msgid "Photo"
+msgid_plural "Photos"
+msgstr[0] "Photo"
+msgstr[1] "Photos"
+
+#: administration/models.py:35 administration/models.py:64
+msgid "Is active"
+msgstr "Est actif"
+
+#: administration/models.py:36 administration/models.py:66
+msgid "Was downloaded"
+msgstr "A été téléchargé"
+
+#: administration/models.py:63
+msgid "Date"
+msgstr "Date"
+
+#: administration/models.py:65
+msgid "Expiration date"
+msgstr "Date d'expiration"
+
+#: administration/models.py:67
+msgid "Link to download"
+msgstr "Lien de téléchargement"
+
+#: administration/models.py:68
+msgid "ID delivery"
+msgstr "ID de livraison"
+
+#: administration/models.py:69
+#: templates/administration/add/add_downloadable_file.html:39
+#: templates/administration/list/list_created_link.html:25
+#: templates/administration/list/list_created_link.html:55
+msgid "Client name"
+msgstr "Nom client"
+
+#: administration/models.py:70
+#: templates/administration/add/add_downloadable_file.html:35
+msgid "Client email"
+msgstr "Email client"
+
+#: administration/views.py:189
 msgid "Email sent successfully"
 msgstr "Email envoyé avec succès"
 
-#: administration/views.py:187
+#: administration/views.py:191
 msgid "Email not sent"
 msgstr "Email non envoyé"
 
-#: administration/views.py:189
+#: administration/views.py:193
 msgid "Email already sent"
 msgstr "Email déjà envoyé"
 
-#: administration/views.py:191
+#: administration/views.py:195
 msgid "Session request does not exist"
 msgstr "La demande de reservation n'existe pas"
+
+#: administration/views.py:391
+msgid ""
+"If you want the website to send the link automatically to the client, "
+"please, put the client "
+msgstr ""
+"Si vous voulez que le site envoie le lien automatiquement au client, "
+"veuillez mettre le client "
+
+#: administration/views.py:395
+msgid "Create downloadable file"
+msgstr "Créer un fichier téléchargeable"
+
+#: administration/views.py:408
+msgid "List of link to download images"
+msgstr "Liste des liens de téléchargement des images"
 
 #: client/form.py:10
 msgid "--- Select a package ---"
@@ -142,6 +200,8 @@ msgstr "Nom complet"
 
 #: client/form.py:64 templates/administration/list/list_contact_forms.html:26
 #: templates/administration/list/list_contact_forms.html:59
+#: templates/administration/list/list_created_link.html:26
+#: templates/administration/list/list_created_link.html:56
 #: templates/administration/list/list_requested_session.html:41
 #: templates/administration/list/list_requested_session.html:117
 #: templates/administration/list/list_user.html:27
@@ -329,14 +389,16 @@ msgstr "Merci pour votre message, mais il n'a pas été envoyé !"
 msgid "Create new album"
 msgstr "Créer un nouvel album"
 
-#: templates/administration/add/add_photos.html:16
-msgid "Total pictures uploaded"
-msgstr "Total des photos envoyées"
-
+#: templates/administration/add/add_downloadable_file.html:30
 #: templates/administration/add/add_photos.html:39
 msgid "Upload image"
 msgstr "Envoyer une image"
 
+#: templates/administration/add/add_downloadable_file.html:42
+msgid "Put the client name for reference"
+msgstr "Renseignez le nom du client comme référence"
+
+#: templates/administration/add/add_downloadable_file.html:59
 #: templates/administration/add/add_photos.html:52
 #: templates/administration/list/list_requested_session.html:94
 #: templates/administration/list/list_requested_session.html:99
@@ -345,12 +407,18 @@ msgstr "Envoyer une image"
 msgid "Send"
 msgstr "Envoyer"
 
+#: templates/administration/add/add_downloadable_file.html:61
 #: templates/administration/add/add_photos.html:54
 #: templates/administration/edit/update_requested_session.html:17
 msgid "Cancel"
 msgstr "Annuler"
 
+#: templates/administration/add/add_photos.html:16
+msgid "Total pictures uploaded"
+msgstr "Total des photos envoyées"
+
 #: templates/administration/base.html:9 templates/administration/base.html:181
+#: templates/administration/list/data.html:43
 #: templates/administration/view/index.html:28
 #: templates/administration/view/index.html:36
 msgid "Dashboard"
@@ -389,28 +457,101 @@ msgid "Portfolio"
 msgstr "Portfolio"
 
 #: templates/administration/base.html:268
+msgid "Send photo via link"
+msgstr "Envoie photo via lien"
+
+#: templates/administration/base.html:278
+msgid "Create link"
+msgstr "Créer lien"
+
+#: templates/administration/base.html:285
+msgid "View all links"
+msgstr "Voir tous les liens"
+
+#: templates/administration/base.html:294
 msgid "Client management"
 msgstr "Gestion clients"
 
-#: templates/administration/base.html:276
+#: templates/administration/base.html:302
 msgid "Message list"
 msgstr "Liste messages"
 
-#: templates/administration/base.html:284
+#: templates/administration/base.html:310
 msgid "Help"
 msgstr "Aide"
 
-#: templates/administration/base.html:292
+#: templates/administration/base.html:318
 msgid "Settings"
 msgstr "Paramètres"
 
-#: templates/administration/base.html:300
+#: templates/administration/base.html:326
 msgid "Change password"
 msgstr "Changer mot de passe"
 
-#: templates/administration/base.html:308
+#: templates/administration/base.html:334
 msgid "Sign out"
 msgstr "Déconnexion"
+
+#: templates/administration/download/downloadable_images.html:4
+#: templates/administration/download/downloadable_images.html:10
+msgid "Downloads"
+msgstr "Téléchargements"
+
+#: templates/administration/download/downloadable_images.html:11
+msgid "Hi"
+msgstr "Bonjour"
+
+#: templates/administration/download/downloadable_images.html:17
+msgid "Zipped version"
+msgstr "Version zip"
+
+#: templates/administration/download/downloadable_images.html:19
+msgid ""
+"\n"
+"                                            You can download your copy of "
+"your edited photos here. This link expires in\n"
+"                                            72 hours. This is a one time "
+"download. If you need to download the photos\n"
+"                                            again, please contact us. Zip "
+"format.\n"
+"                                        "
+msgstr ""
+"\n"
+"                                            Vous pouvez télécharger votre "
+"copie de vos photos ici. Ce lien expire dans\n"
+"                                            72 heures. Ceci est un "
+"téléchargement unique. Si vous avez besoin de\n"
+"                                            télécharger les photos encore, "
+"veuillez nous contacter. Format zip.\n"
+"                                        "
+
+#: templates/administration/download/downloadable_images.html:26
+msgid "Download zip"
+msgstr "Télécharger zip"
+
+#: templates/administration/download/downloadable_images.html:35
+msgid "Individual photos"
+msgstr "Photos individuelles"
+
+#: templates/administration/download/downloadable_images.html:37
+msgid ""
+"\n"
+"                                            You can download your copy of "
+"your edited photos here. This link expires in\n"
+"                                            72 hours. This is a one time "
+"download. If you need to download the photos\n"
+"                                            again, please contact us. "
+"Individual photos.\n"
+"                                        "
+msgstr ""
+"\n"
+"                                            Vous pouvez télécharger votre "
+"copie de vos photos ici. Ce lien expire dans\n"
+"                                            72 heures. Ceci est un "
+"téléchargement unique. Si vous avez besoin de\n"
+"                                            télécharger les photos encore, "
+"veuillez nous contacter. Photos individuelles.\n"
+"                                        "
 
 #: templates/administration/edit/update_requested_session.html:4
 #: templates/administration/edit/update_requested_session.html:12
@@ -539,6 +680,22 @@ msgstr "Sujet"
 #: templates/administration/list/list_contact_forms.html:61
 msgid "Message"
 msgstr "Message"
+
+#: templates/administration/list/list_created_link.html:10
+msgid "Created links"
+msgstr "Liens créés"
+
+#: templates/administration/list/list_created_link.html:27
+#: templates/administration/list/list_created_link.html:57
+msgid "Link"
+msgid_plural "Links"
+msgstr[0] "Lien"
+msgstr[1] "Liens"
+
+#: templates/administration/list/list_created_link.html:28
+#: templates/administration/list/list_created_link.html:58
+msgid "Downloaded"
+msgstr "Téléchargé"
 
 #: templates/administration/list/list_requested_session.html:5
 #: templates/administration/list/list_requested_session.html:8

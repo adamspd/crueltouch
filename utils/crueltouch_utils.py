@@ -320,8 +320,8 @@ def check(data) -> bool:
             return True
 
 
-def send_client_email(email_address, subject: str, header: str, message: str, footer: str, is_contact_form: bool,
-                      is_other: bool) -> bool:
+def send_client_email(email_address, subject: str, header: str, message: str, footer: str, button_label: str,
+                      button_text: str, button_link: str, is_contact_form: bool, is_other: bool) -> bool:
     """
     This function sends email to client, and returns True if email is sent successfully.
     It sends email when client filled out the contact form or when admin wants to reply to client.
@@ -333,6 +333,9 @@ def send_client_email(email_address, subject: str, header: str, message: str, fo
     :param header: header of the email
     :param message: message of the email
     :param footer: footer of the email
+    :param button_label: button label
+    :param button_text: button text
+    :param button_link: button link
     :param is_contact_form: True if email is sent when client filled out the contact form
     :param is_other: True if email is sent when admin wants to reply to client
     :return: True if email is sent successfully
@@ -349,6 +352,9 @@ def send_client_email(email_address, subject: str, header: str, message: str, fo
                 'message': message,
                 'footer': footer,
                 'subject': subject,
+                'button_label': button_label,
+                'button_text': button_text,
+                'button_link': button_link,
             }
         )
         mail = send_mail(

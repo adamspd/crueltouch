@@ -1,0 +1,62 @@
+{% extends 'homepage/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block title %}CRUELTOUCH | {% trans "Downloads" %}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="text-center">{% trans "Downloads" %}</h3>
+                <small class="text-muted">{% trans 'Hi' %}, {{ client_name }}</small>
+                <div class="container" style="display: block; margin-left: auto; margin-right: auto;">
+                    <div class="row">
+                        <div class="col-md-8 offset-md-2">
+                            <div class="card" style="margin: 5px">
+                                <div class="card-body">
+                                    <h5 class="card-title">{% trans "Zipped version" %}</h5>
+                                    <p class="card-text">
+                                        {% blocktranslate %}
+                                            You can download your copy of your edited photos here. This link expires in
+                                            72 hours. This is a one time download. If you need to download the photos
+                                            again, please contact us. Zip format.
+                                        {% endblocktranslate %}
+                                    </p>
+                                    <a href="{% url 'homepage:download_zip' id_delivery %}"
+                                       class="btn btn-primary">{% trans "Download zip" %}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 offset-md-2">
+                            <div class="card" style="margin: 5px">
+                                <div class="card-body">
+                                    <h5 class="card-title">{% trans "Individual photos" %}</h5>
+                                    <p class="card-text">
+                                        {% blocktranslate %}
+                                            You can download your copy of your edited photos here. This link expires in
+                                            72 hours. This is a one time download. If you need to download the photos
+                                            again, please contact us. Individual photos.
+                                        {% endblocktranslate %}
+                                    </p>
+                                    {% for photo in photos %}
+                                        <a href="{{ photo.get_absolute_url }}"
+                                           download="{{ photo.get_name_with_extension }}"
+                                           class="btn btn-sm {% if photo.was_downloaded_ %}btn-secondary{% else %}btn-primary{% endif %}"
+                                           onclick="{{ photo.set_was_downloaded_to_true }}"
+                                           style="margin: 2px; overflow: hidden !important;">
+                                        <span style="overflow: hidden; white-space: normal; display: block; text-overflow: ellipsis;">
+                                            {% trans "Download %} "{{ photo.get_name_without_extension }}"
+                                        </span>
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
