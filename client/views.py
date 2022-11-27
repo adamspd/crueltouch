@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import RedirectView
+from django.utils.translation import gettext_lazy as _
 
 from client.models import UserClient, BookMe, Album, Photo
 from static_pages_and_forms.models import ContactForm
@@ -261,13 +262,13 @@ def form_book_me(request_client):
                 f"client.views:232 | data from form: {full_name}, {email}, {session_type}, {place}, {package}, {desired_date}, {address}, {phone_number}")
             if check(full_name):
                 messages.error(request_client, "Form not valid, try again !")
-                return redirect('client:bookme')
+                return redirect('client:book_me')
             # validate email exists in real world
             valid = validate_email(email)
             c_print(f"client.views:230 | email is valid: {valid}")
             if not valid:
                 messages.error(request_client, 'Email is not valid')
-                return redirect('client:bookme')
+                return redirect('client:book_me')
             obj = BookMe.objects.create(
                 full_name=full_name,
                 email=email,
@@ -281,9 +282,9 @@ def form_book_me(request_client):
             obj.save()
             c_print(f"client.views:263 | object saved: {obj}")
             messages.success(request_client,
-                             'Thank you, your booking has been registered successfully, you will receive an email'
-                             ' shortly!')
-            return redirect('client:bookme')
+                             _('Thank you, your booking has been registered successfully, you will receive an email '
+                               'shortly!'))
+            return redirect('client:book_me')
     else:
         if request_client.session.get('click_id') == 1:
             form = BookME(initial={'place': request_client.session.get('location'),

@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -72,7 +73,7 @@
 
 <!-- HIDDEN PREHEADER TEXT -->
 <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: Open Sans, Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
-    Hi {{ full_name }}, the crueltouch team is pleased to announce that your reservation has been processed.
+    {% trans "Hi {{ full_name }}, the crueltouch team is pleased to announce that your reservation has been processed." %}
 </div>
 
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -135,7 +136,7 @@
                                     <img src="https://litmus-builder.s3.amazonaws.com/8cd68d09-3d9e-45d3-9cd2-f8f4969d69bd"
                                          width="125" height="120" style="display: block; border: 0px;"/><br>
                                     <h2 style="font-size: 30px; font-weight: 800; line-height: 36px; color: #333333; margin: 0;">
-                                        Thank you for booking Crueltouch!
+                                        {% trans "Thank you for booking Crueltouch!" %}
                                     </h2>
                                 </td>
                             </tr>
@@ -143,12 +144,14 @@
                                 <td align="left"
                                     style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 10px;">
                                     <p style="font-size: 16px; font-weight: 400; line-height: 24px; color: #777777;">
-                                        Hi {{ full_name }}, the crueltouch team is pleased to announce that your
-                                        reservation has been successfully submitted. We will do our best to process it.
-                                        You will receive an email shortly with the next steps.
+                                        {% blocktranslate %}
+                                            Hi {{ full_name }}, the crueltouch team is pleased to announce that your
+                                            reservation has been successfully submitted. We will do our best to process
+                                            it. You will receive an email shortly with the next steps.
+                                        {% endblocktranslate %}
                                     </p>
                                     <p style="font-size: 16px; font-weight: 700; line-height: 24px; color: #777777;">
-                                        NB: A $100 deposit is required to book the date. No deposit, no obligation.
+                                        {% trans "NB: A $100 deposit is required to book the date. No deposit, no obligation." %}
                                     </p>
                                 </td>
                             </tr>
@@ -158,7 +161,7 @@
                                         <tr>
                                             <td width="75%" align="left" bgcolor="#eeeeee"
                                                 style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
-                                                Booking Confirmation
+                                                {% trans "Booking Confirmation" %}
                                             </td>
                                             <td width="25%" align="left" bgcolor="#eeeeee"
                                                 style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">
@@ -167,7 +170,7 @@
                                         <tr>
                                             <td width="75%" align="left"
                                                 style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;">
-                                                Session type
+                                                {% trans "Session type" %}
                                             </td>
                                             <td width="25%" align="left"
                                                 style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;">
@@ -177,7 +180,7 @@
                                         <tr>
                                             <td width="75%" align="left"
                                                 style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                Place
+                                                {% trans "Place" %}
                                             </td>
                                             <td width="25%" align="left"
                                                 style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
@@ -187,7 +190,7 @@
                                         <tr>
                                             <td width="75%" align="left"
                                                 style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                Package
+                                                {% trans "Package" %}
                                             </td>
                                             <td width="25%" align="left"
                                                 style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
@@ -197,7 +200,7 @@
                                         <tr>
                                             <td width="75%" align="left"
                                                 style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
-                                                Status
+                                                {% trans "Status" %}
                                             </td>
                                             <td width="25%" align="left"
                                                 style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
@@ -213,7 +216,7 @@
                                         <tr>
                                             <td width="75%" align="left"
                                                 style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                                                ESTIMATED COST
+                                                {% trans "ESTIMATED COST" %}
                                             </td>
                                             <td width="25%" align="left"
                                                 style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
@@ -253,7 +256,7 @@
                                             <tr>
                                                 <td align="left" valign="top"
                                                     style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px;">
-                                                    <p style="font-weight: 800;">Estimated Response Date</p>
+                                                    <p style="font-weight: 800;">{% trans "Estimated Response Date" %}</p>
                                                     <p>{{ estimated_response_time }}</p>
                                                 </td>
                                             </tr>
@@ -287,7 +290,7 @@
                                 <td align="center"
                                     style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 25px;">
                                     <h2 style="font-size: 24px; font-weight: 800; line-height: 30px; color: #ffffff; margin: 0;">
-                                        See my latest works.
+                                        {% trans "See my latest works" %}.
                                     </h2>
                                 </td>
                             </tr>
@@ -297,7 +300,7 @@
                                         <tr>
                                             <td align="center" style="border-radius: 5px;" bgcolor="#66b3b7">
                                                 <a href="https://crueltouch.com/portfolio/" target="_blank"
-                                                   style="font-size: 18px; font-family: Open Sans, Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; border-radius: 5px; background-color: #66b3b7; padding: 15px 30px; border: 1px solid #66b3b7; display: block;">Awesome</a>
+                                                   style="font-size: 18px; font-family: Open Sans, Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; border-radius: 5px; background-color: #66b3b7; padding: 15px 30px; border: 1px solid #66b3b7; display: block;">{% trans "Awesome" %}</a>
                                             </td>
                                         </tr>
                                     </table>
@@ -338,9 +341,9 @@
                                 <td align="left"
                                     style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 24px;">
                                     <p style="font-size: 14px; font-weight: 400; line-height: 20px; color: #777777;">
-                                        If you don't want to receive any more email from us, <a
+                                        {% trans "If you don't want to receive any more email from us" %}, <a
                                             href="https://crueltouch.com/contact/" target="_blank"
-                                            style="color: #777777;">please let us know</a>.
+                                            style="color: #777777;">{% trans "please let us know" %}</a>.
                                     </p>
                                 </td>
                             </tr>
@@ -384,8 +387,8 @@
                     <td bgcolor="#ffffff" align="center"
                         style="padding: 30px 30px 30px 30px; color: #666666; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px;">
                         <p style="margin: 0;">Copyright &copy;<script>document.write(new Date().getFullYear());</script>
-                            All rights reserved | <a href="https://crueltouch.com" target="_blank"
-                                                     style="text-decoration: none">Crueltouch</a> | Made with love by <a
+                            {% trans 'All rights reserved' %} | <a href="https://crueltouch.com" target="_blank"
+                                                     style="text-decoration: none">Crueltouch</a> | {% trans 'Made with love by' %} <a
                                     href="https://adamspierredavid.com" target="_blank" style="text-decoration: none">APD</a>
                         </p>
                     </td>
