@@ -25,6 +25,11 @@ add_photos_patterns = [
     path('portfolio/', add_photos_portfolio, name='add_photos_portfolio'),
 ]
 
+link_pattern = [
+    path('creation/', create_downloadable_file, name='create_downloadable_file'),
+    path('show-all/', list_downloadable_files_link, name='show_all_links_created'),
+]
+
 urlpatterns = [
     # /administration/login
     path('login/', login_admin, name='login'),
@@ -50,4 +55,6 @@ urlpatterns = [
     path('portfolio/delete-photo/<int:pk>/', delete_photo_portfolio, name='delete_photo_portfolio'),
     # /administration/homepage/delete-photo/<int:pk>/
     path('homepage/delete-photo/<int:pk>/', delete_photo_homepage, name='delete_photo_homepage'),
+    # /administration/link/
+    path('link/', include(link_pattern)),
 ]

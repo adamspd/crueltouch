@@ -2,6 +2,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import path
 from django.views.generic.base import RedirectView
 
+from administration.views import get_downloadable_client_images, download_zip
 from .views import *
 
 app_name = 'homepage'
@@ -19,4 +20,8 @@ urlpatterns = [
     path('promotions/', promotions, name='promotions'),
     # /favicon.ico
     path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('favicon.ico')), name="get_favicon"),
+    # /download/<str:id_delivery>/
+    path('download/<str:id_delivery>/', get_downloadable_client_images, name='get_downloadable_client_images'),
+    # /download/zip/<str:id_delivery>/
+    path('download/zip/<str:id_delivery>/', download_zip, name='download_zip'),
 ]
