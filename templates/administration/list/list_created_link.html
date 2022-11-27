@@ -1,0 +1,72 @@
+{% extends 'administration/list/data.html' %}
+{% load i18n %}
+{% load static %}
+{% block title %}ICERD | {{ title }}{% endblock %}
+
+{% block pageTitle %}
+    {{ title }}
+{% endblock %}
+{% block pageLink %}
+    {% translate "Created links" %}
+{% endblock %}
+
+
+{% block table %}
+    <!-- Main content -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ title }}</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>{% translate "Client name" %}</th>
+                    <th>{% translate "Email" %}</th>
+                    <th>{% translate "Link" %}</th>
+                    <th>{% translate "Downloaded" %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for rs in deliveries %}
+                    <tr>
+                        <td>
+                            &nbsp;&nbsp;&nbsp;{{ rs.client_name }}
+                        </td>
+                        <td>
+                            <a href="mailto:{{ rs.client_email }}">
+                                &nbsp;&nbsp;&nbsp;{{ rs.client_email }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ rs.link_to_download }}" target="_blank">
+                                {{ rs.link_to_download }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ rs.was_downloaded }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>{% translate "Client name" %}</th>
+                    <th>{% translate "Email" %}</th>
+                    <th>{% translate "Link" %}</th>
+                    <th>{% translate "Downloaded" %}</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <!-- /.table-responsive -->
+    </div>
+    <!-- /.card-body -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}"
+                 role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
