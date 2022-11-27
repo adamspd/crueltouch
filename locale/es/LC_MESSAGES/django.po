@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-27 01:32+0100\n"
+"POT-Creation-Date: 2022-11-27 01:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -179,6 +179,45 @@ msgstr "Español"
 #: crueltouch/settings.py:198
 msgid "French"
 msgstr "Francés"
+
+#: static_pages_and_forms/form.py:19
+msgid "How do I call you ?"
+msgstr "¿Cómo te llamas?"
+
+#: static_pages_and_forms/form.py:26
+msgid "A valid email address, please... !"
+msgstr "Por favor, introduzca un correo electrónico válida...!"
+
+#: static_pages_and_forms/form.py:32
+msgid "What is the subject of your message... ?"
+msgstr "¿Cuál es el asunto de su mensaje...?"
+
+#: static_pages_and_forms/form.py:38
+msgid "I'm listening... !"
+msgstr "¡Estoy escuchando...!"
+
+#: static_pages_and_forms/models.py:27
+msgid "Your message has been received"
+msgstr "Su mensaje ha sido recibido"
+
+#: static_pages_and_forms/models.py:29
+#, fuzzy
+#| msgid "Thank you for your booking!"
+msgid "Thank you for reaching out to us"
+msgstr "¡Gracias por su reserva!"
+
+#: static_pages_and_forms/models.py:30
+#, python-brace-format
+msgid ""
+"Hi {instance.full_name}, thank you for reaching out to us. We will get back "
+"to you as soon as possible. "
+msgstr ""
+"Hola {instance.full_name}, gracias por contactarnos. Nos pondremos en "
+"contacto contigo lo antes posible. "
+
+#: static_pages_and_forms/models.py:32
+msgid "Have a great day! CruelTouch Team"
+msgstr "¡Que tengas un gran día! Equipo CruelTouch"
 
 #: static_pages_and_forms/views.py:19
 msgid "Thank you for your message, but it didn't went through !"
@@ -574,3 +613,74 @@ msgstr "Pasión"
 #: templates/homepage/index.html:72
 msgid "Travels"
 msgstr "Viajes"
+
+#: templates/static_pages_and_forms/contact.html:3
+#, fuzzy
+#| msgid "Contact Us"
+msgid "Contact us"
+msgstr "Contáctenos"
+
+#: templates/static_pages_and_forms/contact.html:34
+#: templates/static_pages_and_forms/success.html:34
+msgid "GET IN TOUCH"
+msgstr "PONTE EN CONTACTO"
+
+#: templates/static_pages_and_forms/contact.html:36
+#: templates/static_pages_and_forms/success.html:36
+msgid ""
+"\n"
+"                                They say a picture is worth a thousand "
+"words.\n"
+"                                But I wonder what else do “they” say?\n"
+"                                In photography there is a reality so subtle "
+"that it becomes more real than reality.\n"
+"                                Taking an image reveals how rich reality "
+"truly is.\n"
+"                                Photography is a way of feeling, of loving.\n"
+"                                What you have caught on film is captured "
+"forever…\n"
+"                                It remembers little things, long after you "
+"have forgotten everything.\n"
+"                            "
+msgstr ""
+"\n"
+"                                Dicen que una imagen vale más que mil "
+"palabras.\n"
+"                                Pero me pregunto qué más dicen “ellos”.\n"
+"                                En la fotografía hay una realidad tan "
+"sutil que se vuelve más real que la realidad.\n"
+"                                Tomar una imagen revela lo rico que es la "
+"verdad.\n"
+"                                La fotografía es una forma de sentir, de "
+"amar.\n"
+"                                Lo que has captado en la película queda capturado para siempre…\n"
+"Se acuerda de las pequeñas cosas, mucho después de que lo hayas olvidado todo.\n"
+"                            "
+
+#: templates/static_pages_and_forms/contact.html:81
+msgid "Submit"
+msgstr "Enviar"
+
+#: templates/static_pages_and_forms/success.html:3
+msgid "Success"
+msgstr "Éxito"
+
+#: templates/static_pages_and_forms/success.html:65
+msgid "Thank you for your inquiry"
+msgstr "¡Gracias por su consulta!"
+
+#: templates/static_pages_and_forms/success.html:67
+msgid "Your contact information and message was successfully submitted."
+msgstr "Su información de contacto y mensaje se envió correctamente."
+
+#: templates/static_pages_and_forms/success.html:70
+msgid "Wanna book me"
+msgstr "¿Quieres reservarme?"
+
+#: templates/static_pages_and_forms/success.html:70
+msgid "Click"
+msgstr "Haga clic"
+
+#: templates/static_pages_and_forms/success.html:71
+msgid "here"
+msgstr "aquí"
