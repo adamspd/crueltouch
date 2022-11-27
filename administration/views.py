@@ -1,13 +1,17 @@
 import datetime
+import os
+import zipfile
 from datetime import timedelta
+from io import BytesIO
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseNotFound, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.utils.translation import gettext_lazy as _
 
+from administration.models import PhotoDelivery, PhotoClient
 from client.form import CreateAlbumForm, UpdateBook
 from client.models import BookMe, UserClient, Photo
 from homepage.models import Album as AlbumHomepage
@@ -15,7 +19,7 @@ from homepage.models import Photo as PhotoHomepage
 from portfolio.models import Album as AlbumPortfolio
 from portfolio.models import Photo as PhotoPortfolio
 from static_pages_and_forms.models import ContactForm
-from utils.crueltouch_utils import email_check, c_print
+from utils.crueltouch_utils import email_check, c_print, send_client_email, is_ajax
 
 
 # Create your views here.
@@ -352,3 +356,94 @@ def delete_photo_homepage(request, pk):
     except PhotoHomepage.DoesNotExist:
         messages.error(request, "Photo does not exist")
         return redirect('administration:list_photos_homepage')
+
+
+@login_required(login_url='/administration/login/')
+@user_passes_test(email_check, login_url='/administration/login/')
+def create_downloadable_file(request):
+    if request.method == 'POST':
+        if is_ajax(request):
+            files = request.FILES.getlist("images_client_link")
+            client_name = request.POST.get("client_name")
+            client_email = request.POST.get("client_email")
+            next_ = request.POST.get('next', '/')
+            c_print(f"email: {client_email}", f"client name: {client_name}", f"next: {next_}")
+            # create a set of PhotoClient objects
+            photos = []
+            for file in files:
+                photo = PhotoClient.objects.create(file=file)
+                photos.append(photo)
+            delivery = PhotoDelivery(client_name=client_name, client_email=client_email)
+            delivery.save()
+            delivery.photos.set(photos)
+            delivery.save()
+            if client_email != "":
+                send_client_email(email_address=client_email, subject="New images were uploaded for you",
+                                  header="New images were uploaded for you",
+                                  message=f"Hello {client_name}, you can download your photos now !",
+                                  footer="Thank you for using our service ! The Crueltouch Team",
+                                  is_contact_form=False, is_other=True, button_label="Download my photos now",
+                                  button_text="Download", button_link=delivery.link_to_download)
+            else:
+                # return HttpResponseRedirect(next_)
+                pass
+            return JsonResponse({'link': delivery.link_to_download})
+    nota_bene = _(f"If you want the website to send the link automatically to the client, please, put the client "
+                  f"email in the field below. If you don't want to send the link automatically, leave the field "
+                  f"empty.")
+    context = {
+        'title': _("Create downloadable file"),
+        'nota_bene': nota_bene,
+    }
+
+    return render(request, 'administration/add/add_downloadable_file.html', context)
+
+
+@login_required(login_url='/administration/login/')
+@user_passes_test(email_check, login_url='/administration/login/')
+def list_downloadable_files_link(request):
+    deliveries = PhotoDelivery.objects.all()
+    context = {
+        'deliveries': deliveries,
+        'title': _("List of link to download images"),
+    }
+    return render(request, 'administration/list/list_created_link.html', context)
+
+
+def get_downloadable_client_images(request, id_delivery):
+    try:
+        photos = PhotoDelivery.objects.get(id_delivery=id_delivery)
+    except PhotoDelivery.DoesNotExist:
+        return HttpResponseNotFound("Not found")
+    context = {
+        'client_name': photos.get_client_name,
+        'photos': photos.get_photos(),
+        'id_delivery': id_delivery,
+    }
+    return render(request, 'administration/download/downloadable_images.html', context)
+
+
+def download_zip(request, id_delivery):
+    # -> zipfile.ZipFile:
+    try:
+        photos = PhotoDelivery.objects.get(id_delivery=id_delivery)
+    except PhotoDelivery.DoesNotExist:
+        return HttpResponseNotFound("Not found")
+
+    zip_subdir = "photos"
+    zip_filename = "%s.zip" % zip_subdir
+    s = BytesIO()
+    zf = zipfile.ZipFile(s, "w")
+    photos.set_downloaded_status()
+    photos = photos.get_photos()
+    for photo in photos:
+        print(f"file path: {photo.file.path}")
+        # get file name
+        filename = os.path.basename(photo.file.path)
+        print(f"file name: {filename}")
+        zip_path = os.path.join(zip_subdir, filename)
+        zf.write(photo.file.path, zip_path)
+    zf.close()
+    resp = HttpResponse(s.getvalue(), content_type="application/x-zip-compressed")
+    resp['Content-Disposition'] = 'attachment; filename=%s' % zip_filename
+    return resp

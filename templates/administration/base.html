@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="{% static 'homepage/img/icon/android-icon-48x48.png' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'homepage/img/icon/favicon.ico' %}">
     <title>{% block title %}Crueltouch | {% translate "Dashboard" %}{% endblock %}</title>
 
     <!-- Google Font: Source Sans Pro -->
@@ -257,6 +257,32 @@
                                         &nbsp;&nbsp;&nbsp;&nbsp;
                                         <i class="far fa-edit nav-icon"></i>
                                         <p>{% translate "Create new album" %}</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fa-solid fa-link"></i>
+                                <p>
+                                    {% translate "Send photo via link" %}
+                                    <i class="fas fa-angle-left right"></i>
+                                    <span class="badge badge-info right">2</span>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{% url 'administration:create_downloadable_file' %}" class="nav-link">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="far fa-plus-square nav-icon"></i>
+                                        <p>{% translate "Create link" %}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'administration:show_all_links_created' %}" class="nav-link">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="far fa-eye nav-icon"></i>
+                                        <p>{% translate "View all links" %}</p>
                                     </a>
                                 </li>
                             </ul>

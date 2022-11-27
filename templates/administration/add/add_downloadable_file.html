@@ -1,0 +1,162 @@
+{% extends 'administration/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block title %}Crueltouch | {{ title }}{% endblock %}
+{% block customCSS %}
+    <style>
+        .not-visible {
+            display: none;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <section class="content content-wrapper">
+        <div class="container-fluid">
+            <div class="row" style="margin: 0 auto; padding-top: 20px">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">{{ title }} </h3>
+                            <small class="float-right"></small>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form method="POST" enctype="multipart/form-data" id="upload-form">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">{% translate "Upload image" %}</label>
+                                    <div class="form-group col-md-12">
+                                        <label>{{ nota_bene }}</label><br>
+                                        <div class="clientEmail">
+                                            <input type="email" name="client_email" class="form-control"
+                                                   placeholder="{% trans 'Client email' %}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label>{% trans "Client name" %} *</label><br>
+                                        <div class="clientName name">
+                                            <input type="text" name="client_name" class="form-control"
+                                                   placeholder="{% trans 'Put the client name for reference' %}"
+                                                   required>
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input required name="images_client_link" type="file" multiple
+                                                   class="form-control-file"
+                                                   id="images_client_link">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="submit" id="formSubmitBTN"
+                                        class="btn btn-info">{% translate "Send" %}</button>
+                                <button type="reset" class="btn btn-default float-right">
+                                    <a href="{% url 'administration:index' %}">{% translate "Cancel" %}</a>
+                                </button>
+                            </div>
+
+                            <br>
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}"
+                                         role="alert">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+                            {% if form.errors %}
+                                {% for field, errors in form.errors.items %}
+                                    {% for error in errors %}
+                                        <p style="color: darkred">{{ error }}</p>
+                                    {% endfor %}
+                                {% endfor %}
+                            {% endif %}
+                        </form>
+
+                    </div>
+                </div>
+                <div class="not-visible" id="progress-box"></div>
+                <div class="not-visible" id="alert-box"></div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block customJS %}
+    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+    <script>
+        const uploadForm = document.getElementById('upload-form');
+        const imagesClientLink = document.getElementById('images_client_link');
+        const progressBox = document.getElementById('progress-box');
+        const csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+        const formSubmitBTN = document.getElementById('formSubmitBTN');
+        const alertBox = document.getElementById('alert-box');
+
+        formSubmitBTN.addEventListener('click', (e) => {
+            console.log("Clicked")
+            e.preventDefault();
+            progressBox.classList.remove('not-visible');
+
+            // upload multiple files
+            const files = imagesClientLink.files;
+            const formData = new FormData();
+            for (let i = 0; i < files.length; i++) {
+                let file = files[i];
+                formData.append('images_client_link', file, file.name);
+            }
+            formData.append('csrfmiddlewaretoken', csrfToken);
+            formData.append('client_email', document.getElementsByName('client_email')[0].value);
+            formData.append('client_name', document.getElementsByName('client_name')[0].value);
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'administration:create_downloadable_file' %}',
+                enctype: 'multipart/form-data',
+                data: formData,
+                beforeSend: function () {
+
+                },
+                xhr: function () {
+                    const xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener('progress', function (e) {
+                        if (e.lengthComputable) {
+                            const percent = Math.round((e.loaded / e.total) * 100);
+                            progressBox.innerHTML = `<div class="progress">
+                            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: ${percent}%;" aria-valuenow="${percent}" aria-valuemin="0" aria-valuemax="100">${percent}%</div>
+                            </div>`;
+                        }
+                    });
+                    return xhr;
+                },
+                success: function (data) {
+                    progressBox.innerHTML = `<div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+                    </div>`;
+                    alertBox.classList.remove('not-visible');
+                    alertBox.innerHTML = `<br><div class="alert alert-success" role="alert">
+                                            Link successfully created, <a href="${data.link}" class="alert-link">check it now</a>
+                                            </div>`;
+                    setTimeout(() => {
+                        progressBox.classList.add('not-visible');
+                    }, 3000);
+                    uploadForm.reset();
+                },
+                error: function (data) {
+                    console.log(data);
+                    progressBox.innerHTML = `<div class="alert alert-danger" role="alert">
+                                            Something wrong happened, please try again !
+                                            </div>`;
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            })
+        })
+    </script>
+{% endblock %}
