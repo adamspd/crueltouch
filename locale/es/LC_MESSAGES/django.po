@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-27 13:22+0100\n"
+"POT-Creation-Date: 2022-11-29 01:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,9 +43,6 @@ msgid "Permissions Emails"
 msgstr "Permisos de correos"
 
 #: administration/models.py:34
-#, fuzzy
-#| msgid "Photo"
-#| msgid_plural "Photos"
 msgid "Photo"
 msgstr "Foto"
 
@@ -58,11 +55,8 @@ msgid "Was downloaded"
 msgstr "Fue descargado"
 
 #: administration/models.py:62
-#, fuzzy
-#| msgid "Photo"
-#| msgid_plural "Photos"
 msgid "Photos"
-msgstr "Foto"
+msgstr "Fotos"
 
 #: administration/models.py:63
 msgid "Date"
@@ -190,6 +184,7 @@ msgstr "Nombre"
 
 #: client/form.py:47 templates/client/booking_and_promotions/bookme.html:140
 #: templates/client/login_registration/log_as_owner.html:24
+#: templates/legal/privacy_policy.html:157
 msgid "Email address"
 msgstr "Correo electrónico"
 
@@ -206,7 +201,8 @@ msgstr "Confirmar contraseña"
 msgid "Full Name"
 msgstr "Nombre completo"
 
-#: client/form.py:64 templates/administration/list/list_contact_forms.html:26
+#: client/form.py:64 static_pages_and_forms/models.py:12
+#: templates/administration/list/list_contact_forms.html:26
 #: templates/administration/list/list_contact_forms.html:59
 #: templates/administration/list/list_created_link.html:26
 #: templates/administration/list/list_created_link.html:56
@@ -249,7 +245,8 @@ msgstr "Fecha deseada"
 msgid "Address"
 msgstr "Dirección"
 
-#: client/form.py:78 templates/administration/list/list_contact_forms.html:25
+#: client/form.py:78 static_pages_and_forms/models.py:11
+#: templates/administration/list/list_contact_forms.html:25
 #: templates/administration/list/list_contact_forms.html:58
 #: templates/client/booking_and_promotions/bookme.html:136
 msgid "Full name"
@@ -365,17 +362,29 @@ msgstr "¿Cuál es el asunto de su mensaje...?"
 msgid "I'm listening... !"
 msgstr "¡Estoy escuchando...!"
 
-#: static_pages_and_forms/models.py:27
+#: static_pages_and_forms/models.py:13
+#: templates/administration/list/list_contact_forms.html:27
+#: templates/administration/list/list_contact_forms.html:60
+msgid "Subject"
+msgstr "Tema"
+
+#: static_pages_and_forms/models.py:14
+#: templates/administration/list/list_contact_forms.html:28
+#: templates/administration/list/list_contact_forms.html:61
+msgid "Message"
+msgstr "Mensaje"
+
+#: static_pages_and_forms/models.py:28
 msgid "Your message has been received"
 msgstr "Su mensaje ha sido recibido"
 
-#: static_pages_and_forms/models.py:29
+#: static_pages_and_forms/models.py:30
 #, fuzzy
 #| msgid "Thank you for your booking!"
 msgid "Thank you for reaching out to us"
 msgstr "¡Gracias por su reserva!"
 
-#: static_pages_and_forms/models.py:30
+#: static_pages_and_forms/models.py:31
 #, python-brace-format
 msgid ""
 "Hi {instance.full_name}, thank you for reaching out to us. We will get back "
@@ -384,13 +393,30 @@ msgstr ""
 "Hola {instance.full_name}, gracias por contactarnos. Nos pondremos en "
 "contacto contigo lo antes posible. "
 
-#: static_pages_and_forms/models.py:32
+#: static_pages_and_forms/models.py:33
 msgid "Have a great day! CruelTouch Team"
 msgstr "¡Que tengas un gran día! Equipo CruelTouch"
 
 #: static_pages_and_forms/views.py:19
 msgid "Thank you for your message, but it didn't went through !"
 msgstr "¡Gracias por su mensaje, pero no se envió!"
+
+#: static_pages_and_forms/views.py:56 templates/homepage/base.html:99
+#: templates/legal/privacy_policy.html:16
+msgid "Privacy Policy"
+msgstr "Política de privacidad"
+
+#: static_pages_and_forms/views.py:57
+msgid "Privacy Policy page"
+msgstr "Página de política de privacidad"
+
+#: static_pages_and_forms/views.py:63
+msgid "Terms and Conditions"
+msgstr "Términos y condiciones"
+
+#: static_pages_and_forms/views.py:64
+msgid "Terms and Conditions page"
+msgstr "Página de términos y condiciones"
 
 #: templates/administration/add/add_album.html:4
 #: templates/administration/add/add_photos.html:26
@@ -438,7 +464,7 @@ msgstr "Tablero"
 msgid "Homepage"
 msgstr "Página de inicio"
 
-#: templates/administration/base.html:67 templates/homepage/base.html:90
+#: templates/administration/base.html:67 templates/homepage/base.html:91
 msgid "Logout"
 msgstr "Cerrar sesión"
 
@@ -460,7 +486,7 @@ msgstr "Agregar fotos"
 msgid "View all photos"
 msgstr "Ver todas las fotos"
 
-#: templates/administration/base.html:235 templates/homepage/base.html:70
+#: templates/administration/base.html:235 templates/homepage/base.html:71
 #: templates/portfolio/index_portfolio.html:4
 msgid "Portfolio"
 msgstr "Portafolio"
@@ -680,7 +706,7 @@ msgid "please let us know"
 msgstr "por favor háganoslo saber"
 
 #: templates/administration/email_template/session_request_received.html:392
-#: templates/homepage/base.html:148
+#: templates/homepage/base.html:158
 msgid "All rights reserved"
 msgstr "Todos los derechos reservados"
 
@@ -695,16 +721,6 @@ msgstr "Hecho con amor por"
 #: templates/administration/view/index.html:73
 msgid "Contact Forms"
 msgstr "Formularios de contacto"
-
-#: templates/administration/list/list_contact_forms.html:27
-#: templates/administration/list/list_contact_forms.html:60
-msgid "Subject"
-msgstr "Tema"
-
-#: templates/administration/list/list_contact_forms.html:28
-#: templates/administration/list/list_contact_forms.html:61
-msgid "Message"
-msgstr "Mensaje"
 
 #: templates/administration/list/list_created_link.html:10
 msgid "Created links"
@@ -989,65 +1005,91 @@ msgstr "¿Ya tienes una cuenta?"
 msgid "CRUELTOUCH"
 msgstr "CRUELTOUCH"
 
-#: templates/homepage/base.html:59
+#: templates/homepage/base.html:60
 msgid "Home"
 msgstr "Inicio"
 
-#: templates/homepage/base.html:62
+#: templates/homepage/base.html:63
 msgid "Meet"
 msgstr "Conoce"
 
-#: templates/homepage/base.html:62
+#: templates/homepage/base.html:63
 msgid "Contact"
 msgstr "Contacta"
 
-#: templates/homepage/base.html:64
+#: templates/homepage/base.html:65
 msgid "Meet Crueltouch"
 msgstr "Conocer Crueltouch"
 
-#: templates/homepage/base.html:65
+#: templates/homepage/base.html:66 templates/legal/privacy_policy.html:383
 msgid "Contact Us"
 msgstr "Contáctenos"
 
-#: templates/homepage/base.html:76 templates/homepage/base.html:78
+#: templates/homepage/base.html:77 templates/homepage/base.html:79
 msgid "Book Me"
 msgstr "Reservame"
 
-#: templates/homepage/base.html:79
+#: templates/homepage/base.html:80
 msgid "Latest Promotions"
 msgstr "Últimas promociones"
 
-#: templates/homepage/base.html:84
+#: templates/homepage/base.html:85
 msgid "Client Login"
 msgstr "Acceso cliente"
 
-#: templates/homepage/base.html:86
+#: templates/homepage/base.html:87
 msgid "View Your Images"
 msgstr "Ver tus imágenes"
 
-#: templates/homepage/base.html:87
+#: templates/homepage/base.html:88
 msgid "Registration"
 msgstr "Registro"
 
-#: templates/homepage/base.html:88
+#: templates/homepage/base.html:89
 msgid "Admin Login"
 msgstr "Admin Iniciar"
 
-#: templates/homepage/base.html:148
+#: templates/homepage/base.html:97
+msgid "Legal"
+msgstr "Legal"
+
+#: templates/homepage/base.html:100
+msgid "Terms & Conditions"
+msgstr "Términos y condiciones"
+
+#: templates/homepage/base.html:158
 msgid "Made with"
 msgstr "Hecho con"
 
-#: templates/homepage/base.html:149
+#: templates/homepage/base.html:159
 msgid "Love"
 msgstr "Amor"
 
-#: templates/homepage/base.html:149
+#: templates/homepage/base.html:159
 msgid "by"
 msgstr "por"
 
-#: templates/homepage/base.html:163
+#: templates/homepage/base.html:173
 msgid "Search here"
 msgstr "Buscar aquí"
+
+#: templates/homepage/cookie.html:8
+msgid "Cookies Consent"
+msgstr "Consentimiento de cookies"
+
+#: templates/homepage/cookie.html:9
+msgid "This website use cookies to ensure you get the best experience."
+msgstr ""
+"Este sitio web utiliza cookies para garantizar que obtenga la mejor "
+"experiencia."
+
+#: templates/homepage/cookie.html:11
+msgid "Got it"
+msgstr "Comprendido"
+
+#: templates/homepage/cookie.html:12
+msgid "Learn more"
+msgstr "Aprende más"
 
 #: templates/homepage/index.html:27
 msgid "Promotions"
@@ -1213,6 +1255,2422 @@ msgstr "Clientes satisfechos"
 msgid "Photoshoot"
 msgstr "Sesión de fotos"
 
+#: templates/legal/privacy_policy.html:17
+#: templates/legal/terms_and_conditions.html:17
+msgid "Last updated"
+msgstr "Última actualización"
+
+#: templates/legal/privacy_policy.html:17
+msgid "November 10, 2022"
+msgstr "10 de noviembre de 2022"
+
+#: templates/legal/privacy_policy.html:19
+msgid ""
+"\n"
+"                                This page informs you of our policies "
+"regarding the collection, use, and disclosure of\n"
+"                                personal data when you use our Service and "
+"the choices you have associated with that\n"
+"                                data.\n"
+"                            "
+msgstr ""
+"\n"
+"                                    Esta página le informa de nuestras "
+"políticas con respecto a la recopilación, uso y divulgación de\n"
+"                                    datos personales cuando utiliza nuestro "
+"Servicio y las opciones que tiene asociadas con esos\n"
+"                                    datos.\n"
+"                                "
+
+#: templates/legal/privacy_policy.html:26
+msgid ""
+"\n"
+"                                We use your data to provide and improve the "
+"Service. By using the Service, you agree to\n"
+"                                the\n"
+"                                collection and use of information in "
+"accordance with this policy. Unless otherwise\n"
+"                                defined\n"
+"                                in this Privacy Policy, terms used in this "
+"Privacy Policy have the same meanings as in\n"
+"                                our\n"
+"                                Terms and Conditions, accessible from\n"
+"                            "
+msgstr ""
+"\n"
+"                                Utilizamos sus datos para proporcionar y "
+"mejorar el Servicio. Al utilizar el Servicio, usted acepta\n"
+"                                la\n"
+"                                recopilación y uso de la información de "
+"acuerdo con esta política. A menos que se defina\n"
+"                                de otra manera\n"
+"                                en esta política de privacidad, los términos "
+"utilizados en esta política de privacidad tienen el mismo significado que "
+"en\n"
+"                                nuestro\n"
+"                                Términos y condiciones, accesibles desde\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:35
+#: templates/static_pages_and_forms/success.html:71
+msgid "here"
+msgstr "aquí"
+
+#: templates/legal/privacy_policy.html:36
+msgid "Interpretation"
+msgstr "Interpretación"
+
+#: templates/legal/privacy_policy.html:37
+msgid ""
+"\n"
+"                            The words of which the initial letter is "
+"capitalized have meanings defined under the\n"
+"                            following conditions. The following definitions "
+"shall have the same meaning regardless of\n"
+"                            whether they appear in singular or in plural.\n"
+"                        "
+msgstr ""
+"\n"
+"                                Las palabras cuya letra inicial está en "
+"mayúsculas tienen significados definidos en las siguientes\n"
+"                                condiciones. Las siguientes definiciones "
+"tendrán el mismo significado sin importar si aparecen en singular o en "
+"plural.\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:43
+msgid "Definitions"
+msgstr "Definiciones"
+
+#: templates/legal/privacy_policy.html:44
+msgid "For the purposes of this Privacy Policy"
+msgstr "Con el propósito de esta política de privacidad"
+
+#: templates/legal/privacy_policy.html:48
+msgid "Account"
+msgstr "Cuenta"
+
+#: templates/legal/privacy_policy.html:49
+msgid ""
+"\n"
+"                                        means a unique account created for "
+"You to access our Service\n"
+"                                        or parts of our Service.\n"
+"                                    "
+msgstr ""
+"\n"
+"                                            significa una cuenta única "
+"creada para que usted acceda a nuestro Servicio\n"
+"                                            o partes de nuestro Servicio.\n"
+"                                        "
+
+#: templates/legal/privacy_policy.html:57
+msgid "Company"
+msgstr "Compañía"
+
+#: templates/legal/privacy_policy.html:58
+msgid ""
+"\n"
+"                                        (referred to as either &quot;the "
+"Company&quot;, &quot;We&quot;,\n"
+"                                        &quot;Us&quot; or &quot;Our&quot; in "
+"this Agreement) refers to\n"
+"                                        crueltouch.com.\n"
+"                                    "
+msgstr ""
+"\n"
+"                                        (denominado &quot;la Compañía&quot;, "
+"&quot;Nosotros&quot;,\n"
+"                                        &quot;Nosotros&quot; o &quot;"
+"Nuestro&quot; en este Acuerdo) se refiere a\n"
+"                                        crueltouch.com.\n"
+"                                    "
+
+#: templates/legal/privacy_policy.html:67
+msgid "Cookies"
+msgstr "Cookies"
+
+#: templates/legal/privacy_policy.html:68
+msgid ""
+"\n"
+"                                        are small files that are placed on "
+"Your computer, mobile\n"
+"                                        device or any other device by a "
+"website, containing the details of Your browsing\n"
+"                                        history on that website among its "
+"many uses.\n"
+"                                    "
+msgstr ""
+"\n"
+"                                        son archivos pequeños que se colocan "
+"en su computadora, dispositivo móvil\n"
+"                                        o cualquier otro dispositivo por un "
+"sitio web, que contiene los detalles de su historial de navegación en ese "
+"sitio web entre sus muchos usos.\n"
+"                                    "
+
+#: templates/legal/privacy_policy.html:76
+msgid "Country"
+msgstr "País"
+
+#: templates/legal/privacy_policy.html:76
+msgid "refers to: United States of America"
+msgstr "se refiere a: Estados Unidos de América"
+
+#: templates/legal/privacy_policy.html:80
+msgid "Device"
+msgstr "Dispositivo"
+
+#: templates/legal/privacy_policy.html:81
+msgid ""
+"\n"
+"                                        means any device that can access the "
+"Service such as a\n"
+"                                        computer, a cellphone or a digital "
+"tablet.\n"
+"                                    "
+msgstr ""
+"\n"
+"                                        significa cualquier dispositivo que "
+"pueda acceder al Servicio como un\n"
+"                                        computadora, un teléfono celular o "
+"una tableta digital.\n"
+"                                    "
+
+#: templates/legal/privacy_policy.html:88
+#: templates/legal/privacy_policy.html:147
+msgid "Personal Data"
+msgstr "Datos personales"
+
+#: templates/legal/privacy_policy.html:89
+msgid ""
+"\n"
+"                                        is any information that relates to "
+"an identified or identifiable individual.\n"
+"                                    "
+msgstr ""
+"\n"
+"                                        es cualquier información que se "
+"refiere a una persona identificada o identificable.\n"
+"                                    "
+
+#: templates/legal/privacy_policy.html:95
+msgid "Service"
+msgstr "Servicio"
+
+#: templates/legal/privacy_policy.html:95
+msgid "refers to the Website."
+msgstr "se refiere al sitio web."
+
+#: templates/legal/privacy_policy.html:99
+msgid "Service Provider"
+msgstr "Proveedor de servicios"
+
+#: templates/legal/privacy_policy.html:100
+msgid ""
+"\n"
+"                                        means any natural or legal person "
+"who processes the\n"
+"                                        data on behalf of the Company. It "
+"refers to third-party companies or individuals\n"
+"                                        employed by the Company to "
+"facilitate the Service, to provide the Service on\n"
+"                                        behalf\n"
+"                                        of the Company, to perform services "
+"related to the Service or to assist the\n"
+"                                        Company\n"
+"                                        in analyzing how the Service is "
+"used.\n"
+"                                    "
+msgstr ""
+"\n"
+"                                        significa cualquier persona natural "
+"o jurídica que procesa los\n"
+"                                        datos en nombre de la Compañía. Se "
+"refiere a empresas o personas terceras\n"
+"                                        empleadas por la Compañía para "
+"facilitar el Servicio, para proporcionar el Servicio en\n"
+"                                        nombre\n"
+"                                        de la Compañía, para realizar "
+"servicios relacionados con el Servicio o para ayudar a\n"
+"                                        la Compañía\n"
+"                                        en el análisis de cómo se utiliza el "
+"Servicio.\n"
+"                                    "
+
+#: templates/legal/privacy_policy.html:113
+#: templates/legal/privacy_policy.html:161
+msgid "Usage Data"
+msgstr "Datos de uso"
+
+#: templates/legal/privacy_policy.html:114
+msgid ""
+"\n"
+"                                        refers to data collected "
+"automatically, either generated\n"
+"                                        by the use of the Service or from "
+"the Service infrastructure itself (for\n"
+"                                        example,\n"
+"                                        the duration of a page visit).\n"
+"                                    "
+msgstr ""
+"\n"
+"                                        se refiere a los datos recopilados "
+"automáticamente, ya sea generado\n"
+"                                        por el uso del Servicio o desde la "
+"infraestructura del Servicio mismo (por\n"
+"                                        ejemplo,\n"
+"                                        la duración de una visita a la "
+"página).\n"
+"                                    "
+
+#: templates/legal/privacy_policy.html:123
+msgid "Website"
+msgstr "Sitio web"
+
+#: templates/legal/privacy_policy.html:124
+msgid "refers to crueltouch.com, accessible from"
+msgstr "se refiere a crueltouch.com, accesible desde"
+
+#: templates/legal/privacy_policy.html:129
+msgid "You"
+msgstr "Usted"
+
+#: templates/legal/privacy_policy.html:130
+msgid ""
+"\n"
+"                                        means the individual accessing or "
+"using the Service, or the\n"
+"                                        company, or other legal entity on "
+"behalf of which such individual is accessing\n"
+"                                        or\n"
+"                                        using the Service, as applicable.\n"
+"                                    "
+msgstr ""
+"\n"
+"                                        significa la persona que accede o "
+"usa el Servicio, o la\n"
+"                                        empresa, o otra entidad legal en "
+"nombre de la cual esa persona está accediendo o\n"
+"                                        usando el Servicio, según "
+"corresponda.\n"
+"                                    "
+
+#: templates/legal/privacy_policy.html:139
+msgid "Collecting and Using Your Personal Data"
+msgstr "Recopilación y uso de sus datos personales"
+
+#: templates/legal/privacy_policy.html:141
+msgid ""
+"\n"
+"                                We collect several types of information for "
+"various purposes to provide and improve\n"
+"                                our Service to you.\n"
+"                            "
+msgstr ""
+"\n"
+"                                Recopilamos varios tipos de información para "
+"diversos fines para proporcionar y mejorar\n"
+"                                nuestro Servicio a usted.\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:146
+msgid "Types of Data Collected"
+msgstr "Tipos de datos recopilados"
+
+#: templates/legal/privacy_policy.html:149
+msgid ""
+"\n"
+"                                While using our Service, we may ask you to "
+"provide us with certain personally\n"
+"                                identifiable\n"
+"                                information that can be used to contact or "
+"identify you (\"Personal Data\"). Personally\n"
+"                                identifiable information may include, but is "
+"not limited to:\n"
+"                            "
+msgstr ""
+"\n"
+"                                Al usar nuestro Servicio, es posible que le "
+"pidamos que nos proporcione cierta información\n"
+"                                personalmente\n"
+"                                identificable que se puede usar para "
+"contactarlo o identificarlo (\"Datos personales\"). La información\n"
+"                                personalmente identificable puede incluir, "
+"pero no se limita a:\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:158
+msgid "First name and last name"
+msgstr "Nombre y apellido"
+
+#: templates/legal/privacy_policy.html:159
+msgid "Cookies and Usage Data"
+msgstr "Cookies y datos de uso"
+
+#: templates/legal/privacy_policy.html:163
+msgid "Usage Data is collected automatically when using the Service."
+msgstr "Usage Data se recopila automáticamente al usar el Servicio."
+
+#: templates/legal/privacy_policy.html:166
+msgid ""
+"\n"
+"                                We may also collect information how the "
+"Service is accessed and used (\"Usage Data\").\n"
+"                                This\n"
+"                                Usage Data may include information such as "
+"your computer's Internet Protocol address\n"
+"                                (e.g.\n"
+"                                IP address), browser type, browser version, "
+"the pages of our Service that you visit, the\n"
+"                                time and date of your visit, the time spent "
+"on those pages, unique device identifiers\n"
+"                                and\n"
+"                                other diagnostic data.\n"
+"                            "
+msgstr ""
+"\n"
+"                                También podemos recopilar información sobre "
+"cómo se accede y se usa el Servicio (\"Datos de uso\").\n"
+"                                Estos\n"
+"                                Datos de uso pueden incluir información como "
+"la dirección IP de Internet de su computadora (por ejemplo, dirección\n"
+"                                IP), tipo de navegador, versión del "
+"navegador, las páginas de nuestro Servicio que visita, la\n"
+"                                fecha y hora de su visita y el tiempo "
+"transcurrido en esas páginas, identificadores únicos de dispositivos\n"
+"                                y\n"
+"                                otros datos de diagnóstico.\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:177
+msgid "Tracking & Cookies Data"
+msgstr "Datos de seguimiento y cookies"
+
+#: templates/legal/privacy_policy.html:179
+msgid ""
+"\n"
+"                                We use cookies and similar tracking "
+"technologies to track the activity on our Service\n"
+"                                and\n"
+"                                hold certain information.\n"
+"                            "
+msgstr ""
+"\n"
+"                                Utilizamos cookies y tecnologías de "
+"seguimiento similares para rastrear la actividad en nuestro Servicio\n"
+"                                y\n"
+"                                mantener cierta información.\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:186
+msgid ""
+"\n"
+"                                Cookies are files with small amount of data "
+"which may include an anonymous unique\n"
+"                                identifier.\n"
+"                                Cookies are sent to your browser from a "
+"website and stored on your device. Tracking\n"
+"                                technologies also used are beacons, tags, "
+"and scripts to collect and track information\n"
+"                                and\n"
+"                                to improve and analyze our Service.\n"
+"                            "
+msgstr ""
+"\n"
+"                                Las cookies son archivos con una pequeña "
+"cantidad de datos que pueden incluir un identificador único\n"
+"                                anónimo. Las cookies se envían a su "
+"navegador desde un sitio web y se almacenan en su dispositivo. Las "
+"tecnologías de seguimiento\n"
+"                                también utilizadas son balizas, etiquetas y "
+"scripts para recopilar y rastrear información\n"
+"                                y\n"
+"                                para mejorar y analizar nuestro Servicio.\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:196
+msgid ""
+"\n"
+"                                You can instruct your browser to refuse all "
+"cookies or to indicate when a cookie is\n"
+"                                being\n"
+"                                sent. However, if you do not accept cookies, "
+"you may not be able to use some portions of\n"
+"                                our\n"
+"                                Service.\n"
+"                            "
+msgstr ""
+"\n"
+"                                Puede instruir a su navegador para que "
+"rechace todas las cookies o para que indique cuándo se\n"
+"                                está\n"
+"                                enviando una cookie. Sin embargo, si no "
+"acepta cookies, es posible que no pueda usar algunas partes de\n"
+"                                nuestro\n"
+"                                Servicio.\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:204
+msgid "Examples of Cookies we use:"
+msgstr "Ejemplos de cookies que utilizamos:"
+
+#: templates/legal/privacy_policy.html:206
+msgid "Session Cookies."
+msgstr "Cookies de sesión."
+
+#: templates/legal/privacy_policy.html:207
+msgid ""
+"\n"
+"                                    We use Session Cookies to operate our "
+"Service.\n"
+"                                "
+msgstr ""
+"\n"
+"                                    Utilizamos cookies de sesión para operar "
+"nuestro Servicio.\n"
+"                                "
+
+#: templates/legal/privacy_policy.html:211
+msgid "Preference Cookies."
+msgstr "Cookies de preferencia."
+
+#: templates/legal/privacy_policy.html:212
+msgid ""
+"\n"
+"                                    We use Preference Cookies to remember "
+"your preferences and various settings.\n"
+"                                "
+msgstr ""
+"\n"
+"                                    Utilizamos cookies de preferencia para "
+"recordar sus preferencias y varios ajustes.\n"
+"                                "
+
+#: templates/legal/privacy_policy.html:216
+msgid "Security Cookies."
+msgstr "Cookies de seguridad."
+
+#: templates/legal/privacy_policy.html:217
+msgid ""
+"\n"
+"                                    We use Security Cookies for security "
+"purposes.\n"
+"                                "
+msgstr ""
+"\n"
+"                                    Utilizamos cookies de seguridad por "
+"razones de seguridad.\n"
+"                                "
+
+#: templates/legal/privacy_policy.html:222
+msgid "Use of Data"
+msgstr "Uso de los datos"
+
+#: templates/legal/privacy_policy.html:224
+msgid ""
+"\n"
+"                                My Company uses the collected data for "
+"various purposes:\n"
+"                            "
+msgstr ""
+"\n"
+"                                Mi empresa utiliza los datos recopilados "
+"para diversos fines:\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:229
+msgid "To provide and maintain the Service"
+msgstr "Para proporcionar y mantener el Servicio"
+
+#: templates/legal/privacy_policy.html:230
+msgid "To notify you about changes to our Service"
+msgstr "Para informarle sobre los cambios en nuestro Servicio"
+
+#: templates/legal/privacy_policy.html:232
+msgid ""
+"\n"
+"                                    To allow you to participate in "
+"interactive features of our Service when you choose\n"
+"                                    to do\n"
+"                                    so\n"
+"                                "
+msgstr ""
+"\n"
+"                                    Para permitirle participar en las "
+"características interactivas de nuestro Servicio cuando usted elija\n"
+"                                    hacer\n"
+"                                    así\n"
+"                                "
+
+#: templates/legal/privacy_policy.html:238
+msgid "To provide customer care and support"
+msgstr "Para proporcionar atención al cliente y soporte"
+
+#: templates/legal/privacy_policy.html:240
+msgid ""
+"To provide analysis or valuable information so that we can improve the "
+"Service"
+msgstr ""
+"Para proporcionar análisis o información valiosa para que podamos mejorar el "
+"Servicio"
+
+#: templates/legal/privacy_policy.html:242
+msgid "To monitor the usage of the Service"
+msgstr "Para monitorear el uso del Servicio"
+
+#: templates/legal/privacy_policy.html:243
+msgid "To detect, prevent and address technical issues"
+msgstr "Para detectar, evitar y abordar problemas técnicos"
+
+#: templates/legal/privacy_policy.html:245
+msgid "Transfer Of Data"
+msgstr "Transferencia de datos"
+
+#: templates/legal/privacy_policy.html:247
+msgid ""
+"\n"
+"                                Your information, including Personal Data, "
+"may be transferred to — and maintained on —\n"
+"                                computers located outside your state, "
+"province, country or other governmental\n"
+"                                jurisdiction where the data protection laws "
+"may differ than those from your\n"
+"                                jurisdiction.\n"
+"                            "
+msgstr ""
+"\n"
+"                                Su información, incluidos los datos "
+"personales, puede transferirse a y mantenerse en\n"
+"                                computadoras ubicadas fuera de su estado, "
+"provincia, país u otra jurisdicción gubernamental\n"
+"                                donde las leyes de protección de datos "
+"pueden diferir de las de su\n"
+"                                jurisdicción.\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:255
+msgid ""
+"\n"
+"                                If you are located outside United States of "
+"America and choose to provide information to us, please note\n"
+"                                that we transfer the data, including "
+"Personal Data, to United States of America and process it\n"
+"                                there.\n"
+"                            "
+msgstr ""
+"\n"
+"                                Si reside fuera de los Estados Unidos de "
+"América y decide proporcionarnos información, tenga en cuenta\n"
+"                                que transferimos los datos, incluidos los "
+"datos personales, a los Estados Unidos de América y los procesamos\n"
+"                                allí.\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:262
+msgid ""
+"\n"
+"                                Your consent to this Privacy Policy followed "
+"by your submission of such information\n"
+"                                represents your agreement to that transfer.\n"
+"                            "
+msgstr ""
+"\n"
+"                                Su consentimiento para esta política de "
+"privacidad seguido de la presentación de dicha información\n"
+"                                representa su acuerdo con esa "
+"transferencia.\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:268
+msgid ""
+"\n"
+"                                My Company will take all steps reasonably "
+"necessary to ensure that your data is treated\n"
+"                                securely and in accordance with this Privacy "
+"Policy and no transfer of your Personal\n"
+"                                Data\n"
+"                                will take place to an organization or a "
+"country unless there are adequate controls in\n"
+"                                place\n"
+"                                including the security of your data and "
+"other personal information.\n"
+"                            "
+msgstr ""
+"\n"
+"                                Mi empresa tomará todas las medidas "
+"razonablemente necesarias para garantizar que sus datos sean tratados\n"
+"                                de forma segura y de conformidad con esta "
+"política de privacidad y no se realizará ninguna transferencia de sus datos "
+"personales\n"
+"                                no\n"
+"                                se llevará a cabo a una organización o un "
+"país a menos que existan controles adecuados en\n"
+"                                lugar\n"
+"                                incluyendo la seguridad de sus datos y otra "
+"información personal.\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:277
+msgid "Disclosure Of Data"
+msgstr "Divulgación de datos"
+
+#: templates/legal/privacy_policy.html:278
+msgid "Legal Requirements"
+msgstr "Requisitos legales"
+
+#: templates/legal/privacy_policy.html:280
+msgid ""
+"\n"
+"                                My Company may disclose your Personal Data "
+"in the good faith belief that such action is\n"
+"                                necessary to:\n"
+"                            "
+msgstr ""
+"\n"
+"                                Mi empresa puede divulgar sus datos "
+"personales de buena fe si cree que dicha acción es\n"
+"                                necesario para:\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:286
+msgid "To comply with a legal obligation"
+msgstr "Cumplir con una obligación legal"
+
+#: templates/legal/privacy_policy.html:288
+msgid "To protect and defend the rights or property of My Company"
+msgstr "Proteger y defender los derechos o propiedad de Mi empresa"
+
+#: templates/legal/privacy_policy.html:291
+msgid ""
+"To prevent or investigate possible wrongdoing in connection with the Service"
+msgstr ""
+"Para prevenir o investigar posibles delitos en relación con el Servicio"
+
+#: templates/legal/privacy_policy.html:294
+msgid "To protect the personal safety of users of the Service or the public"
+msgstr ""
+"Para proteger la seguridad personal de los usuarios del Servicio o el público"
+
+#: templates/legal/privacy_policy.html:297
+msgid "To protect against legal liability"
+msgstr "Para protegerse contra la responsabilidad legal"
+
+#: templates/legal/privacy_policy.html:300
+msgid "Security Of Data"
+msgstr "Seguridad de los datos"
+
+#: templates/legal/privacy_policy.html:302
+#, python-format
+msgid ""
+"\n"
+"                                The security of your data is important to "
+"us, but remember that no method of\n"
+"                                transmission\n"
+"                                over the Internet, or method of electronic "
+"storage is 100%% secure. While we strive to\n"
+"                                use\n"
+"                                commercially acceptable means to protect "
+"your Personal Data, we cannot guarantee its\n"
+"                                absolute security.\n"
+"                            "
+msgstr ""
+"\n"
+"                                La seguridad de sus datos es importante para "
+"nosotros, pero recuerde que ningún método de\n"
+"                                transmisión\n"
+"                                por Internet o método de almacenamiento "
+"electrónico es 100%% seguro. Si bien nos esforzamos por\n"
+"                                usar\n"
+"                                medios comercialmente aceptables para "
+"proteger sus datos personales, no podemos garantizar su\n"
+"                                seguridad absoluta.\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:311
+msgid "Service Providers"
+msgstr "Proveedores de servicios"
+
+#: templates/legal/privacy_policy.html:313
+msgid ""
+"\n"
+"                                We may employ third party companies and "
+"individuals to facilitate our Service (\"Service\n"
+"                                Providers\"), to provide the Service on our "
+"behalf, to perform Service-related services\n"
+"                                or to\n"
+"                                assist us in analyzing how our Service is "
+"used.\n"
+"                            "
+msgstr ""
+"\n"
+"                                Podemos emplear empresas y personas de "
+"terceros para facilitar nuestro Servicio (\"Proveedores de servicios\"), "
+"para prestar el Servicio en nuestro nombre, para realizar servicios "
+"relacionados con el Servicio\n"
+"                                o para\n"
+"                                ayudarnos a analizar cómo se utiliza nuestro "
+"Servicio.\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:321
+msgid ""
+"\n"
+"                                These third parties have access to your "
+"Personal Data only to perform these tasks on our\n"
+"                                behalf and are obligated not to disclose or "
+"use it for any other purpose.\n"
+"                            "
+msgstr ""
+"\n"
+"                                Estas terceras partes tienen acceso a sus "
+"datos personales solo para realizar estas tareas en nuestro\n"
+"                                nombre y están obligadas a no divulgarlos o "
+"utilizarlos para ningún otro propósito.\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:326
+msgid "Links To Other Sites"
+msgstr "Enlaces a otros sitios"
+
+#: templates/legal/privacy_policy.html:328
+msgid ""
+"\n"
+"                                Our Service may contain links to other sites "
+"that are not operated by us. If you click\n"
+"                                on a\n"
+"                                third party link, you will be directed to "
+"that third party's site. We strongly advise\n"
+"                                you to\n"
+"                                review the Privacy Policy of every site you "
+"visit.\n"
+"                            "
+msgstr ""
+"\n"
+"                                Nuestro Servicio puede contener enlaces a "
+"otros sitios que no son operados por nosotros. Si hace clic\n"
+"                                en un\n"
+"                                enlace de terceros, se le dirigirá al sitio "
+"de ese tercero. Le recomendamos encarecidamente\n"
+"                                que\n"
+"                                revise la política de privacidad de cada "
+"sitio que visite.\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:337
+msgid ""
+"\n"
+"                                We have no control over and assume no "
+"responsibility for the content, privacy policies\n"
+"                                or\n"
+"                                practices of any third party sites or "
+"services.\n"
+"                            "
+msgstr ""
+"\n"
+"                                No tenemos control sobre y no asumimos "
+"responsabilidad alguna por el contenido, las políticas de privacidad\n"
+"                                o\n"
+"                                prácticas de ningún sitio o servicio de "
+"terceros.\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:343
+msgid "Children's Privacy"
+msgstr "Privacidad de los niños"
+
+#: templates/legal/privacy_policy.html:345
+msgid ""
+"\n"
+"                                Our Service does not address anyone under "
+"the age of 18 (\"Children\").\n"
+"                            "
+msgstr ""
+"\n"
+"                                Nuestro Servicio no se dirige a nadie menor "
+"de 18 años (\"Niños\").\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:350
+msgid ""
+"\n"
+"                                We do not knowingly collect personally "
+"identifiable information from anyone under the\n"
+"                                age of\n"
+"                                18. If you are a parent or guardian, and you "
+"are aware that your Children has provided\n"
+"                                us\n"
+"                                with Personal Data, please contact us. If we "
+"become aware that we have collected\n"
+"                                Personal\n"
+"                                Data from children without verification of "
+"parental consent, we take steps to remove\n"
+"                                that\n"
+"                                information from our servers.\n"
+"                            "
+msgstr ""
+"\n"
+"                                No recopilamos intencionadamente información "
+"personalmente identificable de nadie menor de\n"
+"                                18 años de edad. Si es un padre o tutor, y "
+"usted sabe que su hijo ha proporcionado\n"
+"                                a\n"
+"                                nosotros datos personales, comuníquese con "
+"nosotros. Si nos damos cuenta de que hemos recopilado\n"
+"                                datos\n"
+"                                personales de niños sin verificación del "
+"consentimiento de los padres, tomamos medidas para eliminar\n"
+"                                esa\n"
+"                                información de nuestros servidores.\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:362
+msgid "Changes To This Privacy Policy"
+msgstr "Cambios en esta política de privacidad"
+
+#: templates/legal/privacy_policy.html:364
+msgid ""
+"\n"
+"                                We may update our Privacy Policy from time "
+"to time. We will notify you of any changes by\n"
+"                                posting the new Privacy Policy on this "
+"page.\n"
+"                            "
+msgstr ""
+"\n"
+"                                Podemos actualizar nuestra política de "
+"privacidad de vez en cuando. Le notificaremos de cualquier cambio\n"
+"                                publicando la nueva política de privacidad "
+"en esta página.\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:370
+msgid ""
+"\n"
+"                                We will let you know via email and/or a "
+"prominent notice on our Service, prior to the\n"
+"                                change\n"
+"                                becoming effective and update the "
+"\"effective date\" at the top of this Privacy Policy.\n"
+"                            "
+msgstr ""
+"\n"
+"                                Le informaremos por correo electrónico y/o "
+"un aviso prominente en nuestro Servicio, antes de que el\n"
+"                                cambio\n"
+"                                entre en vigencia y actualizaremos la "
+"\"fecha de vigencia\" en la parte superior de esta política de privacidad.\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:377
+msgid ""
+"\n"
+"                                You are advised to review this Privacy "
+"Policy periodically for any changes. Changes to\n"
+"                                this\n"
+"                                Privacy Policy are effective when they are "
+"posted on this page.\n"
+"                            "
+msgstr ""
+"\n"
+"                                Se recomienda revisar periódicamente esta "
+"política de privacidad para cualquier cambio. Los cambios a\n"
+"                                esta\n"
+"                                política de privacidad son efectivos cuando "
+"se publican en esta página.\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:385
+msgid ""
+"\n"
+"                                If you have any questions about this Privacy "
+"Policy, please contact us:\n"
+"                            "
+msgstr ""
+"\n"
+"                                Si tiene alguna pregunta sobre esta política "
+"de privacidad, comuníquese con nosotros:\n"
+"                            "
+
+#: templates/legal/privacy_policy.html:390
+msgid "By email:"
+msgstr "Por correo electrónico:"
+
+#: templates/legal/privacy_policy.html:394
+msgid "By visiting this page on our website:"
+msgstr "Visitando esta página en nuestro sitio web:"
+
+#: templates/legal/terms_and_conditions.html:17
+msgid "November 23, 2022"
+msgstr "23 de noviembre de 2022"
+
+#: templates/legal/terms_and_conditions.html:23
+#: templates/legal/terms_and_conditions.html:51
+msgid "1. AGREEMENT TO TERMS"
+msgstr "1. ACUERDO DE TÉRMINOS"
+
+#: templates/legal/terms_and_conditions.html:24
+#: templates/legal/terms_and_conditions.html:105
+msgid "2. INTELLECTUAL PROPERTY RIGHTS"
+msgstr "2. DERECHOS DE PROPIEDAD INTELECTUAL"
+
+#: templates/legal/terms_and_conditions.html:25
+#: templates/legal/terms_and_conditions.html:131
+msgid "3. USER REPRESENTATIONS"
+msgstr "3. REPRESENTACIONES DEL USUARIO"
+
+#: templates/legal/terms_and_conditions.html:26
+#: templates/legal/terms_and_conditions.html:153
+msgid "4. USER REGISTRATION"
+msgstr "4. REGISTRO DE USUARIO"
+
+#: templates/legal/terms_and_conditions.html:27
+#: templates/legal/terms_and_conditions.html:164
+msgid "5. PROHIBITED ACTIVITIES"
+msgstr "5. ACTIVIDADES PROHIBIDAS"
+
+#: templates/legal/terms_and_conditions.html:28
+#: templates/legal/terms_and_conditions.html:278
+msgid "6. USER GENERATED CONTRIBUTIONS"
+msgstr "6. CONTRIBUCIONES GENERADAS POR EL USUARIO"
+
+#: templates/legal/terms_and_conditions.html:29
+#: templates/legal/terms_and_conditions.html:381
+msgid "7. CONTRIBUTION LICENSE"
+msgstr "7. LICENCIA DE CONTRIBUCIÓN"
+
+#: templates/legal/terms_and_conditions.html:30
+#: templates/legal/terms_and_conditions.html:429
+msgid "8. SUBMISSIONS"
+msgstr "8. PRESENTACIONES"
+
+#: templates/legal/terms_and_conditions.html:31
+#: templates/legal/terms_and_conditions.html:444
+msgid "9. THIRD-PARTY WEBSITE AND CONTENT"
+msgstr "9. SITIO WEB Y CONTENIDO DE TERCEROS"
+
+#: templates/legal/terms_and_conditions.html:32
+#: templates/legal/terms_and_conditions.html:474
+msgid "10. ADVERTISERS"
+msgstr "10. ANUNCIANTES"
+
+#: templates/legal/terms_and_conditions.html:33
+#: templates/legal/terms_and_conditions.html:489
+msgid "11. SITE MANAGEMENT"
+msgstr "11. GESTIÓN DEL SITIO"
+
+#: templates/legal/terms_and_conditions.html:34
+#: templates/legal/terms_and_conditions.html:506
+msgid "12. PRIVACY POLICY"
+msgstr "12. POLÍTICA DE PRIVACIDAD"
+
+#: templates/legal/terms_and_conditions.html:35
+#: templates/legal/terms_and_conditions.html:522
+msgid "13. COPYRIGHT INFRINGEMENTS"
+msgstr "13. INFRACCIONES DE DERECHOS DE AUTOR"
+
+#: templates/legal/terms_and_conditions.html:36
+#: templates/legal/terms_and_conditions.html:577
+msgid "14. TERM AND TERMINATION"
+msgstr "14. TÉRMINO Y TERMINACIÓN"
+
+#: templates/legal/terms_and_conditions.html:37
+#: templates/legal/terms_and_conditions.html:602
+msgid "15. MODIFICATIONS AND INTERRUPTIONS"
+msgstr "15. MODIFICACIONES E INTERRUPCIONES"
+
+#: templates/legal/terms_and_conditions.html:38
+#: templates/legal/terms_and_conditions.html:626
+msgid "16. GOVERNING LAW"
+msgstr "16. LEY APLICABLE"
+
+#: templates/legal/terms_and_conditions.html:39
+#: templates/legal/terms_and_conditions.html:641
+msgid "17. DISPUTE RESOLUTION"
+msgstr "17. RESOLUCIÓN DE DISPUTAS"
+
+#: templates/legal/terms_and_conditions.html:40
+#: templates/legal/terms_and_conditions.html:706
+msgid "18. CORRECTIONS"
+msgstr "18. CORRECCIONES"
+
+#: templates/legal/terms_and_conditions.html:41
+#: templates/legal/terms_and_conditions.html:717
+msgid "19. DISCLAIMER"
+msgstr "19. DESCARGO DE RESPONSABILIDAD"
+
+#: templates/legal/terms_and_conditions.html:42
+#: templates/legal/terms_and_conditions.html:745
+msgid "20. LIMITATION OF LIABILITY"
+msgstr "20. LIMITACIÓN DE RESPONSABILIDAD"
+
+#: templates/legal/terms_and_conditions.html:43
+#: templates/legal/terms_and_conditions.html:756
+msgid "21. INDEMNIFICATION"
+msgstr "21. INDEMNIZACIÓN"
+
+#: templates/legal/terms_and_conditions.html:44
+#: templates/legal/terms_and_conditions.html:775
+msgid "22. USER DATA"
+msgstr "22. DATOS DEL USUARIO"
+
+#: templates/legal/terms_and_conditions.html:45
+#: templates/legal/terms_and_conditions.html:788
+msgid "23. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES"
+msgstr "23. COMUNICACION ELECTRÓNICA, TRANSACCIONES Y FIRMAS"
+
+#: templates/legal/terms_and_conditions.html:46
+#: templates/legal/terms_and_conditions.html:805
+msgid "24. MISCELLANEOUS"
+msgstr "24. DIVERSOS"
+
+#: templates/legal/terms_and_conditions.html:47
+#: templates/legal/terms_and_conditions.html:826
+msgid "25. CONTACT US"
+msgstr "25. CONTACTENOS"
+
+#: templates/legal/terms_and_conditions.html:53
+msgid ""
+"\n"
+"                        These Terms of Use constitute a legally binding "
+"agreement made between you, whether personally\n"
+"                        or on behalf of an entity (“you”) and crueltouch.com "
+"(\"Company,\" “we,\" “us,\" or “our”),\n"
+"                        concerning your access to and use of the https://"
+"crueltouch.com website as well as any\n"
+"                        other media form, media channel, mobile website or "
+"mobile application related, linked, or\n"
+"                        otherwise connected thereto (collectively, the "
+"“Site”).  You agree that by accessing the Site,\n"
+"                        you have\n"
+"                        read, understood, and agreed to be bound by all of "
+"these Terms of Use. IF YOU DO NOT AGREE WITH\n"
+"                        ALL OF THESE TERMS OF USE, THEN YOU ARE EXPRESSLY "
+"PROHIBITED FROM USING THE SITE AND YOU MUST\n"
+"                        DISCONTINUE USE IMMEDIATELY.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:67
+msgid ""
+"\n"
+"                        Supplemental terms and conditions or documents that "
+"may be posted on the Site from time to time\n"
+"                        are hereby expressly incorporated herein by "
+"reference. We reserve the right, in our sole\n"
+"                        discretion, to make changes or modifications to "
+"these Terms of Use from time to time. We will\n"
+"                        alert you about any changes by updating the “Last "
+"updated” date of these Terms of Use, and you\n"
+"                        waive any right to receive specific notice of each "
+"such change. Please ensure that you check the\n"
+"                        applicable Terms every time you use our Site so that "
+"you understand which Terms apply. You will\n"
+"                        be subject to, and will be deemed to have been made "
+"aware of and to have accepted, the changes\n"
+"                        in any revised Terms of Use by your continued use of "
+"the Site after the date such revised Terms\n"
+"                        of Use are posted.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:80
+msgid ""
+"\n"
+"                        The information provided on the Site is not intended "
+"for distribution to or use by any person or\n"
+"                        entity in any jurisdiction or country where such "
+"distribution or use would be contrary to law or\n"
+"                        regulation or which would subject us to any "
+"registration requirement within such jurisdiction or\n"
+"                        country. Accordingly, those persons who choose to "
+"access the Site from other locations do so on\n"
+"                        their own initiative and are solely responsible for "
+"compliance with local laws, if and to the\n"
+"                        extent local laws are applicable.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:90
+msgid ""
+"\n"
+"                        The Site is not tailored to comply with industry-"
+"specific regulations (Health Insurance\n"
+"                        Portability and Accountability Act (HIPAA), Federal "
+"Information Security Management Act (FISMA),\n"
+"                        etc.), so if your interactions would be subjected to "
+"such laws, you may not use this Site. You\n"
+"                        may not use the Site in a way that would violate the "
+"Gramm-Leach-Bliley Act (GLBA).\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:98
+msgid ""
+"\n"
+"                        The Site is intended for users who are at least 18 "
+"years old. Persons under the age of 18 are\n"
+"                        not permitted to use or register for the Site.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:107
+msgid ""
+"\n"
+"                        Unless otherwise indicated, the Site is our "
+"proprietary property and all source code, databases,\n"
+"                        functionality, software, website designs, audio, "
+"video, text, photographs, and graphics on the\n"
+"                        Site (collectively, the “Content”) and the "
+"trademarks, service marks, and logos contained\n"
+"                        therein (the “Marks”) are owned or controlled by us "
+"or licensed to us, and are protected by\n"
+"                        copyright and trademark laws and various other "
+"intellectual property rights and unfair\n"
+"                        competition laws of the United States, international "
+"copyright laws, and international\n"
+"                        conventions. The Content and the Marks are provided "
+"on the Site “AS IS” for your information and\n"
+"                        personal use only. Except as expressly provided in "
+"these Terms of Use, no part of the Site and\n"
+"                        no Content or Marks may be copied, reproduced, "
+"aggregated, republished, uploaded, posted,\n"
+"                        publicly displayed, encoded, translated, "
+"transmitted, distributed, sold, licensed, or otherwise\n"
+"                        exploited for any commercial purpose whatsoever, "
+"without our express prior written permission.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:122
+msgid ""
+"\n"
+"                        Provided that you are eligible to use the Site, you "
+"are granted a limited license to access and\n"
+"                        use the Site and to download or print a copy of any "
+"portion of the Content to which you have\n"
+"                        properly gained access solely for your personal, non-"
+"commercial use. We reserve all rights not\n"
+"                        expressly granted to you in and to the Site, the "
+"Content and the Marks.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:133
+msgid ""
+"\n"
+"                        By using the Site, you represent and warrant that:  "
+"(1) all registration information you submit\n"
+"                        will be true, accurate, current, and complete; (2) "
+"you will maintain the accuracy of such\n"
+"                        information and promptly update such registration "
+"information as necessary; (3) you have the\n"
+"                        legal capacity, and you agree to comply with these "
+"Terms of Use;  (4) you are not a minor in the\n"
+"                        jurisdiction in which you reside; (5) you will not "
+"access the Site through automated or\n"
+"                        non-human means, whether through a bot, script, or "
+"otherwise; (6) you will not use the Site for\n"
+"                        any illegal or unauthorized purpose; and (7) your "
+"use of the Site will not violate any\n"
+"                        applicable law or regulation.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:145
+msgid ""
+"\n"
+"                        If you provide any information that is untrue, "
+"inaccurate, not current, or incomplete, we have\n"
+"                        the right to suspend or terminate your account and "
+"refuse any and all current or future use of\n"
+"                        the Site (or any portion thereof).\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:155
+msgid ""
+"\n"
+"                        You may be required to register with the Site. You "
+"agree to keep your password confidential and\n"
+"                        will be responsible for all use of your account and "
+"password. We reserve the right to remove,\n"
+"                        reclaim, or change a username you select if we "
+"determine, in our sole discretion, that such\n"
+"                        username is inappropriate, obscene, or otherwise "
+"objectionable.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:166
+msgid ""
+"\n"
+"                        You may not access or use the Site for any purpose "
+"other than that for which we make the Site\n"
+"                        available. The Site may not be used in connection "
+"with any commercial endeavors except those\n"
+"                        that are specifically endorsed or approved by us.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:173
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                        you can download the following files either in "
+#| "zip format or file by file.\n"
+#| "                    "
+msgid ""
+"\n"
+"                        As a user of the Site, you agree not to:\n"
+"                    "
+msgstr ""
+"\n"
+"                        puede descargar los siguientes archivos ya sea en "
+"formato zip o archivo por archivo.\n"
+"                    "
+
+#: templates/legal/terms_and_conditions.html:179
+msgid ""
+"\n"
+"                            Systematically retrieve data or other content "
+"from the Site to create or compile, directly\n"
+"                            or indirectly, a collection, compilation, "
+"database, or directory without written\n"
+"                            permission from us.\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:186
+msgid ""
+"\n"
+"                            Trick, defraud, or mislead us and other users, "
+"especially in any attempt to learn sensitive\n"
+"                            account information such as user passwords;\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:192
+msgid ""
+"\n"
+"                            Circumvent, disable, or otherwise interfere with "
+"security-related features of the Site,\n"
+"                            including features that prevent or restrict the "
+"use or copying of any Content or enforce\n"
+"                            limitations on the use of the Site and/or the "
+"Content contained therein;\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:199
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                        you can download the following files either in "
+#| "zip format or file by file.\n"
+#| "                    "
+msgid ""
+"\n"
+"                            Disparage, tarnish, or otherwise harm, in our "
+"opinion, us and/or the Site;\n"
+"                        "
+msgstr ""
+"\n"
+"                        puede descargar los siguientes archivos ya sea en "
+"formato zip o archivo por archivo.\n"
+"                    "
+
+#: templates/legal/terms_and_conditions.html:204
+msgid ""
+"\n"
+"                            Use any information obtained from the Site in "
+"order to harass, abuse, or harm another\n"
+"                            person;\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:210
+msgid ""
+"\n"
+"                            Use the Site as part of any effort to compete "
+"with us or otherwise use the Site and/or the\n"
+"                            Content for any revenue-generating endeavor or "
+"commercial enterprise;\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:216
+msgid ""
+"\n"
+"                            Decipher, decompile, disassemble, or reverse "
+"engineer any of the software comprising or in\n"
+"                            any way making up a part of the Site;\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:222
+msgid ""
+"\n"
+"                            Attempt to bypass any measures of the Site "
+"designed to prevent or restrict access to the\n"
+"                            Site, or any portion of the Site.\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:228
+msgid ""
+"\n"
+"                            Copy or adapt the Site’s software, including but "
+"not limited to Flash, PHP, HTML,\n"
+"                            JavaScript, or other code.\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:234
+msgid ""
+"\n"
+"                            Except as permitted by applicable law, decipher, "
+"decompile, disassemble, or reverse engineer\n"
+"                            any of the software comprising or in any way "
+"making up a part of the Site.\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:240
+msgid ""
+"\n"
+"                            Except as may be the result of standard search "
+"engine or Internet browser usage, use,\n"
+"                            launch, develop, or distribute any automated "
+"system, including without limitation, any\n"
+"                            spider, robot, cheat utility, scraper, or "
+"offline reader that accesses the Site, or using or\n"
+"                            launching any unauthorized script or other "
+"software.\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:248
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                        you can download the following files either in "
+#| "zip format or file by file.\n"
+#| "                    "
+msgid ""
+"\n"
+"                            Use a buying agent or purchasing agent to make "
+"purchases on the Site.\n"
+"                        "
+msgstr ""
+"\n"
+"                        puede descargar los siguientes archivos ya sea en "
+"formato zip o archivo por archivo.\n"
+"                    "
+
+#: templates/legal/terms_and_conditions.html:253
+msgid ""
+"\n"
+"                            Make any unauthorized use of the Site, including "
+"collecting usernames and/or email addresses\n"
+"                            of users by electronic or other means for the "
+"purpose of sending unsolicited email, or\n"
+"                            creating user accounts by automated means or "
+"under false pretenses.\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:260
+msgid ""
+"\n"
+"                            Use the Site as part of any effort to compete "
+"with us or otherwise use the Site and/or the\n"
+"                            Content for any revenue-generating endeavor or "
+"commercial enterprise.\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:266
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                        you can download the following files either in "
+#| "zip format or file by file.\n"
+#| "                    "
+msgid ""
+"\n"
+"                            Use the Site to advertise or offer to sell goods "
+"and services.\n"
+"                        "
+msgstr ""
+"\n"
+"                        puede descargar los siguientes archivos ya sea en "
+"formato zip o archivo por archivo.\n"
+"                    "
+
+#: templates/legal/terms_and_conditions.html:271
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                        you can download the following files either in "
+#| "zip format or file by file.\n"
+#| "                    "
+msgid ""
+"\n"
+"                            Sell or otherwise transfer your profile.\n"
+"                        "
+msgstr ""
+"\n"
+"                        puede descargar los siguientes archivos ya sea en "
+"formato zip o archivo por archivo.\n"
+"                    "
+
+#: templates/legal/terms_and_conditions.html:280
+msgid ""
+"\n"
+"                        The Site does not offer unauthorized users to submit "
+"or post article. We may provide you with\n"
+"                        the opportunity\n"
+"                        to create, submit, post, display, transmit, perform, "
+"publish, distribute, or broadcast content\n"
+"                        and materials to us or on the Site, including but "
+"not limited to text, writings, video, audio,\n"
+"                        photographs, graphics, comments, suggestions, or "
+"personal information or other material\n"
+"                        (collectively, \"Contributions\"). Contributions may "
+"be viewable by other users of the Site and\n"
+"                        through third-party websites. As such, any "
+"Contributions you transmit may be treated in\n"
+"                        accordance with the Site Privacy Policy. When you "
+"create or make available any Contributions,\n"
+"                        you thereby represent and warrant that:\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:294
+msgid ""
+"\n"
+"                            The creation, distribution, transmission, public "
+"display, or performance, and the accessing,\n"
+"                            downloading, or copying of your Contributions do "
+"not and will not infringe the proprietary\n"
+"                            rights, including but not limited to the "
+"copyright, patent, trademark, trade secret, or\n"
+"                            moral rights of any third party.\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:302
+msgid ""
+"\n"
+"                            You are the creator and owner of or have the "
+"necessary licenses, rights, consents, releases,\n"
+"                            and permissions to use and to authorize us, the "
+"Site, and other users of the Site to use\n"
+"                            your Contributions in any manner contemplated by "
+"the Site and these Terms of Use.\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:309
+msgid ""
+"\n"
+"                            You have the written consent, release, and/or "
+"permission of each and every identifiable\n"
+"                            individual person in your Contributions to use "
+"the name or likeness of each and every such\n"
+"                            identifiable individual person to enable "
+"inclusion and use of your Contributions in any\n"
+"                            manner contemplated by the Site and these Terms "
+"of Use.\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:317
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                        you can download the following files either in "
+#| "zip format or file by file.\n"
+#| "                    "
+msgid ""
+"\n"
+"                            Your Contributions are not false, inaccurate, or "
+"misleading.\n"
+"                        "
+msgstr ""
+"\n"
+"                        puede descargar los siguientes archivos ya sea en "
+"formato zip o archivo por archivo.\n"
+"                    "
+
+#: templates/legal/terms_and_conditions.html:322
+msgid ""
+"\n"
+"                            Your Contributions are not unsolicited or "
+"unauthorized advertising, promotional materials,\n"
+"                            pyramid schemes, chain letters, spam, mass "
+"mailings, or other forms of solicitation.\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:328
+msgid ""
+"\n"
+"                            Your Contributions are not obscene, lewd, "
+"lascivious, filthy, violent, harassing, libelous,\n"
+"                            slanderous, or otherwise objectionable (as "
+"determined by us).\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:334
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                        you can download the following files either in "
+#| "zip format or file by file.\n"
+#| "                    "
+msgid ""
+"\n"
+"                            Your Contributions do not ridicule, mock, "
+"disparage, intimidate, or abuse anyone.\n"
+"                        "
+msgstr ""
+"\n"
+"                        puede descargar los siguientes archivos ya sea en "
+"formato zip o archivo por archivo.\n"
+"                    "
+
+#: templates/legal/terms_and_conditions.html:339
+msgid ""
+"\n"
+"                            Your Contributions are not used to harass or "
+"threaten (in the legal sense of those terms)\n"
+"                            any other person and to promote violence against "
+"a specific person or class of people.\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:345
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                        you can download the following files either in "
+#| "zip format or file by file.\n"
+#| "                    "
+msgid ""
+"\n"
+"                            Your Contributions do not violate any applicable "
+"law, regulation, or rule.\n"
+"                        "
+msgstr ""
+"\n"
+"                        puede descargar los siguientes archivos ya sea en "
+"formato zip o archivo por archivo.\n"
+"                    "
+
+#: templates/legal/terms_and_conditions.html:350
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                        you can download the following files either in "
+#| "zip format or file by file.\n"
+#| "                    "
+msgid ""
+"\n"
+"                            Your Contributions do not violate the privacy or "
+"publicity rights of any third party.\n"
+"                        "
+msgstr ""
+"\n"
+"                        puede descargar los siguientes archivos ya sea en "
+"formato zip o archivo por archivo.\n"
+"                    "
+
+#: templates/legal/terms_and_conditions.html:355
+msgid ""
+"\n"
+"                            Your Contributions do not violate any applicable "
+"law concerning child pornography, or\n"
+"                            otherwise intended to protect the health or well-"
+"being of minors.\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:361
+msgid ""
+"\n"
+"                            Your Contributions do not include any offensive "
+"comments that are connected to race,\n"
+"                            national origin, gender, sexual preference, or "
+"physical handicap.\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:367
+msgid ""
+"\n"
+"                            Your Contributions do not otherwise violate, or "
+"link to material that violates, any\n"
+"                            provision of these Terms of Use, or any "
+"applicable law or regulation.\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:374
+msgid ""
+"\n"
+"                        Any use of the Site in violation of the foregoing "
+"violates these Terms of Use and may result in,\n"
+"                        among other things, termination or suspension of "
+"your rights to use the Site.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:383
+msgid ""
+"\n"
+"                        By posting your Contributions to any part of the "
+"Site, you automatically grant, and you\n"
+"                        represent\n"
+"                        and warrant that you have the right to grant, to us "
+"an unrestricted, unlimited, irrevocable,\n"
+"                        perpetual, non-exclusive, transferable, royalty-"
+"free, fully-paid, worldwide right, and license\n"
+"                        to\n"
+"                        host, use, copy, reproduce, disclose, sell, resell, "
+"publish, broadcast, retitle, archive, store,\n"
+"                        cache, publicly perform, publicly display, reformat, "
+"translate, transmit, excerpt (in whole or\n"
+"                        in\n"
+"                        part), and distribute such Contributions (including, "
+"without limitation, your image and voice)\n"
+"                        for any purpose, commercial, advertising, or "
+"otherwise, and to prepare derivative works of,\n"
+"                        or incorporate into other works, such Contributions, "
+"and grant and authorize sublicenses of the\n"
+"                        foregoing. The use and distribution may occur in any "
+"media formats and through any media\n"
+"                        channels.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:400
+msgid ""
+"\n"
+"                        This license will apply to any form, media, or "
+"technology now known or hereafter developed, and\n"
+"                        includes our use of your name, company name, and "
+"franchise name, as applicable, and any of the\n"
+"                        trademarks, service marks, trade names, logos, and "
+"personal and commercial images you provide.\n"
+"                        You waive all moral rights in your Contributions, "
+"and you warrant that moral rights have not\n"
+"                        otherwise been asserted in your Contributions.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:409
+msgid ""
+"\n"
+"                        We do not assert any ownership over your "
+"Contributions. You retain full ownership of all of your\n"
+"                        Contributions and any intellectual property rights "
+"or other proprietary rights associated with\n"
+"                        your Contributions. We are not liable for any "
+"statements or representations in your\n"
+"                        Contributions\n"
+"                        provided by you in any area on the Site. You are "
+"solely responsible for your Contributions to\n"
+"                        the Site and you expressly agree to exonerate us "
+"from any and all responsibility and to refrain\n"
+"                        from any legal action against us regarding your "
+"Contributions.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:420
+msgid ""
+"\n"
+"                        We have the right, in our sole and absolute "
+"discretion, (1) to edit, redact, or otherwise change\n"
+"                        any Contributions; (2) to re-categorize any "
+"Contributions to place them in more appropriate\n"
+"                        locations on the Site; and (3) to pre-screen or "
+"delete any Contributions at any time and for any\n"
+"                        reason, without notice. We have no obligation to "
+"monitor your Contributions.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:431
+msgid ""
+"\n"
+"                        You acknowledge and agree that any questions, "
+"comments, suggestions, ideas, feedback, or other\n"
+"                        information regarding the Site (\"Submissions\") "
+"provided by you to us are non-confidential and\n"
+"                        shall become our sole property. We shall own "
+"exclusive rights, including all intellectual\n"
+"                        property rights, and shall be entitled to the "
+"unrestricted use and dissemination of these\n"
+"                        Submissions for any lawful purpose, commercial or "
+"otherwise, without acknowledgment or\n"
+"                        compensation to you. You hereby waive all moral "
+"rights to any such Submissions, and you hereby\n"
+"                        warrant that any such Submissions are original with "
+"you or that you have the right to submit\n"
+"                        such Submissions. You agree there shall be no "
+"recourse against us for any alleged or actual\n"
+"                        infringement or misappropriation of any proprietary "
+"right in your Submissions.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:446
+msgid ""
+"\n"
+"                        The Site may contain (or you may be sent through the "
+"Site or the Service) links to other\n"
+"                        websites (\"Third-Party Websites\") as well as "
+"articles, photographs, text, graphics, pictures,\n"
+"                        designs, music, sound, video, information, "
+"applications, software, and other content or items\n"
+"                        belonging to or originating from third parties "
+"(\"Third-Party Content\"). Such Third-Party\n"
+"                        Websites and Third-Party Content are not "
+"investigated, monitored, or checked for accuracy,\n"
+"                        appropriateness, or completeness by us, and we are "
+"not responsible for any Third-Party Websites\n"
+"                        accessed through the Site or any Third-Party Content "
+"posted on, available through, or installed\n"
+"                        from the Site, including the content, accuracy, "
+"offensiveness, opinions, reliability, privacy\n"
+"                        practices, or other policies of or contained in the "
+"Third-Party Websites or the Third-Party\n"
+"                        Content. Inclusion of, linking to, or permitting the "
+"use or installation of any Third-Party\n"
+"                        Websites or any Third-Party Content does not imply "
+"approval or endorsement thereof by us. If\n"
+"                        you decide to leave the Site and access the Third-"
+"Party Websites or to use or install any\n"
+"                        Third-Party Content, you do so at your own risk, and "
+"you should be aware these Terms of Use no\n"
+"                        longer govern. You should review the applicable "
+"terms and policies, including privacy and data\n"
+"                        gathering practices, of any website to which you "
+"navigate from the Site or relating to any\n"
+"                        applications you use or install from the Site. Any "
+"purchases you make through Third-Party\n"
+"                        Websites will be through other websites and from "
+"other companies, and we take no responsibility\n"
+"                        whatsoever in relation to such purchases which are "
+"exclusively between you and the applicable\n"
+"                        third party. You agree and acknowledge that we do "
+"not endorse the products or services offered\n"
+"                        on Third-Party Websites and you shall hold us "
+"harmless from any harm caused by your purchase of\n"
+"                        such products or services. Additionally, you shall "
+"hold us harmless from any losses sustained\n"
+"                        by you or harm caused to you relating to or "
+"resulting in any way from any Third-Party Content or\n"
+"                        any contact with Third-Party Websites.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:476
+msgid ""
+"\n"
+"                        We allow advertisers to display their advertisements "
+"and other information in certain areas of\n"
+"                        the Site, such as sidebar advertisements or banner "
+"advertisements. If you are an advertiser, you\n"
+"                        shall take full responsibility for any "
+"advertisements you place on the Site and any services\n"
+"                        provided on the Site or products sold through those "
+"advertisements. Further, as an advertiser,\n"
+"                        you warrant and represent that you possess all "
+"rights and authority to place advertisements on\n"
+"                        the Site, including, but not limited to, "
+"intellectual property rights, publicity rights, and\n"
+"                        contractual rights. We simply provide the space to "
+"place such advertisements, and we have no\n"
+"                        other relationship with advertisers.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:491
+msgid ""
+"\n"
+"                        We reserve the right, but not the obligation, to: "
+"(1) monitor the Site for violations of these\n"
+"                        Terms of Use; (2) take appropriate legal action "
+"against anyone who, in our sole discretion,\n"
+"                        violates the law or these Terms of Use, including "
+"without limitation, reporting such user to\n"
+"                        law enforcement authorities; (3) in our sole "
+"discretion and without limitation, refuse, restrict\n"
+"                        access to, limit the availability of, or disable (to "
+"the extent technologically feasible) any of\n"
+"                        your Contributions or any portion thereof; (4) in "
+"our sole discretion and without limitation,\n"
+"                        notice, or liability, to remove from the Site or "
+"otherwise disable all files and content that\n"
+"                        are excessive in size or are in any way burdensome "
+"to our systems; and (5) otherwise manage the\n"
+"                        Site in a manner designed to protect our rights and "
+"property and to facilitate the proper\n"
+"                        functioning of the Site.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:508
+#, python-format
+msgid ""
+"\n"
+"                        We care about data privacy and security. Please "
+"review our\n"
+"                        <a href=\"%(url)s\">Privacy Policy</a>. By using the "
+"Site, you agree\n"
+"                        to be bound by our Privacy Policy, which is "
+"incorporated into these Terms of Use. Please\n"
+"                        be advised the Site is hosted in Beauharnois (BHS) - "
+"Canada.\n"
+"                        If you access the Site from the European Union, "
+"Asia, or any other region of the world with laws\n"
+"                        or other requirements governing personal data "
+"collection, use, or disclosure that differ from\n"
+"                        applicable laws in the United States, then through "
+"your continued use of the Site, you are\n"
+"                        transferring your data to Canada, and you agree to "
+"have your data transferred to and\n"
+"                        processed in Canada.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:524
+#, python-format
+msgid ""
+"\n"
+"                        We respect the intellectual property rights of "
+"others. If you believe that any material\n"
+"                        available\n"
+"                        on or through the Site infringes upon any copyright "
+"owned by you, please contact us at\n"
+"                        <a href=\"mailto:%(email)s\">%(email)s</a> and "
+"provide the following information:\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:533
+msgid ""
+"\n"
+"                            An electronic or physical signature of the "
+"person authorized to act on behalf of the owner\n"
+"                            of the copyright interest;\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:539
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                        you can download the following files either in "
+#| "zip format or file by file.\n"
+#| "                    "
+msgid ""
+"\n"
+"                            A description of the copyrighted work that you "
+"claim has been infringed;\n"
+"                        "
+msgstr ""
+"\n"
+"                        puede descargar los siguientes archivos ya sea en "
+"formato zip o archivo por archivo.\n"
+"                    "
+
+#: templates/legal/terms_and_conditions.html:544
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                        you can download the following files either in "
+#| "zip format or file by file.\n"
+#| "                    "
+msgid ""
+"\n"
+"                            A description of where the material that you "
+"claim is infringing is located on the Site;\n"
+"                        "
+msgstr ""
+"\n"
+"                        puede descargar los siguientes archivos ya sea en "
+"formato zip o archivo por archivo.\n"
+"                    "
+
+#: templates/legal/terms_and_conditions.html:549
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                        you can download the following files either in "
+#| "zip format or file by file.\n"
+#| "                    "
+msgid ""
+"\n"
+"                            Your address, telephone number, and email "
+"address;\n"
+"                        "
+msgstr ""
+"\n"
+"                        puede descargar los siguientes archivos ya sea en "
+"formato zip o archivo por archivo.\n"
+"                    "
+
+#: templates/legal/terms_and_conditions.html:554
+msgid ""
+"\n"
+"                            A signed statement by you that you have a good "
+"faith belief that the disputed use is not\n"
+"                            authorized by the copyright owner, its agent, or "
+"the law; and\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:560
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                                            You can download your copy of "
+#| "your edited photos here. This link expires in\n"
+#| "                                            72 hours. This is a one time "
+#| "download. If you need to download the photos\n"
+#| "                                            again, please contact us. Zip "
+#| "format.\n"
+#| "                                        "
+msgid ""
+"\n"
+"                            A signed statement by you, made under penalty of "
+"perjury, that the above information in your\n"
+"                            Notice is accurate and that you are the "
+"copyright owner or authorized to act on the\n"
+"                            copyright\n"
+"                            owner's behalf.\n"
+"                        "
+msgstr ""
+"\n"
+"                                            Puede descargar una copia de sus "
+"fotos editadas aquí. Este enlace caduca en\n"
+"                                            72 horas. Esta es una descarga "
+"única. Si necesita descargar las fotos\n"
+"                                            de nuevo, comuníquese con "
+"nosotros. Formato zip.\n"
+"                                        "
+
+#: templates/legal/terms_and_conditions.html:569
+msgid ""
+"\n"
+"                        We reserve the right to remove Content alleged to be "
+"infringing without prior notice and at\n"
+"                        our sole discretion. In appropriate circumstances, "
+"we will also terminate a user's account if\n"
+"                        we determine that the user is a repeat infringer.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:579
+msgid ""
+"\n"
+"                        These Terms of Use shall remain in full force and "
+"effect while you use the Site. WITHOUT\n"
+"                        LIMITING\n"
+"                        ANY OTHER PROVISION OF THESE TERMS OF USE, WE "
+"RESERVE THE RIGHT TO, IN OUR SOLE DISCRETION AND\n"
+"                        WITHOUT NOTICE OR LIABILITY, DENY ACCESS TO AND USE "
+"OF THE SITE (INCLUDING BLOCKING CERTAIN IP\n"
+"                        ADDRESSES), TO ANY PERSON FOR ANY REASON OR FOR NO "
+"REASON, INCLUDING WITHOUT LIMITATION FOR\n"
+"                        BREACH OF ANY REPRESENTATION, WARRANTY, OR COVENANT "
+"CONTAINED IN THESE TERMS OF USE OR OF ANY\n"
+"                        APPLICABLE LAW OR REGULATION. WE MAY TERMINATE YOUR "
+"USE OR PARTICIPATION IN THE SITE OR DELETE\n"
+"                        YOUR ACCOUNT AND ANY CONTENT OR INFORMATION THAT YOU "
+"POSTED AT ANY TIME, WITHOUT WARNING, IN\n"
+"                        OUR SOLE DISCRETION.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:592
+msgid ""
+"\n"
+"                        If we terminate or suspend your account for any "
+"reason set forth in this Section 14, you are\n"
+"                        prohibited from registering and creating a new "
+"account under your name, a fake or borrowed name,\n"
+"                        or the name of any third party, even if you may be "
+"acting on behalf of the third party. In\n"
+"                        addition to terminating or suspending your account, "
+"we reserve the right to take appropriate\n"
+"                        legal action, including without limitation pursuing "
+"civil, criminal, and injunctive redress.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:604
+msgid ""
+"\n"
+"                        We reserve the right to change, modify, or remove "
+"the contents of the Site at any time or for\n"
+"                        any reason at our sole discretion without notice. "
+"However, we have no obligation to update any\n"
+"                        information on our Site. We also reserve the right "
+"to modify or discontinue all or part of the\n"
+"                        Site without notice at any time. We will not be "
+"liable to you or any third party for any\n"
+"                        modification, price change, suspension, or "
+"discontinuance of the Site.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:613
+msgid ""
+"\n"
+"                        We cannot guarantee the Site will be available at "
+"all times. We may experience hardware,\n"
+"                        software, or other problems or need to perform "
+"maintenance related to the Site, resulting in\n"
+"                        interruptions, delays, or errors. We reserve the "
+"right to change, revise, update, suspend,\n"
+"                        discontinue, or otherwise modify the Site at any "
+"time or for any reason without notice to you.\n"
+"                        You agree that we have no liability whatsoever for "
+"any loss, damage, or inconvenience caused\n"
+"                        by your inability to access or use the Site during "
+"any downtime or discontinuance of the Site.\n"
+"                        Nothing in these Terms of Use will be construed to "
+"obligate us to maintain and support the\n"
+"                        Site or to supply any corrections, updates, or "
+"releases in connection therewith.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:628
+msgid ""
+"\n"
+"                        These conditions are governed by and interpreted "
+"following the laws of USA, and the use of\n"
+"                        the United Nations Convention of Contracts for the "
+"International Sale of Goods is expressly\n"
+"                        excluded. If your habitual residence is in the EU, "
+"and you are a consumer, you additionally\n"
+"                        possess the protection provided to you by obligatory "
+"provisions of the law of your country of\n"
+"                        residence. crueltouch.com and yourself both agree to "
+"submit to the non-exclusive\n"
+"                        jurisdiction of the courts of Florida, which means "
+"that you may make a claim to defend\n"
+"                        your consumer protection rights in regard to these "
+"Terms of Use in USA, or in the EU country\n"
+"                        in which you reside.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:643
+msgid "Informal Negotiations"
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:645
+msgid ""
+"\n"
+"                            To expedite resolution and control the cost of "
+"any dispute, controversy, or claim related to\n"
+"                            these Terms of Use (each a \"Dispute\" and "
+"collectively, the \"Disputes\") brought by either you\n"
+"                            or us (individually, a \"Party\" and "
+"collectively, the \"Parties\"), the Parties agree to first\n"
+"                            attempt to negotiate any Dispute (except those "
+"Disputes expressly provided below) informally\n"
+"                            for at least thirty (30) days before initiating "
+"arbitration. Such informal negotiations\n"
+"                            commence upon written notice from one Party to "
+"the other Party.\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:656
+#, fuzzy
+#| msgid "Booking Confirmation"
+msgid "Binding Arbitration"
+msgstr "Confirmación de reserva"
+
+#: templates/legal/terms_and_conditions.html:658
+msgid ""
+"\n"
+"                            Any dispute arising from the relationships "
+"between the Parties to this contract shall be\n"
+"                            determined by one arbitrator who will be chosen "
+"in accordance with the Arbitration and\n"
+"                            Internal Rules of the European Court of "
+"Arbitration being part of the European Centre of\n"
+"                            Arbitration having its seat in Strasbourg, and "
+"which are in force at the time the\n"
+"                            application for arbitration is filed, and of "
+"which adoption of this clause constitutes\n"
+"                            acceptance. The seat of arbitration shall be "
+"Nice, France. The language of the proceedings\n"
+"                            shall be English. Applicable rules of "
+"substantive law shall be the law of USA.\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:670
+#, fuzzy
+#| msgid "Registration"
+msgid "Restrictions"
+msgstr "Registro"
+
+#: templates/legal/terms_and_conditions.html:672
+msgid ""
+"\n"
+"                            The Parties agree that any arbitration shall be "
+"limited to the Dispute between the Parties\n"
+"                            individually. To the full extent permitted by "
+"law, (a) no arbitration shall be joined with\n"
+"                            any\n"
+"                            other proceeding; (b) there is no right or "
+"authority for any Dispute to be arbitrated on a\n"
+"                            class-action basis or to utilize class action "
+"procedures; and (c) there is no right or\n"
+"                            authority for any Dispute to be brought in a "
+"purported representative capacity on behalf of\n"
+"                            the general public or any other persons.\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:684
+msgid "Exceptions to Informal Negotiations and Arbitration"
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:686
+msgid ""
+"\n"
+"                            The Parties agree that the following Disputes "
+"are not subject to the above provisions\n"
+"                            concerning\n"
+"                            informal negotiations and binding arbitration: "
+"(a) any Disputes seeking to enforce or\n"
+"                            protect,\n"
+"                            or concerning the validity of, any of the "
+"intellectual property rights of a Party; (b) any\n"
+"                            Dispute related to, or arising from, allegations "
+"of theft, piracy, invasion of privacy, or\n"
+"                            unauthorized use; and (c) any claim for "
+"injunctive relief. If this provision is found to be\n"
+"                            illegal or unenforceable, then neither Party "
+"will elect to arbitrate any Dispute falling\n"
+"                            within\n"
+"                            that portion of this provision found to be "
+"illegal or unenforceable and such Dispute shall\n"
+"                            be\n"
+"                            decided by a court of competent jurisdiction "
+"within the courts listed for jurisdiction\n"
+"                            above,\n"
+"                            and the Parties agree to submit to the personal "
+"jurisdiction of that court.\n"
+"                        "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:708
+msgid ""
+"\n"
+"                        There may be information on the Site that contains "
+"typographical errors, inaccuracies, or\n"
+"                        omissions, including descriptions, pricing, "
+"availability, and various other information. We\n"
+"                        reserve the right to correct any errors, "
+"inaccuracies, or omissions and to change or update\n"
+"                        the information on the Site at any time, without "
+"prior notice.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:719
+msgid ""
+"\n"
+"                        THE SITE IS PROVIDED ON AN AS-IS AND AS-AVAILABLE "
+"BASIS. YOU AGREE THAT YOUR USE OF THE SITE AND\n"
+"                        OUR SERVICES WILL BE AT YOUR SOLE RISK. TO THE "
+"FULLEST EXTENT PERMITTED BY LAW, WE DISCLAIM ALL\n"
+"                        WARRANTIES, EXPRESS OR IMPLIED, IN CONNECTION WITH "
+"THE SITE AND YOUR USE THEREOF, INCLUDING,\n"
+"                        WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF "
+"MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,\n"
+"                        AND NON-INFRINGEMENT. WE MAKE NO WARRANTIES OR "
+"REPRESENTATIONS ABOUT THE ACCURACY OR\n"
+"                        COMPLETENESS OF THE SITE’S CONTENT OR THE CONTENT OF "
+"ANY WEBSITES LINKED TO THE SITE AND WE WILL\n"
+"                        ASSUME NO LIABILITY OR RESPONSIBILITY FOR ANY (1) "
+"ERRORS, MISTAKES, OR INACCURACIES OF CONTENT\n"
+"                        AND MATERIALS, (2) PERSONAL INJURY OR PROPERTY "
+"DAMAGE, OF ANY NATURE WHATSOEVER, RESULTING FROM\n"
+"                        YOUR ACCESS TO AND USE OF THE SITE, (3) ANY "
+"UNAUTHORIZED ACCESS TO OR USE OF OUR SECURE SERVERS\n"
+"                        AND/OR ANY AND ALL PERSONAL INFORMATION AND/OR "
+"FINANCIAL INFORMATION STORED THEREIN, (4) ANY\n"
+"                        INTERRUPTION OR CESSATION OF TRANSMISSION TO OR FROM "
+"THE SITE, (5) ANY BUGS, VIRUSES, TROJAN\n"
+"                        HORSES, OR THE LIKE WHICH MAY BE TRANSMITTED TO OR "
+"THROUGH THE SITE BY ANY THIRD PARTY, AND/OR\n"
+"                        (6) ANY ERRORS OR OMISSIONS IN ANY CONTENT AND "
+"MATERIALS OR FOR ANY LOSS OR DAMAGE OF ANY KIND\n"
+"                        INCURRED AS A RESULT OF THE USE OF ANY CONTENT "
+"POSTED, TRANSMITTED, OR OTHERWISE MADE AVAILABLE\n"
+"                        VIA THE SITE. WE DO NOT WARRANT, ENDORSE, GUARANTEE, "
+"OR ASSUME RESPONSIBILITY FOR ANY PRODUCT OR\n"
+"                        SERVICE ADVERTISED OR OFFERED BY A THIRD PARTY "
+"THROUGH THE SITE, ANY HYPERLINKED WEBSITE, OR ANY\n"
+"                        WEBSITE OR MOBILE APPLICATION FEATURED IN ANY BANNER "
+"OR OTHER ADVERTISING, AND WE WILL NOT BE A\n"
+"                        PARTY TO OR IN ANY WAY BE RESPONSIBLE FOR MONITORING "
+"ANY TRANSACTION BETWEEN YOU AND ANY\n"
+"                        THIRD-PARTY PROVIDERS OF PRODUCTS OR SERVICES. AS "
+"WITH THE PURCHASE OF A PRODUCT OR SERVICE\n"
+"                        THROUGH ANY MEDIUM OR IN ANY ENVIRONMENT, YOU SHOULD "
+"USE YOUR BEST JUDGMENT AND EXERCISE CAUTION\n"
+"                        WHERE APPROPRIATE.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:747
+msgid ""
+"\n"
+"                        IN NO EVENT WILL WE, BE LIABLE TO YOU OR ANY THIRD "
+"PARTY\n"
+"                        FOR ANY DIRECT, INDIRECT, CONSEQUENTIAL, EXEMPLARY, "
+"INCIDENTAL, SPECIAL, OR PUNITIVE DAMAGES,\n"
+"                        INCLUDING LOST PROFIT, LOST REVENUE, LOSS OF DATA, "
+"OR OTHER DAMAGES ARISING FROM YOUR USE OF THE\n"
+"                        SITE, EVEN IF WE HAVE BEEN ADVISED OF THE "
+"POSSIBILITY OF SUCH DAMAGES.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:758
+msgid ""
+"\n"
+"                        You agree to defend, indemnify, and hold us "
+"harmless, including our subsidiaries, affiliates,\n"
+"                        and all of our respective officers, agents, "
+"partners, and employees, from and against any loss,\n"
+"                        damage, liability, claim, or demand, including "
+"reasonable attorneys’ fees and expenses, made\n"
+"                        by any third party due to or arising out of: (1) use "
+"of the Site; (2) breach of these Terms of\n"
+"                        Use; (3) any breach of your representations and "
+"warranties set forth in these Terms of Use;\n"
+"                        (4) your violation of the rights of a third party, "
+"including but not limited to intellectual\n"
+"                        property rights; or (5) any overt harmful act toward "
+"any other user of the Site with whom you\n"
+"                        connected via the Site. Notwithstanding the "
+"foregoing, we reserve the right, at your expense,\n"
+"                        to assume the exclusive defense and control of any "
+"matter for which you are required to\n"
+"                        indemnify us, and you agree to cooperate, at your "
+"expense, with our defense of such claims. We\n"
+"                        will use reasonable efforts to notify you of any "
+"such claim, action, or proceeding which is\n"
+"                        subject to this indemnification upon becoming aware "
+"of it.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:777
+msgid ""
+"\n"
+"                        We will maintain certain data that you transmit to "
+"the Site for the purpose of managing the\n"
+"                        performance of the Site, as well as data relating to "
+"your use of the Site. Although we perform\n"
+"                        regular routine backups of data, you are solely "
+"responsible for all data that you transmit or\n"
+"                        that relates to any activity you have undertaken "
+"using the Site. You agree that we shall have\n"
+"                        no liability to you for any loss or corruption of "
+"any such data, and you hereby waive any right\n"
+"                        of action against us arising from any such loss or "
+"corruption of such data.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:790
+msgid ""
+"\n"
+"                        Visiting the Site, sending us emails, and completing "
+"online forms constitute electronic\n"
+"                        communications. You consent to receive electronic "
+"communications, and you agree that all\n"
+"                        agreements, notices, disclosures, and other "
+"communications that we provide to you\n"
+"                        electronically, via email and on the Site, satisfy "
+"any legal requirement that such\n"
+"                        communication be in writing. YOU HEREBY AGREE TO THE "
+"USE OF ELECTRONIC SIGNATURES, CONTRACTS,\n"
+"                        ORDERS, AND OTHER RECORDS, AND TO ELECTRONIC "
+"DELIVERY OF NOTICES, POLICIES, AND RECORDS OF\n"
+"                        TRANSACTIONS INITIATED OR COMPLETED BY US OR VIA THE "
+"SITE. You hereby waive any rights or\n"
+"                        requirements under any statutes, regulations, rules, "
+"ordinances, or other laws in any\n"
+"                        jurisdiction which require an original signature or "
+"delivery or retention of non-electronic\n"
+"                        records, or to payments or the granting of credits "
+"by any means other than electronic means.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:807
+msgid ""
+"\n"
+"                        These Terms of Use and any policies or operating "
+"rules posted by us on the Site or in respect to\n"
+"                        the Site constitute the entire agreement and "
+"understanding between you and us. Our failure to\n"
+"                        exercise or enforce any right or provision of these "
+"Terms of Use shall not operate as a waiver\n"
+"                        of such right or provision. These Terms of Use "
+"operate to the fullest extent permissible by law.\n"
+"                        We may assign any or all of our rights and "
+"obligations to others at any time. We shall not be\n"
+"                        responsible or liable for any loss, damage, delay, "
+"or failure to act caused by any cause beyond\n"
+"                        our reasonable control. If any provision or part of "
+"a provision of these Terms of Use is\n"
+"                        determined to be unlawful, void, or unenforceable, "
+"that provision or part of the provision is\n"
+"                        deemed severable from these Terms of Use and does "
+"not affect the validity and enforceability of\n"
+"                        any remaining provisions. There is no joint venture, "
+"partnership, employment or agency\n"
+"                        relationship created between you and us as a result "
+"of these Terms of Use or use of the Site.\n"
+"                        You agree that these Terms of Use will not be "
+"construed against us by virtue of having drafted\n"
+"                        them. You hereby waive any and all defenses you may "
+"have based on the electronic form of these\n"
+"                        Terms of Use and the lack of signing by the parties "
+"hereto to execute these Terms of Use.\n"
+"                    "
+msgstr ""
+
+#: templates/legal/terms_and_conditions.html:828
+msgid ""
+"\n"
+"                        In order to resolve a complaint regarding the Site "
+"or to receive further information regarding\n"
+"                        use of the Site, please contact us at:\n"
+"                    "
+msgstr ""
+
 #: templates/portfolio/index_portfolio.html:13
 msgid "All"
 msgstr "Todo"
@@ -1284,9 +3742,17 @@ msgstr "¿Quieres reservarme?"
 msgid "Click"
 msgstr "Haga clic"
 
-#: templates/static_pages_and_forms/success.html:71
-msgid "here"
-msgstr "aquí"
+#~ msgid ""
+#~ "This website use cookies to ensure you get the best experience. By "
+#~ "continuing to use this site, you consent to our use of cookies in "
+#~ "accordance with our Privacy Policy"
+#~ msgstr ""
+#~ "Este sitio web utiliza cookies para garantizar que obtenga la mejor "
+#~ "experiencia. Al continuar utilizando este sitio, usted acepta nuestro uso "
+#~ "de cookies de acuerdo con nuestra Política de privacidad"
+
+#~ msgid "I understand"
+#~ msgstr "Lo entiendo"
 
 #~ msgid "day"
 #~ msgid_plural "days"

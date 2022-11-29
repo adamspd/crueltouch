@@ -1,0 +1,17 @@
+{% load i18n %}
+{% load static %}
+
+<div class="cookie-container" id="cookie-container">
+    <div class="wrapper" id="wrapper">
+        <img src="{% static 'homepage/img/cookie.webp' %}" alt="">
+        <div class="content">
+            <header>{% trans "Cookies Consent" %}</header>
+            <p>{% trans "This website use cookies to ensure you get the best experience." %}</p>
+            <div class="buttons">
+                <button class="item" id="acceptBtn">{% trans "Got it" %}</button>
+                <a href="{% url 'homepage:privacy_policy' %}#what_is_cookie" class="item">{% trans "Learn more" %}</a>
+            </div>
+        </div>
+    </div>
+</div>
+

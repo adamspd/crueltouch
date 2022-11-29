@@ -312,8 +312,8 @@ def check(data) -> bool:
     c_print(f"Checking {data}")
     if data is not None:
         search_list = [
-            "http", "https", "www.", "%", "business", "robot", " earn", "#1",
-            "# 1", "financial", "Make money", "Making money", "Invest $1", "Passive income", "NFT",
+            "http", "https", "www.", "%", "business", "robot", " earn", "#1", "income",
+            "# 1", "financial", "Make money", "Making money", "Invest $1", "Passive income", "NFT", "invest"
         ]
         if re.compile('|'.join(search_list), re.IGNORECASE).search(data):
             c_print(f"Found spam word in data")

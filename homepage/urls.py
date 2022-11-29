@@ -3,6 +3,7 @@ from django.urls import path
 from django.views.generic.base import RedirectView
 
 from administration.views import get_downloadable_client_images, download_zip
+from static_pages_and_forms.views import privacy_policy, terms_and_conditions
 from .views import *
 
 app_name = 'homepage'
@@ -24,4 +25,8 @@ urlpatterns = [
     path('download/<str:id_delivery>/', get_downloadable_client_images, name='get_downloadable_client_images'),
     # /download/zip/<str:id_delivery>/
     path('download/zip/<str:id_delivery>/', download_zip, name='download_zip'),
+    # /privacy-policy/
+    path('privacy-policy/', privacy_policy, name='privacy_policy'),
+    # /terms-and-conditions/
+    path('terms-and-conditions/', terms_and_conditions, name='terms_and_conditions'),
 ]
