@@ -9,8 +9,8 @@ class Contact(ModelForm):
         model = ContactForm
         fields = ['full_name', 'email', 'subject', 'message']
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.fields['full_name'].widget.attrs.update(
             {
                 'type': 'text',
