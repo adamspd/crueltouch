@@ -27,6 +27,7 @@
 
     <!-- Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/index.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/cookie.css' %}"/>
     {% block customCSS %}
         <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/styles.css' %}"/>{% endblock %}
     {% block priceTableCSS %}{% endblock %}
@@ -93,6 +94,13 @@
             </li>
         {% endblock %}
         <li>
+            <a href="#">{% trans "Legal" %}</a>
+            <ul class="sub-menu">
+                <li><a href="{% url 'homepage:privacy_policy' %}">{% trans "Privacy Policy" %}</a></li>
+                <li><a href="{% url 'homepage:terms_and_conditions' %}">{% trans "Terms & Conditions" %}</a></li>
+            </ul>
+        </li>
+        <li>
             <div class="language_fr ml-auto">
                 {% get_current_language as LANGUAGE_CODE %}
                 <form action="{% url 'set_language' %}" method="post">
@@ -122,7 +130,7 @@
 
 {% block body %}
 {% endblock %}
-
+{% include "homepage/cookie.html" %}
 
 {% block footer %}
     <!-- Footer-->
@@ -134,8 +142,10 @@
                 {% block customfa %}
                     <div class="col-md-6 order-1 order-md-2">
                     <div class="footer-social-links">
-                        <a href="https://www.facebook.com/crueltouch" target="_blank"><i class="fa-brands fa-facebook"></i></a>
-                        <a href="https://www.instagram.com/crueltouch_/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/crueltouch" target="_blank"><i
+                                class="fa-brands fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/crueltouch_/" target="_blank"><i
+                                class="fa-brands fa-instagram"></i></a>
                         <a href="https://vm.tiktok.com/ZM8quPJ9t/">
                             <i class="fa-brands fa-tiktok"></i>
                         </a>
@@ -180,6 +190,28 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"
         integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    const cookieBox = document.getElementById(".wrapper");
+    const acceptBtn = document.getElementById("acceptBtn");
+    const cookieContainer = document.getElementById("cookie-container");
+
+    acceptBtn.addEventListener("click", () => {
+        //setting cookie for 1 month, after one month it'll be expired automatically
+        document.cookie = "CookieBy=crueltouch.com; max-age=" + 60 * 60 * 24 * 30;
+        localStorage.setItem("cookieBannerDisplayed", "true");
+        if (document.cookie) { //if cookie is set
+            cookieContainer.classList.remove("active");
+        } else { //if cookie not set then alert an error
+            alert("Cookie can't be set! Please unblock this site from the cookie setting of your browser.");
+        }
+    });
+
+    setTimeout(() => {
+        if (!localStorage.getItem("cookieBannerDisplayed")) {
+            cookieContainer.classList.add("active");
+        }
+    }, 2000);
+</script>
 {% block js %}
     <script src="{% static 'homepage/js/jquery.slicknav.min.js' %}"></script>
     <script src="{% static 'homepage/js/owl.carousel.min.js' %}"></script>

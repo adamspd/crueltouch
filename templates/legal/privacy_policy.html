@@ -1,0 +1,433 @@
+{% extends 'homepage/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block title %}{{ page_title }}{% endblock %}
+{% block site_description %}{{ page_description }}{% endblock %}
+{% block body %}
+    <div class="clearfix"></div>
+
+    <!-- Privacy Policy section  -->
+    <section class="privacy-policy" style="padding: 5px; margin: 5px">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="privacy-policy-content">
+                        <button onclick="topFunction()" id="myBtnTop" title="Go to top">Top</button>
+                        <h2>{% trans 'Privacy Policy' %}</h2>
+                        <p>{% trans "Last updated" %}: {% trans 'November 10, 2022' %}</p>
+                        <p>
+                            {% blocktranslate %}
+                                This page informs you of our policies regarding the collection, use, and disclosure of
+                                personal data when you use our Service and the choices you have associated with that
+                                data.
+                            {% endblocktranslate %}
+                        </p>
+                        <p>
+                            {% blocktranslate %}
+                                We use your data to provide and improve the Service. By using the Service, you agree to
+                                the
+                                collection and use of information in accordance with this policy. Unless otherwise
+                                defined
+                                in this Privacy Policy, terms used in this Privacy Policy have the same meanings as in
+                                our
+                                Terms and Conditions, accessible from
+                            {% endblocktranslate %}
+                            <a href="{% url 'homepage:terms_and_conditions' %}">{% trans 'here' %}</a>.</p>
+                        <h2>{% trans 'Interpretation' %}</h2>
+                        <p>{% blocktranslate %}
+                            The words of which the initial letter is capitalized have meanings defined under the
+                            following conditions. The following definitions shall have the same meaning regardless of
+                            whether they appear in singular or in plural.
+                        {% endblocktranslate %}
+                        </p>
+                        <h2>{% trans 'Definitions' %}</h2>
+                        <p>{% trans 'For the purposes of this Privacy Policy' %}:</p>
+                        <ul>
+                            <li>
+                                <p>
+                                    <strong>{% trans 'Account' %}</strong>
+                                    {% blocktranslate %}
+                                        means a unique account created for You to access our Service
+                                        or parts of our Service.
+                                    {% endblocktranslate %}
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    <strong>{% trans 'Company' %}</strong>
+                                    {% blocktranslate %}
+                                        (referred to as either &quot;the Company&quot;, &quot;We&quot;,
+                                        &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to
+                                        crueltouch.com.
+                                    {% endblocktranslate %}
+                                </p>
+                            </li>
+                            <li>
+                                <p id="">
+                                    <strong>{% trans 'Cookies' %}</strong>
+                                    {% blocktranslate %}
+                                        are small files that are placed on Your computer, mobile
+                                        device or any other device by a website, containing the details of Your browsing
+                                        history on that website among its many uses.
+                                    {% endblocktranslate %}
+                                </p>
+                            </li>
+                            <li>
+                                <p><strong>{% translate "Country" %}</strong> {% trans 'refers to: United States of America' %}</p>
+                            </li>
+                            <li>
+                                <p>
+                                    <strong>{% trans "Device" %}</strong>
+                                    {% blocktranslate %}
+                                        means any device that can access the Service such as a
+                                        computer, a cellphone or a digital tablet.
+                                    {% endblocktranslate %}
+                                </p>
+                            </li>
+                            <li>
+                                <p><strong>{% trans 'Personal Data' %}</strong>
+                                    {% blocktranslate %}
+                                        is any information that relates to an identified or identifiable individual.
+                                    {% endblocktranslate %}
+                                </p>
+                            </li>
+                            <li>
+                                <p><strong>{% trans 'Service' %}</strong> {% trans 'refers to the Website.' %}</p>
+                            </li>
+                            <li>
+                                <p>
+                                    <strong>{% trans "Service Provider" %}</strong>
+                                    {% blocktranslate %}
+                                        means any natural or legal person who processes the
+                                        data on behalf of the Company. It refers to third-party companies or individuals
+                                        employed by the Company to facilitate the Service, to provide the Service on
+                                        behalf
+                                        of the Company, to perform services related to the Service or to assist the
+                                        Company
+                                        in analyzing how the Service is used.
+                                    {% endblocktranslate %}
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    <strong>{% trans "Usage Data" %}</strong>
+                                    {% blocktranslate %}
+                                        refers to data collected automatically, either generated
+                                        by the use of the Service or from the Service infrastructure itself (for
+                                        example,
+                                        the duration of a page visit).
+                                    {% endblocktranslate %}
+                                </p>
+                            </li>
+                            <li>
+                                <p><strong>{% trans 'Website' %}</strong>
+                                    {% trans "refers to crueltouch.com, accessible from" %} <a
+                                            href="https://www.crueltouch.com" rel="external nofollow noopener"
+                                            target="_blank">https://www.crueltouch.com</a></p>
+                            </li>
+                            <li>
+                                <p><strong>{% trans 'You' %}</strong>
+                                    {% blocktranslate %}
+                                        means the individual accessing or using the Service, or the
+                                        company, or other legal entity on behalf of which such individual is accessing
+                                        or
+                                        using the Service, as applicable.
+                                    {% endblocktranslate %}
+                                </p>
+                            </li>
+                        </ul>
+                        <h3>{% trans "Collecting and Using Your Personal Data" %}</h3>
+                        <p>
+                            {% blocktranslate %}
+                                We collect several types of information for various purposes to provide and improve
+                                our Service to you.
+                            {% endblocktranslate %}
+                        </p>
+                        <h4>{% trans "Types of Data Collected" %}</h4>
+                        <h5>{% trans "Personal Data" %}</h5>
+                        <p>
+                            {% blocktranslate %}
+                                While using our Service, we may ask you to provide us with certain personally
+                                identifiable
+                                information that can be used to contact or identify you ("Personal Data"). Personally
+                                identifiable information may include, but is not limited to:
+                            {% endblocktranslate %}
+                        </p>
+                        <ul>
+                            <li>{% trans "Email address" %}</li>
+                            <li>{% trans "First name and last name" %}</li>
+                            <li>{% trans "Cookies and Usage Data" %}</li>
+                        </ul>
+                        <h5>{% trans "Usage Data" %}</h5>
+                        <p>
+                            {% translate "Usage Data is collected automatically when using the Service." %}
+                        </p>
+                        <p>
+                            {% blocktranslate %}
+                                We may also collect information how the Service is accessed and used ("Usage Data").
+                                This
+                                Usage Data may include information such as your computer's Internet Protocol address
+                                (e.g.
+                                IP address), browser type, browser version, the pages of our Service that you visit, the
+                                time and date of your visit, the time spent on those pages, unique device identifiers
+                                and
+                                other diagnostic data.
+                            {% endblocktranslate %}
+                        </p>
+                        <h5>{% trans 'Tracking & Cookies Data' %}</h5>
+                        <p>
+                            {% blocktranslate %}
+                                We use cookies and similar tracking technologies to track the activity on our Service
+                                and
+                                hold certain information.
+                            {% endblocktranslate %}
+                        </p>
+                        <p id="what_is_cookie">
+                            {% blocktranslate %}
+                                Cookies are files with small amount of data which may include an anonymous unique
+                                identifier.
+                                Cookies are sent to your browser from a website and stored on your device. Tracking
+                                technologies also used are beacons, tags, and scripts to collect and track information
+                                and
+                                to improve and analyze our Service.
+                            {% endblocktranslate %}
+                        </p>
+                        <p>
+                            {% blocktranslate %}
+                                You can instruct your browser to refuse all cookies or to indicate when a cookie is
+                                being
+                                sent. However, if you do not accept cookies, you may not be able to use some portions of
+                                our
+                                Service.
+                            {% endblocktranslate %}
+                        </p>
+                        <p>{% trans "Examples of Cookies we use:" %}</p>
+                        <ul>
+                            <li><strong>{% trans "Session Cookies." %}</strong>
+                                {% blocktranslate %}
+                                    We use Session Cookies to operate our Service.
+                                {% endblocktranslate %}
+                            </li>
+                            <li><strong>{% trans "Preference Cookies." %}</strong>
+                                {% blocktranslate %}
+                                    We use Preference Cookies to remember your preferences and various settings.
+                                {% endblocktranslate %}
+                            </li>
+                            <li><strong>{% trans "Security Cookies." %}</strong>
+                                {% blocktranslate %}
+                                    We use Security Cookies for security purposes.
+                                {% endblocktranslate %}
+                            </li>
+                        </ul>
+                        <h3>{% trans "Use of Data" %}</h3>
+                        <p>
+                            {% blocktranslate %}
+                                My Company uses the collected data for various purposes:
+                            {% endblocktranslate %}
+                        </p>
+                        <ul>
+                            <li>{% trans "To provide and maintain the Service" %}</li>
+                            <li>{% trans "To notify you about changes to our Service" %}</li>
+                            <li>
+                                {% blocktranslate %}
+                                    To allow you to participate in interactive features of our Service when you choose
+                                    to do
+                                    so
+                                {% endblocktranslate %}
+                            </li>
+                            <li>{% trans "To provide customer care and support" %}</li>
+                            <li>
+                                {% trans "To provide analysis or valuable information so that we can improve the Service" %}
+                            </li>
+                            <li>{% trans "To monitor the usage of the Service" %}</li>
+                            <li>{% trans "To detect, prevent and address technical issues" %}</li>
+                        </ul>
+                        <h3>{% trans "Transfer Of Data" %}</h3>
+                        <p>
+                            {% blocktranslate %}
+                                Your information, including Personal Data, may be transferred to — and maintained on —
+                                computers located outside your state, province, country or other governmental
+                                jurisdiction where the data protection laws may differ than those from your
+                                jurisdiction.
+                            {% endblocktranslate %}
+                        </p>
+                        <p>
+                            {% blocktranslate %}
+                                If you are located outside United States of America and choose to provide information to us, please note
+                                that we transfer the data, including Personal Data, to United States of America and process it
+                                there.
+                            {% endblocktranslate %}
+                        </p>
+                        <p>
+                            {% blocktranslate %}
+                                Your consent to this Privacy Policy followed by your submission of such information
+                                represents your agreement to that transfer.
+                            {% endblocktranslate %}
+                        </p>
+                        <p>
+                            {% blocktranslate %}
+                                My Company will take all steps reasonably necessary to ensure that your data is treated
+                                securely and in accordance with this Privacy Policy and no transfer of your Personal
+                                Data
+                                will take place to an organization or a country unless there are adequate controls in
+                                place
+                                including the security of your data and other personal information.
+                            {% endblocktranslate %}
+                        </p>
+                        <h3>{% trans "Disclosure Of Data" %}</h3>
+                        <h4>{% trans "Legal Requirements" %}</h4>
+                        <p>
+                            {% blocktranslate %}
+                                My Company may disclose your Personal Data in the good faith belief that such action is
+                                necessary to:
+                            {% endblocktranslate %}
+                        </p>
+                        <ul>
+                            <li>{% trans "To comply with a legal obligation" %}</li>
+                            <li>
+                                {% trans "To protect and defend the rights or property of My Company" %}
+                            </li>
+                            <li>
+                                {% trans "To prevent or investigate possible wrongdoing in connection with the Service" %}
+                            </li>
+                            <li>
+                                {% trans "To protect the personal safety of users of the Service or the public" %}
+                            </li>
+                            <li>
+                                {% trans "To protect against legal liability" %}
+                            </li>
+                        </ul>
+                        <h3>{% trans "Security Of Data" %}</h3>
+                        <p>
+                            {% blocktranslate %}
+                                The security of your data is important to us, but remember that no method of
+                                transmission
+                                over the Internet, or method of electronic storage is 100% secure. While we strive to
+                                use
+                                commercially acceptable means to protect your Personal Data, we cannot guarantee its
+                                absolute security.
+                            {% endblocktranslate %}
+                        </p>
+                        <h3>{% trans "Service Providers" %}</h3>
+                        <p>
+                            {% blocktranslate %}
+                                We may employ third party companies and individuals to facilitate our Service ("Service
+                                Providers"), to provide the Service on our behalf, to perform Service-related services
+                                or to
+                                assist us in analyzing how our Service is used.
+                            {% endblocktranslate %}
+                        </p>
+                        <p>
+                            {% blocktranslate %}
+                                These third parties have access to your Personal Data only to perform these tasks on our
+                                behalf and are obligated not to disclose or use it for any other purpose.
+                            {% endblocktranslate %}
+                        </p>
+                        <h3>{% trans "Links To Other Sites" %}</h3>
+                        <p>
+                            {% blocktranslate %}
+                                Our Service may contain links to other sites that are not operated by us. If you click
+                                on a
+                                third party link, you will be directed to that third party's site. We strongly advise
+                                you to
+                                review the Privacy Policy of every site you visit.
+                            {% endblocktranslate %}
+                        </p>
+                        <p>
+                            {% blocktranslate %}
+                                We have no control over and assume no responsibility for the content, privacy policies
+                                or
+                                practices of any third party sites or services.
+                            {% endblocktranslate %}
+                        </p>
+                        <h3>{% trans "Children's Privacy" %}</h3>
+                        <p>
+                            {% blocktranslate %}
+                                Our Service does not address anyone under the age of 18 ("Children").
+                            {% endblocktranslate %}
+                        </p>
+                        <p>
+                            {% blocktranslate %}
+                                We do not knowingly collect personally identifiable information from anyone under the
+                                age of
+                                18. If you are a parent or guardian, and you are aware that your Children has provided
+                                us
+                                with Personal Data, please contact us. If we become aware that we have collected
+                                Personal
+                                Data from children without verification of parental consent, we take steps to remove
+                                that
+                                information from our servers.
+                            {% endblocktranslate %}
+                        </p>
+                        <h3>{% trans "Changes To This Privacy Policy" %}</h3>
+                        <p>
+                            {% blocktranslate %}
+                                We may update our Privacy Policy from time to time. We will notify you of any changes by
+                                posting the new Privacy Policy on this page.
+                            {% endblocktranslate %}
+                        </p>
+                        <p>
+                            {% blocktranslate %}
+                                We will let you know via email and/or a prominent notice on our Service, prior to the
+                                change
+                                becoming effective and update the "effective date" at the top of this Privacy Policy.
+                            {% endblocktranslate %}
+                        </p>
+                        <p>
+                            {% blocktranslate %}
+                                You are advised to review this Privacy Policy periodically for any changes. Changes to
+                                this
+                                Privacy Policy are effective when they are posted on this page.
+                            {% endblocktranslate %}
+                        </p>
+                        <h3>{% trans "Contact Us" %}</h3>
+                        <p>
+                            {% blocktranslate %}
+                                If you have any questions about this Privacy Policy, please contact us:
+                            {% endblocktranslate %}
+                        </p>
+                        <ul>
+                            <li>{% trans "By email:" %}
+                                <a href="mailto:adamspd.webmaster@gmail.com" target="_blank">[email protected]</a>
+                            </li>
+                            <li>
+                                {% trans "By visiting this page on our website:" %}
+                                <a href="https://crueltouch.com/contact/" target="_parent">
+                                    https://crueltouch.com/contact/
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Privacy Policy section end  -->
+
+
+{% endblock %}
+{% block customJS %}
+    <script>
+        const mybutton = document.getElementById("myBtnTop");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () {
+            scrollFunction()
+        };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+{% endblock %}
+
