@@ -50,3 +50,17 @@ def check_full_name(data):
                 or "Eric Jones" in data \
                 or "BusinessLoans" in data:
             return True
+
+
+def privacy_policy(request):
+    page_title = _("Privacy Policy")
+    page_description = _("Privacy Policy page")
+    context = {'page_title': page_title, 'page_description': page_description}
+    return render(request, 'legal/privacy_policy.html', context=context)
+
+
+def terms_and_conditions(request):
+    page_title = _("Terms and Conditions")
+    page_description = _("Terms and Conditions page")
+    context = {'page_title': page_title, 'page_description': page_description}
+    return render(request, 'legal/terms_and_conditions.html', context=context)

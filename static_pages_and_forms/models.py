@@ -1,16 +1,17 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from utils.crueltouch_utils import c_print, send_client_email, send_email_admin
 
 
 class ContactForm(models.Model):
-    full_name = models.CharField(max_length=255, null=False, blank=False)
-    email = models.EmailField(blank=False, null=True)
-    subject = models.CharField(default="", null=True, blank=True, max_length=255)
-    message = models.TextField(null=False, blank=False)
+    full_name = models.CharField(max_length=255, null=False, blank=False, verbose_name=_("Full name"))
+    email = models.EmailField(blank=False, null=True, verbose_name=_("Email"))
+    subject = models.CharField(default="", null=True, blank=True, max_length=255, verbose_name=_("Subject"))
+    message = models.TextField(null=False, blank=False, verbose_name=_("Message"))
 
     def __str__(self):
         return self.full_name
