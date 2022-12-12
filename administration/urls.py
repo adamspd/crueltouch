@@ -28,6 +28,7 @@ add_photos_patterns = [
 link_pattern = [
     path('creation/', create_downloadable_file, name='create_downloadable_file'),
     path('show-all/', list_downloadable_files_link, name='show_all_links_created'),
+    path('via-account/', send_photo_via_account, name='via_account'),
 ]
 
 urlpatterns = [
