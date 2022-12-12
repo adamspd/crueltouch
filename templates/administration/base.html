@@ -263,9 +263,9 @@
                         </li>
                     <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fa-solid fa-link"></i>
+                                <i class="nav-icon fa-solid fa-paper-plane"></i>
                                 <p>
-                                    {% translate "Send photo via link" %}
+                                    {% translate "Send photo" %}
                                     <i class="fas fa-angle-left right"></i>
                                     <span class="badge badge-info right">2</span>
                                 </p>
@@ -274,8 +274,15 @@
                                 <li class="nav-item">
                                     <a href="{% url 'administration:create_downloadable_file' %}" class="nav-link">
                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="far fa-plus-square nav-icon"></i>
-                                        <p>{% translate "Create link" %}</p>
+                                        <i class="fa fa-chain nav-icon"></i>
+                                        <p>{% translate "Via link" %}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'administration:create_downloadable_file' %}" class="nav-link">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="fa fa-user-plus nav-icon"></i>
+                                        <p>{% translate "Via account" %}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">

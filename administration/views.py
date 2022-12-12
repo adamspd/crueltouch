@@ -447,3 +447,41 @@ def download_zip(request, id_delivery):
     resp = HttpResponse(s.getvalue(), content_type="application/x-zip-compressed")
     resp['Content-Disposition'] = 'attachment; filename=%s' % zip_filename
     return resp
+
+
+@login_required(login_url='/administration/login/')
+@user_passes_test(email_check, login_url='/administration/login/')
+def send_photo_via_account(request, pk):
+    # try:
+    #     photo = PhotoClient.objects.get(id=pk)
+    # except PhotoClient.DoesNotExist:
+    #     return HttpResponseNotFound("Not found")
+    # if request.method == 'POST':
+    #     if is_ajax(request):
+    #         client_name = request.POST.get("client_name")
+    #         client_email = request.POST.get("client_email")
+    #         next_ = request.POST.get('next', '/')
+    #         c_print(f"email: {client_email}", f"client name: {client_name}", f"next: {next_}")
+    #         delivery = PhotoDelivery(client_name=client_name, client_email=client_email)
+    #         delivery.save()
+    #         delivery.photos.add(photo)
+    #         delivery.save()
+    #         if client_email != "":
+    #             send_client_email(email_address=client_email, subject="New images were uploaded for you",
+    #                               header="New images were uploaded for you",
+    #                               message=f"Hello {client_name}, you can download your photos now !",
+    #                               footer="Thank you for using our service ! The Crueltouch Team",
+    #                               is_contact_form=False, is_other=True, button_label="Download my photos now",
+    #                               button_text="Download", button_link=delivery.link_to_download)
+    #         else:
+    #             # return HttpResponseRedirect(next_)
+    #             pass
+    #         return JsonResponse({'link': delivery.link_to_download})
+    # nota_bene = _(f"If you want the website to send the link automatically to the client, please, put the client "
+    #               f"email in the field below. If you don't want to send the link automatically, leave the field "
+    #               f"empty.")
+    context = {
+        'title': _("Create downloadable file"),
+        #   'nota_bene': nota_bene,
+    }
+    return render(request, 'administration/add/add_downloadable_file.html', context)
