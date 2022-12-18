@@ -1,0 +1,185 @@
+/* create a gallery of images */
+.container-all {
+    margin: 0 auto;
+}
+
+.gallery-all {
+    margin: 0 5px;
+    width: 100vw;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.img-container {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.actual-img {
+    box-shadow: 0 0 0.5rem 0.5rem rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    height: auto;
+    margin: 0.5rem;
+    border-radius: 0.1rem;
+    object-fit: cover;
+}
+
+.gallery-all img:hover {
+    cursor: pointer;
+}
+
+/* add watermark on top of photos */
+.watermarked {
+    position: relative;
+    overflow: hidden;
+}
+
+.watermarked img {
+    width: 100%;
+}
+
+.watermarked::before {
+    position: absolute;
+    display: block;
+    width: 300px;
+    height: 150%;
+
+    content: attr(data-watermark);
+
+    opacity: 0.08;
+    line-height: 3em;
+    letter-spacing: 2px;
+    color: #ffffff;
+    text-shadow: 0 0 2px #000000;
+    overflow-x: hidden;
+    font-size: 0.8em;
+}
+
+/* like button */
+
+.img-id-text {
+    font-size: 1.7em;
+    font-weight: 300;
+}
+
+button {
+    position: relative;
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+    outline: none;
+}
+
+.button {
+    z-index: 1;
+    margin: 0.5em;
+    color: #aab2bd;
+    padding: 0.2em 0.6em;
+    min-width: 2.4em;
+    min-height: 2.4em;
+    border-radius: 0.2em;
+    outline: none;
+    transition: background 0.2s;
+}
+
+.fa i {
+    transition: 0.2s;
+}
+
+.fa {
+    font-size: large !important;
+    margin-right: 0 !important;
+}
+
+.fa:hover, .fa:focus {
+    color: #8d98a7;
+}
+
+.fa:hover:active i, .fa:focus:active i {
+    transform: scale(0.8);
+}
+
+.fa.rounded {
+    border-radius: 2em;
+}
+
+.fa.is-loading {
+    pointer-events: none;
+    position: relative;
+    color: transparent !important;
+}
+
+.fa.is-loading:after {
+    z-index: 1;
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 1em;
+    width: 1em;
+    margin-left: -0.5em;
+    margin-top: -0.5em;
+    animation: loader-animation 600ms infinite linear;
+    font-size: inherit;
+    color: #aab2bd !important;
+    border: 0.2em solid;
+    border-radius: 0.7em;
+    border-right-color: transparent;
+    border-top-color: transparent;
+}
+
+@keyframes loader-animation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.fa.is-active:before {
+    animation: effect-01-animation 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.fa.is-active:after {
+    animation: effect-02-animation 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes effect-01-animation {
+    from {
+        transform: rotate(-15deg) scale(0);
+    }
+    40% {
+        opacity: 1;
+    }
+    to {
+        transform: rotate(-30deg) scale(2.5);
+        opacity: 0;
+    }
+}
+
+@keyframes effect-02-animation {
+    from {
+        transform: rotate(10deg) scale(0);
+    }
+    40% {
+        opacity: 1;
+    }
+    to {
+        transform: rotate(30deg) scale(2);
+        opacity: 0;
+    }
+}
+
+.fa-heart.like:before, .button.like:after {
+    color: #cc4896;
+}

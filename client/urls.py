@@ -27,7 +27,8 @@ urlpatterns = [
     re_path(r'^(?P<pk>\d+)/$', user_album_details, name='album_details'),
 
     # favorite
-    re_path(r'^(?P<pk>\d+)/favorite$', favorite, name='favorite'),
+    re_path(r'^favorite/$', favorite, name='favorite'),
+    re_path(r'^dislike/$', dislike, name='dislike'),
 
     # # client details
     # re_path(r'^(?P<pk>\d+)/$', user_details, name='user_details'),

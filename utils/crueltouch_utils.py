@@ -14,6 +14,7 @@ from django.template import loader
 
 from administration.models import PermissionsEmails
 from crueltouch import settings
+from crueltouch.productions import production_debug
 
 
 def c_print(msg, *args, **kwargs):
@@ -62,7 +63,10 @@ def check_user_login(request):
             return redirect('administration:index')
         elif user.is_active:
             c_print("User is active but not admin")
-            return redirect("client:client_homepage")
+            if user.has_to_change_password:
+                return redirect("administration:must_change_password", user.pk)
+            else:
+                return redirect("client:client_homepage")
         else:
             messages.error(request, "User is anonymous")
             return redirect('client:login')
@@ -458,3 +462,90 @@ def change_img_format_to_webp(img_path: str, quality: int = 80, method: int = 6,
     else:
         c_print(f"Image {img_path} does not exist")
         return ""
+
+
+def send_password_reset_email(first_name: str, email_address: str) -> bool:
+    """
+    This function sends email to client with his password, and returns True if email is sent successfully.
+    Use models `PermissionsEmails`.
+    :param first_name: first name of the client
+    :param email_address: client's email address
+    :return: True if email is sent successfully
+    """
+    if get_permissions(is_booking=False, is_contact_form=False, is_other=True):
+        recipient_list = [
+            email_address,
+        ]
+        if production_debug:
+            button_link = "http://localhost:8000/client/login/"
+        else:
+            button_link = "https://crueltouch.com/client/login/"
+        html_message = loader.render_to_string(
+            "administration/email_template/client_email.html",
+            {
+                'header': "Login details",
+                'message': f"Hello {first_name},we have created an account for you on our website "
+                           f"so that we can communicate confidential data to you in a secure manner. Your username "
+                           f"is {email_address}. Your password is: Crueltouch2022, you'll be asked to change it when "
+                           f"you log in for the first time.",
+                'footer': "Thank you for your trust in Crueltouch.",
+                'subject': "Login details on Crueltouch website",
+                'button_label': "Login right now !",
+                'button_text': "Login",
+                'button_link': button_link,
+            }
+        )
+        mail = send_mail(
+            subject="Password reset",
+            message="",
+            from_email="crueltouch.photo.web@gmail.com",
+            html_message=html_message,
+            recipient_list=recipient_list
+        )
+        if mail == 1:
+            return True
+        else:
+            return False
+    else:
+        return False
+
+
+def convert_raw_to_jpg(file):
+    c_print(f"Convert raw to jpg: {file}")
+    # convert .CR2 to .jpg
+    img = Image.open(file)
+    if img.format != 'JPEG':
+        # convert to RGB if necessary
+        if img.mode != 'RGB':
+            img = img.convert('RGB')
+        # save as JPEG
+        file = file.replace('.CR2', '.jpg')
+        img.save(file, 'JPEG')
+    return file
+
+
+def create_thumbnail(file):
+    if file.name.endswith('.png'):
+        return file
+    c_print(f"Create thumbnail: {file}")
+    # create thumbnail
+    img = Image.open(file)
+    img.thumbnail((500, 500))
+    # file = file.name('.jpg', '_thumb.jpg')
+    img.save(file, 'JPEG')
+    return file
+
+
+def work_with_file_photos(file):
+    # if file is video, skip it
+    if file.name.endswith('.mp4'):
+        return file
+    # check file extension
+    if file.name.endswith('.CR2'):
+        # convert raw file to jpg
+        file = convert_raw_to_jpg(file)
+        # create thumbnail
+        file = create_thumbnail(file)
+    else:
+        file = create_thumbnail(file)
+    return file
