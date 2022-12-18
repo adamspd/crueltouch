@@ -1,0 +1,184 @@
+{% extends 'administration/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block title %}Crueltouch | {{ title }}{% endblock %}
+{% block customCSS %}
+    <style>
+        .not-visible {
+            display: none;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <section class="content content-wrapper">
+        <div class="container-fluid">
+            <div class="row" style="margin: 0 auto; padding-top: 20px">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">{{ title }} </h3>
+                            <small class="float-right"></small>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form method="POST" enctype="multipart/form-data" id="upload-form">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">{% translate "Upload image" %}</label>
+                                    <div class="form-group col-md-12">
+                                        <label>{% trans "Client name" %} *</label><br>
+                                        <div class="clientName name">
+                                            <select name="client" id="client_name" class="form-control">
+                                                {% for client in client_list %}
+                                                    <option value="{{ client.id }}">{{ client.first_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="not-in-the-list">
+                                            <p>Client not in the list ?
+                                                <a href="{% url 'administration:create_new_client' %}">
+                                                    Add <i class="fa-solid fa-plus-circle"></i></a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="id_photo"
+                                                   multiple="multiple">
+                                            <label class="custom-file-label" for="id_photo">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="submit" id="formSubmitBTN"
+                                        class="btn btn-info">{% translate "Send" %}</button>
+                                <button type="reset" class="btn btn-default float-right">
+                                    <a href="{% url 'administration:index' %}">{% translate "Cancel" %}</a>
+                                </button>
+                            </div>
+
+                            <br>
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}"
+                                         role="alert">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+                            {% if form.errors %}
+                                {% for field, errors in form.errors.items %}
+                                    {% for error in errors %}
+                                        <p style="color: darkred">{{ error }}</p>
+                                    {% endfor %}
+                                {% endfor %}
+                            {% endif %}
+                        </form>
+
+                    </div>
+                </div>
+                <div class="not-visible" id="progress-box"></div>
+                <div class="not-visible" id="alert-box"></div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block customJS %}
+    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+    <script>
+
+        $('input#id_photo').change(function () {
+            const files = $(this)[0].files;
+
+            // calculate total size of all files
+            let totalSize = 0;
+            for (let i = 0; i < files.length; i++) {
+                totalSize += files[i].size;
+            }
+            // convert total size to MB
+            totalSize = totalSize / 1024 / 1024;
+            // round to 2 decimal places
+            totalSize = totalSize.toFixed(2);
+            // display total size
+            $(this).next('.custom-file-label').html(files.length + ' files selected' + ' (' + totalSize + ' MB)');
+        });
+
+        const uploadForm = document.getElementById('upload-form');
+        const imagesClientLink = document.getElementById('id_photo');
+        const progressBox = document.getElementById('progress-box');
+        const csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+        const formSubmitBTN = document.getElementById('formSubmitBTN');
+        const alertBox = document.getElementById('alert-box');
+
+        document.getElementById("id_photo").addEventListener("change", function () {
+            console.log(this.files.length);
+        });
+
+        formSubmitBTN.addEventListener('click', (e) => {
+            e.preventDefault();
+            progressBox.classList.remove('not-visible');
+
+            // upload multiple files
+            const files = imagesClientLink.files;
+            const formData = new FormData();
+            for (let i = 0; i < files.length; i++) {
+                let file = files[i];
+                formData.append('id_photo', file, file.name);
+            }
+            formData.append('csrfmiddlewaretoken', csrfToken);
+            formData.append('client', document.getElementsByName('client')[0].value);
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'administration:send_photos_for_client_to_choose_from' %}',
+                enctype: 'multipart/form-data',
+                data: formData,
+                beforeSend: function () {
+
+                },
+                xhr: function () {
+                    const xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener('progress', function (e) {
+                        if (e.lengthComputable) {
+                            const percent = Math.round((e.loaded / e.total) * 100);
+                            progressBox.innerHTML = `<div class="progress">
+                            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: ${percent}%;" aria-valuenow="${percent}" aria-valuemin="0" aria-valuemax="100">${percent}%</div>
+                            </div>`;
+                        }
+                    });
+                    return xhr;
+                },
+                success: function (data) {
+                    progressBox.innerHTML = `<div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+                    </div>`;
+                    alertBox.classList.remove('not-visible');
+                    alertBox.innerHTML = `<br><div class="alert alert-success" role="alert">
+                                            Photos successfully sent to client for choosing.
+                                            </div>`;
+                    setTimeout(() => {
+                        progressBox.classList.add('not-visible');
+                    }, 3000);
+                    uploadForm.reset();
+                    // change label input#id_photo to Choose file
+                    imagesClientLink.nextElementSibling.innerHTML = 'Choose file';
+                },
+                error: function (data) {
+                    console.log(data.error);
+                    progressBox.innerHTML = `<div class="alert alert-danger" role="alert">
+                                            Something wrong happened, please try again !
+                                            </div>`;
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            })
+        })
+    </script>
+{% endblock %}

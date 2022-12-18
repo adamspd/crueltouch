@@ -19,7 +19,8 @@
     <!-- Main content -->
     <div>
         <div class="cardHeader">
-            <h2>{{ total_photos_label }}</h2> <span class="badge badge-pill badge-primary">{{ photos|length }}</span>
+            <h2>{{ total_photos_label }}</h2> <span
+                class="badge badge-pill badge-primary">{{ album.get_photos_count }}</span>
             <small class="text-muted">{% if messages %}
                 {% for message in messages %}
                     <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}"
@@ -30,30 +31,37 @@
         </div>
         <br>
         <div class="" style="padding: 5px;">
-            {% if photos %}
+            {% if photos_liked %}
+                <div class="cardHeader">
+                    <h3 style="font-size: 20px">Photos liked</h3>
+                </div>
+                <br><br>
                 <div style="display: flex; flex-flow: row wrap; justify-items: flex-start; padding: 5px;">
-                    {% for photo in photos %}
+                    {% for photo in photos_liked %}
                         <div style="margin: 5px">
                             <div>
                                 <img src="{{ photo.file.url }}" alt="" style="height: 150px">
-                            </div>
-                            <br>
-                            <div>
-                                {% if portfolio == True %}
-                                    <a class="btn btn-danger" style="background-color: red"
-                                       href="{% url 'administration:delete_photo_portfolio' photo.pk %}">Remove</a>
-                                {% else %}
-                                    <a class="btn btn-danger" style="background-color: red"
-                                       href="{% url 'administration:delete_photo_homepage' photo.pk %}">Remove</a>
-                                {% endif %}
                             </div>
                             <br><br>
                         </div>
                     {% endfor %}
                 </div>
-            {% else %}
-                <div class="alert-info" id="info" style="text-align: center; margin-top: auto">
-                    <p>No photos to portfolio.</p>
+            {% endif %}
+            {% if photos_not_liked %}
+                <hr>
+                <div class="cardHeader">
+                    <h3 style="font-size: 20px">Photos not liked</h3>
+                </div>
+                <br><br>
+                <div style="display: flex; flex-flow: row wrap; justify-items: flex-start; padding: 5px;">
+                    {% for photo in photos_not_liked %}
+                        <div style="margin: 5px">
+                            <div>
+                                <img src="{{ photo.file.url }}" alt="" style="height: 150px">
+                            </div>
+                            <br><br>
+                        </div>
+                    {% endfor %}
                 </div>
             {% endif %}
         </div>

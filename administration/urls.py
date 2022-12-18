@@ -12,6 +12,14 @@ session_patterns = [
 
 user_patterns = [
     path('list/', list_requested_user, name='user_list'),
+    # /administration/users/creation/
+    path('creation/', create_new_client, name='create_new_client'),
+    # /administration/users/album/liked/
+    path('album/liked/', view_client_album_created, name='view_client_album_created'),
+    # /administration/users/album/<int:pk>/liked/
+    path('album/<int:pk>/liked/', view_all_liked_photos, name='view_all_liked_photos'),
+    # /administration/users/album/<int:pk>/delete/
+    path('album/<int:pk>/delete/', delete_client_album, name='delete_client_album'),
 ]
 
 message_patterns = [
@@ -23,12 +31,14 @@ message_patterns = [
 add_photos_patterns = [
     path('homepage/', add_photos_homepage, name='add_photos_homepage'),
     path('portfolio/', add_photos_portfolio, name='add_photos_portfolio'),
+    path('clients/', send_photos_for_client_to_choose_from, name='send_photos_for_client_to_choose_from'),
 ]
 
 link_pattern = [
     path('creation/', create_downloadable_file, name='create_downloadable_file'),
     path('show-all/', list_downloadable_files_link, name='show_all_links_created'),
     path('via-account/', send_photo_via_account, name='via_account'),
+    path('delete/<int:pk>/', delete_delivery, name='delete_delivery'),
 ]
 
 urlpatterns = [
@@ -58,4 +68,7 @@ urlpatterns = [
     path('homepage/delete-photo/<int:pk>/', delete_photo_homepage, name='delete_photo_homepage'),
     # /administration/link/
     path('link/', include(link_pattern)),
+    # /administration/password-change/<int-pk>/
+    path('password-change/<int:pk>/', must_change_password, name="must_change_password")
+
 ]

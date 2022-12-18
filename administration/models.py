@@ -56,6 +56,10 @@ class PhotoClient(models.Model):
     def was_downloaded_(self):
         return self.was_downloaded
 
+    def delete(self, using=None, keep_parents=False):
+        self.file.delete()
+        super().delete(using, keep_parents)
+
 
 # contains a list of PhotoClient objects
 class PhotoDelivery(models.Model):
@@ -81,10 +85,6 @@ class PhotoDelivery(models.Model):
         if not self.expiration_date:
             self.generate_expiration_date()
         return super().save(*args, **kwargs)
-
-    def delete(self, *args, **kwargs):
-        self.photos.all().delete()
-        return super().delete(*args, **kwargs)
 
     def generate_expiration_date(self):
         self.expiration_date = timezone.now() + timezone.timedelta(days=3)
@@ -170,4 +170,10 @@ class PhotoDelivery(models.Model):
 
     def get_client_email(self):
         return self.client_email
+
+    # delete files on the disk when deleting the object
+    def delete_files(self, *args, **kwargs):
+        for photo in self.photos.all():
+            photo.delete()
+        return super().delete(*args, **kwargs)
 

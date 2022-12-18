@@ -2,9 +2,8 @@
 {% load static %}
 {% block title %}Client | Photos{% endblock %}
 {% block customCSS %}
-    <link rel="stylesheet" type="text/css" href="{% static 'client/index.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'client/likes.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'client/gallery.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'client/css/index.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'client/css/gallery.css' %}">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
           integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
@@ -12,109 +11,101 @@
 {% endblock %}
 
 {% block body %}
-    <form action="{% url 'client:favorite' album.pk %}" method="post">
-        {% csrf_token %}
-        {% if album %}
-            {% for photo in album.photo_set.all %}
-                <div class="container-all">
-                    <div class="containers">
-                        <input type="radio" id="photofav{{ forloop.counter }}" name="photofav" value="{{ photo.id }}">
-                        <label for="photofav{{ forloop.counter }}">
-                            <img src="{{ photo.file.url }}" alt="">
-                            <h2>{{ photo.id }}</h2>
-                            {% if photo.is_favorite %}
-                                <p>It's a favorite</p>
-                            {% endif %}
-                        </label>
+    {% if album %}
+        <div class="containers">
+            <div class="row">
+                <div class="md-12">
+                    <div class="content">
+                        <div class="container-all">
+                            <div class="gallery-all">
+                                {% for photo in album.get_photos %}
+                                    <label for="photofav{{ forloop.counter }}" class="img-container">
+                                        <div class="watermarked" data-watermark="CRUELTOUCH">
+                                            <img src="{{ photo.file.url }}" alt="" class="actual-img">
+                                        </div>
+                                        <div class="overlay">
+                                            <span class="img-id-text">{{ photo.id }}</span> &nbsp;
+                                            <button class="button like rounded">
+                                                <i class="fa fa-heart {{ photo.get_is_favorite }}"
+                                                   onClick="setFavorite({{ photo.id }})"
+                                                   id="{{ photo.id }}"></i>
+                                            </button>
+                                        </div>
+                                    </label>
+                                {% endfor %}
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-            {% endfor %}
-            <input type="submit" value="Favorite">
-        {% else %}
-            <h2 class="alert-info" id="info" style="text-align: center; margin-top: auto">
-                Hi, {{ user.first_name }}. You don't have any photos uploaded yet.</h2>
-            <div class="alert-warning" style="text-align: center; font-size: medium">
-                Wanna book me ? Click <a href="{% url 'client:book_me' %}">here</a></div>
-        {% endif %}
-    </form>
-
-    <style>
-        .watermark {
-            min-width: 400px;
-            max-width: 600px;
-            min-height: 400px;
-            max-height: 600px;
-            background-color: rgba(128, 128, 128, 0.25);
-            position: relative;
-        }
-
-        .watermark img {
-            display: block;
-            height: 200px;
-            width: auto;
-        }
-
-        .watermark:after {
-            content: "";
-            position: absolute;
-            display: block;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-
-        .watermark-text {
-            color: #000;
-            left: 0;
-            bottom: 35px;
-            padding: 2px;
-            font-weight: 700;
-            z-index: 2;
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-            position: absolute;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 20px;
-            font-weight: bold;
-            z-index: 10;
-            width: auto;
-        }
-    </style>
-
-
-
+            </div>
+        </div>
+    {% else %}
+        <h2 class="alert-info" id="info" style="text-align: center; margin-top: auto">
+            Hi, {{ user.first_name }}. You don't have any photos uploaded yet.</h2>
+        <div class="alert-warning" style="text-align: center; font-size: medium">
+            Wanna book me ? Click <a href="{% url 'client:book_me' %}">here</a></div>
+    {% endif %}
 {% endblock body %}
 
 {% block customJS %}
-    <script src="{% static 'client/index.js' %}"></script>
-    <script src="{% static 'client/likes.js' %}"></script>
     <script>
-        // Centring function:
-        jQuery.fn.center = function () {
-            this.css("position", "absolute");
-            this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
-                $(window).scrollTop()) + "px");
-            this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
-                $(window).scrollLeft()) + "px");
-            return this;
+        document.querySelectorAll('.watermarked').forEach(function (el) {
+            el.dataset.watermark = (el.dataset.watermark + ' ').repeat(600);
+        });
+
+        function setFavorite(photo_id) {
+            const button = document.getElementById(photo_id);
+            const formData = new FormData();
+            formData.append('photo_id', photo_id)
+            console.log("photo_id ", photo_id)
+            // Button Off
+            if (button.classList.contains('is-active')) {
+                button.classList.remove('is-active');
+                button.classList.remove('like')
+                $.ajax({
+                    url: "{% url 'client:dislike' %}",
+                    type: "POST",
+                    data: formData,
+                    beforeSend: function () {
+
+                    },
+                    success: function (response) {
+                        console.log(response)
+                    },
+                    error: function (response) {
+                        console.log("error response ", response)
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+                return;
+            }
+
+            // Button On (with a loader)
+            button.classList.add('is-loading');
+            setTimeout(function () {
+                button.classList.remove('is-loading');
+                button.classList.add('is-active');
+                button.classList.add('like')
+                $.ajax({
+                    url: "{% url 'client:favorite' %}",
+                    type: "POST",
+                    data: formData,
+                    beforeSend: function () {
+
+                    },
+                    success: function (response) {
+                        console.log(response)
+                    },
+                    error: function (response) {
+                        console.log("error response ", response)
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            }, 500);
         }
-
-        // Centring element:
-        $('.container').center();
-
-        // toggling classes
-        $('a.btn-like').on('click', function () {
-            $(this).toggleClass('liked');
-            $('.like-text,.unlike-text').toggle();
-        });
-
-        $('a.btn-favorite').on('click', function () {
-            $(this).toggleClass('liked');
-            $('.favorite-text,.unfavorite-text').toggle();
-        });
     </script>
 {% endblock %}

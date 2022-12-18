@@ -4,6 +4,9 @@ from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from crueltouch import email_secrets
+from crueltouch.email_secrets import DATABASE_UPDATE
+from crueltouch.productions import production_debug
 from utils.crueltouch_utils import c_print, send_client_email, send_email_admin
 
 
@@ -23,22 +26,29 @@ class ContactForm(models.Model):
 @receiver(post_save, sender=ContactForm)
 def send_email_after_saving_contact_form(sender, instance, created, *args, **kwargs):
     if created:
+        if production_debug or DATABASE_UPDATE:
+            client_email = email_secrets.TEST_EMAIL
+        else:
+            client_email = instance.email
         c_print("client.models:235 | Sending email to admin to notify of a new contact form submission")
         sent = send_client_email(
             subject=_(f"Your message has been received") + " !",
-            email_address=instance.email,
+            email_address=client_email,
             header=_("Thank you for reaching out to us") + ".",
             message=_(f"Hi {instance.full_name}, thank you for reaching out to us. We will get back to you as soon as "
                       "possible. "),
             footer=_("Have a great day! CruelTouch Team"),
             is_contact_form=True,
-            is_other=False
+            is_other=False,
+            button_label=_("Awesome!"),
+            button_link="https://crueltouch.com/portfolio/",
+            button_text=_("")
         )
         if sent:  # if email was sent
             send_email_admin(
                 subject="New contact form submission",
                 message=f"Hi, you have a new contact form submission from {instance.full_name} with email address "
-                        f"{instance.email}. The message is: \"{instance.message}\"",
+                        f"{client_email}. The message is: \"{instance.message}\"",
                 is_contact_form=True,
                 is_other=False
             )
