@@ -3,23 +3,27 @@ import os
 import zipfile
 from datetime import timedelta
 from io import BytesIO
+from sqlite3 import IntegrityError
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.hashers import make_password
 from django.http import HttpResponseRedirect, HttpResponseNotFound, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.utils.translation import gettext_lazy as _
 
+from administration.forms import UserChangePasswordForm
 from administration.models import PhotoDelivery, PhotoClient
 from client.form import CreateAlbumForm, UpdateBook
-from client.models import BookMe, UserClient, Photo
+from client.models import BookMe, UserClient, Photo, Album as AlbumClient
+from crueltouch.productions import production_debug
 from homepage.models import Album as AlbumHomepage
 from homepage.models import Photo as PhotoHomepage
 from portfolio.models import Album as AlbumPortfolio
 from portfolio.models import Photo as PhotoPortfolio
 from static_pages_and_forms.models import ContactForm
-from utils.crueltouch_utils import email_check, c_print, send_client_email, is_ajax
+from utils.crueltouch_utils import email_check, c_print, send_client_email, is_ajax, work_with_file_photos
 
 
 # Create your views here.
@@ -451,6 +455,19 @@ def download_zip(request, id_delivery):
 
 @login_required(login_url='/administration/login/')
 @user_passes_test(email_check, login_url='/administration/login/')
+def delete_delivery(request, pk):
+    try:
+        delivery = PhotoDelivery.objects.get(pk=pk)
+        delivery.delete_files()
+        messages.success(request, "Delivery deleted successfully")
+        return redirect('administration:show_all_links_created')
+    except PhotoDelivery.DoesNotExist:
+        messages.error(request, "Delivery does not exist")
+        return redirect('administration:show_all_links_created')
+
+
+@login_required(login_url='/administration/login/')
+@user_passes_test(email_check, login_url='/administration/login/')
 def send_photo_via_account(request, pk):
     # try:
     #     photo = PhotoClient.objects.get(id=pk)
@@ -485,3 +502,146 @@ def send_photo_via_account(request, pk):
         #   'nota_bene': nota_bene,
     }
     return render(request, 'administration/add/add_downloadable_file.html', context)
+
+
+@login_required(login_url='/administration/login/')
+@user_passes_test(email_check, login_url='/administration/login/')
+def send_photos_for_client_to_choose_from(request):
+    client_list = UserClient.objects.filter(staff=False).order_by('first_name')
+    c_print(f"client list: {client_list}")
+    if request.method == 'POST':
+        if is_ajax(request):
+            client = request.POST.get("client")
+            files = request.FILES.getlist("id_photo")
+            next_ = request.POST.get('next', '/')
+            # get client name
+            user_client = UserClient.objects.get(id=client)
+            # get client album if exists
+            try:
+                client_album = AlbumClient.objects.get(owner=client)
+            except AlbumClient.DoesNotExist:
+                client_album = AlbumClient.objects.create(owner=user_client)
+                # create a set of PhotoClient objects
+            photos = []
+            for file in files:
+                f = work_with_file_photos(file)
+                photo = Photo.objects.create(file=f)
+                photos.append(photo)
+            client_album.save()
+            # if client album already have photos, add new photos to it
+            if client_album.photos.all():
+                client_album.photos.add(*photos)
+            else:
+                client_album.photos.set(photos)
+            client_album.save()
+            if production_debug:
+                button_link = f"http://localhost:8000/client/{client_album.id}"
+            else:
+                button_link = f"https://crueltouch.com/client/{client_album.id}"
+            # notify client
+            send_client_email(
+                email_address=user_client.email, subject="New images were uploaded for you to choose from",
+                header="New images were uploaded for you to choose from",
+                message=f"Hello {user_client.first_name}, we uploaded new photos for you to choose from !",
+                footer="Thank you for using our service ! The Crueltouch Team",
+                is_contact_form=False, is_other=True, button_label="Click on the button below to do so",
+                button_text="Choose photos", button_link=button_link
+            )
+
+            c_print(f"client: {user_client}", f"photos: {files}", f"next: {next_}", f"client album: {client_album}")
+
+    context = {
+        'title': _("Send photos to client"),
+        'client_list': client_list,
+    }
+    return render(request, 'administration/add/add_client_photos.html', context)
+
+
+@login_required(login_url='/administration/login/')
+@user_passes_test(email_check, login_url='/administration/login/')
+def create_new_client(request):
+    previous = request.META.get('HTTP_REFERER')
+    if request.method == 'POST':
+        if is_ajax(request):
+            client_name = request.POST.get("client_name")
+            client_email = request.POST.get("client_email")
+            client_password = 'Crueltouch2022'
+            c_print(f"email: {client_email}", f"client name: {client_name}", f"next: {previous}")
+            try:
+                client = UserClient.objects.create_user(first_name=client_name, email=client_email,
+                                                        password=client_password)
+            except IntegrityError:
+                return JsonResponse({'error': 'Client already exists'})
+            client.save()
+            client.set_first_login()
+            client.send_password_email()
+            return JsonResponse({'success': True, 'client': client.id, 'message': 'Client created successfully !'})
+    context = {
+        'title': _("Create new client"),
+        'previous': previous,
+    }
+    return render(request, 'administration/add/add_new_client.html', context)
+
+
+@login_required(login_url="/client/login/")
+def must_change_password(request, pk):
+    form = UserChangePasswordForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            try:
+                user = UserClient.objects.get(pk=pk)
+                password = form.cleaned_data['new_password1']
+                if user.password_is_same(password=password):
+                    messages.warning(request, _("You can't use your old password"))
+                    return redirect("administration:must_change_password")
+                user.password = make_password(password)
+                user.save()
+                user.set_not_first_login()
+                user.save()
+                return redirect("client:login")
+            except UserClient.DoesNotExist:
+                messages.warning(request, _("This user no longer exists !"))
+                return redirect("client:register")
+    else:
+        form = UserChangePasswordForm()
+    first_logon = True
+    msg = "You must change your password before you can log in"
+    context = {
+        'form': form,
+        'first_login': first_logon,
+        'msg': msg
+    }
+    return render(request, "administration/password/has_to_change_password.html", context)
+
+
+@login_required(login_url="/administration/login/")
+@user_passes_test(email_check, login_url='/administration/login/')
+def view_client_album_created(request):
+    album = AlbumClient.objects.all()
+    context = {
+        'title': _("View chosen photos"),
+        'album_list': album,
+    }
+    return render(request, 'administration/list/list_album_client.html', context)
+
+
+@login_required(login_url="/administration/login/")
+@user_passes_test(email_check, login_url='/administration/login/')
+def view_all_liked_photos(request, pk):
+    album = AlbumClient.objects.get(pk=pk)
+    context = {
+        'title': _("View chosen photos"),
+        'album': album,
+        'photos_liked': album.get_photos_liked(),
+        'photos_not_liked': album.get_photos_not_liked(),
+        'total_photos_label': _("Total photos sent"),
+    }
+    return render(request, 'administration/list/list_album_client_photos.html', context)
+
+
+@login_required(login_url="/administration/login/")
+@user_passes_test(email_check, login_url='/administration/login/')
+def delete_client_album(request, pk):
+    album = AlbumClient.objects.get(pk=pk)
+    album.delete_files()
+    return redirect("administration:view_client_album_created")

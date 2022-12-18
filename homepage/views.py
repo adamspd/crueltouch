@@ -14,14 +14,24 @@ from .models import Photo
 
 
 def index(request):
-    album1 = Photo.objects.filter(album_id=1)
-    album2 = Photo.objects.filter(album_id=2)
-    change_file_format(album1)
-    change_file_format(album2)
-    list_of_album1 = list(album1)
-    list_of_album2 = list(album2)
-    random.shuffle(list_of_album1)
-    random.shuffle(list_of_album2)
+    try:
+        album1 = Photo.objects.filter(album_id=1)
+        album2 = Photo.objects.filter(album_id=2)
+    except Photo.DoesNotExist:
+        album1 = []
+        album2 = []
+
+    if album1 != [] or album2 != []:
+        change_file_format(album1)
+        change_file_format(album2)
+        list_of_album1 = list(album1)
+        list_of_album2 = list(album2)
+        random.shuffle(list_of_album1)
+        random.shuffle(list_of_album2)
+    else:
+        list_of_album1 = []
+        list_of_album2 = []
+
     context = {
         'album1': list_of_album1,
         'album2': list_of_album2

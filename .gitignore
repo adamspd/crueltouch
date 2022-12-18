@@ -38,3 +38,4 @@ media
 
 
 crueltouch/email_secrets.py
+database_backup/*

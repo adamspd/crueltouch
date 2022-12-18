@@ -1,0 +1,75 @@
+{% extends 'administration/list/data.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}CRUELTOUCH | {% translate "View chosen photos" %}{% endblock %}
+
+{% block pageTitle %}
+    {% translate "View chosen photos" %}
+{% endblock %}
+{% block pageLink %}
+    {% translate "View chosen photos" %}
+{% endblock %}
+
+
+{% block table %}
+    <!-- Main content -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{% translate "List of chosen photos" %}</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>{% translate "Client" %}</th>
+                    <th>#{% translate "photos" %}</th>
+                    <th>#{% translate "liked" %}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for album in album_list %}
+                    <tr>
+                        <td>
+                            &nbsp;&nbsp;&nbsp;
+                            <a href="{% url 'administration:view_all_liked_photos' album.pk %}">
+                                {{ album.owner }}
+                            </a>
+                        </td>
+                        <td>
+                            &nbsp;&nbsp;&nbsp;{{ album.get_photos_count }}
+                        </td>
+                        <td>
+                            {{ album.get_photos_liked_count }}
+                        </td>
+                        <td>
+                            <a href="{% url 'administration:view_all_liked_photos' album.pk %}">
+                                <button class="btn btn-primary">
+                                    <i class="fas fa-eye"></i>&nbsp;Show
+                                </button>
+                            </a>
+                            <a href="{% url 'administration:delete_client_album' album.pk %}">
+                                <button class="btn btn-danger">
+                                    <i class="fas fa-trash"></i>&nbsp;Delete
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>{% translate "Client" %}</th>
+                    <th>#{% translate "photos" %}</th>
+                    <th>#{% translate "liked" %}</th>
+                    <th></th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <!-- /.table-responsive -->
+    </div>
+    <!-- /.card-body -->
+{% endblock %}

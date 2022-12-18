@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User, PermissionsMixin
 from django.core.validators import RegexValidator
 from django.db import models
@@ -10,9 +11,12 @@ from django.dispatch import receiver
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
+from crueltouch import email_secrets
+from crueltouch.email_secrets import DATABASE_UPDATE
+from crueltouch.productions import production_debug
 from utils.crueltouch_utils import c_print, notify_admin_session_request_received_via_email, \
     send_session_request_received_email, get_estimated_response_time, get_today_date, status_change_email, \
-    get_today_date_formatted
+    send_password_reset_email
 
 phone_regex = RegexValidator(
     regex=r'^\d{10}$',
@@ -32,7 +36,7 @@ class UserManager(BaseUserManager):
         )
         user_obj.staff = is_staff
         user_obj.admin = is_admin
-        user_obj.active = is_active
+        user_obj.is_active = is_active
         user_obj.first_name = first_name
         user_obj.set_password(password)
         user_obj.save(using=self._db)
@@ -50,10 +54,11 @@ class UserManager(BaseUserManager):
 class UserClient(AbstractBaseUser, PermissionsMixin, models.Model):
     email = models.EmailField(max_length=255, unique=True, default="", help_text=_("A valid email address, please"))
     first_name = models.CharField(max_length=255, default=None)
-    active = models.BooleanField(default=True)  # can login
+    is_active = models.BooleanField(default=True)  # can login
     admin = models.BooleanField(default=False)  # superuser
     staff = models.BooleanField(default=False)  # staff member
     start_date = models.DateTimeField(default=now)
+    first_login = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', ]
@@ -80,6 +85,27 @@ class UserClient(AbstractBaseUser, PermissionsMixin, models.Model):
         # Simplest possible answer: Yes, always
         return True
 
+    def set_first_login(self):
+        self.first_login = True
+        self.save()
+
+    def set_not_first_login(self):
+        self.first_login = False
+        self.save()
+
+    @property
+    def has_to_change_password(self):
+        return self.first_login
+
+    def password_is_same(self, password):
+        # check if password is same as the one set
+        if self.password == make_password(password):
+            return True
+        return False
+
+    def send_password_email(self):
+        send_password_reset_email(self.first_name, self.email)
+
     @property
     def is_staff(self):
         """Is the user a member of staff?"""
@@ -91,26 +117,95 @@ class UserClient(AbstractBaseUser, PermissionsMixin, models.Model):
         return self.admin
 
     @property
-    def is_active(self):
+    def user_active(self):
         """Is the user active / can he log in?"""
-        return self.active
-
-
-class Album(models.Model):
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return str(self.owner)
+        return self.is_active
 
 
 class Photo(models.Model):
-    album = models.ForeignKey(Album, on_delete=models.CASCADE)
     file = models.ImageField(upload_to='Client', null=True, blank=True)
     is_favorite = models.BooleanField(default=False)
     can_be_downloaded = models.BooleanField(default=False)
 
     def __str__(self):
-        return str(self.album.owner) + '-' + self.file.name
+        return self.file.name
+
+    def set_favorite(self):
+        self.is_favorite = True
+        self.save()
+
+    def set_not_favorite(self):
+        self.is_favorite = False
+        self.save()
+
+    def set_can_be_downloaded(self):
+        self.can_be_downloaded = True
+        self.save()
+
+    def set_can_not_be_downloaded(self):
+        self.can_be_downloaded = False
+        self.save()
+
+    def get_is_favorite(self):
+        if self.is_favorite:
+            return "like is-active"
+        else:
+            return ""
+
+    def delete(self, using=None, keep_parents=False):
+        self.file.delete()
+        super().delete(using, keep_parents)
+
+
+class Album(models.Model):
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    photos = models.ManyToManyField(Photo, verbose_name=_('Photos'))
+    is_active = models.BooleanField(default=True, verbose_name=_('Is active'))
+    was_viewed = models.BooleanField(default=False, verbose_name=_('Was viewed'))
+
+    # meta data
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
+
+    def __str__(self):
+        return str(self.owner)
+
+    def set_active(self):
+        self.is_active = True
+        self.save()
+
+    def set_inactive(self):
+        self.is_active = False
+        self.save()
+
+    def set_viewed(self):
+        self.was_viewed = True
+        self.save()
+
+    def set_not_viewed(self):
+        self.was_viewed = False
+        self.save()
+
+    def get_photos(self):
+        return self.photos.all()
+
+    def get_photos_count(self):
+        return self.photos.count()
+
+    def get_photos_liked_count(self):
+        return self.photos.filter(is_favorite=True).count()
+
+    def get_photos_liked(self):
+        return self.photos.filter(is_favorite=True)
+
+    def get_photos_not_liked(self):
+        return self.photos.filter(is_favorite=False)
+
+    # delete files on the disk when deleting the object
+    def delete_files(self, *args, **kwargs):
+        for photo in self.photos.all():
+            photo.delete()
+        super().delete(*args, **kwargs)
 
 
 class BookMe(models.Model):
@@ -289,17 +384,18 @@ def get_estimated_total(session_type, package, place):
         return _("Contact us for more information")
 
 
-# return one week from today to string
-
-
 @receiver(post_save, sender=BookMe)
 def account_authorization_status_handler(sender, instance, created, *args, **kwargs):
     if created:
+        if production_debug or DATABASE_UPDATE:
+            client_email = email_secrets.TEST_EMAIL
+        else:
+            client_email = instance.email
         c_print("client.models:235 | Sending email to admin to notify of a session request")
         notify_admin_session_request_received_via_email(
             today=get_today_date(),
             client_name=instance.full_name,
-            client_email=instance.email,
+            client_email=client_email,
             phone=instance.phone_number,
             session_type=instance.session_type,
             place=instance.place,
@@ -315,7 +411,7 @@ def account_authorization_status_handler(sender, instance, created, *args, **kwa
         c_print("client.models:249 | Sending email to user to thank them for their request")
         sent = send_session_request_received_email(
             full_name=instance.full_name,
-            email_address=instance.email,
+            email_address=client_email,
             session_type=instance.session_type,
             place=instance.place,
             package=instance.get_package_display,

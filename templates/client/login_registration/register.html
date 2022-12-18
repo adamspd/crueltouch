@@ -55,7 +55,7 @@
                         </div>
                     </form>
                 </div>
-                <small class="text-muted" style="padding-top: 5px; margin-top: 5px">
+                <small class="text-muted list-error" style="padding-top: 5px; margin-top: 5px">
                     {% if messages %}
                         {% for message in messages %}
                             <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}"
