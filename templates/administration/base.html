@@ -13,14 +13,14 @@
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     {% block css %}
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
-              crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
-              integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
+              integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA=="
+              crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+              integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
               crossorigin="anonymous" referrerpolicy="no-referrer"/>
         <!-- Ionicons -->
-        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        {#        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">#}
         <!-- Tempusdominus Bootstrap 4 -->
         <!-- iCheck -->
         <link rel="stylesheet"
@@ -72,7 +72,7 @@
                     <form action="" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="next" value="{{ redirect_to }}">
-                        <select name="language" id="" onchange="this.form.submit()" class="custom-sel">
+                        <select name="language" id="language_selection" onchange="this.form.submit()" class="custom-sel">
                             {% get_available_languages as LANGUAGES %}
                             {% get_language_info_list for LANGUAGES as languages %}
                             {% for language in languages %}
@@ -174,7 +174,7 @@
                         <!-- Add icons to the links using the .nav-icon class
                              with font-awesome or any other icon font library -->
 
-                        <li class="nav-item menu-open">
+                        <li class="nav-item">
                             <a href="{% url 'administration:index' %}" class="nav-link active">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
@@ -261,28 +261,36 @@
                                 </li>
                             </ul>
                         </li>
-                    <li class="nav-item">
+                        <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fa-solid fa-paper-plane"></i>
                                 <p>
                                     {% translate "Send photo" %}
                                     <i class="fas fa-angle-left right"></i>
-                                    <span class="badge badge-info right">2</span>
+                                    <span class="badge badge-info right">5</span>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{% url 'administration:create_downloadable_file' %}" class="nav-link">
+                                    <a href="{% url 'administration:send_photos_for_client_to_choose_from' %}"
+                                       class="nav-link">
                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="fa fa-chain nav-icon"></i>
-                                        <p>{% translate "Via link" %}</p>
+                                        <i class="fa fa-check-circle nav-icon"></i>
+                                        <p>{% translate "To choose from" %}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'administration:view_client_album_created' %}" class="nav-link">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="fa fa-heart nav-icon"></i>
+                                        <p>{% translate "View all chosen" %}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{% url 'administration:create_downloadable_file' %}" class="nav-link">
                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="fa fa-user-plus nav-icon"></i>
-                                        <p>{% translate "Via account" %}</p>
+                                        <i class="fa fa-chain nav-icon"></i>
+                                        <p>{% translate "Final via link" %}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -290,6 +298,13 @@
                                         &nbsp;&nbsp;&nbsp;&nbsp;
                                         <i class="far fa-eye nav-icon"></i>
                                         <p>{% translate "View all links" %}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'administration:create_downloadable_file' %}" class="nav-link disabled">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="fa fa-user-plus nav-icon"></i>
+                                        <p>{% translate "Final via account" %}</p>
                                     </a>
                                 </li>
                             </ul>
@@ -327,7 +342,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link disabled">
+                            <a href="{% url 'reset_password' %}" class="nav-link">
                                 &nbsp;&nbsp;<i class="fa-solid fa-user-secret"></i>
                                 <p>
                                     &nbsp;&nbsp;{% translate "Change password" %}
@@ -357,8 +372,8 @@
 
     <!-- /.content-wrapper -->
     <footer class="main-footer">
-        <div class="copyright">
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+        <div class="copyright" id="copyright">
+            Copyright &copy;<script>document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))</script>
             All rights reserved | CRUELTOUCH | <a href="https://adamspierredavid.com" target="_blank">APD</a>
         </div>
     </footer>
@@ -373,8 +388,8 @@
 
 <!-- jQuery -->
 {% block js %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js"
+            integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- jQuery UI 1.13.2 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
@@ -385,8 +400,8 @@
         $.widget.bridge('uibutton', $.ui.button)
     </script>
     <!-- Bootstrap 4 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.bundle.min.js"
-            integrity="sha512-9GacT4119eY3AcosfWtHMsT5JyZudrexyEVzTBWV3viP/YfB9e2pEy3N7WXL3SV6ASXpTU0vzzSxsbfsuUH4sQ=="
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"
+            integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- ChartJS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
@@ -404,25 +419,25 @@
             integrity="sha512-NhRZzPdzMOMf005Xmd4JonwPftz4Pe99mRVcFeRDcdCtfjv46zPIi/7ZKScbpHD/V0HB1Eb+ZWigMqw94VUVaw=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- daterangepicker -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"
-            integrity="sha512-CryKbMe7sjSCDPl18jtJI5DR5jtkUWxPXWaLCst6QjH8wxDexfRJic2WRmRXmstr2Y8SxDDWuBO6CQC6IE4KTA=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{#    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"#}
+{#            integrity="sha512-CryKbMe7sjSCDPl18jtJI5DR5jtkUWxPXWaLCst6QjH8wxDexfRJic2WRmRXmstr2Y8SxDDWuBO6CQC6IE4KTA=="#}
+{#            crossorigin="anonymous" referrerpolicy="no-referrer"></script>#}
     {#    <!-- Tempusdominus Bootstrap 4 -->#}
     {#    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js"#}
     {#            integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA=="#}
     {#            crossorigin="anonymous" referrerpolicy="no-referrer"></script>#}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.js"
-            integrity="sha512-W76C8qrNYavcaycIH9EijxRuswoS+LCqA1+hq+ECrmjzAbe/SHhTgrwA1uc84husS/Gz50mxOEHPzrcd3sxBqQ=="
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js"
+            integrity="sha512-mh+AjlD3nxImTUGisMpHXW03gE6F4WdQyvuFRkjecwuWLwD2yCijw4tKA3NsEFpA1C3neiKhGXPSIGSfCYPMlQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Summernote -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.js"
             integrity="sha512-ZESy0bnJYbtgTNGlAD+C2hIZCt4jKGF41T5jZnIXy4oP8CQqcrBGWyxNP16z70z/5Xy6TS/nUZ026WmvOcjNIQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- overlayScrollbars -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.3/js/jquery.overlayScrollbars.min.js"
-            integrity="sha512-PviP63d43OXLyLjCv3TawK1Rw4LQQsnH6yschHgK63LBvLpd1U1+7LM/OESlV/cSze5lFI3+f7JwKFEBEWNp1w=="
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.3/js/OverlayScrollbars.min.js"
+            integrity="sha512-Ae2SccSxoNp/Cn7PIlowLk8cmVyyW5aSCbrB/k08h/yYeK3zrNJ/oAJf8RK/ZD95G8KjkzPIXxKbeYPn43KC0w=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js"></script>
+    {#    <script src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js"></script>#}
     <!-- AdminLTE App -->
     <script src="{% static 'administration/dist/js/adminlte.js' %}"></script>
     <!-- AdminLTE for demo purposes -->

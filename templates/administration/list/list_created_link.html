@@ -26,6 +26,7 @@
                     <th>{% translate "Email" %}</th>
                     <th>{% translate "Link" %}</th>
                     <th>{% translate "Downloaded" %}</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -47,6 +48,12 @@
                         <td>
                             {{ rs.was_downloaded }}
                         </td>
+                        <td>
+                            <a href="{% url 'administration:delete_delivery' rs.id %}" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash"></i>
+                                {% translate "Delete" %}
+                            </a>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -56,6 +63,7 @@
                     <th>{% translate "Email" %}</th>
                     <th>{% translate "Link" %}</th>
                     <th>{% translate "Downloaded" %}</th>
+                    <th></th>
                 </tr>
                 </tfoot>
             </table>

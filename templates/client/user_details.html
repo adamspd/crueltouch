@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}<title>User Details</title>{% endblock %}
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'client/gallery.css' %}">{% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static 'client/css/gallery.css' %}">{% endblock %}
 {% if all_photos %}
     {% block addmorephotos %}
         <a class="btn btn-primary" href="{% url 'client:add_photos' user_client.id %}">Add more photos</a>
