@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-29 01:59+0100\n"
+"POT-Creation-Date: 2022-12-19 01:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: administration/forms.py:13 client/form.py:53
+#: templates/client/login_registration/log_as_owner.html:33
+#: templates/client/login_registration/login.html:32
+msgid "Password"
+msgstr "Contraseña"
+
+#: administration/forms.py:19
+msgid "Repeat password"
+msgstr "Repite contraseña"
 
 #: administration/models.py:12
 msgid "The date"
@@ -46,63 +56,64 @@ msgstr "Permisos de correos"
 msgid "Photo"
 msgstr "Foto"
 
-#: administration/models.py:35 administration/models.py:64
+#: administration/models.py:35 administration/models.py:68 client/models.py:164
 msgid "Is active"
 msgstr "Está activo"
 
-#: administration/models.py:36 administration/models.py:66
+#: administration/models.py:36 administration/models.py:70
 msgid "Was downloaded"
 msgstr "Fue descargado"
 
-#: administration/models.py:62
+#: administration/models.py:66 client/models.py:163
 msgid "Photos"
 msgstr "Fotos"
 
-#: administration/models.py:63
+#: administration/models.py:67
 msgid "Date"
 msgstr "Fecha"
 
-#: administration/models.py:65
+#: administration/models.py:69
 msgid "Expiration date"
 msgstr "Fecha de expiración"
 
-#: administration/models.py:67
+#: administration/models.py:71
 msgid "Link to download"
 msgstr "Enlace para descargar"
 
-#: administration/models.py:68
+#: administration/models.py:72
 msgid "ID delivery"
 msgstr "ID de entrega"
 
-#: administration/models.py:69
+#: administration/models.py:73
+#: templates/administration/add/add_client_photos.html:32
 #: templates/administration/add/add_downloadable_file.html:39
 #: templates/administration/list/list_created_link.html:25
-#: templates/administration/list/list_created_link.html:55
+#: templates/administration/list/list_created_link.html:62
 msgid "Client name"
 msgstr "Nombre del cliente"
 
-#: administration/models.py:70
+#: administration/models.py:74
 #: templates/administration/add/add_downloadable_file.html:35
 msgid "Client email"
 msgstr "Correo del cliente"
 
-#: administration/views.py:189
+#: administration/views.py:193
 msgid "Email sent successfully"
 msgstr "Correo enviado con éxito"
 
-#: administration/views.py:191
+#: administration/views.py:195
 msgid "Email not sent"
 msgstr "Correo no enviado"
 
-#: administration/views.py:193
+#: administration/views.py:197
 msgid "Email already sent"
 msgstr "Correo ya enviado"
 
-#: administration/views.py:195
+#: administration/views.py:199
 msgid "Session request does not exist"
 msgstr "La solicitud de sesión no existe"
 
-#: administration/views.py:391
+#: administration/views.py:395
 msgid ""
 "If you want the website to send the link automatically to the client, "
 "please, put the client "
@@ -110,24 +121,51 @@ msgstr ""
 "Si desea que el sitio web envíe el enlace automáticamente al cliente, por "
 "favor, ponga el cliente "
 
-#: administration/views.py:395
+#: administration/views.py:399 administration/views.py:501
 msgid "Create downloadable file"
 msgstr "Crear archivo descargable"
 
-#: administration/views.py:408
+#: administration/views.py:412
 msgid "List of link to download images"
 msgstr "Lista de enlaces para descargar imágenes"
+
+#: administration/views.py:555
+msgid "Send photos to client"
+msgstr "Enviar fotos al cliente"
+
+#: administration/views.py:581
+msgid "Create new client"
+msgstr "Crear nuevo cliente"
+
+#: administration/views.py:596
+msgid "You can't use your old password"
+msgstr "No puedes usar tu antigua contraseña"
+
+#: administration/views.py:604
+msgid "This user no longer exists !"
+msgstr "Este usuario ya no existe !"
+
+#: administration/views.py:623 administration/views.py:634
+#: templates/administration/list/list_album_client.html:5
+#: templates/administration/list/list_album_client.html:8
+#: templates/administration/list/list_album_client.html:11
+msgid "View chosen photos"
+msgstr "Ver fotos elegidas"
+
+#: administration/views.py:638
+msgid "Total photos sent"
+msgstr "Total de fotos enviadas"
 
 #: client/form.py:10
 msgid "--- Select a package ---"
 msgstr "--- Seleccione un paquete ---"
 
-#: client/form.py:11 client/models.py:243
+#: client/form.py:11 client/models.py:339
 #: templates/client/booking_and_promotions/promotions.html:61
 msgid "7 photos"
 msgstr "7 fotos"
 
-#: client/form.py:12 client/models.py:245
+#: client/form.py:12 client/models.py:341
 #: templates/client/booking_and_promotions/promotions.html:62
 msgid "15 photos"
 msgstr "15 fotos"
@@ -136,7 +174,7 @@ msgstr "15 fotos"
 msgid "30 photos + mini video"
 msgstr "30 fotos + mini video"
 
-#: client/form.py:14 client/models.py:241
+#: client/form.py:14 client/models.py:337
 #: templates/client/booking_and_promotions/promotions.html:60
 msgid "3 photos"
 msgstr "3 fotos"
@@ -188,11 +226,6 @@ msgstr "Nombre"
 msgid "Email address"
 msgstr "Correo electrónico"
 
-#: client/form.py:53 templates/client/login_registration/log_as_owner.html:33
-#: templates/client/login_registration/login.html:32
-msgid "Password"
-msgstr "Contraseña"
-
 #: client/form.py:58
 msgid "Confirm password"
 msgstr "Confirmar contraseña"
@@ -201,11 +234,11 @@ msgstr "Confirmar contraseña"
 msgid "Full Name"
 msgstr "Nombre completo"
 
-#: client/form.py:64 static_pages_and_forms/models.py:12
+#: client/form.py:64 static_pages_and_forms/models.py:15
 #: templates/administration/list/list_contact_forms.html:26
 #: templates/administration/list/list_contact_forms.html:59
 #: templates/administration/list/list_created_link.html:26
-#: templates/administration/list/list_created_link.html:56
+#: templates/administration/list/list_created_link.html:63
 #: templates/administration/list/list_requested_session.html:41
 #: templates/administration/list/list_requested_session.html:117
 #: templates/administration/list/list_user.html:27
@@ -245,7 +278,7 @@ msgstr "Fecha deseada"
 msgid "Address"
 msgstr "Dirección"
 
-#: client/form.py:78 static_pages_and_forms/models.py:11
+#: client/form.py:78 static_pages_and_forms/models.py:14
 #: templates/administration/list/list_contact_forms.html:25
 #: templates/administration/list/list_contact_forms.html:58
 #: templates/client/booking_and_promotions/bookme.html:136
@@ -260,7 +293,7 @@ msgstr "Por favor, introduzca un correo electrónico válida...!"
 msgid "No spaces, letters or special characters, only 10 digits..."
 msgstr "Sin espacios, letras o caracteres especiales, solo 10 dígitos..."
 
-#: client/form.py:113 client/models.py:146
+#: client/form.py:113 client/models.py:242
 msgid "Does not have to be specific, just the city and the state"
 msgstr "No tiene que ser específico, solo la ciudad y el estado"
 
@@ -272,7 +305,7 @@ msgstr "Rellene todos los campos"
 msgid "Sorry, we only offer this package in Orlando"
 msgstr "Lo sentimos, solo ofrecemos este paquete en Orlando"
 
-#: client/models.py:19 client/models.py:142
+#: client/models.py:24 client/models.py:238
 msgid ""
 "Phone number must not contain spaces, letters, parentheses or dashes. It "
 "must contain 10 digits."
@@ -280,57 +313,61 @@ msgstr ""
 "El número de teléfono no debe contener espacios, letras, paréntesis o "
 "guiones. Debe contener 10 dígitos."
 
-#: client/models.py:27
+#: client/models.py:32
 msgid "You must provide an email address"
 msgstr "Debe proporcionar un correo electrónico"
 
-#: client/models.py:29
+#: client/models.py:34
 msgid "User must have a firstname"
 msgstr "El usuario debe tener un nombre"
 
-#: client/models.py:51 client/models.py:138
+#: client/models.py:56 client/models.py:234
 msgid "A valid email address, please"
 msgstr "Por favor, introduzca un correo electrónico válida"
 
-#: client/models.py:148 client/models.py:149 client/models.py:196
+#: client/models.py:165
+msgid "Was viewed"
+msgstr "Fue visto"
+
+#: client/models.py:244 client/models.py:245 client/models.py:292
 msgid "pending"
 msgstr "pendiente"
 
-#: client/models.py:166 client/models.py:325
+#: client/models.py:262 client/models.py:436
 msgid "Thank you for your booking!"
 msgstr "¡Gracias por su reserva!"
 
-#: client/models.py:176 client/models.py:312
+#: client/models.py:272 client/models.py:423
 msgid "New booking request received"
 msgstr "Nueva solicitud de reserva recibida"
 
-#: client/models.py:181
+#: client/models.py:277
 msgid "Yes"
 msgstr "Sí"
 
-#: client/models.py:183
+#: client/models.py:279
 msgid "No"
 msgstr "No"
 
-#: client/models.py:198
+#: client/models.py:294
 msgid "Your booking request status has changed!"
 msgstr "¡El estado de su solicitud de reserva ha cambiado!"
 
-#: client/models.py:221 client/models.py:227 client/models.py:233
-#: client/models.py:249
+#: client/models.py:317 client/models.py:323 client/models.py:329
+#: client/models.py:345
 msgid "No data"
 msgstr "Sin datos"
 
-#: client/models.py:247
+#: client/models.py:343
 #: templates/client/booking_and_promotions/promotions.html:63
 msgid "30 photos"
 msgstr "30 fotos"
 
-#: client/models.py:289
+#: client/models.py:385
 msgid "Contact us for more information"
 msgstr "Contáctenos para más información"
 
-#: client/views.py:285
+#: client/views.py:255
 msgid ""
 "Thank you, your booking has been registered successfully, you will receive "
 "an email shortly!"
@@ -362,29 +399,29 @@ msgstr "¿Cuál es el asunto de su mensaje...?"
 msgid "I'm listening... !"
 msgstr "¡Estoy escuchando...!"
 
-#: static_pages_and_forms/models.py:13
+#: static_pages_and_forms/models.py:16
 #: templates/administration/list/list_contact_forms.html:27
 #: templates/administration/list/list_contact_forms.html:60
 msgid "Subject"
 msgstr "Tema"
 
-#: static_pages_and_forms/models.py:14
+#: static_pages_and_forms/models.py:17
 #: templates/administration/list/list_contact_forms.html:28
 #: templates/administration/list/list_contact_forms.html:61
 msgid "Message"
 msgstr "Mensaje"
 
-#: static_pages_and_forms/models.py:28
+#: static_pages_and_forms/models.py:35
 msgid "Your message has been received"
 msgstr "Su mensaje ha sido recibido"
 
-#: static_pages_and_forms/models.py:30
+#: static_pages_and_forms/models.py:37
 #, fuzzy
 #| msgid "Thank you for your booking!"
 msgid "Thank you for reaching out to us"
 msgstr "¡Gracias por su reserva!"
 
-#: static_pages_and_forms/models.py:31
+#: static_pages_and_forms/models.py:38
 #, python-brace-format
 msgid ""
 "Hi {instance.full_name}, thank you for reaching out to us. We will get back "
@@ -393,9 +430,17 @@ msgstr ""
 "Hola {instance.full_name}, gracias por contactarnos. Nos pondremos en "
 "contacto contigo lo antes posible. "
 
-#: static_pages_and_forms/models.py:33
+#: static_pages_and_forms/models.py:40
 msgid "Have a great day! CruelTouch Team"
 msgstr "¡Que tengas un gran día! Equipo CruelTouch"
+
+#: static_pages_and_forms/models.py:43
+msgid "Awesome!"
+msgstr "Increíble"
+
+#: static_pages_and_forms/models.py:45
+msgid "Ok"
+msgstr "Ok"
 
 #: static_pages_and_forms/views.py:19
 msgid "Thank you for your message, but it didn't went through !"
@@ -424,15 +469,13 @@ msgstr "Página de términos y condiciones"
 msgid "Create new album"
 msgstr "Crear nuevo álbum"
 
+#: templates/administration/add/add_client_photos.html:30
 #: templates/administration/add/add_downloadable_file.html:30
 #: templates/administration/add/add_photos.html:39
 msgid "Upload image"
 msgstr "Subir imagen"
 
-#: templates/administration/add/add_downloadable_file.html:42
-msgid "Put the client name for reference"
-msgstr "Ponga el nombre del cliente para referencia"
-
+#: templates/administration/add/add_client_photos.html:60
 #: templates/administration/add/add_downloadable_file.html:59
 #: templates/administration/add/add_photos.html:52
 #: templates/administration/list/list_requested_session.html:94
@@ -442,11 +485,25 @@ msgstr "Ponga el nombre del cliente para referencia"
 msgid "Send"
 msgstr "Enviar"
 
+#: templates/administration/add/add_client_photos.html:62
 #: templates/administration/add/add_downloadable_file.html:61
+#: templates/administration/add/add_new_client.html:51
 #: templates/administration/add/add_photos.html:54
 #: templates/administration/edit/update_requested_session.html:17
 msgid "Cancel"
 msgstr "Cancelar"
+
+#: templates/administration/add/add_downloadable_file.html:42
+msgid "Put the client name for reference"
+msgstr "Ponga el nombre del cliente para referencia"
+
+#: templates/administration/add/add_new_client.html:30
+msgid "New client"
+msgstr "Nuevo cliente"
+
+#: templates/administration/add/add_new_client.html:49
+msgid "Create"
+msgstr "Crear"
 
 #: templates/administration/add/add_photos.html:16
 msgid "Total pictures uploaded"
@@ -492,38 +549,52 @@ msgid "Portfolio"
 msgstr "Portafolio"
 
 #: templates/administration/base.html:268
-msgid "Send photo via link"
-msgstr "Enviar foto a través de enlace"
+msgid "Send photo"
+msgstr "Enviar foto"
 
-#: templates/administration/base.html:278
-msgid "Create link"
-msgstr "Crear enlace"
+#: templates/administration/base.html:279
+msgid "To choose from"
+msgstr "Para elegir"
 
-#: templates/administration/base.html:285
+#: templates/administration/base.html:286
+msgid "View all chosen"
+msgstr "Ver todo lo elegido"
+
+#: templates/administration/base.html:293
+msgid "Final via link"
+msgstr "Final vía enlace"
+
+#: templates/administration/base.html:300
 msgid "View all links"
 msgstr "Ver todos los enlaces"
 
-#: templates/administration/base.html:294
+#: templates/administration/base.html:307
+msgid "Final via account"
+msgstr "Final vía cuenta"
+
+#: templates/administration/base.html:316
 msgid "Client management"
 msgstr "Gestión de clientes"
 
-#: templates/administration/base.html:302
+#: templates/administration/base.html:324
 msgid "Message list"
 msgstr "Lista de mensajes"
 
-#: templates/administration/base.html:310
+#: templates/administration/base.html:332
 msgid "Help"
 msgstr "Ayuda"
 
-#: templates/administration/base.html:318
+#: templates/administration/base.html:340
 msgid "Settings"
 msgstr "Configuraciones"
 
-#: templates/administration/base.html:326
+#: templates/administration/base.html:348
+#: templates/administration/password/has_to_change_password.html:64
+#: templates/client/client_view/base.html:12
 msgid "Change password"
 msgstr "Cambiar contraseña"
 
-#: templates/administration/base.html:334
+#: templates/administration/base.html:356
 msgid "Sign out"
 msgstr "Desconectar"
 
@@ -714,6 +785,25 @@ msgstr "Todos los derechos reservados"
 msgid "Made with love by"
 msgstr "Hecho con amor por"
 
+#: templates/administration/list/list_album_client.html:19
+msgid "List of chosen photos"
+msgstr "Lista de fotos elegidas"
+
+#: templates/administration/list/list_album_client.html:26
+#: templates/administration/list/list_album_client.html:64
+msgid "Client"
+msgstr "Cliente"
+
+#: templates/administration/list/list_album_client.html:27
+#: templates/administration/list/list_album_client.html:65
+msgid "photos"
+msgstr "fotos"
+
+#: templates/administration/list/list_album_client.html:28
+#: templates/administration/list/list_album_client.html:66
+msgid "liked"
+msgstr "me gustó"
+
 #: templates/administration/list/list_contact_forms.html:4
 #: templates/administration/list/list_contact_forms.html:7
 #: templates/administration/list/list_contact_forms.html:10
@@ -727,14 +817,18 @@ msgid "Created links"
 msgstr "Enlaces creados"
 
 #: templates/administration/list/list_created_link.html:27
-#: templates/administration/list/list_created_link.html:57
+#: templates/administration/list/list_created_link.html:64
 msgid "Link"
 msgstr "Enlace"
 
 #: templates/administration/list/list_created_link.html:28
-#: templates/administration/list/list_created_link.html:58
+#: templates/administration/list/list_created_link.html:65
 msgid "Downloaded"
 msgstr "Descargado"
+
+#: templates/administration/list/list_created_link.html:54
+msgid "Delete"
+msgstr "Borrar"
 
 #: templates/administration/list/list_requested_session.html:5
 #: templates/administration/list/list_requested_session.html:8
@@ -823,6 +917,90 @@ msgstr "Últimas 10 sesiones de fotos solicitadas"
 #: templates/administration/list/list_user.html:58
 msgid "Start date"
 msgstr "Fecha de inicio"
+
+#: templates/administration/password/forgot-password.html:8
+#: templates/administration/password/has_to_change_password.html:8
+msgid "First Connection"
+msgstr "Primera conexión"
+
+#: templates/administration/password/forgot-password.html:35
+msgid ""
+"Please enter the email address you used to register and we will send you a "
+"link to reset your password"
+msgstr ""
+"Por favor, introduzca la dirección de correo electrónico que utilizó para "
+"registrarse y le enviaremos un enlace para restablecer su contraseña"
+
+#: templates/administration/password/forgot-password.html:52
+msgid "Request new password"
+msgstr "Solicitar nueva contraseña"
+
+#: templates/administration/password/forgot-password.html:58
+#: templates/administration/password/reset_password_done.html:18
+#: templates/client/login_registration/log_as_owner.html:4
+#: templates/client/login_registration/log_as_owner.html:38
+#: templates/client/login_registration/login.html:4
+#: templates/client/login_registration/login.html:40
+#: templates/client/login_registration/register.html:77
+msgid "Login"
+msgstr "Iniciar sesión"
+
+#: templates/administration/password/forgot-password.html:61
+msgid "Register a new membership"
+msgstr "Registrar una nueva membresía"
+
+#: templates/administration/password/has_to_change_password.html:35
+msgid ""
+"You are only one step away from your new password, retrieve your password now"
+msgstr ""
+"Está a un solo paso de su nueva contraseña, recupere su contraseña ahora"
+
+#: templates/administration/password/reset_password_done.html:11
+msgid "Password reset complete"
+msgstr "Restablecimiento de contraseña completo"
+
+#: templates/administration/password/reset_password_done.html:13
+msgid "Your new password has been set. You can log in now."
+msgstr "Su nueva contraseña ha sido establecida. Puede iniciar sesión ahora."
+
+#: templates/administration/password/reset_password_sent.html:11
+msgid "Reset password email sent"
+msgstr "Correo electrónico de restablecimiento de contraseña enviado"
+
+#: templates/administration/password/reset_password_sent.html:13
+msgid ""
+"\n"
+"                    We have emailed you instructions on how to set your "
+"password, if an account\n"
+"                    exists with the e-mail address you entered. You should "
+"receive them shortly.\n"
+"                "
+msgstr ""
+"\n"
+"                    Le hemos enviado por correo electrónico instrucciones "
+"sobre cómo establecer su contraseña, si existe una cuenta\n"
+"                    con la dirección de correo electrónico que ingresó. "
+"Debería recibirlos en breve.\n"
+"                "
+
+#: templates/administration/password/reset_password_sent.html:19
+msgid ""
+"\n"
+"                    If you do not receive an email, please check that you "
+"have entered the email address\n"
+"                    you registered with and check your spam folder.\n"
+"                "
+msgstr ""
+"\n"
+"                    Si no recibe un correo electrónico, verifique que ha "
+"ingresado la dirección de correo electrónico\n"
+"                    con la que se registró y revise su carpeta de correo "
+"no deseado.\n"
+"                "
+
+#: templates/administration/password/reset_password_sent.html:27
+msgid "Back to homepage"
+msgstr "Volver a la página de inicio"
 
 #: templates/administration/view/index.html:39
 msgid "Index"
@@ -961,14 +1139,6 @@ msgstr "Florida"
 msgid "book now"
 msgstr "reservar ahora"
 
-#: templates/client/login_registration/log_as_owner.html:4
-#: templates/client/login_registration/log_as_owner.html:38
-#: templates/client/login_registration/login.html:4
-#: templates/client/login_registration/login.html:37
-#: templates/client/login_registration/register.html:77
-msgid "Login"
-msgstr "Iniciar sesión"
-
 #: templates/client/login_registration/log_as_owner.html:13
 msgid "ADMIN LOGIN"
 msgstr "ADMIN INICIAR"
@@ -977,11 +1147,15 @@ msgstr "ADMIN INICIAR"
 msgid "LOGIN"
 msgstr "INICIAR SESIÓN"
 
-#: templates/client/login_registration/login.html:59
-msgid "Don't have an account"
-msgstr "¿No tienes una cuenta?"
+#: templates/client/login_registration/login.html:36
+msgid "Forgot password"
+msgstr "Olvidé mi contraseña"
 
-#: templates/client/login_registration/login.html:61
+#: templates/client/login_registration/login.html:62
+msgid "Don't have an account"
+msgstr "¿No tienes una cuenta"
+
+#: templates/client/login_registration/login.html:64
 msgid "Sign Up"
 msgstr "Regístrate"
 
@@ -1256,7 +1430,7 @@ msgid "Photoshoot"
 msgstr "Sesión de fotos"
 
 #: templates/legal/privacy_policy.html:17
-#: templates/legal/terms_and_conditions.html:17
+#: templates/legal/terms_and_conditions.html:15
 msgid "Last updated"
 msgstr "Última actualización"
 
@@ -2200,136 +2374,136 @@ msgstr "Por correo electrónico:"
 msgid "By visiting this page on our website:"
 msgstr "Visitando esta página en nuestro sitio web:"
 
-#: templates/legal/terms_and_conditions.html:17
+#: templates/legal/terms_and_conditions.html:15
 msgid "November 23, 2022"
 msgstr "23 de noviembre de 2022"
 
-#: templates/legal/terms_and_conditions.html:23
-#: templates/legal/terms_and_conditions.html:51
+#: templates/legal/terms_and_conditions.html:21
+#: templates/legal/terms_and_conditions.html:49
 msgid "1. AGREEMENT TO TERMS"
 msgstr "1. ACUERDO DE TÉRMINOS"
 
-#: templates/legal/terms_and_conditions.html:24
-#: templates/legal/terms_and_conditions.html:105
+#: templates/legal/terms_and_conditions.html:22
+#: templates/legal/terms_and_conditions.html:103
 msgid "2. INTELLECTUAL PROPERTY RIGHTS"
 msgstr "2. DERECHOS DE PROPIEDAD INTELECTUAL"
 
-#: templates/legal/terms_and_conditions.html:25
-#: templates/legal/terms_and_conditions.html:131
+#: templates/legal/terms_and_conditions.html:23
+#: templates/legal/terms_and_conditions.html:129
 msgid "3. USER REPRESENTATIONS"
 msgstr "3. REPRESENTACIONES DEL USUARIO"
 
-#: templates/legal/terms_and_conditions.html:26
-#: templates/legal/terms_and_conditions.html:153
+#: templates/legal/terms_and_conditions.html:24
+#: templates/legal/terms_and_conditions.html:151
 msgid "4. USER REGISTRATION"
 msgstr "4. REGISTRO DE USUARIO"
 
-#: templates/legal/terms_and_conditions.html:27
-#: templates/legal/terms_and_conditions.html:164
+#: templates/legal/terms_and_conditions.html:25
+#: templates/legal/terms_and_conditions.html:162
 msgid "5. PROHIBITED ACTIVITIES"
 msgstr "5. ACTIVIDADES PROHIBIDAS"
 
-#: templates/legal/terms_and_conditions.html:28
-#: templates/legal/terms_and_conditions.html:278
+#: templates/legal/terms_and_conditions.html:26
+#: templates/legal/terms_and_conditions.html:276
 msgid "6. USER GENERATED CONTRIBUTIONS"
 msgstr "6. CONTRIBUCIONES GENERADAS POR EL USUARIO"
 
-#: templates/legal/terms_and_conditions.html:29
-#: templates/legal/terms_and_conditions.html:381
+#: templates/legal/terms_and_conditions.html:27
+#: templates/legal/terms_and_conditions.html:379
 msgid "7. CONTRIBUTION LICENSE"
 msgstr "7. LICENCIA DE CONTRIBUCIÓN"
 
-#: templates/legal/terms_and_conditions.html:30
-#: templates/legal/terms_and_conditions.html:429
+#: templates/legal/terms_and_conditions.html:28
+#: templates/legal/terms_and_conditions.html:427
 msgid "8. SUBMISSIONS"
 msgstr "8. PRESENTACIONES"
 
-#: templates/legal/terms_and_conditions.html:31
-#: templates/legal/terms_and_conditions.html:444
+#: templates/legal/terms_and_conditions.html:29
+#: templates/legal/terms_and_conditions.html:442
 msgid "9. THIRD-PARTY WEBSITE AND CONTENT"
 msgstr "9. SITIO WEB Y CONTENIDO DE TERCEROS"
 
-#: templates/legal/terms_and_conditions.html:32
-#: templates/legal/terms_and_conditions.html:474
+#: templates/legal/terms_and_conditions.html:30
+#: templates/legal/terms_and_conditions.html:472
 msgid "10. ADVERTISERS"
 msgstr "10. ANUNCIANTES"
 
-#: templates/legal/terms_and_conditions.html:33
-#: templates/legal/terms_and_conditions.html:489
+#: templates/legal/terms_and_conditions.html:31
+#: templates/legal/terms_and_conditions.html:487
 msgid "11. SITE MANAGEMENT"
 msgstr "11. GESTIÓN DEL SITIO"
 
-#: templates/legal/terms_and_conditions.html:34
-#: templates/legal/terms_and_conditions.html:506
+#: templates/legal/terms_and_conditions.html:32
+#: templates/legal/terms_and_conditions.html:504
 msgid "12. PRIVACY POLICY"
 msgstr "12. POLÍTICA DE PRIVACIDAD"
 
-#: templates/legal/terms_and_conditions.html:35
-#: templates/legal/terms_and_conditions.html:522
+#: templates/legal/terms_and_conditions.html:33
+#: templates/legal/terms_and_conditions.html:520
 msgid "13. COPYRIGHT INFRINGEMENTS"
 msgstr "13. INFRACCIONES DE DERECHOS DE AUTOR"
 
-#: templates/legal/terms_and_conditions.html:36
-#: templates/legal/terms_and_conditions.html:577
+#: templates/legal/terms_and_conditions.html:34
+#: templates/legal/terms_and_conditions.html:575
 msgid "14. TERM AND TERMINATION"
 msgstr "14. TÉRMINO Y TERMINACIÓN"
 
-#: templates/legal/terms_and_conditions.html:37
-#: templates/legal/terms_and_conditions.html:602
+#: templates/legal/terms_and_conditions.html:35
+#: templates/legal/terms_and_conditions.html:600
 msgid "15. MODIFICATIONS AND INTERRUPTIONS"
 msgstr "15. MODIFICACIONES E INTERRUPCIONES"
 
-#: templates/legal/terms_and_conditions.html:38
-#: templates/legal/terms_and_conditions.html:626
+#: templates/legal/terms_and_conditions.html:36
+#: templates/legal/terms_and_conditions.html:624
 msgid "16. GOVERNING LAW"
 msgstr "16. LEY APLICABLE"
 
-#: templates/legal/terms_and_conditions.html:39
-#: templates/legal/terms_and_conditions.html:641
+#: templates/legal/terms_and_conditions.html:37
+#: templates/legal/terms_and_conditions.html:639
 msgid "17. DISPUTE RESOLUTION"
 msgstr "17. RESOLUCIÓN DE DISPUTAS"
 
-#: templates/legal/terms_and_conditions.html:40
-#: templates/legal/terms_and_conditions.html:706
+#: templates/legal/terms_and_conditions.html:38
+#: templates/legal/terms_and_conditions.html:704
 msgid "18. CORRECTIONS"
 msgstr "18. CORRECCIONES"
 
-#: templates/legal/terms_and_conditions.html:41
-#: templates/legal/terms_and_conditions.html:717
+#: templates/legal/terms_and_conditions.html:39
+#: templates/legal/terms_and_conditions.html:715
 msgid "19. DISCLAIMER"
 msgstr "19. DESCARGO DE RESPONSABILIDAD"
 
-#: templates/legal/terms_and_conditions.html:42
-#: templates/legal/terms_and_conditions.html:745
+#: templates/legal/terms_and_conditions.html:40
+#: templates/legal/terms_and_conditions.html:743
 msgid "20. LIMITATION OF LIABILITY"
 msgstr "20. LIMITACIÓN DE RESPONSABILIDAD"
 
-#: templates/legal/terms_and_conditions.html:43
-#: templates/legal/terms_and_conditions.html:756
+#: templates/legal/terms_and_conditions.html:41
+#: templates/legal/terms_and_conditions.html:754
 msgid "21. INDEMNIFICATION"
 msgstr "21. INDEMNIZACIÓN"
 
-#: templates/legal/terms_and_conditions.html:44
-#: templates/legal/terms_and_conditions.html:775
+#: templates/legal/terms_and_conditions.html:42
+#: templates/legal/terms_and_conditions.html:773
 msgid "22. USER DATA"
 msgstr "22. DATOS DEL USUARIO"
 
-#: templates/legal/terms_and_conditions.html:45
-#: templates/legal/terms_and_conditions.html:788
+#: templates/legal/terms_and_conditions.html:43
+#: templates/legal/terms_and_conditions.html:786
 msgid "23. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES"
 msgstr "23. COMUNICACION ELECTRÓNICA, TRANSACCIONES Y FIRMAS"
 
-#: templates/legal/terms_and_conditions.html:46
-#: templates/legal/terms_and_conditions.html:805
+#: templates/legal/terms_and_conditions.html:44
+#: templates/legal/terms_and_conditions.html:803
 msgid "24. MISCELLANEOUS"
 msgstr "24. DIVERSOS"
 
-#: templates/legal/terms_and_conditions.html:47
-#: templates/legal/terms_and_conditions.html:826
+#: templates/legal/terms_and_conditions.html:45
+#: templates/legal/terms_and_conditions.html:824
 msgid "25. CONTACT US"
 msgstr "25. CONTACTENOS"
 
-#: templates/legal/terms_and_conditions.html:53
+#: templates/legal/terms_and_conditions.html:51
 msgid ""
 "\n"
 "                        These Terms of Use constitute a legally binding "
@@ -2350,8 +2524,26 @@ msgid ""
 "                        DISCONTINUE USE IMMEDIATELY.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Estos Términos de Uso constituyen un acuerdo legalmente "
+"vinculante entre usted, ya sea personalmente\n"
+"                        o en nombre de una entidad (\"usted\") y crueltouch.com "
+"(\"Compañía\", \"nosotros\", \"nosotros\" o \"nuestro\"),\n"
+"                        con respecto a su acceso y uso del sitio web https://"
+"crueltouch.com, así como cualquier\n"
+"                        otro medio de forma, medio de comunicación, sitio web "
+"móvil o aplicación móvil relacionada, vinculada o\n"
+"                        de otra manera conectada (colectivamente, el "
+"\"Sitio\").  Usted acepta que al acceder al Sitio,\n"
+"                        usted ha\n"
+"                        leído, entendido y aceptado estar obligado por todos "
+"estos Términos de Uso. SI NO ESTÁ DE ACUERDO CON\n"
+"                        TODOS ESTOS TÉRMINOS DE USO, ENTONCES ESTÁ "
+"EXPRESAMENTE PROHIBIDO DE USAR EL SITIO Y DEBE\n"
+"                        DEJAR DE USAR INMEDIATAMENTE.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:67
+#: templates/legal/terms_and_conditions.html:65
 msgid ""
 "\n"
 "                        Supplemental terms and conditions or documents that "
@@ -2373,8 +2565,27 @@ msgid ""
 "                        of Use are posted.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Los términos y condiciones suplementarios o "
+"documentos que pueden publicarse en el Sitio de vez en cuando\n"
+"                        se incorporan expresamente aquí por referencia. Nos "
+"reservamos el derecho, a nuestra sola\n"
+"                        discreción, de realizar cambios o modificaciones en "
+"estos Términos de Uso de vez en cuando. Nosotros\n"
+"                        le alertaremos sobre cualquier cambio al actualizar "
+"la fecha \"Última actualización\" de estos Términos de Uso, y usted\n"
+"                        renuncia a cualquier derecho a recibir un aviso "
+"específico de cada cambio. Asegúrese de que revise\n"
+"                        los Términos aplicables cada vez que use nuestro "
+"Sitio para que entienda qué Términos se aplican. Usted\n"
+"                        estará sujeto a, y se considerará que ha sido "
+"informado y ha aceptado, los cambios\n"
+"                        en cualquier Términos de Uso revisados al continuar "
+"usando el Sitio después de la fecha en que se publiquen\n"
+"                        esos Términos de Uso revisados.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:80
+#: templates/legal/terms_and_conditions.html:78
 msgid ""
 "\n"
 "                        The information provided on the Site is not intended "
@@ -2390,8 +2601,21 @@ msgid ""
 "                        extent local laws are applicable.\n"
 "                    "
 msgstr ""
+"\n"
+"                        La información proporcionada en el Sitio no está "
+"destinada a ser distribuida o utilizada por ninguna persona o\n"
+"                        entidad en cualquier jurisdicción o país donde tal "
+"distribución o uso sería contrario a la ley o\n"
+"                        regulación o que nos sometería a cualquier "
+"requerimiento de registro dentro de dicha jurisdicción o\n"
+"                        país. En consecuencia, aquellas personas que eligen "
+"acceder al Sitio desde otras ubicaciones lo hacen en\n"
+"                        su propia iniciativa y son únicamente responsables "
+"de cumplir con las leyes locales, si y en la\n"
+"                        medida en que las leyes locales sean aplicables.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:90
+#: templates/legal/terms_and_conditions.html:88
 msgid ""
 "\n"
 "                        The Site is not tailored to comply with industry-"
@@ -2404,8 +2628,18 @@ msgid ""
 "Gramm-Leach-Bliley Act (GLBA).\n"
 "                    "
 msgstr ""
+"\n"
+"                        El Sitio no está diseñado para cumplir con "
+"regulaciones específicas de la industria (Ley de\n"
+"                        Portabilidad y Responsabilidad del Seguro de Salud "
+"(HIPAA), Ley Federal de Gestión de Seguridad de la Información (FISMA),\n"
+"                        etc.), por lo que si sus interacciones estarían "
+"sometidas a dichas leyes, no puede usar este Sitio. Usted\n"
+"                        no puede usar el Sitio de una manera que viole la Ley "
+"Gramm-Leach-Bliley (GLBA).\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:98
+#: templates/legal/terms_and_conditions.html:96
 msgid ""
 "\n"
 "                        The Site is intended for users who are at least 18 "
@@ -2413,8 +2647,14 @@ msgid ""
 "                        not permitted to use or register for the Site.\n"
 "                    "
 msgstr ""
+"\n"
+"                        El Sitio está destinado a usuarios que tienen al "
+"menos 18 años de edad. Las personas menores de 18 años\n"
+"                        no están permitidas para usar o registrarse en el "
+"Sitio.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:107
+#: templates/legal/terms_and_conditions.html:105
 msgid ""
 "\n"
 "                        Unless otherwise indicated, the Site is our "
@@ -2441,8 +2681,32 @@ msgid ""
 "without our express prior written permission.\n"
 "                    "
 msgstr ""
+"\n"
+"                        A menos que se indique lo contrario, el Sitio es de "
+"propiedad exclusiva nuestra y todo el código fuente, bases de datos,\n"
+"                        funcionalidad, software, diseños de sitios web, "
+"audio, video, texto, fotografías y gráficos en el\n"
+"                        Sitio (colectivamente, el “Contenido”) y las marcas "
+"registradas, marcas de servicio y logotipos contenidos\n"
+"                        en el mismo (las “Marcas”) son propiedad nuestra o "
+"nos están licenciadas, y están protegidas por\n"
+"                        las leyes de derechos de autor y marcas registradas "
+"y diversas otras leyes de propiedad intelectual y leyes de\n"
+"                        competencia desleal de los Estados Unidos, leyes de "
+"derechos de autor internacionales y convenciones\n"
+"                        internacionales. El Contenido y las Marcas se "
+"proporcionan en el Sitio “TAL CUAL” para su información y\n"
+"                        uso personal solamente. Excepto como se expresa en "
+"estos Términos de Uso, ninguna parte del Sitio y\n"
+"                        ningún Contenido o Marcas puede ser copiado, "
+"reproducido, agregado, republicado, cargado, publicado,\n"
+"                        mostrado públicamente, codificado, traducido, "
+"transmitido, distribuido, vendido, licenciado o de otra manera\n"
+"                        explotado para ningún propósito comercial en "
+"absoluto, sin nuestro permiso expreso por escrito previo.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:122
+#: templates/legal/terms_and_conditions.html:120
 msgid ""
 "\n"
 "                        Provided that you are eligible to use the Site, you "
@@ -2455,8 +2719,18 @@ msgid ""
 "Content and the Marks.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Dado que usted es elegible para usar el Sitio, se le "
+"otorga una licencia limitada para acceder y\n"
+"                        usar el Sitio y para descargar o imprimir una copia "
+"de cualquier parte del Contenido al que usted ha\n"
+"                        accedido correctamente exclusivamente para su uso "
+"personal, no comercial. Reservamos todos los derechos no\n"
+"                        expresamente otorgados a usted en y al Sitio, el "
+"Contenido y las Marcas.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:133
+#: templates/legal/terms_and_conditions.html:131
 msgid ""
 "\n"
 "                        By using the Site, you represent and warrant that:  "
@@ -2476,8 +2750,25 @@ msgid ""
 "                        applicable law or regulation.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Al usar el Sitio, usted representa y garantiza que:  "
+"(1) toda la información de registro que usted envíe\n"
+"                        será verdadera, precisa, actual y completa; (2) "
+"usted mantendrá la exactitud de dicha\n"
+"                        información y actualizará dicha información de "
+"registro de inmediato cuando sea necesario; (3) usted tiene la\n"
+"                        capacidad legal, y usted acepta cumplir con estos "
+"Términos de Uso;  (4) usted no es un menor en el\n"
+"                        lugar en el que reside; (5) usted no accederá al "
+"Sitio a través de medios automatizados o\n"
+"                        no humanos, ya sea a través de un bot, un script o "
+"de otra manera; (6) usted no usará el Sitio para\n"
+"                        ningún propósito ilegal o no autorizado; y (7) su "
+"uso del Sitio no violará ninguna\n"
+"                        ley o reglamento aplicable.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:145
+#: templates/legal/terms_and_conditions.html:143
 msgid ""
 "\n"
 "                        If you provide any information that is untrue, "
@@ -2487,8 +2778,15 @@ msgid ""
 "                        the Site (or any portion thereof).\n"
 "                    "
 msgstr ""
+"\n"
+"                        Si usted proporciona cualquier información que no "
+"sea verdadera, precisa, actual o completa, tenemos\n"
+"                        el derecho de suspender o terminar su cuenta y "
+"rechazar cualquier uso actual o futuro de\n"
+"                        el Sitio (o cualquier parte de él).\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:155
+#: templates/legal/terms_and_conditions.html:153
 msgid ""
 "\n"
 "                        You may be required to register with the Site. You "
@@ -2501,8 +2799,18 @@ msgid ""
 "objectionable.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Es posible que se le solicite que se registre en el "
+"Sitio. Usted acepta mantener su contraseña confidencial y\n"
+"                        será responsable de todo uso de su cuenta y "
+"contraseña. Nos reservamos el derecho de eliminar,\n"
+"                        reclamar o cambiar un nombre de usuario que usted "
+"seleccione si determinamos, a nuestra sola discreción, que dicho\n"
+"                        nombre de usuario es inapropiado, obsceno u "
+"objetable de otra manera.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:166
+#: templates/legal/terms_and_conditions.html:164
 msgid ""
 "\n"
 "                        You may not access or use the Site for any purpose "
@@ -2512,25 +2820,26 @@ msgid ""
 "                        that are specifically endorsed or approved by us.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Usted no puede acceder o usar el Sitio con ningún "
+"propósito distinto al que hacemos el Sitio\n"
+"                        disponible. El Sitio no puede ser utilizado en "
+"conexión con ningún emprendimiento comercial excepto aquellos\n"
+"                        que están específicamente aprobados o "
+"recomendados por nosotros.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:173
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                        you can download the following files either in "
-#| "zip format or file by file.\n"
-#| "                    "
+#: templates/legal/terms_and_conditions.html:171
 msgid ""
 "\n"
 "                        As a user of the Site, you agree not to:\n"
 "                    "
 msgstr ""
 "\n"
-"                        puede descargar los siguientes archivos ya sea en "
-"formato zip o archivo por archivo.\n"
+"                        Como usuario del Sitio, usted se compromete a no:\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:179
+#: templates/legal/terms_and_conditions.html:177
 msgid ""
 "\n"
 "                            Systematically retrieve data or other content "
@@ -2540,8 +2849,15 @@ msgid ""
 "                            permission from us.\n"
 "                        "
 msgstr ""
+"\n"
+"                            Recuperar sistemáticamente datos u otro "
+"contenido del Sitio para crear o compilar, directamente\n"
+"                            o indirectamente, una colección, compilación, "
+"base de datos o directorio sin el permiso escrito\n"
+"                            de nosotros.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:186
+#: templates/legal/terms_and_conditions.html:184
 msgid ""
 "\n"
 "                            Trick, defraud, or mislead us and other users, "
@@ -2549,8 +2865,14 @@ msgid ""
 "                            account information such as user passwords;\n"
 "                        "
 msgstr ""
+"\n"
+"                            Enganar, engañar o engañar a nosotros y a otros "
+"usuarios, especialmente en cualquier intento de aprender información "
+"sensible\n"
+"                            de cuenta como contraseñas de usuario;\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:192
+#: templates/legal/terms_and_conditions.html:190
 msgid ""
 "\n"
 "                            Circumvent, disable, or otherwise interfere with "
@@ -2561,14 +2883,16 @@ msgid ""
 "Content contained therein;\n"
 "                        "
 msgstr ""
+"\n"
+"                            Evitar, deshabilitar o de otra manera interferir "
+"con las características relacionadas con la seguridad del Sitio,\n"
+"                            incluyendo características que impiden o "
+"restringen el uso o la copia de cualquier Contenido o aplican\n"
+"                            limitaciones al uso del Sitio y/o el Contenido "
+"que contiene;\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:199
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                        you can download the following files either in "
-#| "zip format or file by file.\n"
-#| "                    "
+#: templates/legal/terms_and_conditions.html:197
 msgid ""
 "\n"
 "                            Disparage, tarnish, or otherwise harm, in our "
@@ -2576,11 +2900,12 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"                        puede descargar los siguientes archivos ya sea en "
-"formato zip o archivo por archivo.\n"
-"                    "
+"                            Desprestigiar, empañar o perjudicar de otro modo, en nuestra "
+"opinión, a nosotros y/o el Sitio;\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:204
+
+#: templates/legal/terms_and_conditions.html:202
 msgid ""
 "\n"
 "                            Use any information obtained from the Site in "
@@ -2588,8 +2913,13 @@ msgid ""
 "                            person;\n"
 "                        "
 msgstr ""
+"\n"
+"                            Utilizar cualquier información obtenida del Sitio en "
+"orden a acosar, abusar o dañar a otra\n"
+"                            persona;\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:210
+#: templates/legal/terms_and_conditions.html:208
 msgid ""
 "\n"
 "                            Use the Site as part of any effort to compete "
@@ -2598,8 +2928,14 @@ msgid ""
 "commercial enterprise;\n"
 "                        "
 msgstr ""
+"\n"
+"                            Utilizar el Sitio como parte de cualquier esfuerzo "
+"para competir con nosotros o de otra manera utilizar el Sitio y/o el\n"
+"                            Contenido para cualquier emprendimiento de "
+"generación de ingresos o empresa comercial;\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:216
+#: templates/legal/terms_and_conditions.html:214
 msgid ""
 "\n"
 "                            Decipher, decompile, disassemble, or reverse "
@@ -2607,8 +2943,13 @@ msgid ""
 "                            any way making up a part of the Site;\n"
 "                        "
 msgstr ""
+"\n"
+"                            Decodificar, descompilar, desensamblar o "
+"desarmar cualquier software que comprenda o en\n"
+"                            cualquier forma que haga parte del Sitio;\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:222
+#: templates/legal/terms_and_conditions.html:220
 msgid ""
 "\n"
 "                            Attempt to bypass any measures of the Site "
@@ -2616,8 +2957,13 @@ msgid ""
 "                            Site, or any portion of the Site.\n"
 "                        "
 msgstr ""
+"\n"
+"                            Intentar evitar cualquier medida del Sitio "
+"diseñada para evitar o restringir el acceso al\n"
+"                            Sitio, o cualquier parte del Sitio.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:228
+#: templates/legal/terms_and_conditions.html:226
 msgid ""
 "\n"
 "                            Copy or adapt the Site’s software, including but "
@@ -2625,8 +2971,13 @@ msgid ""
 "                            JavaScript, or other code.\n"
 "                        "
 msgstr ""
+"\n"
+"                            Copiar o adaptar el software del Sitio, incluyendo "
+"pero no limitado a Flash, PHP, HTML,\n"
+"                            JavaScript, u otro código.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:234
+#: templates/legal/terms_and_conditions.html:232
 msgid ""
 "\n"
 "                            Except as permitted by applicable law, decipher, "
@@ -2635,8 +2986,14 @@ msgid ""
 "making up a part of the Site.\n"
 "                        "
 msgstr ""
+"\n"
+"                            Excepto como se permita por la ley aplicable, "
+"decodificar, descompilar, desensamblar o desarmar\n"
+"                            cualquier software que comprenda o en cualquier "
+"forma que haga parte del Sitio.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:240
+#: templates/legal/terms_and_conditions.html:238
 msgid ""
 "\n"
 "                            Except as may be the result of standard search "
@@ -2649,14 +3006,18 @@ msgid ""
 "software.\n"
 "                        "
 msgstr ""
+"\n"
+"                            Excepto como pueda ser el resultado del uso "
+"estándar de un motor de búsqueda o navegador de Internet, utilizar,\n"
+"                            lanzar, desarrollar o distribuir cualquier sistema "
+"automatizado, incluyendo sin limitación, cualquier\n"
+"                            araña, robot, utilidad de trampa, scraper, o "
+"lector fuera de línea que acceda al Sitio, o utilizando o\n"
+"                            lanzando cualquier script no autorizado u otro "
+"software.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:248
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                        you can download the following files either in "
-#| "zip format or file by file.\n"
-#| "                    "
+#: templates/legal/terms_and_conditions.html:246
 msgid ""
 "\n"
 "                            Use a buying agent or purchasing agent to make "
@@ -2664,11 +3025,11 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"                        puede descargar los siguientes archivos ya sea en "
-"formato zip o archivo por archivo.\n"
-"                    "
+"                            Utilizar un agente de compra o agente de "
+"compra para realizar compras en el Sitio.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:253
+#: templates/legal/terms_and_conditions.html:251
 msgid ""
 "\n"
 "                            Make any unauthorized use of the Site, including "
@@ -2679,8 +3040,17 @@ msgid ""
 "under false pretenses.\n"
 "                        "
 msgstr ""
+"\n"
+"                            Hacer cualquier uso no autorizado del Sitio, "
+"incluyendo la recolección de nombres de usuario y/o direcciones de correo "
+"electrónico\n"
+"                            de los usuarios por medios electrónicos u otros "
+"para el propósito de enviar correo electrónico no solicitado, o\n"
+"                            creando cuentas de usuario por medios automatizados "
+"o bajo falsas pretensiones.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:260
+#: templates/legal/terms_and_conditions.html:258
 msgid ""
 "\n"
 "                            Use the Site as part of any effort to compete "
@@ -2689,14 +3059,14 @@ msgid ""
 "commercial enterprise.\n"
 "                        "
 msgstr ""
+"\n"
+"                            Utilizar el Sitio como parte de cualquier esfuerzo "
+"para competir con nosotros o de otra manera utilizar el Sitio y/o el\n"
+"                            Contenido para cualquier emprendimiento de "
+"generación de ingresos o empresa comercial.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:266
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                        you can download the following files either in "
-#| "zip format or file by file.\n"
-#| "                    "
+#: templates/legal/terms_and_conditions.html:264
 msgid ""
 "\n"
 "                            Use the Site to advertise or offer to sell goods "
@@ -2704,28 +3074,21 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"                        puede descargar los siguientes archivos ya sea en "
-"formato zip o archivo por archivo.\n"
-"                    "
+"                            Utilizar el Sitio para publicitar o ofrecer "
+"productos y servicios.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:271
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                        you can download the following files either in "
-#| "zip format or file by file.\n"
-#| "                    "
+#: templates/legal/terms_and_conditions.html:269
 msgid ""
 "\n"
 "                            Sell or otherwise transfer your profile.\n"
 "                        "
 msgstr ""
 "\n"
-"                        puede descargar los siguientes archivos ya sea en "
-"formato zip o archivo por archivo.\n"
-"                    "
+"                            Vender o de otra manera transferir su perfil.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:280
+#: templates/legal/terms_and_conditions.html:278
 msgid ""
 "\n"
 "                        The Site does not offer unauthorized users to submit "
@@ -2746,8 +3109,26 @@ msgid ""
 "                        you thereby represent and warrant that:\n"
 "                    "
 msgstr ""
+"\n"
+"                        El Sitio no ofrece a los usuarios no autorizados "
+"presentar o publicar artículos. Podemos proporcionarle con\n"
+"                        la oportunidad\n"
+"                        de crear, enviar, publicar, mostrar, transmitir, "
+"realizar, publicar, distribuir o transmitir contenido\n"
+"                        y materiales a nosotros o en el Sitio, incluyendo "
+"pero no limitado a texto, escritos, video, audio,\n"
+"                        fotografías, gráficos, comentarios, sugerencias, o "
+"información personal u otro material\n"
+"                        (colectivamente, \"Contribuciones\"). Las "
+"Contribuciones pueden ser vistas por otros usuarios del Sitio y\n"
+"                        a través de sitios web de terceros. Por lo tanto, "
+"cualquier Contribución que transmita puede ser tratada en\n"
+"                        de acuerdo con la Política de Privacidad del Sitio. "
+"Cuando usted cree o haga disponible cualquier Contribución,\n"
+"                        usted representa y garantiza que:\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:294
+#: templates/legal/terms_and_conditions.html:292
 msgid ""
 "\n"
 "                            The creation, distribution, transmission, public "
@@ -2759,8 +3140,17 @@ msgid ""
 "                            moral rights of any third party.\n"
 "                        "
 msgstr ""
+"\n"
+"                            La creación, distribución, transmisión, "
+"visualización pública, o la ejecución, y el acceso,\n"
+"                            descarga, o copia de sus Contribuciones no "
+"infringen los derechos de propiedad intelectual,\n"
+"                            incluyendo pero no limitado a los derechos de "
+"autor, patente, marca comercial, secreto comercial, o\n"
+"                            derechos morales de cualquier tercero.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:302
+#: templates/legal/terms_and_conditions.html:300
 msgid ""
 "\n"
 "                            You are the creator and owner of or have the "
@@ -2771,8 +3161,16 @@ msgid ""
 "the Site and these Terms of Use.\n"
 "                        "
 msgstr ""
+"\n"
+"                            Usted es el creador y propietario o tiene las "
+"licencias, derechos, consentimientos, liberaciones,\n"
+"                            y permisos necesarios para usar y autorizar a "
+"nosotros, el Sitio, y otros usuarios del Sitio para usar\n"
+"                            sus Contribuciones de cualquier manera "
+"contemplada por el Sitio y estos Términos de Uso.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:309
+#: templates/legal/terms_and_conditions.html:307
 msgid ""
 "\n"
 "                            You have the written consent, release, and/or "
@@ -2785,14 +3183,17 @@ msgid ""
 "of Use.\n"
 "                        "
 msgstr ""
+"\n"
+"                            Usted tiene el consentimiento por escrito, "
+"liberación, y/o permiso de cada y cada persona identificable\n"
+"                            en sus Contribuciones para usar el nombre o "
+"parecido de cada y cada persona identificable\n"
+"                            para permitir la inclusión y uso de sus "
+"Contribuciones de cualquier manera contemplada por el Sitio y estos Términos "
+"de Uso.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:317
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                        you can download the following files either in "
-#| "zip format or file by file.\n"
-#| "                    "
+#: templates/legal/terms_and_conditions.html:315
 msgid ""
 "\n"
 "                            Your Contributions are not false, inaccurate, or "
@@ -2800,11 +3201,11 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"                        puede descargar los siguientes archivos ya sea en "
-"formato zip o archivo por archivo.\n"
-"                    "
+"                            Sus Contribuciones no son falsas, inexactas, o "
+"engañosas.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:322
+#: templates/legal/terms_and_conditions.html:320
 msgid ""
 "\n"
 "                            Your Contributions are not unsolicited or "
@@ -2813,8 +3214,14 @@ msgid ""
 "mailings, or other forms of solicitation.\n"
 "                        "
 msgstr ""
+"\n"
+"                            Sus Contribuciones no son publicidad no "
+"solicitada o no autorizada, materiales promocionales,\n"
+"                            esquemas piramidales, cartas en cadena, spam, "
+"correos masivos, o otras formas de solicitud.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:328
+#: templates/legal/terms_and_conditions.html:326
 msgid ""
 "\n"
 "                            Your Contributions are not obscene, lewd, "
@@ -2823,14 +3230,14 @@ msgid ""
 "determined by us).\n"
 "                        "
 msgstr ""
+"\n"
+"                            Sus Contribuciones no son obscenas, lascivas, "
+"lascivas, sucias, violentas, acosadoras, difamatorias,\n"
+"                            calumniosas, u otras objeciones (como lo "
+"determinamos nosotros).\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:334
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                        you can download the following files either in "
-#| "zip format or file by file.\n"
-#| "                    "
+#: templates/legal/terms_and_conditions.html:332
 msgid ""
 "\n"
 "                            Your Contributions do not ridicule, mock, "
@@ -2838,11 +3245,11 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"                        puede descargar los siguientes archivos ya sea en "
-"formato zip o archivo por archivo.\n"
-"                    "
+"                            Sus Contribuciones no ridiculizan, burlan, "
+"desprecian, intimidan, o abusan de nadie.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:339
+#: templates/legal/terms_and_conditions.html:337
 msgid ""
 "\n"
 "                            Your Contributions are not used to harass or "
@@ -2851,14 +3258,14 @@ msgid ""
 "a specific person or class of people.\n"
 "                        "
 msgstr ""
+"\n"
+"                            Sus Contribuciones no son usadas para acosar o "
+"amenazar (en el sentido legal de esos términos)\n"
+"                            a cualquier otra persona y para promover la "
+"violencia contra una persona o clase de personas específicas.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:345
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                        you can download the following files either in "
-#| "zip format or file by file.\n"
-#| "                    "
+#: templates/legal/terms_and_conditions.html:343
 msgid ""
 "\n"
 "                            Your Contributions do not violate any applicable "
@@ -2866,17 +3273,11 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"                        puede descargar los siguientes archivos ya sea en "
-"formato zip o archivo por archivo.\n"
-"                    "
+"                            Sus contribuciones no infringen ningún "
+"aplicable ley, reglamento, o regla.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:350
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                        you can download the following files either in "
-#| "zip format or file by file.\n"
-#| "                    "
+#: templates/legal/terms_and_conditions.html:348
 msgid ""
 "\n"
 "                            Your Contributions do not violate the privacy or "
@@ -2884,11 +3285,11 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"                        puede descargar los siguientes archivos ya sea en "
-"formato zip o archivo por archivo.\n"
-"                    "
+"                            Sus Contribuciones no violan la privacidad ni la "
+"propiedad intelectual de ningún tercero.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:355
+#: templates/legal/terms_and_conditions.html:353
 msgid ""
 "\n"
 "                            Your Contributions do not violate any applicable "
@@ -2897,8 +3298,14 @@ msgid ""
 "being of minors.\n"
 "                        "
 msgstr ""
+"\n"
+"                            Sus Contribuciones no violan ninguna ley "
+"aplicable sobre pornografía infantil, o\n"
+"                            de otra manera destinado a proteger la salud o "
+"el bienestar de menores.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:361
+#: templates/legal/terms_and_conditions.html:359
 msgid ""
 "\n"
 "                            Your Contributions do not include any offensive "
@@ -2907,8 +3314,14 @@ msgid ""
 "physical handicap.\n"
 "                        "
 msgstr ""
+"\n"
+"                            Sus Contribuciones no incluyen ningún comentario "
+"ofensivo que están conectados a la raza,\n"
+"                            origen nacional, género, preferencia sexual, o "
+"discapacidad física.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:367
+#: templates/legal/terms_and_conditions.html:365
 msgid ""
 "\n"
 "                            Your Contributions do not otherwise violate, or "
@@ -2917,8 +3330,14 @@ msgid ""
 "applicable law or regulation.\n"
 "                        "
 msgstr ""
+"\n"
+"                            Sus Contribuciones no violan de otra manera, o "
+"enlazar a material que infringe, cualquier\n"
+"                            disposición de estos Términos de Uso, o cualquier "
+"ley o reglamento aplicable.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:374
+#: templates/legal/terms_and_conditions.html:372
 msgid ""
 "\n"
 "                        Any use of the Site in violation of the foregoing "
@@ -2927,8 +3346,14 @@ msgid ""
 "your rights to use the Site.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Cualquier uso del Sitio en violación de lo anterior "
+"infringe estos Términos de Uso y puede resultar en,\n"
+"                        entre otras cosas, la terminación o suspensión de "
+"los derechos de uso del Sitio.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:383
+#: templates/legal/terms_and_conditions.html:381
 msgid ""
 "\n"
 "                        By posting your Contributions to any part of the "
@@ -2955,8 +3380,32 @@ msgid ""
 "                        channels.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Al publicar sus Contribuciones en cualquier parte del "
+"Sitio, usted automáticamente otorga, y usted\n"
+"                        representa\n"
+"                        y garantiza que tiene el derecho de otorgar, a nosotros "
+"un derecho sin restricciones, ilimitado, irrevocable,\n"
+"                        perpetuo, no exclusivo, transferible, libre de derechos "
+"de autor, totalmente pagado, derecho mundial, y licencia\n"
+"                        para\n"
+"                        alojar, utilizar, copiar, reproducir, revelar, vender, "
+"revender, publicar, transmitir, re-título, archivo, almacenar,\n"
+"                        caché, ejecutar públicamente, mostrar públicamente, "
+"reformatear, traducir, transmitir, extracto (en su totalidad o\n"
+"                        en\n"
+"                        parte), y distribuir tales Contribuciones (incluyendo, "
+"sin limitación, su imagen y voz)\n"
+"                        para cualquier propósito, comercial, publicitario, o "
+"de otra manera, y para preparar obras derivadas de,\n"
+"                        o incorporar en otras obras, tales Contribuciones, y "
+"otorgar y autorizar sublicencias de la\n"
+"                        anterior. El uso y la distribución puede ocurrir en cualquier "
+"formato de medios y a través de cualquier medio\n"
+"                        canales.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:400
+#: templates/legal/terms_and_conditions.html:398
 msgid ""
 "\n"
 "                        This license will apply to any form, media, or "
@@ -2970,8 +3419,19 @@ msgid ""
 "                        otherwise been asserted in your Contributions.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Esta licencia se aplicará a cualquier forma, medio, o "
+"tecnología ahora conocido o desarrollado en el futuro, y\n"
+"                        incluye nuestro uso de su nombre, nombre de la empresa, y "
+"nombre de la franquicia, según corresponda, y cualquier de los\n"
+"                        marcas comerciales, marcas de servicio, nombres comerciales, "
+"logotipos, y las imágenes personales y comerciales que usted proporciona.\n"
+"                        Usted renuncia a todos los derechos morales en sus "
+"Contribuciones, y usted garantiza que los derechos morales no\n"
+"                        de otra manera se han afirmado en sus Contribuciones.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:409
+#: templates/legal/terms_and_conditions.html:407
 msgid ""
 "\n"
 "                        We do not assert any ownership over your "
@@ -2989,8 +3449,23 @@ msgid ""
 "Contributions.\n"
 "                    "
 msgstr ""
+"\n"
+"                        No afirmamos ninguna propiedad sobre sus "
+"Contribuciones. Usted conserva la propiedad completa de todos sus\n"
+"                        Contribuciones y cualquier derecho de propiedad "
+"intelectual u otros derechos de propiedad asociados con\n"
+"                        sus Contribuciones. No somos responsables por cualquier "
+"declaración o representación en su\n"
+"                        Contribuciones\n"
+"                        proporcionado por usted en cualquier área en el Sitio. Usted es "
+"únicamente responsable de sus Contribuciones a\n"
+"                        el Sitio y usted expresa su acuerdo para exonerar a nosotros "
+"de cualquier responsabilidad y abstenerse\n"
+"                        de cualquier acción legal contra nosotros con respecto a sus "
+"Contribuciones.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:420
+#: templates/legal/terms_and_conditions.html:418
 msgid ""
 "\n"
 "                        We have the right, in our sole and absolute "
@@ -3003,8 +3478,18 @@ msgid ""
 "monitor your Contributions.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Tenemos el derecho, en nuestra absoluta y "
+"discreción, (1) para editar, redactar, o de otra manera cambiar\n"
+"                        cualquier Contribución; (2) para re-categorizar cualquier "
+"Contribución para colocarlos en ubicaciones más apropiadas\n"
+"                        en el Sitio; y (3) para pre-visualizar o eliminar cualquier "
+"Contribución en cualquier momento y por cualquier\n"
+"                        razón, sin previo aviso. No tenemos ninguna obligación de "
+"controlar sus Contribuciones.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:431
+#: templates/legal/terms_and_conditions.html:429
 msgid ""
 "\n"
 "                        You acknowledge and agree that any questions, "
@@ -3027,8 +3512,27 @@ msgid ""
 "right in your Submissions.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Usted reconoce y acepta que cualquier pregunta, "
+"comentario, sugerencia, idea, comentario, o otra\n"
+"                        información con respecto al Sitio (\"Contribuciones\") "
+"proporcionado por usted a nosotros no es confidencial y\n"
+"                        se convertirá en nuestra única propiedad. Nosotros tendremos "
+"los derechos exclusivos, incluyendo todos los derechos de propiedad\n"
+"                        intelectual, y tendrá derecho a la utilización y difusión "
+"sin restricciones de estas\n"
+"                        Contribuciones para cualquier propósito legal, comercial o "
+"de otra manera, sin reconocimiento o\n"
+"                        compensación a usted. Usted renuncia a todos los derechos "
+"morales a cualquier tal Contribución, y usted garantiza que cualquier tal "
+"Contribución es original con usted o que usted tiene el derecho de presentar\n"
+"                        tales Contribuciones. Usted acepta que no habrá recurso contra "
+"nosotros por cualquier supuesta o real\n"
+"                        infracción o apropiación indebida de cualquier derecho de "
+"propiedad en sus Contribuciones.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:446
+#: templates/legal/terms_and_conditions.html:444
 msgid ""
 "\n"
 "                        The Site may contain (or you may be sent through the "
@@ -3078,8 +3582,47 @@ msgid ""
 "                        any contact with Third-Party Websites.\n"
 "                    "
 msgstr ""
+"\n"
+"                        El Sitio puede contener (o usted puede ser enviado a través "
+"del Sitio o el Servicio) enlaces a otros\n"
+"                        sitios web (\"Sitios Web de Terceros\") así como "
+"artículos, fotografías, texto, gráficos, imágenes,\n"
+"                        diseños, música, sonido, video, información, "
+"aplicaciones, software, y otro contenido o elementos\n"
+"                        pertenecientes o originados por terceros (\"Contenido de Terceros\"). "
+"Estos Sitios Web de Terceros y el Contenido de Terceros no son\n"
+"                        investigados, monitoreados, o verificados por nosotros, y no "
+"somos responsables por cualquier Sitio Web de Terceros\n"
+"                        accedido a través del Sitio o cualquier Contenido de Terceros "
+"publicado en, disponible a través, o instalado\n"
+"                        desde el Sitio, incluyendo el contenido, exactitud, "
+"ofensividad, opiniones, fiabilidad, privacidad\n"
+"                        prácticas, o otras políticas de o contenidas en los "
+"Sitios Web de Terceros o el Contenido de Terceros. La inclusión de, enlace a, o "
+"permiso de uso o instalación de cualquier Sitio Web de Terceros o cualquier Contenido "
+"de Terceros no implica\n"
+"                        aprobación o respaldo por nuestra parte. Si usted decide "
+"abandonar el Sitio y acceder a los Sitios Web de Terceros o utilizar o instalar "
+"cualquier Contenido de Terceros, usted lo hace bajo su propio riesgo, y usted debe "
+"estar al tanto de que estas Condiciones de Uso no\n"
+"                        gobiernan más. Usted debe revisar los términos y políticas "
+"aplicables, incluyendo la privacidad y la recopilación de datos\n"
+"                        prácticas, de cualquier sitio web al que navegue desde el "
+"Sito o relacionado con cualquier aplicación que usted use o instale desde el Sitio. "
+"Cualquier compra que usted realice a través de Sitios Web de Terceros será a través "
+"de otros sitios web y de otras empresas, y no nos hacemos responsables\n"
+"                        de ninguna manera en relación con tales compras que son "
+"exclusivamente entre usted y el tercero aplicable. Usted acepta y reconoce que no "
+"aprobamos los productos o servicios ofrecidos\n"
+"                        en Sitios Web de Terceros y usted nos exime de cualquier "
+"daño causado por su compra de tales productos o servicios. Además, usted nos exime "
+"de cualquier pérdida sufrida\n"
+"                        por usted o daño causado a usted relacionado o "
+"resultante de cualquier Contenido de Terceros o\n"
+"                        cualquier contacto con Sitios Web de Terceros.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:476
+#: templates/legal/terms_and_conditions.html:474
 msgid ""
 "\n"
 "                        We allow advertisers to display their advertisements "
@@ -3099,8 +3642,25 @@ msgid ""
 "                        other relationship with advertisers.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Permitimos a los anunciantes mostrar sus anuncios y "
+"otra información en ciertas áreas del\n"
+"                        Sitio, como anuncios laterales o anuncios de "
+"bandera. Si usted es un anunciante, usted\n"
+"                        asumirá la total responsabilidad por cualquier "
+"anuncio que coloque en el Sitio y cualquier servicio\n"
+"                        proporcionado en el Sitio o productos vendidos a "
+"través de esos anuncios. Además, como anunciante,\n"
+"                        usted garantiza y representa que posee todos los "
+"derechos y autoridad para colocar anuncios en\n"
+"                        el Sitio, incluyendo, pero no limitado a, derechos "
+"de propiedad intelectual, derechos de publicidad, y\n"
+"                        derechos contractuales. Simplemente proporcionamos "
+"el espacio para colocar tales anuncios, y no tenemos\n"
+"                        otra relación con los anunciantes.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:491
+#: templates/legal/terms_and_conditions.html:489
 msgid ""
 "\n"
 "                        We reserve the right, but not the obligation, to: "
@@ -3124,8 +3684,34 @@ msgid ""
 "                        functioning of the Site.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Nos reservamos el derecho, pero no la obligación, de: "
+"(1) monitorear el Sitio para violaciones de estos\n"
+"                        Términos de Uso; (2) tomar medidas legales "
+"apropiadas contra cualquier persona que, en nuestra "
+"única discreción,\n"
+"                        viola la ley o estos Términos de Uso, incluyendo, "
+"pero no limitado a, informar a tal usuario a\n"
+"                        las autoridades de aplicación de la ley; (3) en "
+"nuestra única discreción y sin limitación, rechazar, "
+"restringir\n"
+"                        el acceso a, limitar la disponibilidad de, o "
+"deshabilitar (a la medida que sea tecnológicamente "
+"factible) cualquier de\n"
+"                        sus Contribuciones o cualquier parte de ella; (4) "
+"en nuestra única discreción y sin limitación,\n"
+"                        notificar, o responsabilidad, para eliminar del "
+"Sito o de otra manera deshabilitar todos los archivos y "
+"contenido que\n"
+"                        son excesivos en tamaño o de cualquier manera "
+"pesados para nuestros sistemas; y (5) de otra manera "
+"gestionar el\n"
+"                        Sitio de una manera diseñada para proteger nuestros "
+"derechos y propiedad y para facilitar el correcto\n"
+"                        funcionamiento del Sitio.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:508
+#: templates/legal/terms_and_conditions.html:506
 #, python-format
 msgid ""
 "\n"
@@ -3148,8 +3734,27 @@ msgid ""
 "                        processed in Canada.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Nos preocupamos por la privacidad y seguridad de los "
+"datos. Por favor, revise nuestro\n"
+"                        <a href=\"%(url)s\">Política de Privacidad</a>. Al "
+"utilizar el Sitio, usted acepta\n"
+"                        estar sujeto a nuestra Política de Privacidad, que "
+"está incorporada en estos Términos de Uso. Por favor\n"
+"                        tenga en cuenta que el Sitio está alojado en "
+"Beauharnois (BHS) - Canadá.\n"
+"                        Si usted accede al Sitio desde la Unión Europea, "
+"Asia, o cualquier otra región del mundo con leyes\n"
+"                        u otros requisitos que rigen la recopilación, uso, "
+"o divulgación de datos personales que difieren de\n"
+"                        las leyes aplicables en los Estados Unidos, entonces "
+"a través de su uso continuo del Sitio, usted está\n"
+"                        transfiriendo sus datos a Canadá, y usted acepta "
+"tener sus datos transferidos a y\n"
+"                        procesados en Canadá.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:524
+#: templates/legal/terms_and_conditions.html:522
 #, python-format
 msgid ""
 "\n"
@@ -3162,8 +3767,17 @@ msgid ""
 "provide the following information:\n"
 "                    "
 msgstr ""
+"\n"
+"                        Respetamos los derechos de propiedad intelectual de "
+"otros. Si cree que cualquier material\n"
+"                        disponible\n"
+"                        en o a través del Sitio infringe sobre cualquier "
+"derecho de autor que usted posee, por favor contáctenos en\n"
+"                        <a href=\"mailto:%(email)s\">%(email)s</a> y "
+"proporcione la siguiente información:\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:533
+#: templates/legal/terms_and_conditions.html:531
 msgid ""
 "\n"
 "                            An electronic or physical signature of the "
@@ -3171,14 +3785,13 @@ msgid ""
 "                            of the copyright interest;\n"
 "                        "
 msgstr ""
+"\n"
+"                            Una firma electrónica o física de la persona "
+"autorizada para actuar en nombre del propietario\n"
+"                            del interés de derechos de autor;\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:539
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                        you can download the following files either in "
-#| "zip format or file by file.\n"
-#| "                    "
+#: templates/legal/terms_and_conditions.html:537
 msgid ""
 "\n"
 "                            A description of the copyrighted work that you "
@@ -3186,17 +3799,11 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"                        puede descargar los siguientes archivos ya sea en "
-"formato zip o archivo por archivo.\n"
-"                    "
+"                            Una descripción del trabajo con derechos de "
+"autor que usted afirma que ha sido infringido;\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:544
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                        you can download the following files either in "
-#| "zip format or file by file.\n"
-#| "                    "
+#: templates/legal/terms_and_conditions.html:542
 msgid ""
 "\n"
 "                            A description of where the material that you "
@@ -3204,17 +3811,11 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"                        puede descargar los siguientes archivos ya sea en "
-"formato zip o archivo por archivo.\n"
-"                    "
+"                            Una descripción de dónde se encuentra el "
+"material que usted afirma que infringe en el Sitio;\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:549
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                        you can download the following files either in "
-#| "zip format or file by file.\n"
-#| "                    "
+#: templates/legal/terms_and_conditions.html:547
 msgid ""
 "\n"
 "                            Your address, telephone number, and email "
@@ -3222,11 +3823,11 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"                        puede descargar los siguientes archivos ya sea en "
-"formato zip o archivo por archivo.\n"
-"                    "
+"                            Su dirección, número de teléfono y dirección de "
+"correo electrónico;\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:554
+#: templates/legal/terms_and_conditions.html:552
 msgid ""
 "\n"
 "                            A signed statement by you that you have a good "
@@ -3235,18 +3836,14 @@ msgid ""
 "the law; and\n"
 "                        "
 msgstr ""
+"\n"
+"                            Una declaración firmada por usted de que tiene "
+"una buena fe creencia de que el uso disputado no\n"
+"                            está autorizado por el propietario del derecho "
+"de autor, su agente, o la ley; y\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:560
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                                            You can download your copy of "
-#| "your edited photos here. This link expires in\n"
-#| "                                            72 hours. This is a one time "
-#| "download. If you need to download the photos\n"
-#| "                                            again, please contact us. Zip "
-#| "format.\n"
-#| "                                        "
+#: templates/legal/terms_and_conditions.html:558
 msgid ""
 "\n"
 "                            A signed statement by you, made under penalty of "
@@ -3258,15 +3855,15 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"                                            Puede descargar una copia de sus "
-"fotos editadas aquí. Este enlace caduca en\n"
-"                                            72 horas. Esta es una descarga "
-"única. Si necesita descargar las fotos\n"
-"                                            de nuevo, comuníquese con "
-"nosotros. Formato zip.\n"
-"                                        "
+"                            Una declaración firmada por usted, hecha bajo "
+"pena de perjurio, que la información anterior en su\n"
+"                            Notificación es precisa y que usted es el "
+"propietario del derecho de autor o autorizado para actuar en el\n"
+"                            nombre del\n"
+"                            propietario del derecho de autor.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:569
+#: templates/legal/terms_and_conditions.html:567
 msgid ""
 "\n"
 "                        We reserve the right to remove Content alleged to be "
@@ -3276,8 +3873,16 @@ msgid ""
 "                        we determine that the user is a repeat infringer.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Nos reservamos el derecho de eliminar el Contenido "
+"que se afirma que infringe sin previo aviso y a\n"
+"                        nuestra discreción exclusiva. En circunstancias "
+"adecuadas, también vamos a terminar una cuenta de usuario si\n"
+"                        determinamos que el usuario es un infractor "
+"reincidente.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:579
+#: templates/legal/terms_and_conditions.html:577
 msgid ""
 "\n"
 "                        These Terms of Use shall remain in full force and "
@@ -3298,8 +3903,27 @@ msgid ""
 "                        OUR SOLE DISCRETION.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Estos Términos de Uso permanecerán en plena vigencia "
+"y efecto mientras usted use el Sitio. SIN\n"
+"                        LIMITACIÓN\n"
+"                        DE\n"
+"                        CUALQUIER OTRA PROVISIÓN DE ESTOS TÉRMINOS DE USO, "
+"NOS RESERVAMOS EL DERECHO DE, EN NUESTRA SOLE DISCRECIÓN Y\n"
+"                        SIN AVISO NI RESPONSABILIDAD, DENEGAR EL ACCESO Y EL "
+"USO DEL SITIO (INCLUYENDO BLOQUEAR CIERTAS IP\n"
+"                        DIRECCIONES), A CUALQUIER PERSONA POR CUALQUIER "
+"RAZÓN O POR NINGUNA RAZÓN, INCLUYENDO SIN LIMITACIÓN POR\n"
+"                        INCUMPLIMIENTO DE CUALQUIER REPRESENTACIÓN, "
+"GARANTÍA, O COVENANT CONTENIDO EN ESTOS TÉRMINOS DE USO O DE CUALQUIER\n"
+"                        LEY O REGULACIÓN APLICABLE. PODEMOS TERMINAR SU USO O "
+"PARTICIPACIÓN EN EL SITIO O ELIMINAR\n"
+"                        SU CUENTA Y CUALQUIER CONTENIDO O INFORMACIÓN QUE USTED "
+"PUBLICÓ EN CUALQUIER MOMENTO, SIN AVISO, EN\n"
+"                        NUESTRA SOLE DISCRECIÓN.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:592
+#: templates/legal/terms_and_conditions.html:590
 msgid ""
 "\n"
 "                        If we terminate or suspend your account for any "
@@ -3314,8 +3938,20 @@ msgid ""
 "civil, criminal, and injunctive redress.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Si terminamos o suspendemos su cuenta por cualquier "
+"razón establecida en esta Sección 14, usted está\n"
+"                        prohibido de registrarse y crear una nueva cuenta "
+"bajo su nombre, un nombre falso o prestado,\n"
+"                        o el nombre de cualquier tercero, incluso si usted "
+"puede estar actuando en nombre del tercero. En\n"
+"                        adición a terminar o suspender su cuenta, nos "
+"reservamos el derecho de tomar las medidas legales\n"
+"                        apropiadas, incluyendo sin limitación el perseguir "
+"la reparación civil, criminal, e injunctive.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:604
+#: templates/legal/terms_and_conditions.html:602
 msgid ""
 "\n"
 "                        We reserve the right to change, modify, or remove "
@@ -3330,8 +3966,21 @@ msgid ""
 "discontinuance of the Site.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Nos reservamos el derecho de cambiar, modificar o "
+"eliminar el contenido del Sitio en cualquier momento o por\n"
+"                        cualquier razón a nuestra discreción exclusiva sin "
+"previo aviso. Sin embargo, no tenemos ninguna obligación de actualizar "
+"ninguna\n"
+"                        información en nuestro Sitio. También nos "
+"reservamos el derecho de modificar o discontinuar todo o parte del\n"
+"                        Sitio sin previo aviso en cualquier momento. No "
+"seremos responsables de usted o cualquier tercero por cualquier\n"
+"                        modificación, cambio de precio, suspensión o "
+"discontinuación del Sitio.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:613
+#: templates/legal/terms_and_conditions.html:611
 msgid ""
 "\n"
 "                        We cannot guarantee the Site will be available at "
@@ -3352,8 +4001,26 @@ msgid ""
 "releases in connection therewith.\n"
 "                    "
 msgstr ""
+"\n"
+"                        No podemos garantizar que el Sitio estará "
+"disponible en todo momento. Podemos experimentar problemas de hardware,\n"
+"                        software u otros o necesitar realizar mantenimiento "
+"relacionado con el Sitio, lo que resulta en\n"
+"                        interrupciones, retrasos o errores. Nos reservamos "
+"el derecho de cambiar, revisar, actualizar, suspender,\n"
+"                        discontinuar o de otra manera modificar el Sitio en "
+"cualquier momento o por cualquier razón sin previo aviso a usted.\n"
+"                        Usted acepta que no tenemos ninguna responsabilidad "
+"por cualquier pérdida, daño o inconveniente causado\n"
+"                        por su incapacidad de acceder o utilizar el Sitio "
+"durante cualquier tiempo de inactividad o discontinuación del Sitio.\n"
+"                        Nada en estos Términos de Uso se interpretará como "
+"obligarnos a mantener y apoyar el\n"
+"                        Sitio o para suministrar correcciones, actualizaciones "
+"o lanzamientos en conexión con el mismo.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:628
+#: templates/legal/terms_and_conditions.html:626
 msgid ""
 "\n"
 "                        These conditions are governed by and interpreted "
@@ -3373,12 +4040,29 @@ msgid ""
 "                        in which you reside.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Estas condiciones se rigen por y se interpretan de "
+"acuerdo con las leyes de los Estados Unidos, y el uso de\n"
+"                        la Convención de las Naciones Unidas de Contratos "
+"para la Venta Internacional de Mercaderías se excluye expresamente.\n"
+"                        Si su residencia habitual está en la UE, y usted es "
+"un consumidor, además usted posee la protección\n"
+"                        proporcionada por usted por disposiciones "
+"obligatorias de la ley de su país de\n"
+"                        residencia. crueltouch.com y usted mismo aceptan "
+"someterse a la jurisdicción no exclusiva\n"
+"                        de los tribunales de Florida, lo que significa que "
+"usted puede hacer una reclamación para defender\n"
+"                        sus derechos de protección al consumidor en relación "
+"con estos Términos de Uso en los Estados Unidos, o en el país de la UE\n"
+"                        en el que reside.\n"
+"                    "
+
+#: templates/legal/terms_and_conditions.html:641
+msgid "Informal Negotiations"
+msgstr "Negociaciones Informales"
 
 #: templates/legal/terms_and_conditions.html:643
-msgid "Informal Negotiations"
-msgstr ""
-
-#: templates/legal/terms_and_conditions.html:645
 msgid ""
 "\n"
 "                            To expedite resolution and control the cost of "
@@ -3395,14 +4079,26 @@ msgid ""
 "the other Party.\n"
 "                        "
 msgstr ""
+"\n"
+"                            Para agilizar la resolución y controlar el costo "
+"de cualquier disputa, controversia o reclamo relacionado con\n"
+"                            estos Términos de Uso (cada uno una \"Disputa\" y "
+"colectivamente, las \"Disputas\") presentadas por usted o nosotros\n"
+"                            (individualmente, una \"Parte\" y colectivamente, "
+"las \"Partes\"), las Partes acuerdan primero\n"
+"                            intentar negociar cualquier Disputa (excepto "
+"esas Disputas expresamente previstas a continuación) de forma informal\n"
+"                            durante al menos treinta (30) días antes de "
+"iniciar la arbitraje. Tales negociaciones informales\n"
+"                            comienzan con aviso escrito de una Parte a la "
+"otra Parte.\n"
+"                        "
+
+#: templates/legal/terms_and_conditions.html:654
+msgid "Binding Arbitration"
+msgstr "Arbitraje vinculante"
 
 #: templates/legal/terms_and_conditions.html:656
-#, fuzzy
-#| msgid "Booking Confirmation"
-msgid "Binding Arbitration"
-msgstr "Confirmación de reserva"
-
-#: templates/legal/terms_and_conditions.html:658
 msgid ""
 "\n"
 "                            Any dispute arising from the relationships "
@@ -3421,14 +4117,27 @@ msgid ""
 "substantive law shall be the law of USA.\n"
 "                        "
 msgstr ""
+"\n"
+"                            Cualquier disputa que surja de las relaciones "
+"entre las Partes de este contrato se determinará\n"
+"                            por un árbitro que será elegido de acuerdo con "
+"las Reglas de Arbitraje y Arbitraje Interno de la Corte Europea de\n"
+"                            Arbitraje que es parte del Centro Europeo de "
+"Arbitraje con sede en Estrasburgo, y que están en vigor en el momento en "
+"que\n"
+"                            la solicitud de arbitraje se presenta, y de la "
+"adopción de esta cláusula constituye\n"
+"                            aceptación. El lugar del arbitraje será Niza, "
+"Francia. El idioma de los procedimientos\n"
+"                            será el inglés. Las reglas aplicables de "
+"derecho sustantivo serán la ley de los Estados Unidos.\n"
+"                        "
+
+#: templates/legal/terms_and_conditions.html:668
+msgid "Restrictions"
+msgstr "Restricciones"
 
 #: templates/legal/terms_and_conditions.html:670
-#, fuzzy
-#| msgid "Registration"
-msgid "Restrictions"
-msgstr "Registro"
-
-#: templates/legal/terms_and_conditions.html:672
 msgid ""
 "\n"
 "                            The Parties agree that any arbitration shall be "
@@ -3445,12 +4154,26 @@ msgid ""
 "                            the general public or any other persons.\n"
 "                        "
 msgstr ""
+"\n"
+"                            Las Partes acuerdan que cualquier arbitraje se "
+"limitará a la Disputa entre las Partes\n"
+"                            individualmente. En la medida máxima permitida "
+"por la ley, (a) ningún arbitraje se unirá con\n"
+"                            cualquier\n"
+"                            otro procedimiento; (b) no hay derecho o "
+"autoridad para que cualquier Disputa se arbitre en una\n"
+"                            base de acción colectiva o para utilizar "
+"procedimientos de acción colectiva; y (c) no hay derecho o\n"
+"                            autoridad para que cualquier Disputa se presente "
+"en una capacidad supuestamente representativa en nombre de\n"
+"                            el público en general o cualquier otra persona.\n"
+"                        "
+
+#: templates/legal/terms_and_conditions.html:682
+msgid "Exceptions to Informal Negotiations and Arbitration"
+msgstr "Excepciones a las negociaciones informales y arbitraje"
 
 #: templates/legal/terms_and_conditions.html:684
-msgid "Exceptions to Informal Negotiations and Arbitration"
-msgstr ""
-
-#: templates/legal/terms_and_conditions.html:686
 msgid ""
 "\n"
 "                            The Parties agree that the following Disputes "
@@ -3478,8 +4201,33 @@ msgid ""
 "jurisdiction of that court.\n"
 "                        "
 msgstr ""
+"\n"
+"                            Las Partes acuerdan que las siguientes "
+"Disputas no están sujetas a las disposiciones anteriores\n"
+"                            concernientes\n"
+"                            a las negociaciones informales y arbitra "
+"vinculante: (a) cualquier Disputa que busca hacer cumplir o\n"
+"                            proteger,\n"
+"                            o en relación con la validez de, cualquier "
+"derecho de propiedad intelectual de una Parte; (b) cualquier\n"
+"                            Disputa relacionada con, o que surja de, "
+"allegaciones de robo, piratería, invasión de la privacidad o\n"
+"                            uso no autorizado; y (c) cualquier reclamo por "
+"medios de protección. Si esta disposición se encuentra para ser\n"
+"                            ilegal o no ejecutable, entonces ninguna Parte "
+"elegirá arbitrar cualquier Disputa que caiga\n"
+"                            dentro\n"
+"                            de esa parte de esta disposición que se "
+"encuentra para ser ilegal o no ejecutable y tal Disputa debe\n"
+"                            ser\n"
+"                            decidida por un tribunal competente dentro de "
+"los tribunales enumerados para la jurisdicción\n"
+"                            anterior,\n"
+"                            y las Partes acuerdan someterse a la jurisdicción "
+"personal de ese tribunal.\n"
+"                        "
 
-#: templates/legal/terms_and_conditions.html:708
+#: templates/legal/terms_and_conditions.html:706
 msgid ""
 "\n"
 "                        There may be information on the Site that contains "
@@ -3492,8 +4240,18 @@ msgid ""
 "prior notice.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Puede haber información en el Sitio que contiene "
+"errores tipográficos, inexactitudes o\n"
+"                        omisiones, incluyendo descripciones, precios, "
+"disponibilidad y diversas otras informaciones. Nosotros\n"
+"                        nos reservamos el derecho de corregir cualquier "
+"error, inexactitud o omisión y de cambiar o actualizar\n"
+"                        la información en el Sitio en cualquier momento, sin "
+"previo aviso.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:719
+#: templates/legal/terms_and_conditions.html:717
 msgid ""
 "\n"
 "                        THE SITE IS PROVIDED ON AN AS-IS AND AS-AVAILABLE "
@@ -3539,8 +4297,51 @@ msgid ""
 "                        WHERE APPROPRIATE.\n"
 "                    "
 msgstr ""
+"\n"
+"                        EL SITIO SE PROPORCIONA TAL CUAL Y SEGÚN ESTÉ DISPONIBLE"
+". USTED ACEPTA QUE SU USO DEL SITIO Y DE "
+"                        NUESTROS SERVICIOS SERÁ POR SU CUENTA Y RIESGO."
+" EN LA MEDIDA EN QUE LO PERMITA LA LEY, RENUNCIAMOS A TODA RESPONSABILIDAD."
+"                        GARANTÍAS, EXPRESAS O IMPLÍCITAS, EN RELACIÓN CON "
+" EL SITIO Y SU USO DEL MISMO, INCLUYENDO,\n"
+"                        SIN LIMITACIÓN, LAS GARANTÍAS IMPLÍCITAS DE "
+"COMERCIABILIDAD, IDONEIDAD PARA UN PROPÓSITO PARTICULAR,\n"
+"                        Y NO INFRACCIÓN. NO OFRECEMOS NINGUNA GARANTÍA NI "
+"REPRESENTACIONES SOBRE LA PRECISIÓN O LA EXACTITUD"
+"                        INTEGRIDAD DEL CONTENIDO DEL SITIO O EL CONTENIDO DE "
+"CUALQUIER SITIO WEB ENLAZADO AL SITIO Y NOSOTROS QUEREMOS"
+"                        NO ASUMIREMOS RESPONSABILIDAD ALGUNA POR (1) "
+"ERRORES, ERRORES O INEXACTITUDES DE CONTENIDO"
+"                        Y MATERIALES, (2) LESIONES PERSONALES O DAÑOS A LA PROPIEDAD "
+"daños materiales, de cualquier naturaleza, resultantes de la utilización del sitio web."
+"                        SU ACCESO Y USO DEL SITIO, (3) CUALQUIER "
+"ACCESO NO AUTORIZADO O USO DE NUESTROS SERVIDORES DE SEGURIDAD"
+"                        Y/O CUALQUIER INFORMACIÓN PERSONAL Y/O "
+"INFORMACIÓN FINANCIERA ALMACENADA EN ELLOS, (4) CUALQUIER "
+"                        INTERRUPCIÓN O CESE DE LA TRANSMISIÓN HACIA O DESDE "
+" EL SITIO, (5) CUALQUIER BUGS, VIRUS, TROJAN"
+"                        CABALLOS, O SIMILARES QUE PUEDAN SER TRANSMITIDOS A O "
+" A TRAVÉS DEL SITIO POR TERCEROS, Y/O"
+"(6) CUALQUIER ERROR U OMISIÓN EN CUALQUIER CONTENIDO Y "
+"MATERIALES O POR CUALQUIER PÉRDIDA O DAÑO DE CUALQUIER TIPO."
+"                        INCURRIDOS COMO RESULTADO DEL USO DE CUALQUIER CONTENIDO "
+"PUBLICADOS, TRANSMITIDOS O PUESTOS A DISPOSICIÓN DE CUALQUIER OTRA FORMA."
+"                        A TRAVÉS DEL SITIO. NO ASEGURAMOS, AVALAMOS, GARANTIZAMOS, "
+"O ASUMIR RESPONSABILIDAD POR CUALQUIER PRODUCTO O "
+"                        SERVICIO ANUNCIADO U OFRECIDO POR UN TERCERO "
+" A TRAVÉS DEL SITIO, DE CUALQUIER SITIO WEB HIPERVINCULADO O DE CUALQUIER SITIO WEB HIPERVINCULADO."
+"                        SITIO WEB O APLICACIÓN MÓVIL QUE APAREZCA EN CUALQUIER BANNER "
+" U OTRO TIPO DE PUBLICIDAD, Y NO SEREMOS ASOCIADOS "
+"                        PARTE NI SEREMOS RESPONSABLES EN MODO ALGUNO DE LA SUPERVISIÓN "
+" DE CUALQUIER TRANSACCIÓN ENTRE USTED Y CUALQUIER"
+"                        TERCEROS PROVEEDORES DE PRODUCTOS O SERVICIOS. COMO "
+"con la compra de un producto o servicio"
+"                        A TRAVÉS DE CUALQUIER MEDIO O EN CUALQUIER ENTORNO, USTED DEBE "
+"UTILIZAR SU MEJOR JUICIO Y PONER PRECAUCIÓN"
+"                        DONDE SEA APROPIADO.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:747
+#: templates/legal/terms_and_conditions.html:745
 msgid ""
 "\n"
 "                        IN NO EVENT WILL WE, BE LIABLE TO YOU OR ANY THIRD "
@@ -3553,8 +4354,18 @@ msgid ""
 "POSSIBILITY OF SUCH DAMAGES.\n"
 "                    "
 msgstr ""
+"\n"
+"                        EN NINGÚN CASO NOSOTROS, SEREMOS RESPONSABLES DE USTED "
+"O DE CUALQUIER TERCERO\n"
+"                        POR CUALQUIER DAÑO DIRECTO, INDIRECTO, "
+"CONSECUENCIAL, EJEMPLAR, INCIDENTAL, ESPECIAL O PUNITIVO,\n"
+"                        INCLUYENDO PÉRDIDA DE BENEFICIOS, PÉRDIDA DE "
+"INGRESOS, PÉRDIDA DE DATOS, O OTROS DAÑOS QUE SURJAN DE SU USO DE\n"
+"                        EL SITIO, INCLUSO SI HEMOS SIDO INFORMADOS DE LA "
+"POSIBILIDAD DE TAL DAÑO.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:758
+#: templates/legal/terms_and_conditions.html:756
 msgid ""
 "\n"
 "                        You agree to defend, indemnify, and hold us "
@@ -3583,8 +4394,32 @@ msgid ""
 "of it.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Usted acepta defender, indemnizar y mantenernos "
+"libres de responsabilidad, incluidas nuestras subsidiarias, afiliadas,\n"
+"                        y todos nuestros respectivos directores, agentes, "
+"socios y empleados, de y contra cualquier pérdida,\n"
+"                        daño, responsabilidad, reclamo o demanda, incluidos "
+"los honorarios razonables de los abogados y los gastos, hechos\n"
+"                        por cualquier tercero debido a o como resultado de: "
+"(1) el uso del sitio; (2) incumplimiento de estos términos de\n"
+"                        uso; (3) cualquier incumplimiento de sus "
+"representaciones y garantías establecidas en estos términos de uso;\n"
+"                        (4) su violación de los derechos de un tercero, "
+"incluyendo, pero sin limitarse a los derechos de propiedad intelectual;\n"
+"                        o (5) cualquier acto dañino hacia cualquier otro "
+"usuario del sitio con quien se conectó a través del sitio. Sin perjuicio "
+"de lo anterior, nos reservamos el derecho, a su costa,\n"
+"                        de asumir la defensa exclusiva y el control de cualquier "
+"asunto para el que se le requiere\n"
+"                        indemnizar a nosotros, y usted acepta cooperar, a su "
+"costo, con nuestra defensa de tales reclamos. Nosotros\n"
+"                        usaremos todos los esfuerzos razonables para notificarle "
+"de cualquier tal reclamo, acción o procedimiento que es\n"
+"                        sujeto a esta indemnización al enterarnos de ello.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:777
+#: templates/legal/terms_and_conditions.html:775
 msgid ""
 "\n"
 "                        We will maintain certain data that you transmit to "
@@ -3601,8 +4436,23 @@ msgid ""
 "corruption of such data.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Mantendremos ciertos datos que transmita al sitio "
+"con el fin de gestionar el\n"
+"                        rendimiento del sitio, así como datos relacionados "
+"con su uso del sitio. Aunque realizamos\n"
+"                        copias de seguridad regulares de los datos, usted es "
+"responsable exclusivamente de todos los datos que transmita o\n"
+"                        que se refieran a cualquier actividad que haya "
+"realizado utilizando el sitio. Usted acepta que no tendremos\n"
+"                        responsabilidad alguna hacia usted por cualquier "
+"pérdida o corrupción de tales datos, y renuncia expresamente a cualquier "
+"derecho\n"
+"                        de acción contra nosotros que surja de cualquier tal "
+"pérdida o corrupción de tales datos.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:790
+#: templates/legal/terms_and_conditions.html:788
 msgid ""
 "\n"
 "                        Visiting the Site, sending us emails, and completing "
@@ -3627,8 +4477,30 @@ msgid ""
 "by any means other than electronic means.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Visitar el sitio, enviarnos correos electrónicos y "
+"completar formularios en línea constituyen comunicaciones electrónicas.\n"
+"                        Usted consiente en recibir comunicaciones electrónicas, "
+"y acepta que todos los\n"
+"                        acuerdos, avisos, divulgaciones y otras comunicaciones "
+"que le proporcionemos\n"
+"                        electrónicamente, por correo electrónico y en el "
+"sitio, satisfacen cualquier requisito legal que tal\n"
+"                        comunicación sea por escrito. USTED ACEPTA EXPRESAMENTE "
+"EL USO DE FIRMAS ELECTRÓNICAS, CONTRATOS,\n"
+"                        ÓRDENES Y OTROS REGISTROS, Y LA ENTREGA ELECTRÓNICA "
+"DE AVISOS, POLÍTICAS Y REGISTROS DE\n"
+"                        TRANSACCIONES INICIADAS O COMPLETADAS POR NOSOTROS O "
+"POR MEDIO DEL SITIO. Usted renuncia expresamente a cualquier derecho o\n"
+"                        requisito bajo cualquier ley, reglamento, regla, "
+"ordenanza u otra ley en cualquier\n"
+"                        jurisdicción que requiera una firma original o "
+"entrega o retención de registros no electrónicos,\n"
+"                        o a pagos o la concesión de créditos por cualquier "
+"medio que no sea electrónico.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:807
+#: templates/legal/terms_and_conditions.html:805
 msgid ""
 "\n"
 "                        These Terms of Use and any policies or operating "
@@ -3661,8 +4533,38 @@ msgid ""
 "hereto to execute these Terms of Use.\n"
 "                    "
 msgstr ""
+"\n"
+"                        Estos Términos de Uso y cualquier política o regla "
+"operativa publicada por nosotros en el sitio o en relación con\n"
+"                        el sitio constituyen el acuerdo y entendimiento "
+"completo entre usted y nosotros. Nuestra falta de\n"
+"                        ejercicio o aplicación de cualquier derecho o "
+"provisión de estos Términos de Uso no operará como una renuncia\n"
+"                        de dicho derecho o disposición. Estos Términos de "
+"Uso operan en la máxima medida permitida por la ley.\n"
+"                        Podemos asignar cualquier o todas nuestras "
+"derechos y obligaciones a otros en cualquier momento. No seremos\n"
+"                        responsables o responsables por cualquier pérdida, "
+"daño, retraso o falta de acción causada por cualquier causa más allá\n"
+"                        de nuestro control razonable. Si alguna disposición "
+"o parte de una disposición de estos Términos de Uso es\n"
+"                        determinada ilegal, nula o no ejecutable, dicha "
+"disposición o parte de la disposición se\n"
+"                        considera separable de estos Términos de Uso y no "
+"afecta la validez y ejecución de\n"
+"                        cualquier disposición restante. No existe sociedad "
+"en común, asociación, empleo o relación de agencia\n"
+"                        creada entre usted y nosotros como resultado de "
+"estos Términos de Uso o uso del sitio.\n"
+"                        Usted acepta que estos Términos de Uso no se "
+"interpretarán en nuestra contra por virtud de haber redactado\n"
+"                        ellos. Usted renuncia expresamente a cualquier "
+"defensa que pueda tener basada en el formato electrónico de estos\n"
+"                        Términos de Uso y la falta de firma por las partes "
+"interesadas para ejecutar estos Términos de Uso.\n"
+"                    "
 
-#: templates/legal/terms_and_conditions.html:828
+#: templates/legal/terms_and_conditions.html:826
 msgid ""
 "\n"
 "                        In order to resolve a complaint regarding the Site "
@@ -3670,6 +4572,11 @@ msgid ""
 "                        use of the Site, please contact us at:\n"
 "                    "
 msgstr ""
+"\n"
+"                        Para resolver una queja con respecto al sitio o "
+"para recibir más información sobre\n"
+"                        el uso del sitio, comuníquese con nosotros en:\n"
+"                    "
 
 #: templates/portfolio/index_portfolio.html:13
 msgid "All"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-29 01:58+0100\n"
+"POT-Creation-Date: 2022-12-19 01:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: administration/forms.py:13 client/form.py:53
+#: templates/client/login_registration/log_as_owner.html:33
+#: templates/client/login_registration/login.html:32
+msgid "Password"
+msgstr "Mot de passe"
+
+#: administration/forms.py:19
+msgid "Repeat password"
+msgstr "Répéter mot de passe"
 
 #: administration/models.py:12
 msgid "The date"
@@ -46,63 +56,64 @@ msgstr "Permissions pour les emails"
 msgid "Photo"
 msgstr "Photo"
 
-#: administration/models.py:35 administration/models.py:64
+#: administration/models.py:35 administration/models.py:68 client/models.py:164
 msgid "Is active"
 msgstr "Est actif"
 
-#: administration/models.py:36 administration/models.py:66
+#: administration/models.py:36 administration/models.py:70
 msgid "Was downloaded"
 msgstr "A été téléchargé"
 
-#: administration/models.py:62
+#: administration/models.py:66 client/models.py:163
 msgid "Photos"
 msgstr "Photos"
 
-#: administration/models.py:63
+#: administration/models.py:67
 msgid "Date"
 msgstr "Date"
 
-#: administration/models.py:65
+#: administration/models.py:69
 msgid "Expiration date"
 msgstr "Date d'expiration"
 
-#: administration/models.py:67
+#: administration/models.py:71
 msgid "Link to download"
 msgstr "Lien de téléchargement"
 
-#: administration/models.py:68
+#: administration/models.py:72
 msgid "ID delivery"
 msgstr "ID de livraison"
 
-#: administration/models.py:69
+#: administration/models.py:73
+#: templates/administration/add/add_client_photos.html:32
 #: templates/administration/add/add_downloadable_file.html:39
 #: templates/administration/list/list_created_link.html:25
-#: templates/administration/list/list_created_link.html:55
+#: templates/administration/list/list_created_link.html:62
 msgid "Client name"
 msgstr "Nom client"
 
-#: administration/models.py:70
+#: administration/models.py:74
 #: templates/administration/add/add_downloadable_file.html:35
 msgid "Client email"
 msgstr "Email client"
 
-#: administration/views.py:189
+#: administration/views.py:193
 msgid "Email sent successfully"
 msgstr "Email envoyé avec succès"
 
-#: administration/views.py:191
+#: administration/views.py:195
 msgid "Email not sent"
 msgstr "Email non envoyé"
 
-#: administration/views.py:193
+#: administration/views.py:197
 msgid "Email already sent"
 msgstr "Email déjà envoyé"
 
-#: administration/views.py:195
+#: administration/views.py:199
 msgid "Session request does not exist"
 msgstr "La demande de reservation n'existe pas"
 
-#: administration/views.py:391
+#: administration/views.py:395
 msgid ""
 "If you want the website to send the link automatically to the client, "
 "please, put the client "
@@ -110,24 +121,51 @@ msgstr ""
 "Si vous voulez que le site envoie le lien automatiquement au client, "
 "veuillez mettre le client "
 
-#: administration/views.py:395
+#: administration/views.py:399 administration/views.py:501
 msgid "Create downloadable file"
 msgstr "Créer un fichier téléchargeable"
 
-#: administration/views.py:408
+#: administration/views.py:412
 msgid "List of link to download images"
 msgstr "Liste des liens de téléchargement des images"
+
+#: administration/views.py:555
+msgid "Send photos to client"
+msgstr "Envoie photo à client"
+
+#: administration/views.py:581
+msgid "Create new client"
+msgstr "Ajout client"
+
+#: administration/views.py:596
+msgid "You can't use your old password"
+msgstr "Vous ne pouvez pas utiliser votre ancien mot de passe"
+
+#: administration/views.py:604
+msgid "This user no longer exists !"
+msgstr "Cet utilisateur n'existe plus !"
+
+#: administration/views.py:623 administration/views.py:634
+#: templates/administration/list/list_album_client.html:5
+#: templates/administration/list/list_album_client.html:8
+#: templates/administration/list/list_album_client.html:11
+msgid "View chosen photos"
+msgstr "Voir photos choisies"
+
+#: administration/views.py:638
+msgid "Total photos sent"
+msgstr "Total photos envoyé"
 
 #: client/form.py:10
 msgid "--- Select a package ---"
 msgstr "--- Sélectionnez un forfait ---"
 
-#: client/form.py:11 client/models.py:243
+#: client/form.py:11 client/models.py:339
 #: templates/client/booking_and_promotions/promotions.html:61
 msgid "7 photos"
 msgstr "7 photos"
 
-#: client/form.py:12 client/models.py:245
+#: client/form.py:12 client/models.py:341
 #: templates/client/booking_and_promotions/promotions.html:62
 msgid "15 photos"
 msgstr "15 photos"
@@ -136,7 +174,7 @@ msgstr "15 photos"
 msgid "30 photos + mini video"
 msgstr "30 photos + mini vidéo"
 
-#: client/form.py:14 client/models.py:241
+#: client/form.py:14 client/models.py:337
 #: templates/client/booking_and_promotions/promotions.html:60
 msgid "3 photos"
 msgstr "3 photos"
@@ -188,11 +226,6 @@ msgstr "Prénom"
 msgid "Email address"
 msgstr "Adresse email"
 
-#: client/form.py:53 templates/client/login_registration/log_as_owner.html:33
-#: templates/client/login_registration/login.html:32
-msgid "Password"
-msgstr "Mot de passe"
-
 #: client/form.py:58
 msgid "Confirm password"
 msgstr "Confirmation mot de passe"
@@ -201,11 +234,11 @@ msgstr "Confirmation mot de passe"
 msgid "Full Name"
 msgstr "Nom complet"
 
-#: client/form.py:64 static_pages_and_forms/models.py:12
+#: client/form.py:64 static_pages_and_forms/models.py:15
 #: templates/administration/list/list_contact_forms.html:26
 #: templates/administration/list/list_contact_forms.html:59
 #: templates/administration/list/list_created_link.html:26
-#: templates/administration/list/list_created_link.html:56
+#: templates/administration/list/list_created_link.html:63
 #: templates/administration/list/list_requested_session.html:41
 #: templates/administration/list/list_requested_session.html:117
 #: templates/administration/list/list_user.html:27
@@ -245,7 +278,7 @@ msgstr "Date souhaitée"
 msgid "Address"
 msgstr "Adresse"
 
-#: client/form.py:78 static_pages_and_forms/models.py:11
+#: client/form.py:78 static_pages_and_forms/models.py:14
 #: templates/administration/list/list_contact_forms.html:25
 #: templates/administration/list/list_contact_forms.html:58
 #: templates/client/booking_and_promotions/bookme.html:136
@@ -261,7 +294,7 @@ msgid "No spaces, letters or special characters, only 10 digits..."
 msgstr ""
 "Pas d'espaces, de lettres ou de caractères spéciaux, seulement 10 chiffres..."
 
-#: client/form.py:113 client/models.py:146
+#: client/form.py:113 client/models.py:242
 msgid "Does not have to be specific, just the city and the state"
 msgstr "Pas besoin d'être spécifique, juste la ville et l'état"
 
@@ -273,7 +306,7 @@ msgstr "Remplissez tous les champs"
 msgid "Sorry, we only offer this package in Orlando"
 msgstr "Désolé, nous offrons seulement ce forfait à Orlando"
 
-#: client/models.py:19 client/models.py:142
+#: client/models.py:24 client/models.py:238
 msgid ""
 "Phone number must not contain spaces, letters, parentheses or dashes. It "
 "must contain 10 digits."
@@ -281,57 +314,61 @@ msgstr ""
 "Le numéro de téléphone ne doit pas contenir d'espaces, de lettres, de "
 "parenthèses ou de tirets. Il doit contenir 10 chiffres."
 
-#: client/models.py:27
+#: client/models.py:32
 msgid "You must provide an email address"
 msgstr "Vous devez fournir une adresse email"
 
-#: client/models.py:29
+#: client/models.py:34
 msgid "User must have a firstname"
 msgstr "Un utilisateur doit avoir un prénom"
 
-#: client/models.py:51 client/models.py:138
+#: client/models.py:56 client/models.py:234
 msgid "A valid email address, please"
 msgstr "Une adresse email valide, s'il vous plaît"
 
-#: client/models.py:148 client/models.py:149 client/models.py:196
+#: client/models.py:165
+msgid "Was viewed"
+msgstr "Vu"
+
+#: client/models.py:244 client/models.py:245 client/models.py:292
 msgid "pending"
 msgstr "en attente"
 
-#: client/models.py:166 client/models.py:325
+#: client/models.py:262 client/models.py:436
 msgid "Thank you for your booking!"
 msgstr "Merci pour votre réservation !"
 
-#: client/models.py:176 client/models.py:312
+#: client/models.py:272 client/models.py:423
 msgid "New booking request received"
 msgstr "Nouvelle demande de réservation reçue"
 
-#: client/models.py:181
+#: client/models.py:277
 msgid "Yes"
 msgstr "Oui"
 
-#: client/models.py:183
+#: client/models.py:279
 msgid "No"
 msgstr "Non"
 
-#: client/models.py:198
+#: client/models.py:294
 msgid "Your booking request status has changed!"
 msgstr "Votre demande de réservation a changé de statut !"
 
-#: client/models.py:221 client/models.py:227 client/models.py:233
-#: client/models.py:249
+#: client/models.py:317 client/models.py:323 client/models.py:329
+#: client/models.py:345
 msgid "No data"
 msgstr "Pas de données"
 
-#: client/models.py:247
+#: client/models.py:343
 #: templates/client/booking_and_promotions/promotions.html:63
 msgid "30 photos"
 msgstr "30 photos"
 
-#: client/models.py:289
+#: client/models.py:385
 msgid "Contact us for more information"
 msgstr "Contactez-nous pour plus d'informations"
 
-#: client/views.py:285
+#: client/views.py:255
 msgid ""
 "Thank you, your booking has been registered successfully, you will receive "
 "an email shortly!"
@@ -363,27 +400,27 @@ msgstr "C'est quoi le sujet de votre message... ?"
 msgid "I'm listening... !"
 msgstr "J'écoute... !"
 
-#: static_pages_and_forms/models.py:13
+#: static_pages_and_forms/models.py:16
 #: templates/administration/list/list_contact_forms.html:27
 #: templates/administration/list/list_contact_forms.html:60
 msgid "Subject"
 msgstr "Sujet"
 
-#: static_pages_and_forms/models.py:14
+#: static_pages_and_forms/models.py:17
 #: templates/administration/list/list_contact_forms.html:28
 #: templates/administration/list/list_contact_forms.html:61
 msgid "Message"
 msgstr "Message"
 
-#: static_pages_and_forms/models.py:28
+#: static_pages_and_forms/models.py:35
 msgid "Your message has been received"
 msgstr "Votre message a été reçu"
 
-#: static_pages_and_forms/models.py:30
+#: static_pages_and_forms/models.py:37
 msgid "Thank you for reaching out to us"
 msgstr "Merci de nous avoir contacté"
 
-#: static_pages_and_forms/models.py:31
+#: static_pages_and_forms/models.py:38
 #, python-brace-format
 msgid ""
 "Hi {instance.full_name}, thank you for reaching out to us. We will get back "
@@ -392,9 +429,17 @@ msgstr ""
 "Bonjour {instance.full_name}, merci de nous avoir contacté. Nous vous "
 "recontacterons dès que possible. "
 
-#: static_pages_and_forms/models.py:33
+#: static_pages_and_forms/models.py:40
 msgid "Have a great day! CruelTouch Team"
 msgstr "Bonne journée ! L'équipe CruelTouch"
+
+#: static_pages_and_forms/models.py:43
+msgid "Awesome!"
+msgstr "Cool"
+
+#: static_pages_and_forms/models.py:45
+msgid "Ok"
+msgstr "Ok"
 
 #: static_pages_and_forms/views.py:19
 msgid "Thank you for your message, but it didn't went through !"
@@ -423,15 +468,13 @@ msgstr "Page Conditions générales d'utilisation"
 msgid "Create new album"
 msgstr "Créer un nouvel album"
 
+#: templates/administration/add/add_client_photos.html:30
 #: templates/administration/add/add_downloadable_file.html:30
 #: templates/administration/add/add_photos.html:39
 msgid "Upload image"
 msgstr "Envoyer une image"
 
-#: templates/administration/add/add_downloadable_file.html:42
-msgid "Put the client name for reference"
-msgstr "Renseignez le nom du client comme référence"
-
+#: templates/administration/add/add_client_photos.html:60
 #: templates/administration/add/add_downloadable_file.html:59
 #: templates/administration/add/add_photos.html:52
 #: templates/administration/list/list_requested_session.html:94
@@ -441,11 +484,25 @@ msgstr "Renseignez le nom du client comme référence"
 msgid "Send"
 msgstr "Envoyer"
 
+#: templates/administration/add/add_client_photos.html:62
 #: templates/administration/add/add_downloadable_file.html:61
+#: templates/administration/add/add_new_client.html:51
 #: templates/administration/add/add_photos.html:54
 #: templates/administration/edit/update_requested_session.html:17
 msgid "Cancel"
 msgstr "Annuler"
+
+#: templates/administration/add/add_downloadable_file.html:42
+msgid "Put the client name for reference"
+msgstr "Renseignez le nom du client comme référence"
+
+#: templates/administration/add/add_new_client.html:30
+msgid "New client"
+msgstr "Nouveau client"
+
+#: templates/administration/add/add_new_client.html:49
+msgid "Create"
+msgstr "Créer"
 
 #: templates/administration/add/add_photos.html:16
 msgid "Total pictures uploaded"
@@ -491,38 +548,52 @@ msgid "Portfolio"
 msgstr "Portfolio"
 
 #: templates/administration/base.html:268
-msgid "Send photo via link"
-msgstr "Envoie photo via lien"
+msgid "Send photo"
+msgstr "Envoyer photo"
 
-#: templates/administration/base.html:278
-msgid "Create link"
-msgstr "Créer lien"
+#: templates/administration/base.html:279
+msgid "To choose from"
+msgstr "À choisir"
 
-#: templates/administration/base.html:285
+#: templates/administration/base.html:286
+msgid "View all chosen"
+msgstr "Voir photos choisies"
+
+#: templates/administration/base.html:293
+msgid "Final via link"
+msgstr "Final via lien"
+
+#: templates/administration/base.html:300
 msgid "View all links"
 msgstr "Voir tous les liens"
 
-#: templates/administration/base.html:294
+#: templates/administration/base.html:307
+msgid "Final via account"
+msgstr "Final via compte"
+
+#: templates/administration/base.html:316
 msgid "Client management"
 msgstr "Gestion clients"
 
-#: templates/administration/base.html:302
+#: templates/administration/base.html:324
 msgid "Message list"
 msgstr "Liste messages"
 
-#: templates/administration/base.html:310
+#: templates/administration/base.html:332
 msgid "Help"
 msgstr "Aide"
 
-#: templates/administration/base.html:318
+#: templates/administration/base.html:340
 msgid "Settings"
 msgstr "Paramètres"
 
-#: templates/administration/base.html:326
+#: templates/administration/base.html:348
+#: templates/administration/password/has_to_change_password.html:64
+#: templates/client/client_view/base.html:12
 msgid "Change password"
 msgstr "Changer mot de passe"
 
-#: templates/administration/base.html:334
+#: templates/administration/base.html:356
 msgid "Sign out"
 msgstr "Déconnexion"
 
@@ -713,6 +784,25 @@ msgstr "Tous droits réservés"
 msgid "Made with love by"
 msgstr "Fait avec amour par"
 
+#: templates/administration/list/list_album_client.html:19
+msgid "List of chosen photos"
+msgstr "Liste photos choisies"
+
+#: templates/administration/list/list_album_client.html:26
+#: templates/administration/list/list_album_client.html:64
+msgid "Client"
+msgstr "Client"
+
+#: templates/administration/list/list_album_client.html:27
+#: templates/administration/list/list_album_client.html:65
+msgid "photos"
+msgstr "photos"
+
+#: templates/administration/list/list_album_client.html:28
+#: templates/administration/list/list_album_client.html:66
+msgid "liked"
+msgstr "aimé"
+
 #: templates/administration/list/list_contact_forms.html:4
 #: templates/administration/list/list_contact_forms.html:7
 #: templates/administration/list/list_contact_forms.html:10
@@ -726,17 +816,18 @@ msgid "Created links"
 msgstr "Liens créés"
 
 #: templates/administration/list/list_created_link.html:27
-#: templates/administration/list/list_created_link.html:57
-#, fuzzy
-#| msgid "Link"
-#| msgid_plural "Links"
+#: templates/administration/list/list_created_link.html:64
 msgid "Link"
 msgstr "Lien"
 
 #: templates/administration/list/list_created_link.html:28
-#: templates/administration/list/list_created_link.html:58
+#: templates/administration/list/list_created_link.html:65
 msgid "Downloaded"
 msgstr "Téléchargé"
+
+#: templates/administration/list/list_created_link.html:54
+msgid "Delete"
+msgstr "Supprimer"
 
 #: templates/administration/list/list_requested_session.html:5
 #: templates/administration/list/list_requested_session.html:8
@@ -826,6 +917,92 @@ msgstr "Derniers 10 photoshoot demandés"
 #: templates/administration/list/list_user.html:58
 msgid "Start date"
 msgstr "Date de début"
+
+#: templates/administration/password/forgot-password.html:8
+#: templates/administration/password/has_to_change_password.html:8
+msgid "First Connection"
+msgstr "Première connexion"
+
+#: templates/administration/password/forgot-password.html:35
+msgid ""
+"Please enter the email address you used to register and we will send you a "
+"link to reset your password"
+msgstr ""
+"Veuillez entrer l'adresse email que vous avez utilisé pour vous inscrire et "
+"nous vous enverrons un lien pour réinitialiser votre mot de passe"
+
+#: templates/administration/password/forgot-password.html:52
+msgid "Request new password"
+msgstr "Demande de nouveau mot de passe"
+
+#: templates/administration/password/forgot-password.html:58
+#: templates/administration/password/reset_password_done.html:18
+#: templates/client/login_registration/log_as_owner.html:4
+#: templates/client/login_registration/log_as_owner.html:38
+#: templates/client/login_registration/login.html:4
+#: templates/client/login_registration/login.html:40
+#: templates/client/login_registration/register.html:77
+msgid "Login"
+msgstr "Se connecter"
+
+#: templates/administration/password/forgot-password.html:61
+msgid "Register a new membership"
+msgstr "S'inscrire"
+
+#: templates/administration/password/has_to_change_password.html:35
+msgid ""
+"You are only one step away from your new password, retrieve your password now"
+msgstr ""
+"Vous êtes à un pas de votre nouveau mot de passe, récupérez-le maintenant"
+
+#: templates/administration/password/reset_password_done.html:11
+msgid "Password reset complete"
+msgstr "Réinitialisation du mot de passe terminée"
+
+#: templates/administration/password/reset_password_done.html:13
+msgid "Your new password has been set. You can log in now."
+msgstr ""
+"Votre nouveau mot de passe a été défini. Vous pouvez maintenant vous "
+"connecter."
+
+#: templates/administration/password/reset_password_sent.html:11
+msgid "Reset password email sent"
+msgstr "Email de réinitialisation du mot de passe envoyé"
+
+#: templates/administration/password/reset_password_sent.html:13
+msgid ""
+"\n"
+"                    We have emailed you instructions on how to set your "
+"password, if an account\n"
+"                    exists with the e-mail address you entered. You should "
+"receive them shortly.\n"
+"                "
+msgstr ""
+"\n"
+"                    Nous vous avons envoyé des instructions sur la façon de "
+"définir votre mot de passe, si un compte\n"
+"                    existe avec l'adresse e-mail que vous avez entrée. Vous "
+"devez les recevoir sous peu.\n"
+"                "
+
+#: templates/administration/password/reset_password_sent.html:19
+msgid ""
+"\n"
+"                    If you do not receive an email, please check that you "
+"have entered the email address\n"
+"                    you registered with and check your spam folder.\n"
+"                "
+msgstr ""
+"\n"
+"                    Si vous ne recevez pas d'email, veuillez vérifier que "
+"vous avez entré l'adresse e-mail\n"
+"                    que vous avez enregistrée et vérifiez votre dossier de "
+"courrier indésirable.\n"
+"                "
+
+#: templates/administration/password/reset_password_sent.html:27
+msgid "Back to homepage"
+msgstr "Retour à la page d'accueil"
 
 #: templates/administration/view/index.html:39
 msgid "Index"
@@ -965,14 +1142,6 @@ msgstr "Florida"
 msgid "book now"
 msgstr "réserver maintenant"
 
-#: templates/client/login_registration/log_as_owner.html:4
-#: templates/client/login_registration/log_as_owner.html:38
-#: templates/client/login_registration/login.html:4
-#: templates/client/login_registration/login.html:37
-#: templates/client/login_registration/register.html:77
-msgid "Login"
-msgstr "Se connecter"
-
 #: templates/client/login_registration/log_as_owner.html:13
 msgid "ADMIN LOGIN"
 msgstr "CONNEXION ADMIN"
@@ -981,11 +1150,15 @@ msgstr "CONNEXION ADMIN"
 msgid "LOGIN"
 msgstr "SE CONNECTER"
 
-#: templates/client/login_registration/login.html:59
+#: templates/client/login_registration/login.html:36
+msgid "Forgot password"
+msgstr "Mot de passe oublié"
+
+#: templates/client/login_registration/login.html:62
 msgid "Don't have an account"
 msgstr "Pas encore inscrit"
 
-#: templates/client/login_registration/login.html:61
+#: templates/client/login_registration/login.html:64
 msgid "Sign Up"
 msgstr "Créer un compte"
 
@@ -1259,7 +1432,7 @@ msgid "Photoshoot"
 msgstr "Photoshoot"
 
 #: templates/legal/privacy_policy.html:17
-#: templates/legal/terms_and_conditions.html:17
+#: templates/legal/terms_and_conditions.html:15
 msgid "Last updated"
 msgstr "Dernière mise à jour"
 
@@ -2190,136 +2363,136 @@ msgstr "Par e-mail :"
 msgid "By visiting this page on our website:"
 msgstr "En visitant cette page sur notre site Web :"
 
-#: templates/legal/terms_and_conditions.html:17
+#: templates/legal/terms_and_conditions.html:15
 msgid "November 23, 2022"
 msgstr "23 novembre 2022"
 
-#: templates/legal/terms_and_conditions.html:23
-#: templates/legal/terms_and_conditions.html:51
+#: templates/legal/terms_and_conditions.html:21
+#: templates/legal/terms_and_conditions.html:49
 msgid "1. AGREEMENT TO TERMS"
 msgstr "1. ACCEPTATION DES CONDITIONS"
 
-#: templates/legal/terms_and_conditions.html:24
-#: templates/legal/terms_and_conditions.html:105
+#: templates/legal/terms_and_conditions.html:22
+#: templates/legal/terms_and_conditions.html:103
 msgid "2. INTELLECTUAL PROPERTY RIGHTS"
 msgstr "2. DROITS DE PROPRIÉTÉ INTELLECTUELLE"
 
-#: templates/legal/terms_and_conditions.html:25
-#: templates/legal/terms_and_conditions.html:131
+#: templates/legal/terms_and_conditions.html:23
+#: templates/legal/terms_and_conditions.html:129
 msgid "3. USER REPRESENTATIONS"
 msgstr "3. REPRÉSENTATIONS DE L'UTILISATEUR"
 
-#: templates/legal/terms_and_conditions.html:26
-#: templates/legal/terms_and_conditions.html:153
+#: templates/legal/terms_and_conditions.html:24
+#: templates/legal/terms_and_conditions.html:151
 msgid "4. USER REGISTRATION"
 msgstr "4. ENREGISTREMENT DE L'UTILISATEUR"
 
-#: templates/legal/terms_and_conditions.html:27
-#: templates/legal/terms_and_conditions.html:164
+#: templates/legal/terms_and_conditions.html:25
+#: templates/legal/terms_and_conditions.html:162
 msgid "5. PROHIBITED ACTIVITIES"
 msgstr "5. ACTIVITÉS INTERDITES"
 
-#: templates/legal/terms_and_conditions.html:28
-#: templates/legal/terms_and_conditions.html:278
+#: templates/legal/terms_and_conditions.html:26
+#: templates/legal/terms_and_conditions.html:276
 msgid "6. USER GENERATED CONTRIBUTIONS"
 msgstr "6. CONTRIBUTIONS GÉNÉRÉES PAR L'UTILISATEUR"
 
-#: templates/legal/terms_and_conditions.html:29
-#: templates/legal/terms_and_conditions.html:381
+#: templates/legal/terms_and_conditions.html:27
+#: templates/legal/terms_and_conditions.html:379
 msgid "7. CONTRIBUTION LICENSE"
 msgstr "7. LICENCE DE CONTRIBUTION"
 
-#: templates/legal/terms_and_conditions.html:30
-#: templates/legal/terms_and_conditions.html:429
+#: templates/legal/terms_and_conditions.html:28
+#: templates/legal/terms_and_conditions.html:427
 msgid "8. SUBMISSIONS"
 msgstr "8. SOUMISSIONS"
 
-#: templates/legal/terms_and_conditions.html:31
-#: templates/legal/terms_and_conditions.html:444
+#: templates/legal/terms_and_conditions.html:29
+#: templates/legal/terms_and_conditions.html:442
 msgid "9. THIRD-PARTY WEBSITE AND CONTENT"
 msgstr "9. SITE WEB ET CONTENU DE TIERS"
 
-#: templates/legal/terms_and_conditions.html:32
-#: templates/legal/terms_and_conditions.html:474
+#: templates/legal/terms_and_conditions.html:30
+#: templates/legal/terms_and_conditions.html:472
 msgid "10. ADVERTISERS"
 msgstr "10. ANNONCEURS"
 
-#: templates/legal/terms_and_conditions.html:33
-#: templates/legal/terms_and_conditions.html:489
+#: templates/legal/terms_and_conditions.html:31
+#: templates/legal/terms_and_conditions.html:487
 msgid "11. SITE MANAGEMENT"
 msgstr "11. GESTION DU SITE"
 
-#: templates/legal/terms_and_conditions.html:34
-#: templates/legal/terms_and_conditions.html:506
+#: templates/legal/terms_and_conditions.html:32
+#: templates/legal/terms_and_conditions.html:504
 msgid "12. PRIVACY POLICY"
 msgstr "12. POLITIQUE DE CONFIDENTIALITÉ"
 
-#: templates/legal/terms_and_conditions.html:35
-#: templates/legal/terms_and_conditions.html:522
+#: templates/legal/terms_and_conditions.html:33
+#: templates/legal/terms_and_conditions.html:520
 msgid "13. COPYRIGHT INFRINGEMENTS"
 msgstr "13. CONTREFAÇONS DE DROITS D'AUTEUR"
 
-#: templates/legal/terms_and_conditions.html:36
-#: templates/legal/terms_and_conditions.html:577
+#: templates/legal/terms_and_conditions.html:34
+#: templates/legal/terms_and_conditions.html:575
 msgid "14. TERM AND TERMINATION"
 msgstr "14. DURÉE ET RÉSILIATION"
 
-#: templates/legal/terms_and_conditions.html:37
-#: templates/legal/terms_and_conditions.html:602
+#: templates/legal/terms_and_conditions.html:35
+#: templates/legal/terms_and_conditions.html:600
 msgid "15. MODIFICATIONS AND INTERRUPTIONS"
 msgstr "15. MODIFICATIONS ET INTERRUPTIONS"
 
-#: templates/legal/terms_and_conditions.html:38
-#: templates/legal/terms_and_conditions.html:626
+#: templates/legal/terms_and_conditions.html:36
+#: templates/legal/terms_and_conditions.html:624
 msgid "16. GOVERNING LAW"
 msgstr "16. LOI APPLICABLE"
 
-#: templates/legal/terms_and_conditions.html:39
-#: templates/legal/terms_and_conditions.html:641
+#: templates/legal/terms_and_conditions.html:37
+#: templates/legal/terms_and_conditions.html:639
 msgid "17. DISPUTE RESOLUTION"
 msgstr "17. RÉSOLUTION DES DIFFÉRENDS"
 
-#: templates/legal/terms_and_conditions.html:40
-#: templates/legal/terms_and_conditions.html:706
+#: templates/legal/terms_and_conditions.html:38
+#: templates/legal/terms_and_conditions.html:704
 msgid "18. CORRECTIONS"
 msgstr "18. CORRECTIONS"
 
-#: templates/legal/terms_and_conditions.html:41
-#: templates/legal/terms_and_conditions.html:717
+#: templates/legal/terms_and_conditions.html:39
+#: templates/legal/terms_and_conditions.html:715
 msgid "19. DISCLAIMER"
 msgstr "19. EXCLUSION DE GARANTIE"
 
-#: templates/legal/terms_and_conditions.html:42
-#: templates/legal/terms_and_conditions.html:745
+#: templates/legal/terms_and_conditions.html:40
+#: templates/legal/terms_and_conditions.html:743
 msgid "20. LIMITATION OF LIABILITY"
 msgstr "20. LIMITATION DE RESPONSABILITÉ"
 
-#: templates/legal/terms_and_conditions.html:43
-#: templates/legal/terms_and_conditions.html:756
+#: templates/legal/terms_and_conditions.html:41
+#: templates/legal/terms_and_conditions.html:754
 msgid "21. INDEMNIFICATION"
 msgstr "21. INDEMNISATION"
 
-#: templates/legal/terms_and_conditions.html:44
-#: templates/legal/terms_and_conditions.html:775
+#: templates/legal/terms_and_conditions.html:42
+#: templates/legal/terms_and_conditions.html:773
 msgid "22. USER DATA"
 msgstr "22. DONNÉES DE L'UTILISATEUR"
 
-#: templates/legal/terms_and_conditions.html:45
-#: templates/legal/terms_and_conditions.html:788
+#: templates/legal/terms_and_conditions.html:43
+#: templates/legal/terms_and_conditions.html:786
 msgid "23. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES"
 msgstr "23. COMMUNICATIONS ÉLECTRONIQUES, TRANSACTIONS ET SIGNATURES"
 
-#: templates/legal/terms_and_conditions.html:46
-#: templates/legal/terms_and_conditions.html:805
+#: templates/legal/terms_and_conditions.html:44
+#: templates/legal/terms_and_conditions.html:803
 msgid "24. MISCELLANEOUS"
 msgstr "24. DIVERSES"
 
-#: templates/legal/terms_and_conditions.html:47
-#: templates/legal/terms_and_conditions.html:826
+#: templates/legal/terms_and_conditions.html:45
+#: templates/legal/terms_and_conditions.html:824
 msgid "25. CONTACT US"
 msgstr "25. NOUS CONTACTER"
 
-#: templates/legal/terms_and_conditions.html:53
+#: templates/legal/terms_and_conditions.html:51
 msgid ""
 "\n"
 "                        These Terms of Use constitute a legally binding "
@@ -2358,7 +2531,7 @@ msgstr ""
 "                        CESSER IMMÉDIATEMENT L'UTILISATION.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:67
+#: templates/legal/terms_and_conditions.html:65
 msgid ""
 "\n"
 "                        Supplemental terms and conditions or documents that "
@@ -2402,7 +2575,7 @@ msgstr ""
 "                        d'utilisation sont publiés.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:80
+#: templates/legal/terms_and_conditions.html:78
 msgid ""
 "\n"
 "                        The information provided on the Site is not intended "
@@ -2432,7 +2605,7 @@ msgstr ""
 "                        mesure où les lois locales sont applicables.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:90
+#: templates/legal/terms_and_conditions.html:88
 msgid ""
 "\n"
 "                        The Site is not tailored to comply with industry-"
@@ -2456,7 +2629,7 @@ msgstr ""
 "violera la loi Gramm-Leach-Bliley (GLBA).\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:98
+#: templates/legal/terms_and_conditions.html:96
 msgid ""
 "\n"
 "                        The Site is intended for users who are at least 18 "
@@ -2471,7 +2644,7 @@ msgstr ""
 "Site.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:107
+#: templates/legal/terms_and_conditions.html:105
 msgid ""
 "\n"
 "                        Unless otherwise indicated, the Site is our "
@@ -2525,7 +2698,7 @@ msgstr ""
 "                        écrite préalable et expresse.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:122
+#: templates/legal/terms_and_conditions.html:120
 msgid ""
 "\n"
 "                        Provided that you are eligible to use the Site, you "
@@ -2549,7 +2722,7 @@ msgstr ""
 "Contenu et les Marques.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:133
+#: templates/legal/terms_and_conditions.html:131
 msgid ""
 "\n"
 "                        By using the Site, you represent and warrant that:  "
@@ -2587,7 +2760,7 @@ msgstr ""
 "                        la loi ou la réglementation applicable.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:145
+#: templates/legal/terms_and_conditions.html:143
 msgid ""
 "\n"
 "                        If you provide any information that is untrue, "
@@ -2605,7 +2778,7 @@ msgstr ""
 "                        le Site (ou toute partie de celui-ci).\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:155
+#: templates/legal/terms_and_conditions.html:153
 msgid ""
 "\n"
 "                        You may be required to register with the Site. You "
@@ -2628,7 +2801,7 @@ msgstr ""
 "inapproprié, obscène ou autrement inacceptable.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:166
+#: templates/legal/terms_and_conditions.html:164
 msgid ""
 "\n"
 "                        You may not access or use the Site for any purpose "
@@ -2647,7 +2820,7 @@ msgstr ""
 "nous.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:173
+#: templates/legal/terms_and_conditions.html:171
 msgid ""
 "\n"
 "                        As a user of the Site, you agree not to:\n"
@@ -2658,7 +2831,7 @@ msgstr ""
 "ne pas :\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:179
+#: templates/legal/terms_and_conditions.html:177
 msgid ""
 "\n"
 "                            Systematically retrieve data or other content "
@@ -2676,7 +2849,7 @@ msgstr ""
 "de notre part.\n"
 "                            "
 
-#: templates/legal/terms_and_conditions.html:186
+#: templates/legal/terms_and_conditions.html:184
 msgid ""
 "\n"
 "                            Trick, defraud, or mislead us and other users, "
@@ -2692,7 +2865,7 @@ msgstr ""
 "utilisateurs;\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:192
+#: templates/legal/terms_and_conditions.html:190
 msgid ""
 "\n"
 "                            Circumvent, disable, or otherwise interfere with "
@@ -2712,7 +2885,7 @@ msgstr ""
 "contenu qu'il contient;\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:199
+#: templates/legal/terms_and_conditions.html:197
 msgid ""
 "\n"
 "                            Disparage, tarnish, or otherwise harm, in our "
@@ -2724,7 +2897,7 @@ msgstr ""
 "avis, à nous et/ou au Site;\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:204
+#: templates/legal/terms_and_conditions.html:202
 msgid ""
 "\n"
 "                            Use any information obtained from the Site in "
@@ -2738,7 +2911,7 @@ msgstr ""
 "                            personne;\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:210
+#: templates/legal/terms_and_conditions.html:208
 msgid ""
 "\n"
 "                            Use the Site as part of any effort to compete "
@@ -2754,7 +2927,7 @@ msgstr ""
 "d'entreprise commerciale;\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:216
+#: templates/legal/terms_and_conditions.html:214
 msgid ""
 "\n"
 "                            Decipher, decompile, disassemble, or reverse "
@@ -2768,7 +2941,7 @@ msgstr ""
 "                            constituant une partie du Site;\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:222
+#: templates/legal/terms_and_conditions.html:220
 msgid ""
 "\n"
 "                            Attempt to bypass any measures of the Site "
@@ -2782,7 +2955,7 @@ msgstr ""
 "                            Site ou à une partie du Site.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:228
+#: templates/legal/terms_and_conditions.html:226
 msgid ""
 "\n"
 "                            Copy or adapt the Site’s software, including but "
@@ -2796,7 +2969,7 @@ msgstr ""
 "                            JavaScript ou tout autre code.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:234
+#: templates/legal/terms_and_conditions.html:232
 msgid ""
 "\n"
 "                            Except as permitted by applicable law, decipher, "
@@ -2812,7 +2985,7 @@ msgstr ""
 "                            constituant une partie du Site.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:240
+#: templates/legal/terms_and_conditions.html:238
 msgid ""
 "\n"
 "                            Except as may be the result of standard search "
@@ -2836,7 +3009,7 @@ msgstr ""
 "autorisé.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:248
+#: templates/legal/terms_and_conditions.html:246
 msgid ""
 "\n"
 "                            Use a buying agent or purchasing agent to make "
@@ -2848,7 +3021,7 @@ msgstr ""
 "pour effectuer des achats sur le Site.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:253
+#: templates/legal/terms_and_conditions.html:251
 msgid ""
 "\n"
 "                            Make any unauthorized use of the Site, including "
@@ -2868,7 +3041,7 @@ msgstr ""
 "moyens automatisés ou sous de faux prétextes.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:260
+#: templates/legal/terms_and_conditions.html:258
 msgid ""
 "\n"
 "                            Use the Site as part of any effort to compete "
@@ -2884,7 +3057,7 @@ msgstr ""
 "d'entreprise commerciale.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:266
+#: templates/legal/terms_and_conditions.html:264
 msgid ""
 "\n"
 "                            Use the Site to advertise or offer to sell goods "
@@ -2896,7 +3069,7 @@ msgstr ""
 "proposer la vente de biens et de services.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:271
+#: templates/legal/terms_and_conditions.html:269
 msgid ""
 "\n"
 "                            Sell or otherwise transfer your profile.\n"
@@ -2906,7 +3079,7 @@ msgstr ""
 "                            Vendre ou transférer autrement votre profil.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:280
+#: templates/legal/terms_and_conditions.html:278
 msgid ""
 "\n"
 "                        The Site does not offer unauthorized users to submit "
@@ -2946,7 +3119,7 @@ msgstr ""
 "représentez et garantissez que :\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:294
+#: templates/legal/terms_and_conditions.html:292
 msgid ""
 "\n"
 "                            The creation, distribution, transmission, public "
@@ -2969,7 +3142,7 @@ msgstr ""
 "partie.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:302
+#: templates/legal/terms_and_conditions.html:300
 msgid ""
 "\n"
 "                            You are the creator and owner of or have the "
@@ -2989,7 +3162,7 @@ msgstr ""
 "par le Site et par les présentes Conditions d'utilisation.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:309
+#: templates/legal/terms_and_conditions.html:307
 msgid ""
 "\n"
 "                            You have the written consent, release, and/or "
@@ -3013,7 +3186,7 @@ msgstr ""
 "Conditions d'utilisation.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:317
+#: templates/legal/terms_and_conditions.html:315
 msgid ""
 "\n"
 "                            Your Contributions are not false, inaccurate, or "
@@ -3025,7 +3198,7 @@ msgstr ""
 "ou trompeuses.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:322
+#: templates/legal/terms_and_conditions.html:320
 msgid ""
 "\n"
 "                            Your Contributions are not unsolicited or "
@@ -3041,7 +3214,7 @@ msgstr ""
 "du spam, des envois de masse ou d'autres formes de sollicitation.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:328
+#: templates/legal/terms_and_conditions.html:326
 msgid ""
 "\n"
 "                            Your Contributions are not obscene, lewd, "
@@ -3057,7 +3230,7 @@ msgstr ""
 "ce que nous déterminons).\n"
 "                            "
 
-#: templates/legal/terms_and_conditions.html:334
+#: templates/legal/terms_and_conditions.html:332
 msgid ""
 "\n"
 "                            Your Contributions do not ridicule, mock, "
@@ -3069,7 +3242,7 @@ msgstr ""
 "discréditent, intimident ou n'abusent pas de quiconque.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:339
+#: templates/legal/terms_and_conditions.html:337
 msgid ""
 "\n"
 "                            Your Contributions are not used to harass or "
@@ -3085,7 +3258,7 @@ msgstr ""
 "violence contre une personne ou une classe de personnes spécifiques.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:345
+#: templates/legal/terms_and_conditions.html:343
 msgid ""
 "\n"
 "                            Your Contributions do not violate any applicable "
@@ -3097,7 +3270,7 @@ msgstr ""
 "réglementation ou règle applicable.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:350
+#: templates/legal/terms_and_conditions.html:348
 msgid ""
 "\n"
 "                            Your Contributions do not violate the privacy or "
@@ -3109,7 +3282,7 @@ msgstr ""
 "vie privée ou à la publicité d'une tierce partie.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:355
+#: templates/legal/terms_and_conditions.html:353
 msgid ""
 "\n"
 "                            Your Contributions do not violate any applicable "
@@ -3124,7 +3297,7 @@ msgstr ""
 "autrement destinés à protéger la santé ou le bien-être des mineurs.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:361
+#: templates/legal/terms_and_conditions.html:359
 msgid ""
 "\n"
 "                            Your Contributions do not include any offensive "
@@ -3139,7 +3312,7 @@ msgstr ""
 "préférence sexuelle ou handicap physique.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:367
+#: templates/legal/terms_and_conditions.html:365
 msgid ""
 "\n"
 "                            Your Contributions do not otherwise violate, or "
@@ -3155,7 +3328,7 @@ msgstr ""
 "d'utilisation ou toute loi ou règlement applicable.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:374
+#: templates/legal/terms_and_conditions.html:372
 msgid ""
 "\n"
 "                        Any use of the Site in violation of the foregoing "
@@ -3171,7 +3344,7 @@ msgstr ""
 "du Site.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:383
+#: templates/legal/terms_and_conditions.html:381
 msgid ""
 "\n"
 "                        By posting your Contributions to any part of the "
@@ -3224,7 +3397,7 @@ msgstr ""
 "                        canaux.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:400
+#: templates/legal/terms_and_conditions.html:398
 msgid ""
 "\n"
 "                        This license will apply to any form, media, or "
@@ -3251,7 +3424,7 @@ msgstr ""
 "                        été autrement affirmés dans vos Contributions.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:409
+#: templates/legal/terms_and_conditions.html:407
 msgid ""
 "\n"
 "                        We do not assert any ownership over your "
@@ -3285,7 +3458,7 @@ msgstr ""
 "vos Contributions.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:420
+#: templates/legal/terms_and_conditions.html:418
 msgid ""
 "\n"
 "                        We have the right, in our sole and absolute "
@@ -3309,7 +3482,7 @@ msgstr ""
 "de surveiller vos Contributions.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:431
+#: templates/legal/terms_and_conditions.html:429
 msgid ""
 "\n"
 "                        You acknowledge and agree that any questions, "
@@ -3352,7 +3525,7 @@ msgstr ""
 "propriété dans vos Soumissions.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:446
+#: templates/legal/terms_and_conditions.html:444
 msgid ""
 "\n"
 "                        The Site may contain (or you may be sent through the "
@@ -3448,7 +3621,7 @@ msgstr ""
 "tiers ou de tout contact avec des Sites Web tiers.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:476
+#: templates/legal/terms_and_conditions.html:474
 msgid ""
 "\n"
 "                        We allow advertisers to display their advertisements "
@@ -3486,7 +3659,7 @@ msgstr ""
 "                        autre relation avec les annonceurs.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:491
+#: templates/legal/terms_and_conditions.html:489
 msgid ""
 "\n"
 "                        We reserve the right, but not the obligation, to: "
@@ -3531,7 +3704,7 @@ msgstr ""
 "                        fonctionnement du Site.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:508
+#: templates/legal/terms_and_conditions.html:506
 #, python-format
 msgid ""
 "\n"
@@ -3572,7 +3745,7 @@ msgstr ""
 "transférées et traitées au Canada.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:524
+#: templates/legal/terms_and_conditions.html:522
 #, python-format
 msgid ""
 "\n"
@@ -3595,7 +3768,7 @@ msgstr ""
 "fournir les informations suivantes :\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:533
+#: templates/legal/terms_and_conditions.html:531
 msgid ""
 "\n"
 "                            An electronic or physical signature of the "
@@ -3609,7 +3782,7 @@ msgstr ""
 "                            du droit d'auteur ;\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:539
+#: templates/legal/terms_and_conditions.html:537
 msgid ""
 "\n"
 "                            A description of the copyrighted work that you "
@@ -3621,7 +3794,7 @@ msgstr ""
 "d'auteur que vous prétendez avoir été violée ;\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:544
+#: templates/legal/terms_and_conditions.html:542
 msgid ""
 "\n"
 "                            A description of where the material that you "
@@ -3633,7 +3806,7 @@ msgstr ""
 "vous prétendez être en infraction sur le Site ;\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:549
+#: templates/legal/terms_and_conditions.html:547
 msgid ""
 "\n"
 "                            Your address, telephone number, and email "
@@ -3645,7 +3818,7 @@ msgstr ""
 "électronique ;\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:554
+#: templates/legal/terms_and_conditions.html:552
 msgid ""
 "\n"
 "                            A signed statement by you that you have a good "
@@ -3661,7 +3834,7 @@ msgstr ""
 "son agent ou la loi ; et\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:560
+#: templates/legal/terms_and_conditions.html:558
 msgid ""
 "\n"
 "                            A signed statement by you, made under penalty of "
@@ -3680,7 +3853,7 @@ msgstr ""
 "                            propriétaire du droit d'auteur.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:569
+#: templates/legal/terms_and_conditions.html:567
 msgid ""
 "\n"
 "                        We reserve the right to remove Content alleged to be "
@@ -3697,7 +3870,7 @@ msgstr ""
 "utilisateur si nous déterminons que l'utilisateur est un récidiviste.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:579
+#: templates/legal/terms_and_conditions.html:577
 msgid ""
 "\n"
 "                        These Terms of Use shall remain in full force and "
@@ -3734,7 +3907,7 @@ msgstr ""
 "À NOTRE SEULE DISCRÉTION.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:592
+#: templates/legal/terms_and_conditions.html:590
 msgid ""
 "\n"
 "                        If we terminate or suspend your account for any "
@@ -3762,7 +3935,7 @@ msgstr ""
 "et injonctives.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:604
+#: templates/legal/terms_and_conditions.html:602
 msgid ""
 "\n"
 "                        We reserve the right to change, modify, or remove "
@@ -3790,7 +3963,7 @@ msgstr ""
 "arrêt du Site.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:613
+#: templates/legal/terms_and_conditions.html:611
 msgid ""
 "\n"
 "                        We cannot guarantee the Site will be available at "
@@ -3831,7 +4004,7 @@ msgstr ""
 "versions dans le cadre de cette connexion.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:628
+#: templates/legal/terms_and_conditions.html:626
 msgid ""
 "\n"
 "                        These conditions are governed by and interpreted "
@@ -3869,11 +4042,11 @@ msgstr ""
 "vous résidez.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:643
+#: templates/legal/terms_and_conditions.html:641
 msgid "Informal Negotiations"
 msgstr "Négociations informelles"
 
-#: templates/legal/terms_and_conditions.html:645
+#: templates/legal/terms_and_conditions.html:643
 msgid ""
 "\n"
 "                            To expedite resolution and control the cost of "
@@ -3904,11 +4077,11 @@ msgstr ""
 "commencent sur notification écrite d'une partie à l'autre partie.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:656
+#: templates/legal/terms_and_conditions.html:654
 msgid "Binding Arbitration"
 msgstr "Arbitrage obligatoire"
 
-#: templates/legal/terms_and_conditions.html:658
+#: templates/legal/terms_and_conditions.html:656
 msgid ""
 "\n"
 "                            Any dispute arising from the relationships "
@@ -3944,11 +4117,11 @@ msgstr ""
 "substantiel seront la loi de France.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:670
+#: templates/legal/terms_and_conditions.html:668
 msgid "Restrictions"
 msgstr "Restrictions"
 
-#: templates/legal/terms_and_conditions.html:672
+#: templates/legal/terms_and_conditions.html:670
 msgid ""
 "\n"
 "                            The Parties agree that any arbitration shall be "
@@ -3980,11 +4153,11 @@ msgstr ""
 "                            la population générale ou d'autres personnes.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:684
+#: templates/legal/terms_and_conditions.html:682
 msgid "Exceptions to Informal Negotiations and Arbitration"
 msgstr "Exceptions aux négociations informelles et à l'arbitrage"
 
-#: templates/legal/terms_and_conditions.html:686
+#: templates/legal/terms_and_conditions.html:684
 msgid ""
 "\n"
 "                            The Parties agree that the following Disputes "
@@ -4038,7 +4211,7 @@ msgstr ""
 "compétence personnelle à ce tribunal.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:708
+#: templates/legal/terms_and_conditions.html:706
 msgid ""
 "\n"
 "                        There may be information on the Site that contains "
@@ -4062,7 +4235,7 @@ msgstr ""
 "avis préalable.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:719
+#: templates/legal/terms_and_conditions.html:717
 msgid ""
 "\n"
 "                        THE SITE IS PROVIDED ON AN AS-IS AND AS-AVAILABLE "
@@ -4153,7 +4326,7 @@ msgstr ""
 "ADAPTÉE LORSQUE C'EST INDISPENSABLE.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:747
+#: templates/legal/terms_and_conditions.html:745
 msgid ""
 "\n"
 "                        IN NO EVENT WILL WE, BE LIABLE TO YOU OR ANY THIRD "
@@ -4174,7 +4347,7 @@ msgstr ""
 "                        TELS DOMMAGES.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:758
+#: templates/legal/terms_and_conditions.html:756
 msgid ""
 "\n"
 "                        You agree to defend, indemnify, and hold us "
@@ -4232,7 +4405,7 @@ msgstr ""
 "lorsque nous en prenons connaissance.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:777
+#: templates/legal/terms_and_conditions.html:775
 msgid ""
 "\n"
 "                        We will maintain certain data that you transmit to "
@@ -4265,7 +4438,7 @@ msgstr ""
 "                        corruption de ces données.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:790
+#: templates/legal/terms_and_conditions.html:788
 msgid ""
 "\n"
 "                        Visiting the Site, sending us emails, and completing "
@@ -4315,7 +4488,7 @@ msgstr ""
 "                        voie électronique.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:807
+#: templates/legal/terms_and_conditions.html:805
 msgid ""
 "\n"
 "                        These Terms of Use and any policies or operating "
@@ -4384,7 +4557,7 @@ msgstr ""
 "                        pour exécuter ces conditions d'utilisation.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:828
+#: templates/legal/terms_and_conditions.html:826
 msgid ""
 "\n"
 "                        In order to resolve a complaint regarding the Site "
