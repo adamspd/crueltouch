@@ -542,7 +542,8 @@ def send_photos_for_client_to_choose_from(request):
             send_client_email(
                 email_address=user_client.email, subject="New images were uploaded for you to choose from",
                 header="New images were uploaded for you to choose from",
-                message=f"Hello {user_client.first_name}, we uploaded new photos for you to choose from !",
+                message=f"Hello {user_client.first_name}, we uploaded new photos for you to choose from! If this will "
+                        f"be your first login, your password is 'Crueltouch2022' without the quote.",
                 footer="Thank you for using our service ! The Crueltouch Team",
                 is_contact_form=False, is_other=True, button_label="Click on the button below to do so",
                 button_text="Choose photos", button_link=button_link

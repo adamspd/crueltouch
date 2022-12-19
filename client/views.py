@@ -5,15 +5,15 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView
-from django.utils.translation import gettext_lazy as _
+from validate_email import validate_email
 
 from client.models import UserClient, BookMe, Album, Photo
 from static_pages_and_forms.models import ContactForm
 from utils.crueltouch_utils import c_print, check_user_login, check, is_ajax
 from .form import CustomRegisterForm, BookME
-from validate_email import validate_email
 
 User = get_user_model()
 

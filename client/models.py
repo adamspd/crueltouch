@@ -1,4 +1,5 @@
 from datetime import datetime
+from sqlite3 import IntegrityError
 
 from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
@@ -384,6 +385,19 @@ def get_estimated_total(session_type, package, place):
         return _("Contact us for more information")
 
 
+def create_client(client_name: str, client_email: str):
+    client_password = "Crueltouch2022"
+    try:
+        client = UserClient.objects.create_user(first_name=client_name, email=client_email,
+                                                password=client_password)
+    except IntegrityError:
+        return False
+    client.save()
+    client.set_first_login()
+    client.send_password_email()
+    return True
+
+
 @receiver(post_save, sender=BookMe)
 def account_authorization_status_handler(sender, instance, created, *args, **kwargs):
     if created:
@@ -391,6 +405,7 @@ def account_authorization_status_handler(sender, instance, created, *args, **kwa
             client_email = email_secrets.TEST_EMAIL
         else:
             client_email = instance.email
+        create_client(instance.full_name, client_email)
         c_print("client.models:235 | Sending email to admin to notify of a session request")
         notify_admin_session_request_received_via_email(
             today=get_today_date(),
