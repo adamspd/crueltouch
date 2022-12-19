@@ -42,7 +42,7 @@ def send_email_after_saving_contact_form(sender, instance, created, *args, **kwa
             is_other=False,
             button_label=_("Awesome!"),
             button_link="https://crueltouch.com/portfolio/",
-            button_text=_("")
+            button_text=_("Ok")
         )
         if sent:  # if email was sent
             send_email_admin(
