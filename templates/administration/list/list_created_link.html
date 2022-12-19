@@ -49,7 +49,8 @@
                             {{ rs.was_downloaded }}
                         </td>
                         <td>
-                            <a href="{% url 'administration:delete_delivery' rs.id %}" class="btn btn-danger btn-sm">
+                            <a href="{% url 'administration:delete_delivery' rs.id %}" class="btn btn-danger btn-sm"
+                               onClick="return confirm('Are you sure you want to delete this item?');">
                                 <i class="fas fa-trash"></i>
                                 {% translate "Delete" %}
                             </a>

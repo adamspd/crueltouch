@@ -46,7 +46,8 @@
                         <td>
                             {{ rs.message }}
                         <td>
-                            <a href="{% url 'administration:message_delete' rs.pk %}" class="btn btn-danger">
+                            <a href="{% url 'administration:message_delete' rs.pk %}" class="btn btn-danger"
+                               onClick="return confirm('Are you sure you want to delete this item?');">
                                 <i class="fas fa-trash"></i>&nbsp;Delete
                             </a>
                         </td>
