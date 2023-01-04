@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-24 18:13+0100\n"
+"POT-Creation-Date: 2023-01-04 20:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -161,12 +161,10 @@ msgid "--- Select a package ---"
 msgstr "--- Sélectionnez un forfait ---"
 
 #: client/form.py:11 client/models.py:339
-#: templates/client/booking_and_promotions/promotions.html:61
 msgid "7 photos"
 msgstr "7 photos"
 
 #: client/form.py:12 client/models.py:341
-#: templates/client/booking_and_promotions/promotions.html:62
 msgid "15 photos"
 msgstr "15 photos"
 
@@ -175,7 +173,6 @@ msgid "30 photos + mini video"
 msgstr "30 photos + mini vidéo"
 
 #: client/form.py:14 client/models.py:337
-#: templates/client/booking_and_promotions/promotions.html:60
 msgid "3 photos"
 msgstr "3 photos"
 
@@ -199,7 +196,7 @@ msgstr "Mariage et autres événements"
 msgid "--- Select a location ---"
 msgstr "--- Sélectionnez un lieu ---"
 
-#: client/form.py:24 templates/client/booking_and_promotions/promotions.html:44
+#: client/form.py:24 templates/client/booking_and_promotions/promotions.html:46
 msgid "Studio"
 msgstr "Studio"
 
@@ -254,7 +251,7 @@ msgid "Type of photo session"
 msgstr "Type de séance photo"
 
 #: client/form.py:67 templates/client/booking_and_promotions/bookme.html:162
-#: templates/client/booking_and_promotions/promotions.html:95
+#: templates/client/booking_and_promotions/promotions.html:108
 msgid "Location"
 msgstr "Lieu"
 
@@ -262,7 +259,7 @@ msgstr "Lieu"
 #: templates/administration/email_template/session_request_received.html:195
 #: templates/administration/list/list_requested_session.html:45
 #: templates/administration/list/list_requested_session.html:122
-#: templates/client/booking_and_promotions/promotions.html:58
+#: templates/client/booking_and_promotions/promotions.html:60
 msgid "Package"
 msgstr "Pack"
 
@@ -360,7 +357,6 @@ msgid "No data"
 msgstr "Pas de données"
 
 #: client/models.py:343
-#: templates/client/booking_and_promotions/promotions.html:63
 msgid "30 photos"
 msgstr "30 photos"
 
@@ -723,11 +719,11 @@ msgstr ""
 
 #: templates/administration/email_template/session_request_received.html:156
 #: templates/client/booking_and_promotions/bookme.html:127
+#: templates/client/booking_and_promotions/promotions.html:11
 msgid ""
-"NB: A $100 deposit is required to book the date. No deposit, no obligation"
+"NB: A $100 deposit is required to book the date. NO DEPOSIT, NO OBLIGATION."
 msgstr ""
-"NB: Un dépôt de 100$ est requis pour réserver la date. Pas de dépôt, pas "
-"d'obligation"
+"NB : Un dépôt de 100 $ est requis pour réserver la date. PAS DE DÉPÔT, PAS D'OBLIGATION."
 
 #: templates/administration/email_template/session_request_received.html:166
 msgid "Booking Confirmation"
@@ -795,6 +791,10 @@ msgstr "Client"
 
 #: templates/administration/list/list_album_client.html:27
 #: templates/administration/list/list_album_client.html:66
+#: templates/client/booking_and_promotions/promotions.html:62
+#: templates/client/booking_and_promotions/promotions.html:63
+#: templates/client/booking_and_promotions/promotions.html:64
+#: templates/client/booking_and_promotions/promotions.html:65
 msgid "photos"
 msgstr "photos"
 
@@ -1086,59 +1086,63 @@ msgstr "Dernières promotions"
 msgid "Promotion Plans"
 msgstr "Plans promotionnels"
 
-#: templates/client/booking_and_promotions/promotions.html:22
+#: templates/client/booking_and_promotions/promotions.html:12
+msgid "All pictures are EDITED."
+msgstr "Toutes les photos ont été ÉDITÉES."
+
+#: templates/client/booking_and_promotions/promotions.html:24
 msgid "Compare all plans"
 msgstr "Comparer tous les plans"
 
-#: templates/client/booking_and_promotions/promotions.html:23
+#: templates/client/booking_and_promotions/promotions.html:25
 msgid "Starter"
 msgstr "Starter"
 
-#: templates/client/booking_and_promotions/promotions.html:24
+#: templates/client/booking_and_promotions/promotions.html:26
 msgid "Basic"
 msgstr "Basique"
 
-#: templates/client/booking_and_promotions/promotions.html:26
+#: templates/client/booking_and_promotions/promotions.html:28
 msgid "Medium"
 msgstr "Moyen"
 
-#: templates/client/booking_and_promotions/promotions.html:28
+#: templates/client/booking_and_promotions/promotions.html:30
 msgid "Premium"
 msgstr "Premium"
 
-#: templates/client/booking_and_promotions/promotions.html:36
+#: templates/client/booking_and_promotions/promotions.html:38
 msgid "Price"
 msgstr "Prix"
 
-#: templates/client/booking_and_promotions/promotions.html:67
+#: templates/client/booking_and_promotions/promotions.html:69
 msgid "Mini Video"
 msgstr "Mini vidéo"
 
-#: templates/client/booking_and_promotions/promotions.html:86
+#: templates/client/booking_and_promotions/promotions.html:99
 msgid "Delivery Time frame"
 msgstr "Temps de livraison"
 
-#: templates/client/booking_and_promotions/promotions.html:88
-#: templates/client/booking_and_promotions/promotions.html:89
-#: templates/client/booking_and_promotions/promotions.html:90
-#: templates/client/booking_and_promotions/promotions.html:91
+#: templates/client/booking_and_promotions/promotions.html:101
+#: templates/client/booking_and_promotions/promotions.html:102
+#: templates/client/booking_and_promotions/promotions.html:103
+#: templates/client/booking_and_promotions/promotions.html:104
 msgid "days"
 msgstr "jours"
 
-#: templates/client/booking_and_promotions/promotions.html:97
+#: templates/client/booking_and_promotions/promotions.html:110
 msgid "Only Orlando"
 msgstr "Seulement Orlando"
 
-#: templates/client/booking_and_promotions/promotions.html:98
-#: templates/client/booking_and_promotions/promotions.html:99
-#: templates/client/booking_and_promotions/promotions.html:100
+#: templates/client/booking_and_promotions/promotions.html:111
+#: templates/client/booking_and_promotions/promotions.html:112
+#: templates/client/booking_and_promotions/promotions.html:113
 msgid "Florida"
 msgstr "Florida"
 
-#: templates/client/booking_and_promotions/promotions.html:107
-#: templates/client/booking_and_promotions/promotions.html:113
-#: templates/client/booking_and_promotions/promotions.html:119
-#: templates/client/booking_and_promotions/promotions.html:125
+#: templates/client/booking_and_promotions/promotions.html:120
+#: templates/client/booking_and_promotions/promotions.html:126
+#: templates/client/booking_and_promotions/promotions.html:132
+#: templates/client/booking_and_promotions/promotions.html:138
 msgid "book now"
 msgstr "réserver maintenant"
 
@@ -3575,8 +3579,8 @@ msgstr ""
 "                        des dessins, de la musique, du son, de la vidéo, de "
 "l'information, des applications, des logiciels et d'autres contenus ou "
 "éléments\n"
-"                        appartenant à ou provenant de tiers (\"Contenu tiers"
-"\"). De tels Sites Web tiers et le Contenu tiers ne sont pas\n"
+"                        appartenant à ou provenant de tiers (\"Contenu "
+"tiers\"). De tels Sites Web tiers et le Contenu tiers ne sont pas\n"
 "                        examinés, surveillés ou vérifiés pour leur "
 "exactitude, leur pertinence ou leur exhaustivité par nous, et nous ne sommes "
 "pas responsables de tout Site Web tiers\n"
@@ -4058,8 +4062,9 @@ msgstr ""
 "\n"
 "                            Pour accélérer la résolution et contrôler le "
 "coût de tout litige, contentieux ou réclamation lié à\n"
-"                            ces conditions d'utilisation (chacun un \"litige"
-"\" et collectivement, les \"litiges\") soumis par l'un ou l'autre de vous\n"
+"                            ces conditions d'utilisation (chacun un "
+"\"litige\" et collectivement, les \"litiges\") soumis par l'un ou l'autre de "
+"vous\n"
 "                            ou nous (individuellement, une \"partie\" et "
 "collectivement, les \"parties\"), les parties conviennent de commencer\n"
 "                            d'abord à négocier de manière informelle tout "
@@ -4634,6 +4639,12 @@ msgstr "Voulez-vous faire appel à mes services"
 #: templates/static_pages_and_forms/success.html:70
 msgid "Click"
 msgstr "Cliquez"
+
+#~ msgid ""
+#~ "NB: A $100 deposit is required to book the date. No deposit, no obligation"
+#~ msgstr ""
+#~ "NB: Un dépôt de 100$ est requis pour réserver la date. Pas de dépôt, pas "
+#~ "d'obligation"
 
 #~ msgid "Promotions"
 #~ msgstr "Promotions"
