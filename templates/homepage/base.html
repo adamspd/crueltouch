@@ -5,10 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <meta charset="UTF-8">
-    <title>{% block title %}{% trans "CRUELTOUCH" %} | {% trans "Homepage" %}{% endblock %}</title>
-    <meta name="description" content="Crueltouch Website">
+    <title>{% block title %}{% trans "Welcome to crueltouch's website" %}{% endblock %}</title>
+    <meta name="description" content="{% block description %}Crueltouch Website{% endblock %}">
     <meta name="keywords" content="photographer, crueltouch, contact crueltouch, roos laurore">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://crueltouch.com{% block canonical %}/{% endblock %}">
 
     <!-- Favicon -->
     <link href="{% static 'homepage/img/icon/android-icon-48x48.png' %}" rel="shortcut icon"/>

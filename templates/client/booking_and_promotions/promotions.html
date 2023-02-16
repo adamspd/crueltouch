@@ -1,7 +1,14 @@
 {% extends 'homepage/base.html' %}
 {% load i18n %}
 {% load static %}
-{% block title %}CRUELTOUCH | {% trans "Latest promotions" %}{% endblock %}
+{% block title %}{% trans "Special Photography Promotions" %}{% endblock %}
+{% block canonical %}{% url 'homepage:promotions' %}{% endblock %}
+{% block description %}
+    {% blocktrans %}
+        Don't miss out on our limited-time photography promotions! Affordable rates on portraits, landscapes, and
+        events. Book your session today.
+    {% endblocktrans %}
+{% endblock %}
 {% block customCSS %}
     <link rel="stylesheet" href="{% static 'client/css/promotions.css' %}">
 {% endblock %}
