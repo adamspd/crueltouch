@@ -1,6 +1,13 @@
 {% extends 'homepage/base.html' %}
 {% load i18n %}
 {% block title %}{% trans "Contact us" %}{% endblock %}
+{% block canonical %}{% url 'flatpages:contact' %}{% endblock %}
+{% block description %}
+    {% blocktranslate %}
+        Get in touch with us for all your photography needs. Contact us today for booking, consultation, or any other
+        inquiry.
+    {% endblocktranslate %}
+{% endblock %}
 {% block body %}
     <div class="clearfix"></div>
     <!-- Header section end  -->
@@ -31,7 +38,7 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="contact-text">
-                        <h3>{% trans "GET IN TOUCH" %}</h3>
+                        <h1 style="font-size: 30px">{% trans "GET IN TOUCH" %}</h1>
                         <p>
                             {% blocktranslate %}
                                 They say a picture is worth a thousand words.

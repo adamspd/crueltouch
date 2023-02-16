@@ -1,7 +1,14 @@
 {% extends 'homepage/base.html' %}
 {% load i18n %}
 {% load static %}
-{% block title %}CRUELTOUCH | {% trans "Register" %}{% endblock %}
+{% block title %}{% trans "Client Registration" %}{% endblock %}
+{% block canonical %}{% url 'client:register' %}{% endblock %}
+{% block description %}
+    {% blocktranslate %}
+        Create an account with us and get access to exclusive promotions, online gallery and more. Register now to
+        experience our professional photography services.
+    {% endblocktranslate %}
+{% endblock %}
 {% block customCSS %}
     <link rel="stylesheet" type="text/css" href="{% static 'client/css/registers.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'client/css/button.css' %}"/>

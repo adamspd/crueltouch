@@ -1,7 +1,11 @@
 {% extends 'homepage/base.html' %}
 {% load i18n %}
 {% load static %}
-{% block title %}CRUELTOUCH | {% trans "Portfolio" %}{% endblock %}
+{% block title %}{% trans "Portfolio" %}{% endblock %}
+{% block description %}
+    {% trans "Have a look at the different high-quality photos that I deliver in my portfolio page" %}
+{% endblock %}
+{% block canonical %}{% url 'pf:index_portfolio' %}{% endblock %}
 {% block homepageCSS %}
     <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/magnific-popup.css' %}"/>
 {% endblock %}

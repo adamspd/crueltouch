@@ -1,7 +1,14 @@
 {% extends 'homepage/base.html' %}
 {% load i18n %}
 {% load static %}
-{% block title %}CRUELTOUCH | {% trans "Login" %}{% endblock %}
+{% block title %}{% trans "Login" %}{% endblock %}
+{% block description %}
+    {% blocktrans %}
+        Access your private online gallery and view your stunning photographs securely with our client login feature.
+        Login now to see your memories
+    {% endblocktrans %}
+{% endblock %}
+{% block canonical %}{% url 'client:login' %}{% endblock %}
 {% block customCSS %}
     <link rel="stylesheet" type="text/css" href="{% static 'client/css/registers.css' %}"/>
 {% endblock %}
@@ -33,7 +40,8 @@
                                    class="form-control">
                         </div>
                         <div class="input-group mb-2">
-                            <div><a href="{% url 'reset_password' %}" style="text-decoration: none">{% trans 'Forgot password' %} ?</a></div>
+                            <div><a href="{% url 'reset_password' %}"
+                                    style="text-decoration: none">{% trans 'Forgot password' %} ?</a></div>
                         </div>
 
                         <div class="d-flex justify-content-center mt-3 login_container">

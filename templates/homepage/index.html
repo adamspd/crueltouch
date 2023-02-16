@@ -2,7 +2,11 @@
 {% load i18n %}
 {% load static %}
 {% block priceTableCSS %}
-    <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/priceCards.css' %}"/>{% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/priceCards.css' %}"/>
+{% endblock %}
+{% block description %}
+    {% trans "Professional photography services for all occasions - portraits, landscapes, events. High-quality results and personalized attention." %}
+{% endblock %}
 {% block body %}
     <!-- Hero section  -->
     <div class="hero-section">
@@ -24,7 +28,7 @@
     <section class="pricing-table">
         <div class="container">
             <div class="block-heading">
-{#                <h2>{% trans "" %}</h2>#}
+                {#                <h2>{% trans "" %}</h2>#}
                 <p class="text-black important" style="color: black; font-weight: 600">
                     {% trans "Click here to book" %}
                 </p>
@@ -42,7 +46,10 @@
                 <div class="row">
                     <div class="col-xl-6 col-lg-7 p-0">
                         <div class="intro-text">
-                            <h2 style="padding-left: 5px; padding-right: 5px; font-size:38px;">{% trans "My name is Roos Laurore" %}.
+                            <h1 style="padding-left: 5px; padding-right: 5px; font-size:38px;">
+                                {% trans "My name is Roos Laurore" %}.
+                            </h1>
+                            <h2 style="padding-left: 5px; padding-right: 5px; font-size:38px;">
                                 {% trans "I’m a photographer" %}</h2>
                             <p>
                                 {% blocktranslate %}
@@ -54,7 +61,8 @@
                                     next years in Indonesia, Greece and China. Long term goal : Digital Nomad.
                                 {% endblocktranslate %}
                             </p>
-                            <a href="{% url 'pf:index_portfolio' %}" class="sp-link">{% trans "Take a look @my portfolio" %}</a>
+                            <a href="{% url 'pf:index_portfolio' %}"
+                               class="sp-link">{% trans "Take a look @my portfolio" %}</a>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-5 p-0">

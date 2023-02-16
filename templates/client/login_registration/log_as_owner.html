@@ -1,7 +1,8 @@
 {% extends 'homepage/base.html' %}
 {% load i18n %}
 {% load static %}
-{% block title %}CRUELTOUCH | {% trans "Login" %}{% endblock %}
+{% block title %}{% trans "Admin Login" %}{% endblock %}
+{% block canonical %}{% url 'administration:login' %}{% endblock %}
 {% block customCSS %}
     <link rel="stylesheet" type="text/css" href="{% static 'client/css/registers.css' %}"/>
 {% endblock %}

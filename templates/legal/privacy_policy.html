@@ -3,6 +3,7 @@
 {% load static %}
 {% block title %}{{ page_title }}{% endblock %}
 {% block site_description %}{{ page_description }}{% endblock %}
+{% block canonical %}{% url 'homepage:privacy_policy' %}{% endblock %}
 {% block body %}
     <div class="clearfix"></div>
 
@@ -13,7 +14,7 @@
                 <div class="col-md-12">
                     <div class="privacy-policy-content">
                         <button onclick="topFunction()" id="myBtnTop" title="Go to top">Top</button>
-                        <h2>{% trans 'Privacy Policy' %}</h2>
+                        <h1>{% trans 'Privacy Policy' %}</h1>
                         <p>{% trans "Last updated" %}: {% trans 'November 10, 2022' %}</p>
                         <p>
                             {% blocktranslate %}

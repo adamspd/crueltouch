@@ -3,13 +3,14 @@
 {% load static %}
 {% block title %}{{ page_title }}{% endblock %}
 {% block site_description %}{{ page_description }}{% endblock %}
+{% block canonical %}{% url 'homepage:terms_and_conditions' %}{% endblock %}
 {% block body %}
     <div class="clearfix"></div>
     <div class="container">
         <br>
         <div class="header">
             <div class="title">
-                <h2>{{ page_title }}</h2>
+                <h1>{{ page_title }}</h1>
             </div>
             <div class="text-muted">
                 <p>{% trans "Last updated" %}: {% trans "November 23, 2022" %}</p>
@@ -46,7 +47,7 @@
             </div>
             <br>
             <div id="agreement">
-                <h3>{% translate "1. AGREEMENT TO TERMS" %}</h3>
+                <h2>{% translate "1. AGREEMENT TO TERMS" %}</h2>
                 <p>
                     {% blocktranslate %}
                         These Terms of Use constitute a legally binding agreement made between you, whether personally
@@ -100,7 +101,7 @@
                 </p>
             </div>
             <div id="ip">
-                <h3>{% translate "2. INTELLECTUAL PROPERTY RIGHTS" %}</h3>
+                <h2>{% translate "2. INTELLECTUAL PROPERTY RIGHTS" %}</h2>
                 <p>
                     {% blocktranslate %}
                         Unless otherwise indicated, the Site is our proprietary property and all source code, databases,
@@ -126,7 +127,7 @@
                 </p>
             </div>
             <div id="userreps">
-                <h3>{% translate "3. USER REPRESENTATIONS" %}</h3>
+                <h2>{% translate "3. USER REPRESENTATIONS" %}</h2>
                 <p>
                     {% blocktranslate %}
                         By using the Site, you represent and warrant that:  (1) all registration information you submit
@@ -148,7 +149,7 @@
                 </p>
             </div>
             <div id="userreg">
-                <h3>{% translate "4. USER REGISTRATION" %}</h3>
+                <h2>{% translate "4. USER REGISTRATION" %}</h2>
                 <p>
                     {% blocktranslate %}
                         You may be required to register with the Site. You agree to keep your password confidential and
@@ -159,7 +160,7 @@
                 </p>
             </div>
             <div id="prohibited">
-                <h3>{% translate "5. PROHIBITED ACTIVITIES" %}</h3>
+                <h2>{% translate "5. PROHIBITED ACTIVITIES" %}</h2>
                 <p>
                     {% blocktranslate %}
                         You may not access or use the Site for any purpose other than that for which we make the Site
@@ -273,7 +274,7 @@
                 </ul>
             </div>
             <div id="ugc">
-                <h3>{% translate "6. USER GENERATED CONTRIBUTIONS" %}</h3>
+                <h2>{% translate "6. USER GENERATED CONTRIBUTIONS" %}</h2>
                 <p>
                     {% blocktranslate %}
                         The Site does not offer unauthorized users to submit or post article. We may provide you with
@@ -376,7 +377,7 @@
                 </p>
             </div>
             <div id="license">
-                <h3>{% translate "7. CONTRIBUTION LICENSE" %}</h3>
+                <h2>{% translate "7. CONTRIBUTION LICENSE" %}</h2>
                 <p>
                     {% blocktranslate %}
                         By posting your Contributions to any part of the Site, you automatically grant, and you
@@ -424,7 +425,7 @@
                 </p>
             </div>
             <div id="submissions">
-                <h3>{% translate "8. SUBMISSIONS" %}</h3>
+                <h2>{% translate "8. SUBMISSIONS" %}</h2>
                 <p>
                     {% blocktranslate %}
                         You acknowledge and agree that any questions, comments, suggestions, ideas, feedback, or other
@@ -439,7 +440,7 @@
                     {% endblocktranslate %}
             </div>
             <div id="thirdparty">
-                <h3>{% translate "9. THIRD-PARTY WEBSITE AND CONTENT" %}</h3>
+                <h2>{% translate "9. THIRD-PARTY WEBSITE AND CONTENT" %}</h2>
                 <p>
                     {% blocktranslate %}
                         The Site may contain (or you may be sent through the Site or the Service) links to other
@@ -469,7 +470,7 @@
                 </p>
             </div>
             <div id="advertisers">
-                <h3>{% translate "10. ADVERTISERS" %}</h3>
+                <h2>{% translate "10. ADVERTISERS" %}</h2>
                 <p>
                     {% blocktranslate %}
                         We allow advertisers to display their advertisements and other information in certain areas of
@@ -484,7 +485,7 @@
                 </p>
             </div>
             <div id="sitemanage">
-                <h3>{% translate "11. SITE MANAGEMENT" %}</h3>
+                <h2>{% translate "11. SITE MANAGEMENT" %}</h2>
                 <p>
                     {% blocktranslate %}
                         We reserve the right, but not the obligation, to: (1) monitor the Site for violations of these
@@ -501,7 +502,7 @@
                 </p>
             </div>
             <div id="privacypolicy1">
-                <h3>{% translate "12. PRIVACY POLICY" %}</h3>
+                <h2>{% translate "12. PRIVACY POLICY" %}</h2>
                 <p>
                     {% blocktranslate with url="https://crueltouch.com/privacy-policy" %}
                         We care about data privacy and security. Please review our
@@ -517,7 +518,7 @@
                 </p>
             </div>
             <div id="copyright2">
-                <h3>{% translate "13. COPYRIGHT INFRINGEMENTS" %}</h3>
+                <h2>{% translate "13. COPYRIGHT INFRINGEMENTS" %}</h2>
                 <p>
                     {% blocktranslate %}
                         We respect the intellectual property rights of others. If you believe that any material
@@ -572,7 +573,7 @@
                 </p>
             </div>
             <div id="terms">
-                <h3>{% translate "14. TERM AND TERMINATION" %}</h3>
+                <h2>{% translate "14. TERM AND TERMINATION" %}</h2>
                 <p>
                     {% blocktranslate %}
                         These Terms of Use shall remain in full force and effect while you use the Site. WITHOUT
@@ -597,7 +598,7 @@
                 </p>
             </div>
             <div id="modifications">
-                <h3>{% translate "15. MODIFICATIONS AND INTERRUPTIONS" %}</h3>
+                <h2>{% translate "15. MODIFICATIONS AND INTERRUPTIONS" %}</h2>
                 <p>
                     {% blocktranslate %}
                         We reserve the right to change, modify, or remove the contents of the Site at any time or for
@@ -621,7 +622,7 @@
                 </p>
             </div>
             <div id="law">
-                <h3>{% translate "16. GOVERNING LAW" %}</h3>
+                <h2>{% translate "16. GOVERNING LAW" %}</h2>
                 <p>
                     {% blocktranslate %}
                         These conditions are governed by and interpreted following the laws of USA, and the use of
@@ -636,7 +637,7 @@
                 </p>
             </div>
             <div id="disputes">
-                <h3>{% translate "17. DISPUTE RESOLUTION" %}</h3>
+                <h2>{% translate "17. DISPUTE RESOLUTION" %}</h2>
                 <div>
                     <h4>{% translate "Informal Negotiations" %}</h4>
                     <p>
@@ -701,7 +702,7 @@
                 </div>
             </div>
             <div id="corrections">
-                <h3>{% translate "18. CORRECTIONS" %}</h3>
+                <h2>{% translate "18. CORRECTIONS" %}</h2>
                 <p>
                     {% blocktranslate %}
                         There may be information on the Site that contains typographical errors, inaccuracies, or
@@ -712,7 +713,7 @@
                 </p>
             </div>
             <div id="disclaimer">
-                <h3>{% translate "19. DISCLAIMER" %}</h3>
+                <h2>{% translate "19. DISCLAIMER" %}</h2>
                 <p>
                     {% blocktranslate %}
                         THE SITE IS PROVIDED ON AN AS-IS AND AS-AVAILABLE BASIS. YOU AGREE THAT YOUR USE OF THE SITE AND
@@ -740,7 +741,7 @@
                 </p>
             </div>
             <div id="liability">
-                <h3>{% translate "20. LIMITATION OF LIABILITY" %}</h3>
+                <h2>{% translate "20. LIMITATION OF LIABILITY" %}</h2>
                 <p>
                     {% blocktranslate %}
                         IN NO EVENT WILL WE, BE LIABLE TO YOU OR ANY THIRD PARTY
@@ -751,7 +752,7 @@
                 </p>
             </div>
             <div id="indemnification">
-                <h3>{% translate "21. INDEMNIFICATION" %}</h3>
+                <h2>{% translate "21. INDEMNIFICATION" %}</h2>
                 <p>
                     {% blocktranslate %}
                         You agree to defend, indemnify, and hold us harmless, including our subsidiaries, affiliates,
@@ -770,7 +771,7 @@
                 </p>
             </div>
             <div id="userdata">
-                <h3>{% translate "22. USER DATA" %}</h3>
+                <h2>{% translate "22. USER DATA" %}</h2>
                 <p>
                     {% blocktranslate %}
                         We will maintain certain data that you transmit to the Site for the purpose of managing the
@@ -783,7 +784,7 @@
                 </p>
             </div>
             <div id="electronic">
-                <h3>{% translate "23. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES" %}</h3>
+                <h2>{% translate "23. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES" %}</h2>
                 <p>
                     {% blocktranslate %}
                         Visiting the Site, sending us emails, and completing online forms constitute electronic
@@ -800,7 +801,7 @@
                 </p>
             </div>
             <div id="misc">
-                <h3>{% translate "24. MISCELLANEOUS" %}</h3>
+                <h2>{% translate "24. MISCELLANEOUS" %}</h2>
                 <p>
                     {% blocktranslate %}
                         These Terms of Use and any policies or operating rules posted by us on the Site or in respect to
@@ -821,7 +822,7 @@
                 </p>
             </div>
             <div id="contact">
-                <h3>{% translate "25. CONTACT US" %}</h3>
+                <h2>{% translate "25. CONTACT US" %}</h2>
                 <p>
                     {% blocktranslate %}
                         In order to resolve a complaint regarding the Site or to receive further information regarding
