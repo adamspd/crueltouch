@@ -147,7 +147,7 @@ USER_ONLINE_TIMEOUT = 300
 USER_LAST_SEEN_TIMEOUT = 60 * 60 * 24 * 7
 
 # Caches settings
-CACHES_LOCATION = os.path.join(BASE_DIR, '.cache') if DEBUG else "/home/debian/.cache/crueltouch"
+CACHES_LOCATION = os.path.join(BASE_DIR, '.cache') if DEBUG else "/home/ubuntu/.cache/crueltouch"
 
 CACHES = {
     'default': {
