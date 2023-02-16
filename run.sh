@@ -21,6 +21,9 @@ print_style () {
     printf "$STARTCOLOR%b$ENDCOLOR\n" "$1";
 }
 
+print_style "Activating environment" "info"
+source /home/ubuntu/web/crueltouch/env/bin/activate
+
 print_style "Checking if everything is correct" "info"
 python3 manage.py check --deploy
 
@@ -46,7 +49,7 @@ python3 manage.py migrate
 
 print_style "\nRestart the system" "warning"
 sudo systemctl daemon-reload
-sudo systemctl restart gunicorn.service
+sudo systemctl restart crueltouch.service
 sudo systemctl restart nginx.service
 sudo systemctl restart uwsgi.service
 
