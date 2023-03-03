@@ -1,39 +1,4 @@
 /* create a gallery of images */
-.container-all {
-    margin: 0 auto;
-}
-
-.gallery-all {
-    margin: 0 5px;
-    width: 100vw;
-    height: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-gap: 2rem;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-}
-
-.img-container {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
-
-.actual-img {
-    box-shadow: 0 0 0.5rem 0.5rem rgba(0, 0, 0, 0.2);
-    max-width: 300px;
-    height: auto;
-    margin: 0.5rem;
-    border-radius: 0.1rem;
-    object-fit: cover;
-}
-
-.gallery-all img:hover {
-    cursor: pointer;
-}
 
 /* add watermark on top of photos */
 .watermarked {

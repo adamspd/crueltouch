@@ -155,7 +155,7 @@ class Photo(models.Model):
         self.can_be_downloaded = False
         self.save()
 
-    def create_thumbnail(self):
+    def create_thumbnail(self, base_height=300):
         if not self.thumbnail:
             img = Image.open(self.file)
             # get image's name without path and extension
@@ -178,7 +178,6 @@ class Photo(models.Model):
                 # no EXIF information found
                 pass
             # resize image
-            base_height = 300
             height_percent = (base_height / float(img.size[1]))
             width_size = int((float(img.size[0]) * float(height_percent)))
             img = img.resize((width_size, base_height), PIL.Image.ANTIALIAS)
@@ -199,6 +198,8 @@ class Photo(models.Model):
             else:
                 self.create_thumbnail()
                 return self.thumbnail.url if self.thumbnail else ''
+        else:
+            return ''
 
     def get_name(self):
         name = os.path.basename(self.file.name)
