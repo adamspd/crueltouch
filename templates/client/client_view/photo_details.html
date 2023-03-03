@@ -21,7 +21,7 @@
                                 {% for photo in album.get_photos %}
                                     <label for="photofav{{ forloop.counter }}" class="img-container">
                                         <div class="watermarked" data-watermark="CRUELTOUCH">
-                                            <img src="{{ photo.file.url }}" alt="" class="actual-img">
+                                            <img src="{{ photo.get_url }}" alt="" class="actual-img">
                                         </div>
                                         <div class="overlay">
                                             <span class="img-id-text">{{ photo.id }}</span> &nbsp;
