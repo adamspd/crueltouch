@@ -134,3 +134,31 @@ a{
     margin-left: 5px;
     margin-right: 5px;
 }
+
+#toggle-password {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  width: 40px;
+  height: 40px;
+}
+
+#toggle-password:focus {
+  outline: none;
+}
+
+#toggle-password i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  color: #333;
+}
+

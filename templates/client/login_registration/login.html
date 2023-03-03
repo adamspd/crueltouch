@@ -36,8 +36,11 @@
                                     <i class="fa fa-key" aria-hidden="true"></i>
                                 </span>
                             </div>
-                            <input type="password" name="password" placeholder="{% trans 'Password' %}..."
+                            <input type="password" name="password" id="password" placeholder="{% trans 'Password' %}..."
                                    class="form-control">
+                            <button type="button" id="toggle-password" aria-label="Toggle password visibility">
+                                <i class="fas fa-eye"></i>
+                            </button>
                         </div>
                         <div class="input-group mb-2">
                             <div><a href="{% url 'reset_password' %}"
@@ -78,3 +81,25 @@
         </div>
     </div>
 {% endblock body %}
+
+{% block customJS %}
+    <script>
+        const passwordInput = document.getElementById('password');
+        const togglePasswordButton = document.getElementById('toggle-password');
+
+        togglePasswordButton.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            if (type === 'password') {
+                togglePasswordButton.setAttribute('aria-label', 'Show password');
+                togglePasswordButton.querySelector('i').classList.remove('fa-eye-slash');
+                togglePasswordButton.querySelector('i').classList.add('fa-eye');
+            } else {
+                togglePasswordButton.setAttribute('aria-label', 'Hide password');
+                togglePasswordButton.querySelector('i').classList.remove('fa-eye');
+                togglePasswordButton.querySelector('i').classList.add('fa-eye-slash');
+            }
+        });
+    </script>
+{% endblock %}
