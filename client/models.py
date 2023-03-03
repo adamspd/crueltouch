@@ -1,10 +1,17 @@
+import os
 from datetime import datetime
+from io import BytesIO
 from sqlite3 import IntegrityError
 
+import PIL
+from PIL import Image
+from PIL.ExifTags import TAGS
 from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User, PermissionsMixin
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models.signals import post_save
@@ -127,6 +134,7 @@ class Photo(models.Model):
     file = models.ImageField(upload_to='Client', null=True, blank=True)
     is_favorite = models.BooleanField(default=False)
     can_be_downloaded = models.BooleanField(default=False)
+    thumbnail = models.FileField(upload_to='Client/thumbnails', null=True, blank=True)
 
     def __str__(self):
         return self.file.name
@@ -147,15 +155,77 @@ class Photo(models.Model):
         self.can_be_downloaded = False
         self.save()
 
+    def create_thumbnail(self):
+        if not self.thumbnail:
+            img = Image.open(self.file)
+            # get image's name without path and extension
+            name = os.path.basename(self.file.name)
+            name, extension = os.path.splitext(name)[0], os.path.splitext(name)[1]
+            name = name + '_thumbnail' + extension
+            # extract orientation information from image's metadata
+            try:
+                for orientation in TAGS.keys():
+                    if TAGS[orientation] == 'Orientation':
+                        break
+                exif = dict(img._getexif().items())
+                if exif[orientation] == 3:
+                    img = img.rotate(180, expand=True)
+                elif exif[orientation] == 6:
+                    img = img.rotate(-90, expand=True)
+                elif exif[orientation] == 8:
+                    img = img.rotate(90, expand=True)
+            except (AttributeError, KeyError, IndexError):
+                # no EXIF information found
+                pass
+            # resize image
+            base_height = 300
+            height_percent = (base_height / float(img.size[1]))
+            width_size = int((float(img.size[0]) * float(height_percent)))
+            img = img.resize((width_size, base_height), PIL.Image.ANTIALIAS)
+            # convert RGBA image to RGB
+            if img.mode == 'RGBA':
+                img = img.convert('RGB')
+            # save thumbnail in self.thumbnail_url field
+            thumbnail_io = BytesIO()
+            img.save(thumbnail_io, format='JPEG')
+            thumbnail_file = ContentFile(thumbnail_io.getvalue())
+            self.thumbnail.save(name, thumbnail_file, save=False)
+            self.save()
+
+    def get_thumbnail_url(self):
+        if self.file:
+            if self.thumbnail:
+                return self.thumbnail.url
+            else:
+                self.create_thumbnail()
+                return self.thumbnail.url if self.thumbnail else ''
+
+    def get_name(self):
+        name = os.path.basename(self.file.name)
+        return name
+
     def get_is_favorite(self):
         if self.is_favorite:
             return "like is-active"
         else:
             return ""
 
-    def delete(self, using=None, keep_parents=False):
-        self.file.delete()
-        super().delete(using, keep_parents)
+    def delete(self, *args, **kwargs):
+        # Delete the files from the file system.
+        if self.file:
+            default_storage.delete(self.file.name)
+        if self.thumbnail:
+            default_storage.delete(self.thumbnail.name)
+
+        # Call the superclass delete() method.
+        super(Photo, self).delete(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.create_thumbnail()
+
+    def get_url(self):
+        return self.file.url if self.file else ''
 
 
 class Album(models.Model):
@@ -191,12 +261,14 @@ class Album(models.Model):
         return self.photos.all()
 
     def get_photos_count(self):
+        c_print(f"photos count: {self.photos.count()}, photos: {self.photos.all()}")
         return self.photos.count()
 
     def get_photos_liked_count(self):
         return self.photos.filter(is_favorite=True).count()
 
     def get_photos_liked(self):
+        # return thumbnails of photos that are liked
         return self.photos.filter(is_favorite=True)
 
     def get_photos_not_liked(self):
