@@ -4,6 +4,7 @@
 {% block customCSS %}
     <link rel="stylesheet" type="text/css" href="{% static 'client/css/index.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'client/css/gallery.css' %}">
+    <link rel="stylesheet" href="{% static 'client/css/modifying_photos_albums.css' %}">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
           integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
@@ -16,24 +17,32 @@
             <div class="row">
                 <div class="md-12">
                     <div class="content">
-                        <div class="container-all">
-                            <div class="gallery-all">
-                                {% for photo in album.get_photos %}
-                                    <label for="photofav{{ forloop.counter }}" class="img-container">
-                                        <div class="watermarked" data-watermark="CRUELTOUCH">
-                                            <img src="{{ photo.get_url }}" alt="" class="actual-img">
-                                        </div>
-                                        <div class="overlay">
-                                            <span class="img-id-text">{{ photo.id }}</span> &nbsp;
-                                            <button class="button like rounded">
-                                                <i class="fa fa-heart {{ photo.get_is_favorite }}"
-                                                   onClick="setFavorite({{ photo.id }})"
-                                                   id="{{ photo.id }}"></i>
-                                            </button>
-                                        </div>
-                                    </label>
-                                {% endfor %}
-                            </div>
+                        <hr>
+                        <div class="cardHeader">
+                            <h1 style="font-size: 20px">Click on the heart to like/dislike</h1>
+                            <h2 style="font-size: 12px">Click on the photo itself to enlarge</h2>
+                        </div>
+                        <br><br>
+                        <div style="display: flex; flex-flow: row wrap; justify-items: flex-start; padding: 5px;">
+                            {% for photo in album.get_photos %}
+                                <div style="margin: 5px">
+                                    <div>
+                                        <a href="{{ photo.file.url }}" class="portfolio-item img-popup set-bg"
+                                           data-setbg="{{ photo.file.url }}" target="_blank">
+                                            <img src="{{ photo.get_thumbnail_url }}" alt="" style="height: 150px">
+                                        </a>
+                                    </div>
+                                    <div class="overlay">
+                                        <span class="img-id-text">{{ photo.get_name|truncatechars:10 }}</span> &nbsp;
+                                        <button class="button like rounded">
+                                            <i class="fa fa-heart {{ photo.get_is_favorite }}"
+                                               onClick="setFavorite({{ photo.id }})"
+                                               id="{{ photo.id }}"></i>
+                                        </button>
+                                    </div>
+                                    <br><br>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -49,6 +58,19 @@
 
 {% block customJS %}
     <script>
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "PrintScreen") {
+                event.preventDefault();
+                alert("Taking screenshots is not allowed on this webpage.");
+            }
+        });
+
+        document.addEventListener("contextmenu", function (event) {
+            event.preventDefault();
+            alert("The right-click context menu has been disabled on this page.");
+        });
+
+
         document.querySelectorAll('.watermarked').forEach(function (el) {
             el.dataset.watermark = (el.dataset.watermark + ' ').repeat(600);
         });
