@@ -1,0 +1,144 @@
+/* General styles */
+body {
+    font-family: forum, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.main-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+/* Page body */
+.page-body {
+    max-width: 980px;
+}
+
+.page-title {
+    font-family: Lobster, cursive;
+    margin: 10px;
+    padding: 15px;
+    text-align: center;
+}
+
+/* Page item */
+.page-item {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 20px;
+    height: 80vh;
+    align-items: center;
+}
+
+
+.item-name {
+    font: normal normal lighter 45px/1.4em forum;
+}
+
+/* Item picture */
+.item-picture {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.item-picture img {
+    height: 629px;
+    width: 530px;
+    object-fit: contain;
+}
+
+/* Item description */
+.item-description {
+    padding: 70px 70px;
+    margin-left: -25px;
+    height: 503px;
+    width: auto;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    border: 1px solid #000;
+    border-radius: 5px;
+    z-index: 1;
+    background: white;
+    align-self: center;
+}
+
+
+/* Media queries */
+@media screen and (max-width: 1024px) {
+    .item-picture img {
+        height: 550px;
+        width: 450px;
+    }
+
+    .item-description {
+        padding: 50px 50px;
+        margin-left: -15px;
+        height: 450px;
+    }
+}
+
+/* Media queries for max-width: 880px */
+@media screen and (max-width: 880px) {
+    .page-item {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .item-picture img {
+        height: 500px;
+        width: 400px;
+    }
+
+    .item-description {
+        padding: 40px 40px;
+        margin: -40px auto 0;
+        width: 320px;
+        height: 400px;
+    }
+}
+
+/* Media queries for max-width: 768px */
+@media screen and (max-width: 768px) {
+}
+
+/* Media queries for max-width: 600px */
+@media screen and (max-width: 600px) {
+}
+
+
+@media screen and (max-width: 480px) {
+    .page-body {
+        margin-bottom: 30px;
+    }
+
+    .page-item {
+        margin-bottom: 55px;
+    }
+
+    .item-picture img {
+        height: auto;
+        width: 100%;
+    }
+
+    .description-paragraph {
+        font-family: Lobster, cursive;
+    }
+    .item-description {
+        padding: 20px 20px;
+        margin: -30px auto 0;
+        height: auto;
+        width: 92%;
+    }
+
+    .item-name {
+        font: normal normal normal 25px/1.4em forum;
+    }
+}

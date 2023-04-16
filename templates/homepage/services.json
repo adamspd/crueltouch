@@ -1,0 +1,56 @@
+{
+  "services": [
+    {
+      "wedding": [
+        {
+          "id": 1,
+          "name": "Wedding Basic",
+          "description": "1 photographer / digital photos only",
+          "duration": 3,
+          "price": 850,
+          "image": "https://static.wixstatic.com/media/36c488_eec8a31c1ce0401f8f644c66ce1b80d2~mv2.jpg/v1/fill/w_1060,h_1258,fp_0.50_0.50,q_85,usm_0.66_1.00_0.01,enc_auto/36c488_eec8a31c1ce0401f8f644c66ce1b80d2~mv2.jpg"
+        },
+        {
+          "id": 2,
+          "name": "Wedding Standard",
+          "description": "1 photographer / 1 videographer / 3 mins recap (1080px)",
+          "duration": 5,
+          "price": 2200,
+          "image": "https://static.wixstatic.com/media/36c488_3388fa347320411b942488a7e4625646~mv2.jpg/v1/fill/w_1060,h_1258,fp_0.50_0.50,q_85,usm_0.66_1.00_0.01,enc_auto/36c488_3388fa347320411b942488a7e4625646~mv2.jpg"
+        },
+        {
+          "id": 3,
+          "name": "Wedding Premium",
+          "description": "2 photographers / 1 videographer / 3 mins videos (1080px) / Engagement photos & videos (30 seconds)",
+          "duration": 8,
+          "price": 2900,
+          "image": "https://static.wixstatic.com/media/nsplsh_6b3846536f57414f7a6234~mv2_d_6000_4000_s_4_2.jpg/v1/fill/w_1060,h_1258,fp_0.50_0.50,q_85,usm_0.66_1.00_0.01,enc_auto/nsplsh_6b3846536f57414f7a6234~mv2_d_6000_4000_s_4_2.jpg"
+        },
+        {
+          "id": 4,
+          "name": "Wedding Deluxe",
+          "description": "2 photographers / 1 videographer / 4 to 6 mins videos (4k) wedding day & engagement / Slideshow / 1 print",
+          "duration": 8,
+          "price": 3200,
+          "image": "https://static.wixstatic.com/media/36c488_fc2af57236624db78531f4718c166f17~mv2.jpg/v1/fill/w_758,h_900,fp_0.50_0.50,q_85,enc_auto/36c488_fc2af57236624db78531f4718c166f17~mv2.jpg"
+        },
+        {
+          "id": 5,
+          "name": "Wedding Gold",
+          "description": "2 photographers / 1 videographer / 4 to 6 mins videos (4k) wedding day & engagement / Slideshow / Drone footage / 1 print",
+          "duration": 8,
+          "price": 4000,
+          "image": "https://static.wixstatic.com/media/nsplsh_5a89c8bc6ce142bf8ffd464944ae2790~mv2.jpg/v1/fill/w_1060,h_1258,fp_0.50_0.50,q_85,usm_0.66_1.00_0.01,enc_auto/nsplsh_5a89c8bc6ce142bf8ffd464944ae2790~mv2.jpg"
+        },
+        {
+          "id": 6,
+          "name": "Wedding Platinum",
+          "description": "2 photographers / 1 videographer / 4 to 6 mins videos (6k) wedding day & engagement / Slideshow / Drone footage / 1 print",
+          "duration": 8,
+          "price": 5000,
+          "image": "https://static.wixstatic.com/media/nsplsh_664a7a6d50652d61306555~mv2_d_7360_4912_s_4_2.jpg/v1/fill/w_1060,h_1258,fp_0.50_0.50,q_85,usm_0.66_1.00_0.01,enc_auto/nsplsh_664a7a6d50652d61306555~mv2_d_7360_4912_s_4_2.jpg"
+        }
+      ]
+    }
+  ]
+}

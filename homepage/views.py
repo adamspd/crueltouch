@@ -1,12 +1,15 @@
+import json
 import random
 
-from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
-
+from django.utils.translation import gettext as _
 from django.views import generic
 
 from crueltouch import settings
+from utils.crueltouch_utils import email_check
 from .models import Photo
 
 
@@ -69,3 +72,16 @@ def get_logo_mini(request):
 
 def promotions(request):
     return render(request, 'client/booking_and_promotions/promotions.html')
+
+
+@login_required(login_url='/administration/login/')
+@user_passes_test(email_check, login_url='/administration/login/')
+def services_offered(request):
+    page_title = _("Services | CruelTouch")
+    page_description = _("Services offered by CruelTouch Photography")
+    # read the JSON file templates/homepage/services.json
+    json_file = open(settings.BASE_DIR / 'templates/homepage/services.json', 'r')
+    services_data = json.load(json_file)
+    services = services_data['services']
+    context = {'page_title': page_title, 'page_description': page_description, 'services': services}
+    return render(request, 'homepage/services_offered.html', context=context)
