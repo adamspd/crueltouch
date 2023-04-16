@@ -1,0 +1,41 @@
+{% extends 'homepage/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block priceTableCSS %}
+    <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/services.css' %}"/>
+{% endblock %}
+{% block title %}
+    {{ page_title }}
+{% endblock %}
+{% block description %}
+    {{ page_description }}
+{% endblock %}
+{% block body %}
+    <div class="main-container">
+        <h1 class="page-title">{% trans "Services" %}</h1>
+        <div class="page-menu">
+
+        </div>
+        <div class="page-body">
+            {% for service in services %}
+                {% for category, items in service.items %}
+                    {% for item in items %}
+                        <div class="page-item">
+                            <div class="item-picture">
+                                <img src="{{ item.image }}" alt="{{ item.name }}">
+                            </div>
+                            <div class="item-description">
+                                <h2 class="item-name">{{ item.name }}</h2>
+                                <p class="description-paragraph">{{ item.description }}</p>
+                                <hr>
+                                <p>{{ item.duration }} hr</p>
+                                <p>${{ item.price }}</p>
+                                <a href="" class="btn btn-dark">Book Now</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
