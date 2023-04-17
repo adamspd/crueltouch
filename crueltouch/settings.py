@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'static_pages_and_forms',
     'portfolio',
     'administration',
+    'appointments',
 ]
 
 SITE_ID = 1

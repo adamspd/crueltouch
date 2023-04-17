@@ -62,9 +62,16 @@ class UserManager(BaseUserManager):
 class UserClient(AbstractBaseUser, PermissionsMixin, models.Model):
     email = models.EmailField(max_length=255, unique=True, default="", help_text=_("A valid email address, please"))
     first_name = models.CharField(max_length=255, default=None)
+    phone_number = models.CharField(validators=[phone_regex], max_length=10, blank=True, null=True, default="",
+                                    help_text=_("Phone number must not contain spaces, letters, parentheses or "
+                                                "dashes. It must contain 10 digits."))
+    address = models.CharField(max_length=255, blank=True, null=True, default="",
+                               help_text=_("Does not have to be specific, just the city and the state"))
+
     is_active = models.BooleanField(default=True)  # can login
     admin = models.BooleanField(default=False)  # superuser
     staff = models.BooleanField(default=False)  # staff member
+
     start_date = models.DateTimeField(default=now)
     first_login = models.BooleanField(default=False)
 

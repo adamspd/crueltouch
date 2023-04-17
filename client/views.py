@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView
-from validate_email import validate_email
+# from validate_email import validate_email
 
 from client.models import UserClient, BookMe, Album, Photo
 from static_pages_and_forms.models import ContactForm
@@ -233,7 +233,8 @@ def form_book_me(request_client):
                 messages.error(request_client, "Form not valid, try again !")
                 return redirect('client:book_me')
             # validate email exists in real world
-            valid = validate_email(email)
+            valid = True
+            # valid = validate_email(email)
             # valid = True
             c_print(f"client.views:230 | email is valid: {valid}")
             if not valid:
