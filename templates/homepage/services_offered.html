@@ -30,7 +30,8 @@
                                 <hr>
                                 <p>{{ item.duration }} hr</p>
                                 <p>${{ item.price }}</p>
-                                <a href="" class="btn btn-dark">Book Now</a>
+                                <a href="{% url 'appointment:appointment_request' service_id=item.id %}"
+                                   class="btn btn-dark">Book Now</a>
                             </div>
                         </div>
                     {% endfor %}
