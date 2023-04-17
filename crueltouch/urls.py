@@ -30,6 +30,7 @@ urlpatterns = [
     path('administration/', include('administration.urls'), name='administration'),
     path('contact/', include('static_pages_and_forms.urls'), name='flatpages'),
     path('portfolio/', include('portfolio.urls'), name='portfolio'),
+    path('appointments/', include('appointments.urls')),
     path('reset_password/',
          auth_views.PasswordResetView.as_view(template_name="administration/password/forgot-password.html"),
          name='reset_password'),

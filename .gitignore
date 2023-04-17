@@ -5,6 +5,8 @@ crueltouch/__pycache__
 homepage/__pycache__
 portfolio/__pycache__
 static_pages_and_forms/__pycache__
+administration/__pycache__
+appointments/__pycache__
 
 # migrations folders
 client/migrations
@@ -12,6 +14,7 @@ homepage/migrations
 portfolio/migrations
 static_pages_and_forms/migrations
 administration/migrations
+appointments/migrations
 
 # DS_Store file
 .DS_Store
@@ -20,6 +23,8 @@ crueltouch/.DS_Store
 homepage/.DS_Store
 portfolio/.DS_Store
 static_pages_and_forms/.DS_Store
+administration/.DS_Store
+appointments/.DS_Store
 
 # IDE & Environments
 .idea

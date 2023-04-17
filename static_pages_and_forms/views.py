@@ -4,7 +4,7 @@ from django.utils.translation import gettext as _
 
 from utils.crueltouch_utils import check, c_print
 from .form import Contact
-from validate_email import validate_email
+# from validate_email import validate_email
 
 
 # Create your views here.
@@ -32,7 +32,7 @@ def success(request):
 
 
 def check_email(data):
-    is_valid = validate_email(data)
+    # is_valid = validate_email(data)
     if data is not None:
         if not is_valid:
             c_print(f"Email is not valid: {is_valid}")
