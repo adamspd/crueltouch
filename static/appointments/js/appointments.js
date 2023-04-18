@@ -1,17 +1,48 @@
 const calendarEl = document.getElementById('calendar');
+const today = new Date().toISOString().slice(0, 10);
 const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
+    headerToolbar: {
+        left: 'title',
+        right: 'prev,today,next',
+    },
     height: '400px',
     width: '80%',
     themeSystem: 'bootstrap',
     color: 'black',
     selectable: true,
     dateClick: function (info) {
-        getAvailableSlots(info.dateStr);
+        // Convert the selected date string to a Date object
+        const selectedDate = new Date(info.dateStr);
+
+        // Get today's date
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const slotContainer = $('.slot-container');
+        const appointmentSlot = $('.appointment-slot');
+        // Check if the selected date is in the past
+        if (selectedDate < today) {
+            // Show an error message
+            if (slotContainer.find('.no-availability-text').length === 0) {
+                slotContainer.append('<p class="no-availability-text">Date is in the past.</p>');
+                appointmentSlot.remove();
+            }
+        } else {
+            // Call the getAvailableSlots function
+            getAvailableSlots(info.dateStr);
+        }
+    },
+    selectAllow: function (info) {
+        return (info.start >= getDateWithoutTime(new Date()));
     },
 });
 
 calendar.setOption('locale', locale);
+
+function getDateWithoutTime(dt) {
+    dt.setHours(0, 0, 0, 0);
+    return dt;
+}
 
 $(document).ready(function () {
     calendar.render();
@@ -35,8 +66,8 @@ function getAvailableSlots(selectedDate) {
             if (data.available_slots.length === 0) {
                 if (slotContainer.find('.no-availability-text').length === 0) {
                     slotContainer.append('<p class="no-availability-text">No availability</p>');
-                    slotContainer.append(`<button class="btn btn-dark btn-request-next-slot" data-service-id="${serviceId}">Request for next available slot</button>`);
                 }
+                slotContainer.append(`<button class="btn btn-dark btn-request-next-slot" data-service-id="${serviceId}">Request for next available slot</button>`);
             } else {
                 // remove the button to request for next available slot
                 $('.no-availability-text').remove();
