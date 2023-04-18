@@ -4,8 +4,8 @@ from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from crueltouch import email_secrets
-from crueltouch.email_secrets import DATABASE_UPDATE
+from crueltouch import secrets
+from crueltouch.secrets import DATABASE_UPDATE
 from crueltouch.productions import production_debug
 from utils.crueltouch_utils import c_print, send_client_email, send_email_admin
 
@@ -27,7 +27,7 @@ class ContactForm(models.Model):
 def send_email_after_saving_contact_form(sender, instance, created, *args, **kwargs):
     if created:
         if production_debug or DATABASE_UPDATE:
-            client_email = email_secrets.TEST_EMAIL
+            client_email = secrets.TEST_EMAIL
         else:
             client_email = instance.email
         c_print("client.models:235 | Sending email to admin to notify of a new contact form submission")

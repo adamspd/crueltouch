@@ -17,7 +17,7 @@ from django.conf import global_settings
 from django.conf import locale
 from django.utils.translation import gettext_lazy as _
 
-from crueltouch import email_secrets
+from crueltouch import secrets
 from crueltouch.productions import production_debug, production_secret_key
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -32,7 +32,7 @@ SECRET_KEY = production_secret_key
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = production_debug
 
-ALLOWED_HOSTS = ["*"] if DEBUG else email_secrets.LIST_OF_ALLOWED_HOSTS
+ALLOWED_HOSTS = ["*"] if DEBUG else secrets.LIST_OF_ALLOWED_HOSTS
 
 AUTH_USER_MODEL = 'client.UserClient'
 
@@ -161,23 +161,23 @@ CACHES = {
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = email_secrets.EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = email_secrets.EMAIL_HOST_PASSWORD
+EMAIL_HOST_USER = secrets.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = secrets.EMAIL_HOST_PASSWORD
 EMAIL_USE_TLS = True
 EMAIL_SUBJECT_PREFIX = ""
 EMAIL_USE_LOCALTIME = True
 
 ADMINS = [
-    ('Adams', email_secrets.ADMIN_EMAIL),
+    ('Adams', secrets.ADMIN_EMAIL),
 ]
 if not DEBUG:
-    ADMINS.append(('Roos', email_secrets.OTHER_ADMIN_EMAIL))
+    ADMINS.append(('Roos', secrets.OTHER_ADMIN_EMAIL))
 
 MANAGERS = [
-    ('Adams', email_secrets.ADMIN_EMAIL),
+    ('Adams', secrets.ADMIN_EMAIL),
 ]
 
-ADMIN_EMAIL = email_secrets.ADMIN_EMAIL
+ADMIN_EMAIL = secrets.ADMIN_EMAIL
 
 # Language translation settings
 
@@ -207,22 +207,25 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR / 'locale'),
 )
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'null': {
-            'level': 'DEBUG',
-            'class': 'logging.NullHandler',
+if not DEBUG:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        "handlers": {
+            "file": {
+                "level": "DEBUG",
+                "class": "logging.FileHandler",
+                "filename": "/home/ubuntu/web/crueltouch/logs/django/debug.log",
+            },
         },
-    },
-    'loggers': {
-        'django.security.DisallowedHost': {
-            'handlers': ['null'],
-            'propagate': False,
+        'loggers': {
+            "django": {
+                "handlers": ["file"],
+                "level": "INFO",
+                "propagate": True,
+            },
         },
-    },
-}
+    }
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
