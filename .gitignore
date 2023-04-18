@@ -42,5 +42,5 @@ db.sqlite3
 media
 
 
-crueltouch/secrets.py
+crueltouch/email_secrets.py
 database_backup/*
