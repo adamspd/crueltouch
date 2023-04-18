@@ -33,6 +33,7 @@ def success(request):
 
 def check_email(data):
     # is_valid = validate_email(data)
+    is_valid = True
     if data is not None:
         if not is_valid:
             c_print(f"Email is not valid: {is_valid}")

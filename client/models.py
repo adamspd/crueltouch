@@ -19,8 +19,8 @@ from django.dispatch import receiver
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
-from crueltouch import email_secrets
-from crueltouch.email_secrets import DATABASE_UPDATE
+from crueltouch import secrets
+from crueltouch.secrets import DATABASE_UPDATE
 from crueltouch.productions import production_debug
 from utils.crueltouch_utils import c_print, notify_admin_session_request_received_via_email, \
     send_session_request_received_email, get_estimated_response_time, get_today_date, status_change_email, \
