@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'static_pages_and_forms',
     'portfolio',
     'administration',
-    'appointments',
+    'appointment',
+    'payment',
 ]
 
 SITE_ID = 1
@@ -166,6 +167,7 @@ EMAIL_HOST_PASSWORD = secrets.EMAIL_HOST_PASSWORD
 EMAIL_USE_TLS = True
 EMAIL_SUBJECT_PREFIX = ""
 EMAIL_USE_LOCALTIME = True
+SERVER_EMAIL = secrets.EMAIL_HOST_USER
 
 ADMINS = [
     ('Adams', secrets.ADMIN_EMAIL),
@@ -197,7 +199,6 @@ LANGUAGES = (
     ('en', _('English')),
     ('es', _('Spanish')),
     ('fr', _('French')),
-    # ('cr-ht', _('Kreyòl')),
 )
 
 # Languages using BiDi (right-to-left) layout
@@ -258,3 +259,26 @@ LOGIN_REDIRECT_URL = 'client/'
 
 # The number of seconds a password reset link is valid for (in second)
 PASSWORD_RESET_TIMEOUT = 3600  # 1 hour
+
+APPOINTMENT_SLOT_DURATION = 30  # minutes
+APPOINTMENT_LEAD_TIME = (9, 0)  # (hour, minute) 24-hour format
+APPOINTMENT_FINISH_TIME = (16, 30)  # (hour, minute) 24-hour format
+
+# Additional configuration options
+APPOINTMENT_CLIENT_MODEL = AUTH_USER_MODEL
+APPOINTMENT_BASE_TEMPLATE = 'homepage/base.html'
+APPOINTMENT_WEBSITE_NAME = 'CruelTouch'
+APPOINTMENT_PAYMENT_URL = 'payment:payment_linked'
+APPOINTMENT_THANK_YOU_URL = None
+
+PAYMENT_PAYPAL_ENVIRONMENT = secrets.ENVIRONMENT
+PAYMENT_PAYPAL_CLIENT_ID = secrets.CLIENT_ID
+PAYMENT_PAYPAL_CLIENT_SECRET = secrets.CLIENT_SECRET
+
+PAYMENT_BASE_TEMPLATE = 'homepage/base.html'
+PAYMENT_WEBSITE_NAME = 'CruelTouch'  # or your website name
+PAYMENT_MODEL = 'appointment.PaymentInfo'  # Replace with your app and model name
+PAYMENT_REDIRECT_SUCCESS_URL = 'homepage:index'  # Replace with your app and success view name
+
+PAYMENT_APPLY_PAYPAL_FEES = True
+PAYMENT_FEES = 0.03 if not PAYMENT_APPLY_PAYPAL_FEES else 0.00
