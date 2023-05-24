@@ -1,10 +1,10 @@
 Django==4.2.1
 django-js-asset==2.0.0
 dnspython==2.3.0
-docutils==0.19
+docutils==0.20.1
 markdown2==2.4.8
 Pillow==9.5.0
 py3-validate-email==1.0.5.post1
-requests==2.30.0
+requests==2.31.0
 django-appointment==1.0.0
 django-payment-manager==1.0.1
