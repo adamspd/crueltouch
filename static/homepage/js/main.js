@@ -50,23 +50,23 @@ $(window).on('load', function() {
 	/*---------------
 		Masonry
 	----------------*/
-	var masonryLayout = function () {
+	const masonryLayout = function () {
 		$('.portfolio-grid').masonry({
 			itemSelector: '.grid-item',
 			columnWidth: '.grid-sizer',
 			percentPosition: true
 		});
-	}
+	};
 
 	/*---------------
 		Mixitup
 	----------------*/
 	masonryLayout();
 	if($('.portfolio-gallery').length > 0 ) {
-		var containerEl = document.querySelector('.portfolio-gallery');
-		var mixer = mixitup(containerEl, {
+		const containerEl = document.querySelector('.portfolio-gallery');
+		const mixer = mixitup(containerEl, {
 			callbacks: {
-				onMixEnd: function() {
+				onMixEnd: function () {
 					masonryLayout();
 				}
 			}
@@ -88,13 +88,13 @@ $(window).on('load', function() {
 		if(localStorage.getItem("navMenu") == null) {
 			localStorage.setItem("navMenu", "show");
 			$('.main-menu').slideDown(400);
-		} else if(localStorage.getItem("navMenu") == "show") {
+		} else if(localStorage.getItem("navMenu") === "show") {
 			localStorage.removeItem("navMenu");
 			$('.main-menu').slideUp(400);
 		}
 	});
 
-	if(localStorage.getItem("navMenu") == "show") {
+	if(localStorage.getItem("navMenu") === "show") {
 		$('.main-menu').slideDown(400);
 	}
 
@@ -117,7 +117,7 @@ $(window).on('load', function() {
 		Background Set
 	--------------------*/
 	$('.set-bg').each(function() {
-		var bg = $(this).data('setbg');
+		const bg = $(this).data('setbg');
 		$(this).css('background-image', 'url(' + bg + ')');
 	});
 
@@ -158,13 +158,13 @@ $(window).on('load', function() {
 	/*----------------------
 		Portfolio item size
 	------------------------*/
-	var PorfolioItemFix = function () {
-		$( ".portfolio-item" ).each(function( index ) {
-			var portfolioItem = $(this);
-			var PIheight = portfolioItem.width();
-			portfolioItem.css('height',PIheight);
+	const PorfolioItemFix = function () {
+		$(".portfolio-item").each(function (index) {
+			const portfolioItem = $(this);
+			const PIheight = portfolioItem.width();
+			portfolioItem.css('height', PIheight);
 		});
-	}
+	};
 	PorfolioItemFix();
 	$(window).on('resize',function(){
 		PorfolioItemFix();
@@ -185,8 +185,8 @@ $(window).on('load', function() {
 		Progress Bar
 	--------------------*/
 	$('.progress-bar-style').each(function() {
-		var progress = $(this).data("progress");
-		var prog_width = progress + '%';
+		const progress = $(this).data("progress");
+		const prog_width = progress + '%';
 		if (progress <= 100) {
 			$(this).append('<div class="bar-inner" style="width:' + prog_width + '"><span>' + prog_width + '</span></div>');
 		}
@@ -201,7 +201,7 @@ $(window).on('load', function() {
 	--------------------*/
 	$('.panel-link').on('click', function (e) {
 		$('.panel-link').parent('.panel-header').removeClass('active');
-		var $this = $(this).parent('.panel-header');
+		const $this = $(this).parent('.panel-header');
 		if (!$this.hasClass('active')) {
 			$this.addClass('active');
 		}
@@ -213,10 +213,10 @@ $(window).on('load', function() {
 		Circle progress
 	--------------------*/
 	$('.circle-progress').each(function() {
-		var cpvalue = $(this).data("cpvalue");
-		var cpcolor = $(this).data("cpcolor");
-		var cptitle = $(this).data("cptitle");
-		var cpid 	= $(this).data("cpid");
+		const cpvalue = $(this).data("cpvalue");
+		const cpcolor = $(this).data("cpcolor");
+		const cptitle = $(this).data("cptitle");
+		const cpid 	= $(this).data("cpid");
 
 		$(this).append('<div class="'+ cpid +'"></div><div class="progress-info"><h2>'+ cpvalue +'%</h2><p>'+ cptitle +'</p></div>');
 
