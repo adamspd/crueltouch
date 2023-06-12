@@ -37,4 +37,3 @@ class Contact(ModelForm):
                 'class': 'form-control',
                 'placeholder': _("I'm listening... !")
             })
-

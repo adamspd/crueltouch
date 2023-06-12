@@ -1,12 +1,11 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from crueltouch import secrets
-from crueltouch.secrets import DATABASE_UPDATE
 from crueltouch.productions import production_debug
+from crueltouch.secrets import DATABASE_UPDATE
 from utils.crueltouch_utils import c_print, send_client_email, send_email_admin
 
 
