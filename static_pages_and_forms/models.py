@@ -1,13 +1,21 @@
+import os
+
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 
-from crueltouch import secrets
+
 from crueltouch.productions import production_debug
-from crueltouch.secrets import DATABASE_UPDATE
+
 from utils.crueltouch_utils import c_print, send_client_email, send_email_admin
 
+from dotenv import load_dotenv
+
+load_dotenv()  # take environment variables from .env.
+
+DATABASE_UPDATE = os.getenv('LIST_OF_LOCAL_IPS')
+TEST_EMAIL = os.getenv('TEST_EMAIL')
 
 class ContactForm(models.Model):
     full_name = models.CharField(max_length=255, null=False, blank=False, verbose_name=_("Full name"))
@@ -26,7 +34,7 @@ class ContactForm(models.Model):
 def send_email_after_saving_contact_form(sender, instance, created, *args, **kwargs):
     if created:
         if production_debug or DATABASE_UPDATE:
-            client_email = secrets.TEST_EMAIL
+            client_email = TEST_EMAIL
         else:
             client_email = instance.email
         c_print("client.models:235 | Sending email to admin to notify of a new contact form submission")

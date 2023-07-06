@@ -18,9 +18,13 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
+from dotenv import load_dotenv
 
-from crueltouch import secrets
-from crueltouch.secrets import DATABASE_UPDATE
+load_dotenv()  # take environment variables from .env.
+
+DATABASE_UPDATE = os.getenv('LIST_OF_LOCAL_IPS')
+TEST_EMAIL = os.getenv('TEST_EMAIL')
+
 from crueltouch.productions import production_debug
 from utils.crueltouch_utils import c_print, notify_admin_session_request_received_via_email, \
     send_session_request_received_email, get_estimated_response_time, get_today_date, status_change_email, \
@@ -482,7 +486,7 @@ def create_client(client_name: str, client_email: str):
 def account_authorization_status_handler(sender, instance, created, *args, **kwargs):
     if created:
         if production_debug or DATABASE_UPDATE:
-            client_email = email_secrets.TEST_EMAIL
+            client_email = TEST_EMAIL
         else:
             client_email = instance.email
         create_client(instance.full_name, client_email)
