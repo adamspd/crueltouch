@@ -102,7 +102,7 @@ def login_admin(request):
         if user is not None:
             if user.is_admin:
                 login(request, user)
-                print("roos is logged in ")
+                print("admin is logged in")
                 # Redirect to a success page.
                 if request.GET.get('next') is not None:
                     c_print(f"next is {request.GET.get('next')}")

@@ -76,7 +76,7 @@
 
         {% block login %}
             <li>
-                <a href="#">{% trans "Book Me" %}</a>
+                <a href="#">{% trans "Booking" %}</a>
                 <ul class="sub-menu">
                     {% if request.user.is_authenticated %}
                         <li><a href="{% url 'homepage:services_offered' %}">{% trans "Services" %}</a></li>

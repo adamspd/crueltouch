@@ -168,7 +168,7 @@ def owner(request):
         user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user)
-            print("roos is logged in ")
+            print("admin is logged in")
             # Redirect to a success page.
             return redirect('client:ownerislogged')
         else:
