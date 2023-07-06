@@ -18,8 +18,26 @@ from django.conf import global_settings
 from django.conf import locale
 from django.utils.translation import gettext_lazy as _
 
-from crueltouch import secrets
-from crueltouch.productions import production_debug, production_secret_key
+load_dotenv()
+allowed_hosts_str = os.getenv('LIST_OF_ALLOWED_HOSTS', default="")
+
+debug_value = os.getenv('DEBUG_VALUE')
+secret_key_value = os.getenv('SECRET_KEY_VALUE')
+
+if not debug_value or not secret_key_value:
+    from crueltouch.productions import production_debug, production_secret_key
+    debug_value = production_debug
+    secret_key_value = production_secret_key
+
+LIST_OF_ALLOWED_HOSTS = allowed_hosts_str.split(',') if allowed_hosts_str else []
+ADMIN_NAME = os.getenv('ADMIN_NAME', default="")
+ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', default="")
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', default="")
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', default="")
+OTHER_ADMIN_EMAIL = os.getenv('OTHER_ADMIN_EMAIL', default="")
+PAYPAL_ENVIRONMENT = os.getenv('PAYPAL_ENVIRONMENT', default="")
+PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID', default="")
+PAYPAL_CLIENT_SECRET = os.getenv('PAYPAL_CLIENT_SECRET', default="")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,12 +46,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = production_secret_key
+SECRET_KEY = secret_key_value
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = production_debug
+DEBUG = debug_value
 
-ALLOWED_HOSTS = ["*"] if DEBUG else secrets.LIST_OF_ALLOWED_HOSTS
+ALLOWED_HOSTS = ["*"] if DEBUG else LIST_OF_ALLOWED_HOSTS
 
 AUTH_USER_MODEL = 'client.UserClient'
 
@@ -163,24 +181,24 @@ CACHES = {
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = secrets.EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = secrets.EMAIL_HOST_PASSWORD
+EMAIL_HOST_USER = EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
 EMAIL_USE_TLS = True
 EMAIL_SUBJECT_PREFIX = ""
 EMAIL_USE_LOCALTIME = True
-SERVER_EMAIL = secrets.EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
 
 ADMINS = [
-    ('Adams', secrets.ADMIN_EMAIL),
+    ('Adams', ADMIN_EMAIL),
 ]
 if not DEBUG:
-    ADMINS.append(('Roos', secrets.OTHER_ADMIN_EMAIL))
+    ADMINS.append(('Roos', OTHER_ADMIN_EMAIL))
 
 MANAGERS = [
-    ('Adams', secrets.ADMIN_EMAIL),
+    ('Adams', ADMIN_EMAIL),
 ]
 
-ADMIN_EMAIL = secrets.ADMIN_EMAIL
+ADMIN_EMAIL = ADMIN_EMAIL
 
 # Language translation settings
 
@@ -272,9 +290,9 @@ APPOINTMENT_WEBSITE_NAME = 'CruelTouch'
 APPOINTMENT_PAYMENT_URL = 'payment:payment_linked'
 APPOINTMENT_THANK_YOU_URL = None
 
-PAYMENT_PAYPAL_ENVIRONMENT = secrets.ENVIRONMENT
-PAYMENT_PAYPAL_CLIENT_ID = secrets.CLIENT_ID
-PAYMENT_PAYPAL_CLIENT_SECRET = secrets.CLIENT_SECRET
+PAYMENT_PAYPAL_ENVIRONMENT = PAYPAL_ENVIRONMENT
+PAYMENT_PAYPAL_CLIENT_ID = PAYPAL_CLIENT_ID
+PAYMENT_PAYPAL_CLIENT_SECRET = PAYPAL_CLIENT_SECRET
 
 PAYMENT_BASE_TEMPLATE = 'homepage/base.html'
 PAYMENT_WEBSITE_NAME = 'CruelTouch'  # or your website name
