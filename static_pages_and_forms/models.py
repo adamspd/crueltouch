@@ -4,18 +4,16 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
-
+from dotenv import load_dotenv
 
 from crueltouch.productions import production_debug
-
 from utils.crueltouch_utils import c_print, send_client_email, send_email_admin
-
-from dotenv import load_dotenv
 
 load_dotenv()  # take environment variables from .env.
 
-DATABASE_UPDATE = os.getenv('LIST_OF_LOCAL_IPS')
+DATABASE_UPDATE = os.getenv('DATABASE_UPDATE')
 TEST_EMAIL = os.getenv('TEST_EMAIL')
+
 
 class ContactForm(models.Model):
     full_name = models.CharField(max_length=255, null=False, blank=False, verbose_name=_("Full name"))

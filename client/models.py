@@ -20,15 +20,15 @@ from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 
-load_dotenv()  # take environment variables from .env.
-
-DATABASE_UPDATE = os.getenv('LIST_OF_LOCAL_IPS')
-TEST_EMAIL = os.getenv('TEST_EMAIL')
-
 from crueltouch.productions import production_debug
 from utils.crueltouch_utils import c_print, notify_admin_session_request_received_via_email, \
     send_session_request_received_email, get_estimated_response_time, get_today_date, status_change_email, \
     send_password_reset_email
+
+load_dotenv()  # take environment variables from .env.
+
+DATABASE_UPDATE = os.getenv('DATABASE_UPDATE')
+TEST_EMAIL = os.getenv('TEST_EMAIL')
 
 phone_regex = RegexValidator(
     regex=r'^\d{10}$',
@@ -336,7 +336,7 @@ class BookMe(models.Model):
         return self.full_name
 
     def send_late_booking_confirmation_email(self) -> bool:
-        if not self.email_sent:
+        if not self.email_sent and not DATABASE_UPDATE:
             # send email to user
             sent = send_session_request_received_email(
                 email_address=self.email, full_name=self.full_name,
