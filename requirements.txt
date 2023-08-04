@@ -6,6 +6,6 @@ markdown2==2.4.10
 Pillow==10.0.0
 py3-validate-email==1.0.5.post1
 requests==2.31.0
-django-appointment==1.1.0
+django-appointment==1.1.2
 django-payment-manager==1.0.1
 python-dotenv~=1.0.0
