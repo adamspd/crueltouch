@@ -326,6 +326,14 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{% url 'administration:invoice_form' %}" class="nav-link">
+                                &nbsp;&nbsp;<i class="fa-solid fa-file-invoice"></i>
+                                <p>
+                                    &nbsp;&nbsp;{% translate "Generate Invoice" %}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{% url 'administration:help' %}" class="nav-link">
                                 &nbsp;&nbsp;<i class="fa-solid fa-hand"></i>
                                 <p>
