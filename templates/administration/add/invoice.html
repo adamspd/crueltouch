@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Generate estimate</title>
+    <style>
+        @page {
+            size: a4 portrait;
+            @frame logo_frame {
+            -pdf-frame-content: logo_frame;
+            left: 0pt;
+            right: 0pt;
+            top: 0pt;
+            height: 500pt;
+        }
+        @frame pd_title {
+            /* Static Frame */
+        -pdf-frame-content:pd_title;
+        left: 286pt;
+        width: 230pt;
+        top: 120pt;
+        height: 120pt;
+        }
+
+        @frame header_frame_left {
+        -pdf-frame-content:header_frame_left;
+        left: 30pt;
+        width: 256pt;
+        top: 200pt;
+        height: 80pt;
+        }
+
+        @frame header_frame_right {
+        -pdf-frame-content:header_frame_right;
+        left: 286pt;
+        width: 256pt;
+        top: 200pt;
+        height: 60pt;
+        text-align:right;
+        }
+
+        @frame content_frame {
+            /* Content Frame */
+        left: 30pt;
+        width: 512pt;
+        top: 330pt;
+        height: 632pt;
+        }
+        @frame footer_frame {
+            /* Another static Frame */
+        -pdf-frame-content:footer_content;
+        left: 0pt;
+        right: 0pt;
+        top: 720pt;
+        height: 300pt;
+        }
+        }
+    </style>
+
+</head>
+<body>
+<!-- Content for Static Frame 'header_frame' -->
+<div id="logo_frame">
+    <img src="{{ header }}" alt="" style="width: 1000pt">
+</div>
+
+<div id="pd_title">
+    <h1 style="font-size: 40px; color: rgb(248, 124, 84); text-align: right; letter-spacing: 5px">INVOICE</h1>
+</div>
+
+<div id="header_frame_left" style="line-height: 0.5em; font-size: 14px">
+    <p>{{ client_name }}</p>
+    <p>{{ client_email }}</p>
+    <p>{{ client_phone }}</p>
+</div>
+
+<div id="header_frame_right" style="text-align: right; line-height: 0.5em; font-size: 14px">
+    <p>Invoice Number: #{{ invoice_number }}</p>
+    <p>Invoice Date: {{ invoice_date }}</p>
+</div>
+
+<div>
+    <table>
+        <thead style="font-size: 14px; background-color: rgb(255, 188, 156)">
+        <th style="background-color: rgb(255, 188, 156); height: 55px; width: 250pt; text-align: left; padding-left: 15px">
+            Item Description
+        </th>
+        <th style="background-color: rgb(255, 188, 156)">Price</th>
+        <th style="background-color: rgb(255, 188, 156)">Quantity</th>
+        <th style="background-color: rgb(255, 188, 156)">Subtotal</th>
+        </thead>
+        <tbody style="font-size: 14px; background-color: rgb(255, 188, 156)">
+        <tr style="font-size: 14px; border: 1px solid rgb(255, 188, 156)">
+            <td style="text-align: left; height: 55px; padding-left: 15px; width: 250pt">{{ package_name }}</td>
+            <td style="text-align: center; height: 55px">${{ package_price }}</td>
+            <td style="text-align: center; height: 55px">{{ package_qty }}</td>
+            <td style="text-align: center; height: 55px">${{ package_subtotal }}</td>
+        </tr>
+        {% if additional %}
+            {% for add in additional %}
+                <tr style="font-size: 14px; border: 1px solid rgb(255, 188, 156)">
+                    <td style="text-align: left; height: 55px; padding-left: 15px; width: 250pt">{{ add.name }}</td>
+                    <td style="text-align: center; height: 55px">${{ add.price }}</td>
+                    <td style="text-align: center; height: 55px">{{ add.quantity }}</td>
+                    <td style="text-align: center; height: 55px">${{ add.subtotal }}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+
+        <tr style="font-size: 14px; border: 1px solid rgb(255, 188, 156)">
+            <td style="text-align: left; height: 55px; padding-left: 15px; width: 250pt"></td>
+            <td style="text-align: center; height: 55px"></td>
+            <td style="text-align: center; height: 55px"></td>
+            <td style="text-align: center; height: 55px"></td>
+        </tr>
+        <tr style="font-size: 14px; background-color: rgb(255, 188, 156)">
+            <td style="background-color: rgb(255, 188, 156); height: 55px; width: 250pt; text-align: left; padding-left: 15px"></td>
+            <td style="background-color: rgb(255, 188, 156)"></td>
+            <td style="background-color: rgb(255, 188, 156); text-align: center;"><b>Total</b></td>
+            <td style="background-color: rgb(255, 188, 156); text-align: left; padding-left: 15px">${{ total }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Content for Static Frame 'footer_frame' -->
+<div id="footer_content">
+    <img src="{{ footer }}" alt="" style="width: 350pt;" align="right">
+</div>
+
+</body>
+</html>

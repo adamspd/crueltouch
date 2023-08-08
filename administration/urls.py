@@ -69,6 +69,9 @@ urlpatterns = [
     # /administration/link/
     path('link/', include(link_pattern)),
     # /administration/password-change/<int-pk>/
-    path('password-change/<int:pk>/', must_change_password, name="must_change_password")
-
+    path('password-change/<int:pk>/', must_change_password, name="must_change_password"),
+    # /administration/invoice-form/
+    path('invoice-form/', invoice_form, name="invoice_form"),
+    # /administration/generate-invoice/
+    path('generate-invoice/', generate_invoice, name="generate_invoice"),
 ]

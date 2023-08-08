@@ -5,15 +5,19 @@ from datetime import timedelta
 from io import BytesIO
 from sqlite3 import IntegrityError
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.hashers import make_password
+from django.contrib.staticfiles import finders
 from django.http import HttpResponseRedirect, HttpResponseNotFound, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
+from django.template.loader import get_template
 from django.utils.translation import gettext_lazy as _
+from xhtml2pdf import pisa
 
-from administration.forms import UserChangePasswordForm
+from administration.forms import UserChangePasswordForm, InvoiceForm
 from administration.models import PhotoDelivery, PhotoClient
 from client.form import CreateAlbumForm, UpdateBook
 from client.models import BookMe, UserClient, Photo, Album as AlbumClient
@@ -646,3 +650,85 @@ def delete_client_album(request, pk):
     album = AlbumClient.objects.get(pk=pk)
     album.delete_files()
     return redirect("administration:view_client_album_created")
+
+
+def link_callback(uri, rel):
+    """
+    Convert HTML URIs to absolute system paths so xhtml2pdf can access those
+    resources
+    """
+    sUrl = settings.STATIC_URL  # Typically /static/
+    sRoot = settings.STATIC_ROOT  # Typically /home/userX/project_static/
+    mUrl = settings.MEDIA_URL  # Typically /media/
+    mRoot = settings.MEDIA_ROOT  # Typically /home/userX/project_static/media/
+
+    result = finders.find(uri)
+    if result:
+        if not isinstance(result, (list, tuple)):
+            result = [result]
+        result = list(os.path.realpath(path) for path in result)
+        path = result[0]
+    else:
+        print(f"uri: {uri}")
+        if uri.startswith(mUrl):
+            path = os.path.join(mRoot, uri.replace(mUrl, ""))
+        elif uri.startswith(sUrl):
+            path = os.path.join(sRoot, uri.replace(sUrl, ""))
+        else:
+            print("URI causing issue:", uri)  # Add this line
+            return uri
+
+    # make sure that file exists
+    if not os.path.isfile(path):
+        raise Exception(
+            'media URI must start with %s or %s' % (sUrl, mUrl)
+        )
+    return path
+
+
+@login_required(login_url="/administration/login/")
+@user_passes_test(email_check, login_url='/administration/login/')
+def invoice_form(request):
+    if request.method == 'POST':
+        form = InvoiceForm(request.POST, request.FILES)
+        print(f"request received {form.data}")
+        if form.is_valid():
+            # You might want to save the form data in session or database
+            request.session['invoice_data'] = form.cleaned_data
+            return redirect('administration:generate_invoice')
+    else:
+        form = InvoiceForm()
+
+    return render(request, 'administration/add/invoice_form.html', {'form': form})
+
+
+@login_required(login_url="/administration/login/")
+@user_passes_test(email_check, login_url='/administration/login/')
+def generate_invoice(request):
+    template_path = 'administration/add/invoice.html'
+    context = request.session.get('invoice_data', {})
+    header = "https://crueltouch.com/media/photos_clients/crueltouch_header.png"
+    footer = "https://productionsdesign.com/wp-content/uploads/2022/06/footer.png"
+    context['header'] = header
+    context['footer'] = footer
+
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+
+    # if download
+    # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    # if view
+    response['Content-Disposition'] = 'filename="report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+        html, dest=response, link_callback=link_callback)
+    # clean session
+    request.session['invoice_data'] = {}
+    # if error then show some funny view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response

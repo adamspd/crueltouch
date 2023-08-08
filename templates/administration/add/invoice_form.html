@@ -1,0 +1,18 @@
+{% extends 'administration/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block title %}Crueltouch | {% translate "Generate Invoice" %}{% endblock %}
+{% block body %}
+    <section class="content content-wrapper">
+        <div class="container-fluid">
+            <div class="row" style="margin: 0 auto; padding-top: 20px">
+                <h2>Create Invoice</h2>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Generate Invoice</button>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
