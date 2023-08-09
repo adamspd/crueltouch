@@ -121,6 +121,12 @@
         </tr>
         </tbody>
     </table>
+    <div id="payment_frame_left" style="line-height: 0.5em; font-size: 14px; padding-top: 10px; margin-bottom: 10px">
+        <p>Payment method: {{ payment_method | title }}</p>
+    </div>
+    <div id="payment_frame_right" style="text-align: left; line-height: 0.5em; font-size: 14px; padding-top: 10px; margin-bottom: 10px; max-width: 50px">
+        <img src="{{ paid_stamps }}" alt="" style="width: 100px; transform: rotate(45deg);" class="paid-stamps">
+    </div>
 </div>
 
 
