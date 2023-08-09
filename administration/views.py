@@ -694,6 +694,7 @@ def invoice_form(request):
         print(f"request received {form.data}")
         if form.is_valid():
             # You might want to save the form data in session or database
+            print(f"form is valid {form.cleaned_data}")
             request.session['invoice_data'] = form.cleaned_data
             return redirect('administration:generate_invoice')
     else:
@@ -709,8 +710,11 @@ def generate_invoice(request):
     context = request.session.get('invoice_data', {})
     header = "https://crueltouch.com/media/photos_clients/crueltouch_header.png"
     footer = "https://productionsdesign.com/wp-content/uploads/2022/06/footer.png"
+    paid_stamps = 'https://crueltouch.com/media/photos_clients/paid_ct_ww.png'
     context['header'] = header
     context['footer'] = footer
+    if context.get('payment_method', '') != 'None':
+        context['paid_stamps'] = paid_stamps
 
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
@@ -718,7 +722,13 @@ def generate_invoice(request):
     # if download
     # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
     # if view
-    response['Content-Disposition'] = 'filename="report.pdf"'
+    # invoice filename should be invoice_client_name_invoice_number.pdf
+    invoice_number = context.get('invoice_number', '')
+    # remove spaces and - from name
+    client_name = context.get('client_name', '')
+    client_name = client_name.replace(" ", "_")
+    client_name = client_name.replace("-", "_")
+    response['Content-Disposition'] = f'filename="{client_name}_invoice_{invoice_number}.pdf"'
     # find the template and render it.
     template = get_template(template_path)
     html = template.render(context)

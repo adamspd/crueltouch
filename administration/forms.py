@@ -25,6 +25,21 @@ class UserChangePasswordForm(forms.Form):
             })
 
 
+PAYMENT_METHOD = (
+    ('_', _('--- Select a payment method ---')),
+    ('cash', _('Cash')),
+    ('credit', _('Credit')),
+    ('debit', _('Debit')),
+    ('paypal', _('Paypal')),
+    ('cashapp', _('CashApp')),
+    ('venmo', _('Venmo')),
+    ('zelle', _('Zelle')),
+    ('check', _('Check')),
+    ('others', _('Others')),
+    ('none', _('None')),
+)
+
+
 class InvoiceForm(forms.Form):
     client_name = forms.CharField()
     client_email = forms.EmailField()
@@ -32,6 +47,8 @@ class InvoiceForm(forms.Form):
     package_name = forms.CharField()
     package_price = forms.DecimalField()
     package_qty = forms.IntegerField()
+    # add choices for payment method
+    payment_method = forms.ChoiceField(choices=PAYMENT_METHOD)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -65,6 +82,10 @@ class InvoiceForm(forms.Form):
             {
                 'class': 'form-control',
             })
+        self.fields['payment_method'].widget.attrs.update(
+            {
+                'class': 'form-control',
+            })
 
     def clean(self):
         cleaned_data = super().clean()
@@ -77,4 +98,5 @@ class InvoiceForm(forms.Form):
         cleaned_data['package_price'] = float(cleaned_data['package_price'])
         cleaned_data['package_subtotal'] = cleaned_data['package_price'] * cleaned_data['package_qty']
         cleaned_data['total'] = cleaned_data['package_price'] * cleaned_data['package_qty']
+
         return cleaned_data
