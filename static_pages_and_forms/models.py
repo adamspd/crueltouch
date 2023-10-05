@@ -11,7 +11,7 @@ from utils.crueltouch_utils import c_print, send_client_email, send_email_admin
 
 load_dotenv()  # take environment variables from .env.
 
-DATABASE_UPDATE = os.getenv('DATABASE_UPDATE')
+DATABASE_UPDATE = os.getenv('DATABASE_UPDATE') == 'True'
 TEST_EMAIL = os.getenv('TEST_EMAIL')
 
 

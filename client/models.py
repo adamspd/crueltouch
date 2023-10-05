@@ -27,7 +27,7 @@ from utils.crueltouch_utils import c_print, notify_admin_session_request_receive
 
 load_dotenv()  # take environment variables from .env.
 
-DATABASE_UPDATE = os.getenv('DATABASE_UPDATE')
+DATABASE_UPDATE = os.getenv('DATABASE_UPDATE') == 'True'
 TEST_EMAIL = os.getenv('TEST_EMAIL')
 
 phone_regex = RegexValidator(
