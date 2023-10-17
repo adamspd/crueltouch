@@ -44,3 +44,4 @@ media
 
 crueltouch/secrets.py
 database_backup/*
+.cache

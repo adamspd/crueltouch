@@ -286,6 +286,7 @@ APPOINTMENT_FINISH_TIME = (16, 30)  # (hour, minute) 24-hour format
 # Additional configuration options
 APPOINTMENT_CLIENT_MODEL = AUTH_USER_MODEL
 APPOINTMENT_BASE_TEMPLATE = 'homepage/base.html'
+APPOINTMENT_ADMIN_BASE_TEMPLATE = 'administration/base.html'
 APPOINTMENT_WEBSITE_NAME = 'CruelTouch'
 APPOINTMENT_PAYMENT_URL = 'payment:payment_linked'
 APPOINTMENT_THANK_YOU_URL = None

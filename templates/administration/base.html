@@ -5,6 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block customMetaTag %}{% endblock %}
     <link rel="icon" type="image/x-icon" href="{% static 'homepage/img/icon/favicon.ico' %}">
     <title>{% block title %}Crueltouch | {% translate "Dashboard" %}{% endblock %}</title>
 
@@ -16,8 +17,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
               integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA=="
               crossorigin="anonymous" referrerpolicy="no-referrer"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
-              integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+              integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
               crossorigin="anonymous" referrerpolicy="no-referrer"/>
         <!-- Ionicons -->
         {#        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">#}
@@ -72,7 +73,8 @@
                     <form action="" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="next" value="{{ redirect_to }}">
-                        <select name="language" id="language_selection" onchange="this.form.submit()" class="custom-sel">
+                        <select name="language" id="language_selection" onchange="this.form.submit()"
+                                class="custom-sel">
                             {% get_available_languages as LANGUAGES %}
                             {% get_language_info_list for LANGUAGES as languages %}
                             {% for language in languages %}
@@ -194,13 +196,39 @@
                                 </a>
                             </li>
                         {% endif %}
+                        {#                        <li class="nav-item">#}
+                        {#                            <a href="{% url 'administration:session_list' %}" class="nav-link">#}
+                        {#                                &nbsp;&nbsp;<i class="fa-solid fa-list"></i>#}
+                        {#                                <p>#}
+                        {#                                    &nbsp;&nbsp;{% translate "Session list" %}#}
+                        {#                                </p>#}
+                        {#                            </a>#}
+                        {#                        </li>#}
                         <li class="nav-item">
-                            <a href="{% url 'administration:session_list' %}" class="nav-link">
-                                &nbsp;&nbsp;<i class="fa-solid fa-list"></i>
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-calendar"></i>
                                 <p>
-                                    &nbsp;&nbsp;{% translate "Session list" %}
+                                    {% translate "Appointment" %}
+                                    <i class="fas fa-angle-left right"></i>
+                                    <span class="badge badge-info right">2</span>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{% url 'appointment:get_user_appointments' %}" class="nav-link">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="far fa-solid fa-eye fa-sm nav-icon"></i>
+                                        <p>{% translate "View all" %}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'appointment:user_profile' %}" class="nav-link">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="far fa-user-circle nav-icon"></i>
+                                        <p>{% translate "User Profile" %}</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -301,7 +329,8 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{% url 'administration:create_downloadable_file' %}" class="nav-link disabled">
+                                    <a href="{% url 'administration:create_downloadable_file' %}"
+                                       class="nav-link disabled">
                                         &nbsp;&nbsp;&nbsp;&nbsp;
                                         <i class="fa fa-user-plus nav-icon"></i>
                                         <p>{% translate "Final via account" %}</p>
@@ -427,9 +456,9 @@
             integrity="sha512-NhRZzPdzMOMf005Xmd4JonwPftz4Pe99mRVcFeRDcdCtfjv46zPIi/7ZKScbpHD/V0HB1Eb+ZWigMqw94VUVaw=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- daterangepicker -->
-{#    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"#}
-{#            integrity="sha512-CryKbMe7sjSCDPl18jtJI5DR5jtkUWxPXWaLCst6QjH8wxDexfRJic2WRmRXmstr2Y8SxDDWuBO6CQC6IE4KTA=="#}
-{#            crossorigin="anonymous" referrerpolicy="no-referrer"></script>#}
+    {#    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"#}
+    {#            integrity="sha512-CryKbMe7sjSCDPl18jtJI5DR5jtkUWxPXWaLCst6QjH8wxDexfRJic2WRmRXmstr2Y8SxDDWuBO6CQC6IE4KTA=="#}
+    {#            crossorigin="anonymous" referrerpolicy="no-referrer"></script>#}
     {#    <!-- Tempusdominus Bootstrap 4 -->#}
     {#    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js"#}
     {#            integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA=="#}
