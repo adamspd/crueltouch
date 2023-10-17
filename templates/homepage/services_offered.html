@@ -12,31 +12,99 @@
 {% endblock %}
 {% block body %}
     <div class="main-container">
-        <h1 class="page-title">{% trans "Services" %}</h1>
+        <h1 class="page-title">{% trans "Book your service here" %}</h1>
         <div class="page-menu">
 
         </div>
         <div class="page-body">
-            {% for service in services %}
-                {% for category, items in service.items %}
-                    {% for item in items %}
+            <div class="category-container">
+                <button class="category-button" onclick="toggleService('wedding-service')">
+                    <span>Wedding</span>
+                    <span class="arrow">></span>
+                </button>
+                <div class="wedding-service service-list">
+                    <!-- Wedding services go here -->
+                    {% for service in wedding_service %}
                         <div class="page-item">
                             <div class="item-picture">
-                                <img src="{{ item.image }}" alt="{{ item.name }}">
+                                <img src="{{ service.get_image_url }}" alt="{{ service.name }}">
                             </div>
                             <div class="item-description">
-                                <h2 class="item-name">{{ item.name }}</h2>
-                                <p class="description-paragraph">{{ item.description }}</p>
+                                <h2 class="item-name">{{ service.name }}</h2>
+                                <p class="description-paragraph">{{ service.description }}</p>
                                 <hr>
-                                <p>{{ item.duration }} hr</p>
-                                <p>${{ item.price }}</p>
-                                <a href="{% url 'appointment:appointment_request' service_id=item.id %}"
+                                <p>{{ service.get_duration }}</p>
+                                <p>{{ service.get_price_text }}</p>
+                                <a href="{% url 'appointment:appointment_request' service_id=service.id %}"
                                    class="btn btn-dark">Book Now</a>
                             </div>
                         </div>
                     {% endfor %}
-                {% endfor %}
-            {% endfor %}
+                </div>
+
+                <button class="category-button" onclick="toggleService('portrait-service')">
+                    <span>Portrait</span>
+                    <span class="arrow">></span>
+                </button>
+                <div class="portrait-service service-list">
+                    {% for service in portrait_service %}
+                        <div class="page-item">
+                            <div class="item-picture">
+                                <img src="{{ service.get_image_url }}" alt="{{ service.name }}">
+                            </div>
+                            <div class="item-description">
+                                <h2 class="item-name">{{ service.name }}</h2>
+                                <p class="description-paragraph">{{ service.description }}</p>
+                                <hr>
+                                <p>{{ service.get_duration }}</p>
+                                <p>{{ service.get_price_text }}</p>
+                                <a href="{% url 'appointment:appointment_request' service_id=service.id %}"
+                                   class="btn btn-dark">Book Now</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <button class="category-button" onclick="toggleService('birthday-service')">
+                    <span>Birthday</span>
+                    <span class="arrow">></span>
+                </button>
+                <div class="birthday-service service-list">
+                    {% for service in birthday_service %}
+                        <div class="page-item">
+                            <div class="item-picture">
+                                <img src="{{ service.get_image_url }}" alt="{{ service.name }}">
+                            </div>
+                            <div class="item-description">
+                                <h2 class="item-name">{{ service.name }}</h2>
+                                <p class="description-paragraph">{{ service.description }}</p>
+                                <hr>
+                                <p>{{ service.get_duration }}</p>
+                                <p>{{ service.get_price_text }}</p>
+                                <a href="{% url 'appointment:appointment_request' service_id=service.id %}"
+                                   class="btn btn-dark">Book Now</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
+{% endblock %}
+
+{% block customJS %}
+    <script>
+        function toggleService(serviceClassName) {
+            let element = document.querySelector('.' + serviceClassName);
+            let arrow = element.previousElementSibling.querySelector('.arrow');
+
+            if (element.style.display === 'none' || element.style.display === '') {
+                element.style.display = 'block';
+                arrow.style.transform = 'rotate(90deg)';
+            } else {
+                element.style.display = 'none';
+                arrow.style.transform = 'rotate(0deg)';
+            }
+        }
+    </script>
 {% endblock %}
