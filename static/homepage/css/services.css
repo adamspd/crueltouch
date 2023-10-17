@@ -142,3 +142,37 @@ body {
         font: normal normal normal 25px/1.4em forum;
     }
 }
+
+
+.category-container {
+    width: 100%;
+}
+
+.category-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f7f7f7;
+    border: 1px solid #e0e0e0;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    width: 100%;
+    gap: 5px;
+}
+
+.category-button:hover {
+    background-color: #e0e0e0;
+}
+
+.arrow {
+    transform: rotate(0deg);
+    transition: transform 0.2s ease;
+    gap: 5px;
+}
+
+.service-list {
+    display: none;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+}
