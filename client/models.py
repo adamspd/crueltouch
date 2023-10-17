@@ -38,7 +38,7 @@ phone_regex = RegexValidator(
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, first_name, email, password=None, is_admin=False, is_staff=False, is_active=True):
+    def create_user(self, first_name, email, last_name=None, password=None, is_admin=False, is_staff=False, is_active=True):
         if not email:
             raise ValueError(_('You must provide an email address'))
         if not first_name:
@@ -46,6 +46,7 @@ class UserManager(BaseUserManager):
         user_obj = self.model(
             email=self.normalize_email(email)
         )
+        user_obj.last_name = last_name
         user_obj.staff = is_staff
         user_obj.admin = is_admin
         user_obj.is_active = is_active
@@ -54,18 +55,19 @@ class UserManager(BaseUserManager):
         user_obj.save(using=self._db)
         return user_obj
 
-    def create_staff_user(self, first_name, email, password):
-        user = self.create_user(first_name, email, password=password, is_staff=True)
+    def create_staff_user(self, first_name, email, password, last_name=None):
+        user = self.create_user(first_name, email, last_name=last_name, password=password, is_staff=True)
         return user
 
-    def create_superuser(self, first_name, email, password):
-        user = self.create_user(first_name, email, password=password, is_staff=True, is_admin=True)
+    def create_superuser(self, first_name, email, password, last_name=None):
+        user = self.create_user(first_name, email, last_name=last_name, password=password, is_staff=True, is_admin=True)
         return user
 
 
 class UserClient(AbstractBaseUser, PermissionsMixin, models.Model):
     email = models.EmailField(max_length=255, unique=True, default="", help_text=_("A valid email address, please"))
     first_name = models.CharField(max_length=255, default=None)
+    last_name = models.CharField(max_length=255, default=None, null=True, blank=True)
     phone_number = models.CharField(validators=[phone_regex], max_length=10, blank=True, null=True, default="",
                                     help_text=_("Phone number must not contain spaces, letters, parentheses or "
                                                 "dashes. It must contain 10 digits."))
@@ -133,6 +135,11 @@ class UserClient(AbstractBaseUser, PermissionsMixin, models.Model):
     @property
     def is_admin(self):
         """Is the user an admin member?"""
+        return self.admin
+
+    @property
+    def is_superuser(self):
+        """Is the user a superuser?"""
         return self.admin
 
     @property
