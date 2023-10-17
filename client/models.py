@@ -137,7 +137,6 @@ class UserClient(AbstractBaseUser, PermissionsMixin, models.Model):
         """Is the user an admin member?"""
         return self.admin
 
-    @property
     def is_superuser(self):
         """Is the user a superuser?"""
         return self.admin
