@@ -42,11 +42,11 @@ def send_email_after_saving_contact_form(sender, instance, created, *args, **kwa
             header=_("Thank you for reaching out to us") + ".",
             message=_(f"Hi {instance.full_name}, thank you for reaching out to us. We will get back to you as soon as "
                       "possible. "),
-            footer=_("Have a great day! CruelTouch Team"),
+            footer=_("Have a great day! Tchiiz Studio"),
             is_contact_form=True,
             is_other=False,
             button_label=_("Awesome!"),
-            button_link="https://crueltouch.com/portfolio/",
+            button_link="https://tchiiz.com/portfolio/",
             button_text=_("Ok")
         )
         if sent:  # if email was sent

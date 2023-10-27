@@ -5,11 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <meta charset="UTF-8">
-    <title>{% block title %}{% trans "Welcome to crueltouch's website" %}{% endblock %}</title>
+    <title>{% block title %}{% trans "Welcome to Tchiiz Studio" %}{% endblock %}</title>
     <meta name="description" content="{% block description %}Crueltouch Website{% endblock %}">
-    <meta name="keywords" content="photographer, crueltouch, contact crueltouch, roos laurore">
+    <meta name="keywords" content="photographer, crueltouch, contact crueltouch, roos laurore, tchiiz, tchiiz studio, tchiiz photography">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://crueltouch.com{% block canonical %}/{% endblock %}">
+    <link rel="canonical" href="https://tchiiz.com{% block canonical %}/{% endblock %}">
 
     <!-- Favicon -->
     <link href="{% static 'homepage/img/icon/android-icon-48x48.png' %}" rel="shortcut icon"/>
@@ -64,7 +64,7 @@
         <li>
             <a href="#">{% trans "Meet" %} & {% trans "Contact" %}</a>
             <ul class="sub-menu">
-                <li><a href="{% url 'homepage:about' %}">{% trans "Meet Crueltouch" %}</a></li>
+                <li><a href="{% url 'homepage:about' %}">{% trans "Meet Us" %}</a></li>
                 <li><a href="{% url 'flatpages:contact' %}">{% trans "Contact Us" %}</a></li>
             </ul>
         </li>
@@ -166,7 +166,7 @@
                 <div class="col-md-6 order-2 order-md-1">
                     <div class="copyright">
                         Copyright &copy;<script>document.write(new Date().getFullYear());</script>
-                        {% trans 'All rights reserved' %} | Crueltouch | {% trans 'Made with' %}
+                        {% trans 'All rights reserved' %} | Tchiiz Studio | {% trans 'Made with' %}
                         <i class="fa fa-heart-o" aria-hidden="true">{% trans 'Love' %}</i> {% trans "by" %} <a
                             href="https://adamspierredavid.com" target="_blank">APD</a>
                     </div>
@@ -207,7 +207,7 @@
 
     acceptBtn.addEventListener("click", () => {
         //setting cookie for 1 month, after one month it'll be expired automatically
-        document.cookie = "CookieBy=crueltouch.com; max-age=" + 60 * 60 * 24 * 30;
+        document.cookie = "CookieBy=tchiiz.com; max-age=" + 60 * 60 * 24 * 30;
         localStorage.setItem("cookieBannerDisplayed", "true");
         if (document.cookie) { //if cookie is set
             cookieContainer.classList.remove("active");

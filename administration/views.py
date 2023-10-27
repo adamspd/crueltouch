@@ -389,7 +389,7 @@ def create_downloadable_file(request):
                 send_client_email(email_address=client_email, subject="New images were uploaded for you",
                                   header="New images were uploaded for you",
                                   message=f"Hello {client_name}, you can download your photos now !",
-                                  footer="Thank you for using our service ! The Crueltouch Team",
+                                  footer="Thank you for using our service ! The Tchiiz Team",
                                   is_contact_form=False, is_other=True, button_label="Download my photos now",
                                   button_text="Download", button_link=delivery.link_to_download)
             else:
@@ -541,14 +541,14 @@ def send_photos_for_client_to_choose_from(request):
             if production_debug:
                 button_link = f"http://localhost:8000/client/{client_album.id}"
             else:
-                button_link = f"https://crueltouch.com/client/{client_album.id}"
+                button_link = f"https://tchiiz.com/client/{client_album.id}"
             # notify client
             send_client_email(
                 email_address=user_client.email, subject="New images were uploaded for you to choose from",
                 header="New images were uploaded for you to choose from",
                 message=f"Hello {user_client.first_name}, we uploaded new photos for you to choose from! If this will "
                         f"be your first login, your password is 'Crueltouch2022' without the quote.",
-                footer="Thank you for using our service ! The Crueltouch Team",
+                footer="Thank you for using our service ! The Tchiiz Team",
                 is_contact_form=False, is_other=True, button_label="Click on the button below to do so",
                 button_text="Choose photos", button_link=button_link
             )
@@ -708,9 +708,9 @@ def invoice_form(request):
 def generate_invoice(request):
     template_path = 'administration/add/invoice.html'
     context = request.session.get('invoice_data', {})
-    header = "https://crueltouch.com/media/photos_clients/crueltouch_header.png"
+    header = "https://tchiiz.com/media/photos_clients/crueltouch_header.png"
     footer = "https://productionsdesign.com/wp-content/uploads/2022/06/footer.png"
-    paid_stamps = 'https://crueltouch.com/media/photos_clients/paid_ct_ww.png'
+    paid_stamps = 'https://tchiiz.com/media/photos_clients/paid_ct_ww.png'
     context['header'] = header
     context['footer'] = footer
     if context.get('payment_method', '') != 'None':
