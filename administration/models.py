@@ -100,7 +100,7 @@ class PhotoDelivery(models.Model):
         self.save()
 
     def generate_link_to_download(self):
-        self.link_to_download = f'https://crueltouch.com/download/{self.id_delivery}/'
+        self.link_to_download = f'https://tchiiz.com/download/{self.id_delivery}/'
         self.save()
 
     def set_downloaded_status(self):

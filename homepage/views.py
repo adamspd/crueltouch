@@ -78,8 +78,8 @@ def promotions(request):
 @login_required(login_url='/administration/login/')
 @user_passes_test(email_check, login_url='/administration/login/')
 def services_offered(request):
-    page_title = _("Services | CruelTouch")
-    page_description = _("Services offered by CruelTouch Photography")
+    page_title = _("Services | TCHIIZ")
+    page_description = _("Services offered by Tchiiz studio Photography")
     all_services = Service.objects.all()
     wedding_services = all_services.filter(name__icontains='wedding')
     portrait_services = all_services.filter(name__icontains='portrait')
