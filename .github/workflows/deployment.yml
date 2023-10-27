@@ -39,7 +39,7 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         key: ${{ secrets.SERVER_SSH_KEY }}
         script: |
-          cd /home/ubuntu/web/crueltouch/crueltouch
+          cd /home/ubuntu/web/tchiiz/crueltouch
           mv ./productions.py ./productions.py.backup
 
     - name: Copy files to server
@@ -49,7 +49,7 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         key: ${{ secrets.SERVER_SSH_KEY }}
         source: "."
-        target: "/home/ubuntu/web/crueltouch"
+        target: "/home/ubuntu/web/tchiiz"
 
     - name: Restore productions backup file
       uses: appleboy/ssh-action@master
@@ -58,7 +58,7 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         key: ${{ secrets.SERVER_SSH_KEY }}
         script: |
-          cd /home/ubuntu/web/crueltouch/crueltouch
+          cd /home/ubuntu/web/tchiiz/crueltouch
           mv ./productions.py.backup ./productions.py
 
     - name: Execute deploy command on server
