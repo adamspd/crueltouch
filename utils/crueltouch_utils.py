@@ -164,7 +164,7 @@ def send_session_request_received_email(email_address, full_name: str, session_t
         mail = send_mail(
             subject=subject,
             message="",
-            from_email="Crueltouch",
+            from_email="TCHIIZ Studio",
             html_message=html_message,
             recipient_list=recipient_list
         )
@@ -268,17 +268,17 @@ def status_change_email(book_me, subject: str) -> bool:
     if book_me.status == 'accepted':
         message = "Your booking session request has been accepted. More information may be sent to you. " \
                   "Thank you for choosing us."
-        footer = "Regards, CruelTouch Team"
+        footer = "Regards, Tchiiz Team"
         header = "Booking Session Request Accepted"
     elif book_me.status == 'canceled':
         message = "Your booking session request has been canceled. " \
                   "We are sorry for the inconvenience."
-        footer = "Regards, CruelTouch Team"
+        footer = "Regards, Tchiiz Team"
         header = "Booking Session Request Canceled"
     else:
         message = "Your booking session request has been completed. " \
                   "Thank you for choosing us."
-        footer = "Regards, CruelTouch Team"
+        footer = "Regards, Tchiiz Team"
         header = "Booking Session Request Completed"
     html_message = loader.render_to_string(
         "administration/email_template/session_request_status_changed.html",
@@ -479,7 +479,7 @@ def send_password_reset_email(first_name: str, email_address: str) -> bool:
         if production_debug:
             button_link = "http://localhost:8000/client/login/"
         else:
-            button_link = "https://crueltouch.com/client/login/"
+            button_link = "https://tchiiz.com/client/login/"
         html_message = loader.render_to_string(
             "administration/email_template/client_email.html",
             {
@@ -488,8 +488,8 @@ def send_password_reset_email(first_name: str, email_address: str) -> bool:
                            f"so that we can communicate confidential data to you in a secure manner. Your username "
                            f"is {email_address}. Your password is: Crueltouch2022, you'll be asked to change it when "
                            f"you log in for the first time.",
-                'footer': "Thank you for your trust in Crueltouch.",
-                'subject': "Login details on Crueltouch website",
+                'footer': "Thank you for your trust in Tchiiz Studio.",
+                'subject': "Login details on Tchiiz website",
                 'button_label': "Login right now !",
                 'button_text': "Login",
                 'button_link': button_link,
