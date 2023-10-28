@@ -71,7 +71,7 @@ msgstr "Autres"
 #: administration/forms.py:39
 #: venv/lib/python3.11/site-packages/appointment/models.py:243
 msgid "None"
-msgstr "Rien"
+msgstr "Aucun"
 
 #: administration/forms.py:59 client/form.py:78
 #: static_pages_and_forms/models.py:19
