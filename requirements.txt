@@ -10,3 +10,4 @@ django-appointment==2.1.0
 django-payment-manager==1.0.1
 python-dotenv~=1.0.0
 xhtml2pdf==0.2.11
+reportlab>=3.6.13 # not directly required, pinned by Snyk to avoid a vulnerability
