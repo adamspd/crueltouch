@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-04 20:28+0100\n"
+"POT-Creation-Date: 2023-10-26 20:56-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,89 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: administration/forms.py:13 client/form.py:53
-#: templates/client/login_registration/log_as_owner.html:33
-#: templates/client/login_registration/login.html:32
+#: administration/forms.py:16 client/form.py:53
+#: templates/client/login_registration/log_as_owner.html:34
+#: templates/client/login_registration/login.html:39
 msgid "Password"
 msgstr "Contraseña"
 
-#: administration/forms.py:19
+#: administration/forms.py:22
 msgid "Repeat password"
 msgstr "Repite contraseña"
+
+#: administration/forms.py:29
+#, fuzzy
+#| msgid "--- Select a package ---"
+msgid "--- Select a payment method ---"
+msgstr "--- Seleccione un paquete ---"
+
+#: administration/forms.py:30
+msgid "Cash"
+msgstr ""
+
+#: administration/forms.py:31
+msgid "Credit"
+msgstr ""
+
+#: administration/forms.py:32
+msgid "Debit"
+msgstr ""
+
+#: administration/forms.py:33
+msgid "Paypal"
+msgstr ""
+
+#: administration/forms.py:34
+msgid "CashApp"
+msgstr ""
+
+#: administration/forms.py:35
+msgid "Venmo"
+msgstr ""
+
+#: administration/forms.py:36
+msgid "Zelle"
+msgstr ""
+
+#: administration/forms.py:37
+msgid "Check"
+msgstr ""
+
+#: administration/forms.py:38 client/form.py:27
+msgid "Others"
+msgstr "Otros"
+
+#: administration/forms.py:39
+#: venv/lib/python3.11/site-packages/appointment/models.py:243
+msgid "None"
+msgstr ""
+
+#: administration/forms.py:59 client/form.py:78
+#: static_pages_and_forms/models.py:19
+#: templates/administration/list/list_contact_forms.html:25
+#: templates/administration/list/list_contact_forms.html:59
+#: templates/client/booking_and_promotions/bookme.html:143
+msgid "Full name"
+msgstr "Nombre completo"
+
+#: administration/forms.py:64 client/form.py:47
+#: templates/client/booking_and_promotions/bookme.html:147
+#: templates/client/login_registration/log_as_owner.html:25
+#: templates/legal/privacy_policy.html:158
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1845
+msgid "Email address"
+msgstr "Correo electrónico"
+
+#: administration/forms.py:70
+#: templates/client/booking_and_promotions/bookme.html:151
+msgid "Phone number"
+msgstr "Teléfono"
+
+#: administration/forms.py:75
+#, fuzzy
+#| msgid "Service"
+msgid "Service name"
+msgstr "Servicio"
 
 #: administration/models.py:12
 msgid "The date"
@@ -56,7 +130,7 @@ msgstr "Permisos de correos"
 msgid "Photo"
 msgstr "Foto"
 
-#: administration/models.py:35 administration/models.py:68 client/models.py:164
+#: administration/models.py:35 administration/models.py:68 client/models.py:253
 msgid "Is active"
 msgstr "Está activo"
 
@@ -64,11 +138,12 @@ msgstr "Está activo"
 msgid "Was downloaded"
 msgstr "Fue descargado"
 
-#: administration/models.py:66 client/models.py:163
+#: administration/models.py:66 client/models.py:252
 msgid "Photos"
 msgstr "Fotos"
 
 #: administration/models.py:67
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/display_appointment.html:23
 msgid "Date"
 msgstr "Fecha"
 
@@ -97,23 +172,23 @@ msgstr "Nombre del cliente"
 msgid "Client email"
 msgstr "Correo del cliente"
 
-#: administration/views.py:193
+#: administration/views.py:197
 msgid "Email sent successfully"
 msgstr "Correo enviado con éxito"
 
-#: administration/views.py:195
+#: administration/views.py:199
 msgid "Email not sent"
 msgstr "Correo no enviado"
 
-#: administration/views.py:197
+#: administration/views.py:201
 msgid "Email already sent"
 msgstr "Correo ya enviado"
 
-#: administration/views.py:199
+#: administration/views.py:203
 msgid "Session request does not exist"
 msgstr "La solicitud de sesión no existe"
 
-#: administration/views.py:395
+#: administration/views.py:399
 msgid ""
 "If you want the website to send the link automatically to the client, "
 "please, put the client "
@@ -121,38 +196,38 @@ msgstr ""
 "Si desea que el sitio web envíe el enlace automáticamente al cliente, por "
 "favor, ponga el cliente "
 
-#: administration/views.py:399 administration/views.py:501
+#: administration/views.py:403 administration/views.py:505
 msgid "Create downloadable file"
 msgstr "Crear archivo descargable"
 
-#: administration/views.py:412
+#: administration/views.py:416
 msgid "List of link to download images"
 msgstr "Lista de enlaces para descargar imágenes"
 
-#: administration/views.py:555
+#: administration/views.py:559
 msgid "Send photos to client"
 msgstr "Enviar fotos al cliente"
 
-#: administration/views.py:581
+#: administration/views.py:585
 msgid "Create new client"
 msgstr "Crear nuevo cliente"
 
-#: administration/views.py:596
+#: administration/views.py:600
 msgid "You can't use your old password"
 msgstr "No puedes usar tu antigua contraseña"
 
-#: administration/views.py:604
+#: administration/views.py:608
 msgid "This user no longer exists !"
 msgstr "Este usuario ya no existe !"
 
-#: administration/views.py:623 administration/views.py:634
+#: administration/views.py:627 administration/views.py:638
 #: templates/administration/list/list_album_client.html:5
 #: templates/administration/list/list_album_client.html:8
 #: templates/administration/list/list_album_client.html:11
 msgid "View chosen photos"
 msgstr "Ver fotos elegidas"
 
-#: administration/views.py:638
+#: administration/views.py:642
 msgid "Total photos sent"
 msgstr "Total de fotos enviadas"
 
@@ -160,11 +235,11 @@ msgstr "Total de fotos enviadas"
 msgid "--- Select a package ---"
 msgstr "--- Seleccione un paquete ---"
 
-#: client/form.py:11 client/models.py:339
+#: client/form.py:11 client/models.py:430
 msgid "7 photos"
 msgstr "7 fotos"
 
-#: client/form.py:12 client/models.py:341
+#: client/form.py:12 client/models.py:432
 msgid "15 photos"
 msgstr "15 fotos"
 
@@ -172,7 +247,7 @@ msgstr "15 fotos"
 msgid "30 photos + mini video"
 msgstr "30 fotos + mini video"
 
-#: client/form.py:14 client/models.py:337
+#: client/form.py:14 client/models.py:428
 msgid "3 photos"
 msgstr "3 fotos"
 
@@ -196,7 +271,7 @@ msgstr "Bodas y otros eventos"
 msgid "--- Select a location ---"
 msgstr "--- Selecciona una ubicación ---"
 
-#: client/form.py:24 templates/client/booking_and_promotions/promotions.html:46
+#: client/form.py:24 templates/client/booking_and_promotions/promotions.html:53
 msgid "Studio"
 msgstr "Estudio"
 
@@ -208,30 +283,22 @@ msgstr "Al aire libre"
 msgid "Orlando"
 msgstr "Orlando"
 
-#: client/form.py:27
-msgid "Others"
-msgstr "Otros"
-
 #: client/form.py:42 templates/administration/list/list_user.html:26
 #: templates/administration/list/list_user.html:56
 msgid "First name"
 msgstr "Nombre"
-
-#: client/form.py:47 templates/client/booking_and_promotions/bookme.html:140
-#: templates/client/login_registration/log_as_owner.html:24
-#: templates/legal/privacy_policy.html:157
-msgid "Email address"
-msgstr "Correo electrónico"
 
 #: client/form.py:58
 msgid "Confirm password"
 msgstr "Confirmar contraseña"
 
 #: client/form.py:63
+#: templates/appointments/appointment_client_information.html:44
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:49
 msgid "Full Name"
 msgstr "Nombre completo"
 
-#: client/form.py:64 static_pages_and_forms/models.py:15
+#: client/form.py:64 static_pages_and_forms/models.py:20
 #: templates/administration/list/list_contact_forms.html:26
 #: templates/administration/list/list_contact_forms.html:60
 #: templates/administration/list/list_created_link.html:26
@@ -242,16 +309,21 @@ msgstr "Nombre completo"
 #: templates/administration/list/list_user.html:57
 #: templates/administration/view/index.html:183
 #: templates/administration/view/index.html:254
-#: templates/client/login_registration/login.html:24
+#: templates/appointments/appointment_client_information.html:48
+#: templates/client/login_registration/login.html:31
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/display_appointment.html:43
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/staff_list.html:36
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:34
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:53
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: client/form.py:66 templates/client/booking_and_promotions/bookme.html:157
+#: client/form.py:66 templates/client/booking_and_promotions/bookme.html:164
 msgid "Type of photo session"
 msgstr "Tipo de sesión fotográfica"
 
-#: client/form.py:67 templates/client/booking_and_promotions/bookme.html:162
-#: templates/client/booking_and_promotions/promotions.html:108
+#: client/form.py:67 templates/client/booking_and_promotions/bookme.html:169
+#: templates/client/booking_and_promotions/promotions.html:115
 msgid "Location"
 msgstr "Ubicación"
 
@@ -259,7 +331,7 @@ msgstr "Ubicación"
 #: templates/administration/email_template/session_request_received.html:195
 #: templates/administration/list/list_requested_session.html:45
 #: templates/administration/list/list_requested_session.html:122
-#: templates/client/booking_and_promotions/promotions.html:60
+#: templates/client/booking_and_promotions/promotions.html:67
 msgid "Package"
 msgstr "Paquete"
 
@@ -275,13 +347,6 @@ msgstr "Fecha deseada"
 msgid "Address"
 msgstr "Dirección"
 
-#: client/form.py:78 static_pages_and_forms/models.py:14
-#: templates/administration/list/list_contact_forms.html:25
-#: templates/administration/list/list_contact_forms.html:59
-#: templates/client/booking_and_promotions/bookme.html:136
-msgid "Full name"
-msgstr "Nombre completo"
-
 #: client/form.py:83 static_pages_and_forms/form.py:26
 msgid "A valid email address, please... !"
 msgstr "Por favor, introduzca un correo electrónico válida...!"
@@ -290,7 +355,8 @@ msgstr "Por favor, introduzca un correo electrónico válida...!"
 msgid "No spaces, letters or special characters, only 10 digits..."
 msgstr "Sin espacios, letras o caracteres especiales, solo 10 dígitos..."
 
-#: client/form.py:113 client/models.py:242
+#: client/form.py:113 client/models.py:75 client/models.py:333
+#: venv/lib/python3.11/site-packages/appointment/models.py:375
 msgid "Does not have to be specific, just the city and the state"
 msgstr "No tiene que ser específico, solo la ciudad y el estado"
 
@@ -302,7 +368,7 @@ msgstr "Rellene todos los campos"
 msgid "Sorry, we only offer this package in Orlando"
 msgstr "Lo sentimos, solo ofrecemos este paquete en Orlando"
 
-#: client/models.py:24 client/models.py:238
+#: client/models.py:35 client/models.py:72 client/models.py:329
 msgid ""
 "Phone number must not contain spaces, letters, parentheses or dashes. It "
 "must contain 10 digits."
@@ -310,60 +376,62 @@ msgstr ""
 "El número de teléfono no debe contener espacios, letras, paréntesis o "
 "guiones. Debe contener 10 dígitos."
 
-#: client/models.py:32
+#: client/models.py:43
 msgid "You must provide an email address"
 msgstr "Debe proporcionar un correo electrónico"
 
-#: client/models.py:34
+#: client/models.py:45
 msgid "User must have a firstname"
 msgstr "El usuario debe tener un nombre"
 
-#: client/models.py:56 client/models.py:234
+#: client/models.py:68 client/models.py:325
 msgid "A valid email address, please"
 msgstr "Por favor, introduzca un correo electrónico válida"
 
-#: client/models.py:165
+#: client/models.py:254
 msgid "Was viewed"
 msgstr "Fue visto"
 
-#: client/models.py:244 client/models.py:245 client/models.py:292
+#: client/models.py:335 client/models.py:336 client/models.py:383
 msgid "pending"
 msgstr "pendiente"
 
-#: client/models.py:262 client/models.py:436
+#: client/models.py:353 client/models.py:527
 msgid "Thank you for your booking!"
 msgstr "¡Gracias por su reserva!"
 
-#: client/models.py:272 client/models.py:423
+#: client/models.py:363 client/models.py:514
 msgid "New booking request received"
 msgstr "Nueva solicitud de reserva recibida"
 
-#: client/models.py:277
+#: client/models.py:368
+#: venv/lib/python3.11/site-packages/django/forms/widgets.py:795
 msgid "Yes"
 msgstr "Sí"
 
-#: client/models.py:279
+#: client/models.py:370
+#: venv/lib/python3.11/site-packages/django/forms/widgets.py:796
 msgid "No"
 msgstr "No"
 
-#: client/models.py:294
+#: client/models.py:385
 msgid "Your booking request status has changed!"
 msgstr "¡El estado de su solicitud de reserva ha cambiado!"
 
-#: client/models.py:317 client/models.py:323 client/models.py:329
-#: client/models.py:345
+#: client/models.py:408 client/models.py:414 client/models.py:420
+#: client/models.py:436
 msgid "No data"
 msgstr "Sin datos"
 
-#: client/models.py:343
+#: client/models.py:434
 msgid "30 photos"
 msgstr "30 fotos"
 
-#: client/models.py:385
+#: client/models.py:476
 msgid "Contact us for more information"
 msgstr "Contáctenos para más información"
 
-#: client/views.py:255
+#: client/views.py:256
 msgid ""
 "Thank you, your booking has been registered successfully, you will receive "
 "an email shortly!"
@@ -371,17 +439,25 @@ msgstr ""
 "Gracias, su reserva se ha registrado correctamente, recibirá un correo "
 "pronto!"
 
-#: crueltouch/settings.py:196
+#: crueltouch/settings.py:218
 msgid "English"
 msgstr "Inglés"
 
-#: crueltouch/settings.py:197
+#: crueltouch/settings.py:219
 msgid "Spanish"
 msgstr "Español"
 
-#: crueltouch/settings.py:198
+#: crueltouch/settings.py:220
 msgid "French"
 msgstr "Francés"
+
+#: homepage/views.py:81
+msgid "Services | TCHIIZ"
+msgstr "Servicios | TCHIIZ"
+
+#: homepage/views.py:82
+msgid "Services offered by Tchiiz studio Photography"
+msgstr "Servicios ofrecidos por Tchiiz studio Photography"
 
 #: static_pages_and_forms/form.py:19
 msgid "How do I call you ?"
@@ -395,29 +471,29 @@ msgstr "¿Cuál es el asunto de su mensaje...?"
 msgid "I'm listening... !"
 msgstr "¡Estoy escuchando...!"
 
-#: static_pages_and_forms/models.py:16
+#: static_pages_and_forms/models.py:21
 #: templates/administration/list/list_contact_forms.html:27
 #: templates/administration/list/list_contact_forms.html:61
 msgid "Subject"
 msgstr "Tema"
 
-#: static_pages_and_forms/models.py:17
+#: static_pages_and_forms/models.py:22
 #: templates/administration/list/list_contact_forms.html:28
 #: templates/administration/list/list_contact_forms.html:62
 msgid "Message"
 msgstr "Mensaje"
 
-#: static_pages_and_forms/models.py:35
+#: static_pages_and_forms/models.py:40
 msgid "Your message has been received"
 msgstr "Su mensaje ha sido recibido"
 
-#: static_pages_and_forms/models.py:37
+#: static_pages_and_forms/models.py:42
 #, fuzzy
 #| msgid "Thank you for your booking!"
 msgid "Thank you for reaching out to us"
 msgstr "¡Gracias por su reserva!"
 
-#: static_pages_and_forms/models.py:38
+#: static_pages_and_forms/models.py:43
 #, python-brace-format
 msgid ""
 "Hi {instance.full_name}, thank you for reaching out to us. We will get back "
@@ -426,42 +502,48 @@ msgstr ""
 "Hola {instance.full_name}, gracias por contactarnos. Nos pondremos en "
 "contacto contigo lo antes posible. "
 
-#: static_pages_and_forms/models.py:40
-msgid "Have a great day! CruelTouch Team"
-msgstr "¡Que tengas un gran día! Equipo CruelTouch"
+#: static_pages_and_forms/models.py:45
+msgid "Have a great day! Tchiiz Studio"
+msgstr "¡Que tengas un gran día! Equipo Tchiiz"
 
-#: static_pages_and_forms/models.py:43
+#: static_pages_and_forms/models.py:48
 msgid "Awesome!"
 msgstr "Increíble"
 
-#: static_pages_and_forms/models.py:45
+#: static_pages_and_forms/models.py:50
 msgid "Ok"
 msgstr "Ok"
 
-#: static_pages_and_forms/views.py:19
-msgid "Thank you for your message, but it didn't went through !"
+#: static_pages_and_forms/views.py:42
+#, fuzzy
+#| msgid "Thank you for your message, but it didn't went through !"
+msgid "Thank you for your message, but it didn't went through!"
 msgstr "¡Gracias por su mensaje, pero no se envió!"
 
-#: static_pages_and_forms/views.py:56 templates/homepage/base.html:99
-#: templates/legal/privacy_policy.html:16
+#: static_pages_and_forms/views.py:49
+msgid "Something went wrong. Please try again later."
+msgstr ""
+
+#: static_pages_and_forms/views.py:78 templates/homepage/base.html:110
+#: templates/legal/privacy_policy.html:17
 msgid "Privacy Policy"
 msgstr "Política de privacidad"
 
-#: static_pages_and_forms/views.py:57
+#: static_pages_and_forms/views.py:79
 msgid "Privacy Policy page"
 msgstr "Página de política de privacidad"
 
-#: static_pages_and_forms/views.py:63
+#: static_pages_and_forms/views.py:85
 msgid "Terms and Conditions"
 msgstr "Términos y condiciones"
 
-#: static_pages_and_forms/views.py:64
+#: static_pages_and_forms/views.py:86
 msgid "Terms and Conditions page"
 msgstr "Página de términos y condiciones"
 
 #: templates/administration/add/add_album.html:4
 #: templates/administration/add/add_photos.html:26
-#: templates/administration/base.html:259
+#: templates/administration/base.html:294
 msgid "Create new album"
 msgstr "Crear nuevo álbum"
 
@@ -486,6 +568,7 @@ msgstr "Enviar"
 #: templates/administration/add/add_new_client.html:51
 #: templates/administration/add/add_photos.html:54
 #: templates/administration/edit/update_requested_session.html:17
+#: venv/lib/python3.11/site-packages/appointment/templates/modal/event_details_modal.html:22
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -505,92 +588,113 @@ msgstr "Crear"
 msgid "Total pictures uploaded"
 msgstr "Total de fotos subidas"
 
-#: templates/administration/base.html:9 templates/administration/base.html:181
+#: templates/administration/add/invoice_form.html:4
+#: templates/administration/base.html:368
+msgid "Generate Invoice"
+msgstr ""
+
+#: templates/administration/base.html:10 templates/administration/base.html:183
 #: templates/administration/list/data.html:43
 #: templates/administration/view/index.html:28
 #: templates/administration/view/index.html:36
 msgid "Dashboard"
 msgstr "Tablero"
 
-#: templates/administration/base.html:64 templates/administration/base.html:209
-#: templates/homepage/base.html:8
+#: templates/administration/base.html:65 templates/administration/base.html:244
 msgid "Homepage"
 msgstr "Página de inicio"
 
-#: templates/administration/base.html:67 templates/homepage/base.html:91
+#: templates/administration/base.html:68 templates/homepage/base.html:102
 msgid "Logout"
 msgstr "Cerrar sesión"
 
-#: templates/administration/base.html:192
+#: templates/administration/base.html:194
 msgid "Django Admin"
 msgstr "Administrador de Django"
 
-#: templates/administration/base.html:201
-msgid "Session list"
-msgstr "Lista de sesiones"
+#: templates/administration/base.html:211
+msgid "Appointment"
+msgstr ""
 
-#: templates/administration/base.html:219
-#: templates/administration/base.html:245
+#: templates/administration/base.html:221
+#, fuzzy
+#| msgid "View all links"
+msgid "View all"
+msgstr "Ver todos los enlaces"
+
+#: templates/administration/base.html:228
+msgid "User Profile"
+msgstr ""
+
+#: templates/administration/base.html:235
+#: venv/lib/python3.11/site-packages/appointment/views_admin.py:414
+#, fuzzy
+#| msgid "Service"
+msgid "Add Service"
+msgstr "Servicio"
+
+#: templates/administration/base.html:254
+#: templates/administration/base.html:280
 msgid "Add photos"
 msgstr "Agregar fotos"
 
-#: templates/administration/base.html:226
-#: templates/administration/base.html:252
+#: templates/administration/base.html:261
+#: templates/administration/base.html:287
 msgid "View all photos"
 msgstr "Ver todas las fotos"
 
-#: templates/administration/base.html:235 templates/homepage/base.html:71
+#: templates/administration/base.html:270 templates/homepage/base.html:73
 #: templates/portfolio/index_portfolio.html:4
 msgid "Portfolio"
 msgstr "Portafolio"
 
-#: templates/administration/base.html:268
+#: templates/administration/base.html:303
 msgid "Send photo"
 msgstr "Enviar foto"
 
-#: templates/administration/base.html:279
+#: templates/administration/base.html:314
 msgid "To choose from"
 msgstr "Para elegir"
 
-#: templates/administration/base.html:286
+#: templates/administration/base.html:321
 msgid "View all chosen"
 msgstr "Ver todo lo elegido"
 
-#: templates/administration/base.html:293
+#: templates/administration/base.html:328
 msgid "Final via link"
 msgstr "Final vía enlace"
 
-#: templates/administration/base.html:300
+#: templates/administration/base.html:335
 msgid "View all links"
 msgstr "Ver todos los enlaces"
 
-#: templates/administration/base.html:307
+#: templates/administration/base.html:343
 msgid "Final via account"
 msgstr "Final vía cuenta"
 
-#: templates/administration/base.html:316
+#: templates/administration/base.html:352
 msgid "Client management"
 msgstr "Gestión de clientes"
 
-#: templates/administration/base.html:324
+#: templates/administration/base.html:360
 msgid "Message list"
 msgstr "Lista de mensajes"
 
-#: templates/administration/base.html:332
+#: templates/administration/base.html:376
 msgid "Help"
 msgstr "Ayuda"
 
-#: templates/administration/base.html:340
+#: templates/administration/base.html:384
 msgid "Settings"
 msgstr "Configuraciones"
 
-#: templates/administration/base.html:348
+#: templates/administration/base.html:392
 #: templates/administration/password/has_to_change_password.html:64
 #: templates/client/client_view/base.html:12
 msgid "Change password"
 msgstr "Cambiar contraseña"
 
-#: templates/administration/base.html:356
+#: templates/administration/base.html:400
 msgid "Sign out"
 msgstr "Desconectar"
 
@@ -677,6 +781,9 @@ msgid "Update requested session"
 msgstr "Actualizar sesión solicitada"
 
 #: templates/administration/edit/update_requested_session.html:18
+#: venv/lib/python3.11/site-packages/appointment/services.py:161
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/manage_staff_personal_info.html:32
+#: venv/lib/python3.11/site-packages/appointment/views_admin.py:419
 msgid "Update"
 msgstr "Actualizar"
 
@@ -684,24 +791,24 @@ msgstr "Actualizar"
 #, python-format
 msgid ""
 "\n"
-"        Hi %(full_name)s, the crueltouch team is pleased to announce that "
-"your reservation has been processed.\n"
+"        Hi %(full_name)s, the Tchiiz  team is pleased to announce that your "
+"reservation has been processed.\n"
 "    "
 msgstr ""
 "\n"
-"        Hola %(full_name)s, el equipo de crueltouch se complace en anunciar "
+"        Hola %(full_name)s, el equipo de Tchiiz se complace en anunciar "
 "que su reserva ha sido procesada.\n"
 "    "
 
 #: templates/administration/email_template/session_request_received.html:141
-msgid "Thank you for booking Crueltouch!"
-msgstr "¡Gracias por reservar Crueltouch!"
+msgid "Thank you for booking Tchiiz Studio!"
+msgstr "¡Gracias por reservar Tchiiz Studio!"
 
 #: templates/administration/email_template/session_request_received.html:149
 #, python-format
 msgid ""
 "\n"
-"                                            Hi %(full_name)s, the crueltouch "
+"                                            Hi %(full_name)s, the Tchiiz "
 "team is pleased to announce that your\n"
 "                                            reservation has been "
 "successfully submitted. We will do our best to process\n"
@@ -711,7 +818,7 @@ msgid ""
 msgstr ""
 "\n"
 "                                            Hola %(full_name)s, el equipo de "
-"crueltouch se complace en anunciar que su\n"
+"Tchiiz se complace en anunciar que su\n"
 "                                            reserva ha sido enviada "
 "exitosamente. Haremos todo lo posible para procesarla.\n"
 "                                            Recibirá un correo electrónico "
@@ -719,12 +826,13 @@ msgstr ""
 "                                        "
 
 #: templates/administration/email_template/session_request_received.html:156
-#: templates/client/booking_and_promotions/bookme.html:127
-#: templates/client/booking_and_promotions/promotions.html:11
+#: templates/client/booking_and_promotions/bookme.html:134
+#: templates/client/booking_and_promotions/promotions.html:18
 msgid ""
 "NB: A $100 deposit is required to book the date. NO DEPOSIT, NO OBLIGATION."
 msgstr ""
-"NB: Se requiere un depósito de $ 100 para reservar la fecha. SIN DEPÓSITO, SIN OBLIGACIÓN."
+"NB: Se requiere un depósito de $ 100 para reservar la fecha. SIN DEPÓSITO, "
+"SIN OBLIGACIÓN."
 
 #: templates/administration/email_template/session_request_received.html:166
 msgid "Booking Confirmation"
@@ -773,7 +881,9 @@ msgid "please let us know"
 msgstr "por favor háganoslo saber"
 
 #: templates/administration/email_template/session_request_received.html:392
-#: templates/homepage/base.html:158
+#: templates/homepage/base.html:169
+#: venv/lib/python3.11/site-packages/appointment/templates/email_sender/thank_you_email.html:251
+#: venv/lib/python3.11/site-packages/payment/templates/email_sender/payment_email.html:67
 msgid "All rights reserved"
 msgstr "Todos los derechos reservados"
 
@@ -787,15 +897,16 @@ msgstr "Lista de fotos elegidas"
 
 #: templates/administration/list/list_album_client.html:26
 #: templates/administration/list/list_album_client.html:65
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/display_appointment.html:39
 msgid "Client"
 msgstr "Cliente"
 
 #: templates/administration/list/list_album_client.html:27
 #: templates/administration/list/list_album_client.html:66
-#: templates/client/booking_and_promotions/promotions.html:62
-#: templates/client/booking_and_promotions/promotions.html:63
-#: templates/client/booking_and_promotions/promotions.html:64
-#: templates/client/booking_and_promotions/promotions.html:65
+#: templates/client/booking_and_promotions/promotions.html:69
+#: templates/client/booking_and_promotions/promotions.html:70
+#: templates/client/booking_and_promotions/promotions.html:71
+#: templates/client/booking_and_promotions/promotions.html:72
 msgid "photos"
 msgstr "fotos"
 
@@ -827,6 +938,8 @@ msgid "Downloaded"
 msgstr "Descargado"
 
 #: templates/administration/list/list_created_link.html:55
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:27
+#: venv/lib/python3.11/site-packages/django/forms/formsets.py:499
 msgid "Delete"
 msgstr "Borrar"
 
@@ -865,7 +978,7 @@ msgstr "Fecha tomada"
 #: templates/administration/list/list_requested_session.html:116
 #: templates/administration/view/index.html:181
 #: templates/administration/view/index.html:252
-#: templates/client/booking_and_promotions/bookme.html:148
+#: templates/client/booking_and_promotions/bookme.html:155
 msgid "Desired date"
 msgstr "Fecha deseada"
 
@@ -873,6 +986,9 @@ msgstr "Fecha deseada"
 #: templates/administration/list/list_requested_session.html:117
 #: templates/administration/view/index.html:182
 #: templates/administration/view/index.html:253
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/service_list.html:25
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/staff_list.html:35
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:228
 msgid "Name"
 msgstr "Nombre"
 
@@ -880,6 +996,7 @@ msgstr "Nombre"
 #: templates/administration/list/list_requested_session.html:119
 #: templates/administration/view/index.html:184
 #: templates/administration/view/index.html:255
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/display_appointment.html:47
 msgid "Phone"
 msgstr "Teléfono"
 
@@ -937,11 +1054,10 @@ msgstr "Solicitar nueva contraseña"
 
 #: templates/administration/password/forgot-password.html:58
 #: templates/administration/password/reset_password_done.html:18
-#: templates/client/login_registration/log_as_owner.html:4
-#: templates/client/login_registration/log_as_owner.html:38
+#: templates/client/login_registration/log_as_owner.html:42
 #: templates/client/login_registration/login.html:4
-#: templates/client/login_registration/login.html:40
-#: templates/client/login_registration/register.html:77
+#: templates/client/login_registration/login.html:51
+#: templates/client/login_registration/register.html:84
 msgid "Login"
 msgstr "Iniciar sesión"
 
@@ -1025,229 +1141,385 @@ msgstr "Fotos entregadas"
 msgid "Clients"
 msgstr "Clientes"
 
+#: templates/appointments/appointment_client_information.html:30
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:35
+msgid "Fill out your details"
+msgstr ""
+
+#: templates/appointments/appointment_client_information.html:36
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:41
+msgid "Tell us a bit about yourself"
+msgstr ""
+
+#: templates/appointments/appointment_client_information.html:39
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:44
+#, fuzzy
+#| msgid "Already have an account"
+msgid "Already have an account?"
+msgstr "¿Ya tienes una cuenta?"
+
+#: templates/appointments/appointment_client_information.html:40
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:45
+msgid "Log in"
+msgstr ""
+
+#: templates/appointments/appointment_client_information.html:40
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:45
+msgid "for faster booking."
+msgstr ""
+
+#: templates/appointments/appointment_client_information.html:57
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:62
+msgid "I want to receive an EMAIL reminder 24 hours before this session starts"
+msgstr ""
+
+#: templates/appointments/appointment_client_information.html:61
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:67
+#, fuzzy
+#| msgid "Phone number"
+msgid "Phone Number"
+msgstr "Teléfono"
+
+#: templates/appointments/appointment_client_information.html:67
+#: templates/client/booking_and_promotions/bookme.html:159
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:74
+msgid "City and State"
+msgstr "Ciudad y estado"
+
+#: templates/appointments/appointment_client_information.html:82
+#: templates/appointments/appointments.html:50
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:87
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointments.html:66
+#, fuzzy
+#| msgid "Service"
+msgid "Service Details"
+msgstr "Servicio"
+
+#: templates/appointments/appointment_client_information.html:90
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:95
+#, fuzzy
+#| msgid "Date"
+msgid "at"
+msgstr "Fecha"
+
+#: templates/appointments/appointment_client_information.html:98
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:103
+msgid "Payment Details"
+msgstr ""
+
+#: templates/appointments/appointment_client_information.html:100
+#: templates/appointments/appointment_payment.html:64
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:105
+#: venv/lib/python3.11/site-packages/payment/templates/payment/payment.html:65
+msgid "Total"
+msgstr ""
+
+#: templates/appointments/appointment_payment.html:40
+#: venv/lib/python3.11/site-packages/payment/templates/payment/payment.html:41
+msgid "Order summary"
+msgstr ""
+
+#: templates/appointments/appointment_payment.html:55
+#: venv/lib/python3.11/site-packages/payment/templates/payment/payment.html:56
+msgid "Subtotal"
+msgstr ""
+
+#: templates/appointments/appointment_payment.html:59
+#: venv/lib/python3.11/site-packages/payment/templates/payment/payment.html:60
+msgid "Sales Tax"
+msgstr ""
+
+#: templates/appointments/appointments.html:18
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointments.html:19
+msgid ""
+"Check out our availability and book the date and time that works for you"
+msgstr ""
+
+#: templates/appointments/appointments.html:26
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointments.html:27
+#, fuzzy
+#| msgid "Select a package"
+msgid "Select a date and time"
+msgstr "Seleccione un paquete"
+
+#: templates/appointments/appointments.html:29
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointments.html:30
+msgid "Timezone"
+msgstr ""
+
+#: templates/appointments/appointments.html:29
+msgid "Eastern Daylight Time (EDT)"
+msgstr ""
+
 #: templates/client/booking_and_promotions/bookme.html:4
 msgid "Book me"
 msgstr "Reservame"
 
-#: templates/client/booking_and_promotions/bookme.html:113
+#: templates/client/booking_and_promotions/bookme.html:7
+msgid ""
+"Book your photography session with Tchiiz Studio and experience the "
+"difference. Professional,\n"
+"        personalized service and stunning results. Schedule now."
+msgstr ""
+
+#: templates/client/booking_and_promotions/bookme.html:120
 msgid "Note"
 msgstr "Nota"
 
-#: templates/client/booking_and_promotions/bookme.html:115
+#: templates/client/booking_and_promotions/bookme.html:122
 msgid "The price vary according to"
 msgstr "El precio varía según"
 
-#: templates/client/booking_and_promotions/bookme.html:118
+#: templates/client/booking_and_promotions/bookme.html:125
 msgid "The place you want to do the photoshoot"
 msgstr "El lugar donde desea hacer la sesión de fotos"
 
-#: templates/client/booking_and_promotions/bookme.html:119
+#: templates/client/booking_and_promotions/bookme.html:126
 msgid "The session type"
 msgstr "El tipo de sesión"
 
-#: templates/client/booking_and_promotions/bookme.html:120
+#: templates/client/booking_and_promotions/bookme.html:127
 msgid "The number of pictures you want (the packages)"
 msgstr "El número de fotos que desea (los paquetes)"
 
-#: templates/client/booking_and_promotions/bookme.html:123
+#: templates/client/booking_and_promotions/bookme.html:130
 msgid ""
 "In order to have a better user experience, we recommend you to register first"
 msgstr ""
 "Para tener una mejor experiencia de usuario, le recomendamos que se registre"
 
-#: templates/client/booking_and_promotions/bookme.html:144
-msgid "Phone number"
-msgstr "Teléfono"
-
-#: templates/client/booking_and_promotions/bookme.html:152
-msgid "City and State"
-msgstr "Ciudad y estado"
-
-#: templates/client/booking_and_promotions/bookme.html:167
+#: templates/client/booking_and_promotions/bookme.html:174
 msgid "Select a package"
 msgstr "Seleccione un paquete"
 
-#: templates/client/booking_and_promotions/bookme.html:172
+#: templates/client/booking_and_promotions/bookme.html:179
+#: venv/lib/python3.11/site-packages/click/core.py:2834
 msgid "required"
 msgstr "requerido"
 
-#: templates/client/booking_and_promotions/bookme.html:181
+#: templates/client/booking_and_promotions/bookme.html:188
 msgid "Request"
 msgstr "Solicitar"
 
 #: templates/client/booking_and_promotions/promotions.html:4
-msgid "Latest promotions"
-msgstr "Últimas promociones"
+msgid "Special Photography Promotions"
+msgstr ""
 
-#: templates/client/booking_and_promotions/promotions.html:10
+#: templates/client/booking_and_promotions/promotions.html:7
+msgid ""
+"\n"
+"        Don't miss out on our limited-time photography promotions! "
+"Affordable rates on portraits, landscapes, and\n"
+"        events. Book your session today.\n"
+"    "
+msgstr ""
+
+#: templates/client/booking_and_promotions/promotions.html:17
 msgid "Promotion Plans"
 msgstr "Planes de promoción"
 
-#: templates/client/booking_and_promotions/promotions.html:12
+#: templates/client/booking_and_promotions/promotions.html:19
 msgid "All pictures are EDITED."
 msgstr "Todas las fotos están EDITADAS."
 
-#: templates/client/booking_and_promotions/promotions.html:24
+#: templates/client/booking_and_promotions/promotions.html:31
 msgid "Compare all plans"
 msgstr "Comparar todos los planes"
 
-#: templates/client/booking_and_promotions/promotions.html:25
+#: templates/client/booking_and_promotions/promotions.html:32
 msgid "Starter"
 msgstr "Inicio"
 
-#: templates/client/booking_and_promotions/promotions.html:26
+#: templates/client/booking_and_promotions/promotions.html:33
 msgid "Basic"
 msgstr "Básico"
 
-#: templates/client/booking_and_promotions/promotions.html:28
+#: templates/client/booking_and_promotions/promotions.html:35
 msgid "Medium"
 msgstr "Medio"
 
-#: templates/client/booking_and_promotions/promotions.html:30
+#: templates/client/booking_and_promotions/promotions.html:37
 msgid "Premium"
 msgstr "Premium"
 
-#: templates/client/booking_and_promotions/promotions.html:38
+#: templates/client/booking_and_promotions/promotions.html:45
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/service_list.html:27
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:231
 msgid "Price"
 msgstr "Precio"
 
-#: templates/client/booking_and_promotions/promotions.html:69
+#: templates/client/booking_and_promotions/promotions.html:76
 msgid "Mini Video"
 msgstr "Minivídeo"
 
-#: templates/client/booking_and_promotions/promotions.html:99
+#: templates/client/booking_and_promotions/promotions.html:106
 msgid "Delivery Time frame"
 msgstr "Plazo de entrega"
 
-#: templates/client/booking_and_promotions/promotions.html:101
-#: templates/client/booking_and_promotions/promotions.html:102
-#: templates/client/booking_and_promotions/promotions.html:103
-#: templates/client/booking_and_promotions/promotions.html:104
+#: templates/client/booking_and_promotions/promotions.html:108
+#: templates/client/booking_and_promotions/promotions.html:109
+#: templates/client/booking_and_promotions/promotions.html:110
+#: templates/client/booking_and_promotions/promotions.html:111
 msgid "days"
 msgstr "días"
 
-#: templates/client/booking_and_promotions/promotions.html:110
+#: templates/client/booking_and_promotions/promotions.html:117
 msgid "Only Orlando"
 msgstr "Sólo Orlando"
 
-#: templates/client/booking_and_promotions/promotions.html:111
-#: templates/client/booking_and_promotions/promotions.html:112
-#: templates/client/booking_and_promotions/promotions.html:113
+#: templates/client/booking_and_promotions/promotions.html:118
+#: templates/client/booking_and_promotions/promotions.html:119
+#: templates/client/booking_and_promotions/promotions.html:120
 msgid "Florida"
 msgstr "Florida"
 
-#: templates/client/booking_and_promotions/promotions.html:120
-#: templates/client/booking_and_promotions/promotions.html:126
-#: templates/client/booking_and_promotions/promotions.html:132
-#: templates/client/booking_and_promotions/promotions.html:138
+#: templates/client/booking_and_promotions/promotions.html:127
+#: templates/client/booking_and_promotions/promotions.html:133
+#: templates/client/booking_and_promotions/promotions.html:139
+#: templates/client/booking_and_promotions/promotions.html:145
 msgid "book now"
 msgstr "reservar ahora"
 
-#: templates/client/login_registration/log_as_owner.html:13
+#: templates/client/login_registration/log_as_owner.html:4
+#: templates/homepage/base.html:98
+msgid "Admin Login"
+msgstr "Admin Iniciar"
+
+#: templates/client/login_registration/log_as_owner.html:14
 msgid "ADMIN LOGIN"
 msgstr "ADMIN INICIAR"
 
-#: templates/client/login_registration/login.html:13
+#: templates/client/login_registration/login.html:6
+msgid ""
+"\n"
+"        Access your private online gallery and view your stunning "
+"photographs securely with our client login feature.\n"
+"        Login now to see your memories\n"
+"    "
+msgstr ""
+
+#: templates/client/login_registration/login.html:20
 msgid "LOGIN"
 msgstr "INICIAR SESIÓN"
 
-#: templates/client/login_registration/login.html:36
+#: templates/client/login_registration/login.html:47
 msgid "Forgot password"
 msgstr "Olvidé mi contraseña"
 
-#: templates/client/login_registration/login.html:62
+#: templates/client/login_registration/login.html:73
 msgid "Don't have an account"
 msgstr "¿No tienes una cuenta"
 
-#: templates/client/login_registration/login.html:64
+#: templates/client/login_registration/login.html:75
 msgid "Sign Up"
 msgstr "Regístrate"
 
 #: templates/client/login_registration/register.html:4
-msgid "Register"
-msgstr "Registrarse"
+#, fuzzy
+#| msgid "Registration"
+msgid "Client Registration"
+msgstr "Registro"
 
-#: templates/client/login_registration/register.html:15
+#: templates/client/login_registration/register.html:7
+msgid ""
+"\n"
+"        Create an account with us and get access to exclusive promotions, "
+"online gallery and more. Register now to\n"
+"        experience our professional photography services.\n"
+"    "
+msgstr ""
+
+#: templates/client/login_registration/register.html:22
 msgid "REGISTER ACCOUNT"
 msgstr "REGISTRAR CUENTA"
 
-#: templates/client/login_registration/register.html:54
+#: templates/client/login_registration/register.html:61
 msgid "Register Account"
 msgstr "Registrar cuenta"
 
-#: templates/client/login_registration/register.html:75
+#: templates/client/login_registration/register.html:82
 msgid "Already have an account"
 msgstr "¿Ya tienes una cuenta?"
 
 #: templates/homepage/base.html:8
-msgid "CRUELTOUCH"
-msgstr "CRUELTOUCH"
+msgid "Welcome to Tchiiz Studio"
+msgstr "Bienvenido a Tchiiz Studio"
 
-#: templates/homepage/base.html:60
+#: templates/homepage/base.html:62
 msgid "Home"
 msgstr "Inicio"
 
-#: templates/homepage/base.html:63
+#: templates/homepage/base.html:65
 msgid "Meet"
 msgstr "Conoce"
 
-#: templates/homepage/base.html:63
+#: templates/homepage/base.html:65
 msgid "Contact"
 msgstr "Contacta"
 
-#: templates/homepage/base.html:65
-msgid "Meet Crueltouch"
-msgstr "Conocer Crueltouch"
+#: templates/homepage/base.html:67
+msgid "Meet Us"
+msgstr "Conócenos"
 
-#: templates/homepage/base.html:66 templates/legal/privacy_policy.html:383
+#: templates/homepage/base.html:68 templates/legal/privacy_policy.html:384
 msgid "Contact Us"
 msgstr "Contáctenos"
 
-#: templates/homepage/base.html:77 templates/homepage/base.html:79
+#: templates/homepage/base.html:79
+msgid "Booking"
+msgstr "Reserva"
+
+#: templates/homepage/base.html:82 templates/homepage/base.html:86
 msgid "Book Me"
 msgstr "Reservame"
 
-#: templates/homepage/base.html:80
+#: templates/homepage/base.html:83 templates/homepage/base.html:87
 msgid "Latest Promotions"
 msgstr "Últimas promociones"
 
-#: templates/homepage/base.html:85
+#: templates/homepage/base.html:84
+msgid "OBM (deprecated)"
+msgstr ""
+
+#: templates/homepage/base.html:93
 msgid "Client Login"
 msgstr "Acceso cliente"
 
-#: templates/homepage/base.html:87
+#: templates/homepage/base.html:95
 msgid "View Your Images"
 msgstr "Ver tus imágenes"
 
-#: templates/homepage/base.html:88
+#: templates/homepage/base.html:96
 msgid "Registration"
 msgstr "Registro"
 
-#: templates/homepage/base.html:89
-msgid "Admin Login"
-msgstr "Admin Iniciar"
+#: templates/homepage/base.html:101
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Admin Dashboard"
+msgstr "Tablero"
 
-#: templates/homepage/base.html:97
+#: templates/homepage/base.html:108
 msgid "Legal"
 msgstr "Legal"
 
-#: templates/homepage/base.html:100
+#: templates/homepage/base.html:111
 msgid "Terms & Conditions"
 msgstr "Términos y condiciones"
 
-#: templates/homepage/base.html:158
+#: templates/homepage/base.html:169
 msgid "Made with"
 msgstr "Hecho con"
 
-#: templates/homepage/base.html:159
+#: templates/homepage/base.html:170
 msgid "Love"
 msgstr "Amor"
 
-#: templates/homepage/base.html:159
+#: templates/homepage/base.html:170
 msgid "by"
 msgstr "por"
 
-#: templates/homepage/base.html:173
+#: templates/homepage/base.html:184
 msgid "Search here"
 msgstr "Buscar aquí"
 
@@ -1269,23 +1541,29 @@ msgstr "Comprendido"
 msgid "Learn more"
 msgstr "Aprende más"
 
-#: templates/homepage/index.html:29
+#: templates/homepage/index.html:8
+msgid ""
+"Professional photography services for all occasions - portraits, landscapes, "
+"events. High-quality results and personalized attention."
+msgstr ""
+
+#: templates/homepage/index.html:33
 msgid "Click here to book"
 msgstr "Haga clic aquí para reservar"
 
-#: templates/homepage/index.html:32
+#: templates/homepage/index.html:36
 msgid "Book Now"
 msgstr "Reservar ahora"
 
-#: templates/homepage/index.html:45
+#: templates/homepage/index.html:50
 msgid "My name is Roos Laurore"
 msgstr "Mi nombre es Roos Laurore"
 
-#: templates/homepage/index.html:46
+#: templates/homepage/index.html:53
 msgid "I’m a photographer"
 msgstr "Soy fotógrafa"
 
-#: templates/homepage/index.html:48
+#: templates/homepage/index.html:55
 msgid ""
 "\n"
 "                                    Born in the 90's, I am very passionate "
@@ -1317,19 +1595,19 @@ msgstr ""
 "China. Objetivo a largo plazo: Nomada digital.\n"
 "                                "
 
-#: templates/homepage/index.html:57
+#: templates/homepage/index.html:65
 msgid "Take a look @my portfolio"
 msgstr "Mira @mi portafolio"
 
-#: templates/homepage/index.html:64
+#: templates/homepage/index.html:72
 msgid "Business"
 msgstr "Negocios"
 
-#: templates/homepage/index.html:68
+#: templates/homepage/index.html:76
 msgid "Passion"
 msgstr "Pasión"
 
-#: templates/homepage/index.html:72
+#: templates/homepage/index.html:80
 msgid "Travels"
 msgstr "Viajes"
 
@@ -1425,16 +1703,20 @@ msgstr "Clientes satisfechos"
 msgid "Photoshoot"
 msgstr "Sesión de fotos"
 
-#: templates/legal/privacy_policy.html:17
-#: templates/legal/terms_and_conditions.html:15
+#: templates/homepage/services_offered.html:15
+msgid "Book your service here"
+msgstr ""
+
+#: templates/legal/privacy_policy.html:18
+#: templates/legal/terms_and_conditions.html:16
 msgid "Last updated"
 msgstr "Última actualización"
 
-#: templates/legal/privacy_policy.html:17
+#: templates/legal/privacy_policy.html:18
 msgid "November 10, 2022"
 msgstr "10 de noviembre de 2022"
 
-#: templates/legal/privacy_policy.html:19
+#: templates/legal/privacy_policy.html:20
 msgid ""
 "\n"
 "                                This page informs you of our policies "
@@ -1452,7 +1734,7 @@ msgstr ""
 "                                    datos.\n"
 "                                "
 
-#: templates/legal/privacy_policy.html:26
+#: templates/legal/privacy_policy.html:27
 msgid ""
 "\n"
 "                                We use your data to provide and improve the "
@@ -1481,16 +1763,16 @@ msgstr ""
 "                                Términos y condiciones, accesibles desde\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:35
+#: templates/legal/privacy_policy.html:36
 #: templates/static_pages_and_forms/success.html:71
 msgid "here"
 msgstr "aquí"
 
-#: templates/legal/privacy_policy.html:36
+#: templates/legal/privacy_policy.html:37
 msgid "Interpretation"
 msgstr "Interpretación"
 
-#: templates/legal/privacy_policy.html:37
+#: templates/legal/privacy_policy.html:38
 msgid ""
 "\n"
 "                            The words of which the initial letter is "
@@ -1508,19 +1790,19 @@ msgstr ""
 "plural.\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:43
+#: templates/legal/privacy_policy.html:44
 msgid "Definitions"
 msgstr "Definiciones"
 
-#: templates/legal/privacy_policy.html:44
+#: templates/legal/privacy_policy.html:45
 msgid "For the purposes of this Privacy Policy"
 msgstr "Con el propósito de esta política de privacidad"
 
-#: templates/legal/privacy_policy.html:48
+#: templates/legal/privacy_policy.html:49
 msgid "Account"
 msgstr "Cuenta"
 
-#: templates/legal/privacy_policy.html:49
+#: templates/legal/privacy_policy.html:50
 msgid ""
 "\n"
 "                                        means a unique account created for "
@@ -1534,18 +1816,18 @@ msgstr ""
 "                                            o partes de nuestro Servicio.\n"
 "                                        "
 
-#: templates/legal/privacy_policy.html:57
+#: templates/legal/privacy_policy.html:58
 msgid "Company"
 msgstr "Compañía"
 
-#: templates/legal/privacy_policy.html:58
+#: templates/legal/privacy_policy.html:59
 msgid ""
 "\n"
 "                                        (referred to as either &quot;the "
 "Company&quot;, &quot;We&quot;,\n"
 "                                        &quot;Us&quot; or &quot;Our&quot; in "
 "this Agreement) refers to\n"
-"                                        crueltouch.com.\n"
+"                                        tchiiz.com.\n"
 "                                    "
 msgstr ""
 "\n"
@@ -1553,14 +1835,14 @@ msgstr ""
 "&quot;Nosotros&quot;,\n"
 "                                        &quot;Nosotros&quot; o &quot;"
 "Nuestro&quot; en este Acuerdo) se refiere a\n"
-"                                        crueltouch.com.\n"
+"                                        tchiiz.com.\n"
 "                                    "
 
-#: templates/legal/privacy_policy.html:67
+#: templates/legal/privacy_policy.html:68
 msgid "Cookies"
 msgstr "Cookies"
 
-#: templates/legal/privacy_policy.html:68
+#: templates/legal/privacy_policy.html:69
 msgid ""
 "\n"
 "                                        are small files that are placed on "
@@ -1579,19 +1861,19 @@ msgstr ""
 "sitio web entre sus muchos usos.\n"
 "                                    "
 
-#: templates/legal/privacy_policy.html:76
+#: templates/legal/privacy_policy.html:77
 msgid "Country"
 msgstr "País"
 
-#: templates/legal/privacy_policy.html:76
+#: templates/legal/privacy_policy.html:77
 msgid "refers to: United States of America"
 msgstr "se refiere a: Estados Unidos de América"
 
-#: templates/legal/privacy_policy.html:80
+#: templates/legal/privacy_policy.html:81
 msgid "Device"
 msgstr "Dispositivo"
 
-#: templates/legal/privacy_policy.html:81
+#: templates/legal/privacy_policy.html:82
 msgid ""
 "\n"
 "                                        means any device that can access the "
@@ -1607,12 +1889,12 @@ msgstr ""
 "una tableta digital.\n"
 "                                    "
 
-#: templates/legal/privacy_policy.html:88
-#: templates/legal/privacy_policy.html:147
+#: templates/legal/privacy_policy.html:89
+#: templates/legal/privacy_policy.html:148
 msgid "Personal Data"
 msgstr "Datos personales"
 
-#: templates/legal/privacy_policy.html:89
+#: templates/legal/privacy_policy.html:90
 msgid ""
 "\n"
 "                                        is any information that relates to "
@@ -1624,19 +1906,22 @@ msgstr ""
 "refiere a una persona identificada o identificable.\n"
 "                                    "
 
-#: templates/legal/privacy_policy.html:95
+#: templates/legal/privacy_policy.html:96
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/display_appointment.html:35
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/default_thank_you.html:20
+#: venv/lib/python3.11/site-packages/appointment/views.py:437
 msgid "Service"
 msgstr "Servicio"
 
-#: templates/legal/privacy_policy.html:95
+#: templates/legal/privacy_policy.html:96
 msgid "refers to the Website."
 msgstr "se refiere al sitio web."
 
-#: templates/legal/privacy_policy.html:99
+#: templates/legal/privacy_policy.html:100
 msgid "Service Provider"
 msgstr "Proveedor de servicios"
 
-#: templates/legal/privacy_policy.html:100
+#: templates/legal/privacy_policy.html:101
 msgid ""
 "\n"
 "                                        means any natural or legal person "
@@ -1668,12 +1953,12 @@ msgstr ""
 "Servicio.\n"
 "                                    "
 
-#: templates/legal/privacy_policy.html:113
-#: templates/legal/privacy_policy.html:161
+#: templates/legal/privacy_policy.html:114
+#: templates/legal/privacy_policy.html:162
 msgid "Usage Data"
 msgstr "Datos de uso"
 
-#: templates/legal/privacy_policy.html:114
+#: templates/legal/privacy_policy.html:115
 msgid ""
 "\n"
 "                                        refers to data collected "
@@ -1694,19 +1979,19 @@ msgstr ""
 "página).\n"
 "                                    "
 
-#: templates/legal/privacy_policy.html:123
+#: templates/legal/privacy_policy.html:124
 msgid "Website"
 msgstr "Sitio web"
 
-#: templates/legal/privacy_policy.html:124
-msgid "refers to crueltouch.com, accessible from"
-msgstr "se refiere a crueltouch.com, accesible desde"
+#: templates/legal/privacy_policy.html:125
+msgid "refers to tchiiz.com, accessible from"
+msgstr "se refiere a tchiiz.com, accesible desde"
 
-#: templates/legal/privacy_policy.html:129
+#: templates/legal/privacy_policy.html:130
 msgid "You"
 msgstr "Usted"
 
-#: templates/legal/privacy_policy.html:130
+#: templates/legal/privacy_policy.html:131
 msgid ""
 "\n"
 "                                        means the individual accessing or "
@@ -1726,11 +2011,11 @@ msgstr ""
 "corresponda.\n"
 "                                    "
 
-#: templates/legal/privacy_policy.html:139
+#: templates/legal/privacy_policy.html:140
 msgid "Collecting and Using Your Personal Data"
 msgstr "Recopilación y uso de sus datos personales"
 
-#: templates/legal/privacy_policy.html:141
+#: templates/legal/privacy_policy.html:142
 msgid ""
 "\n"
 "                                We collect several types of information for "
@@ -1744,11 +2029,11 @@ msgstr ""
 "                                nuestro Servicio a usted.\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:146
+#: templates/legal/privacy_policy.html:147
 msgid "Types of Data Collected"
 msgstr "Tipos de datos recopilados"
 
-#: templates/legal/privacy_policy.html:149
+#: templates/legal/privacy_policy.html:150
 msgid ""
 "\n"
 "                                While using our Service, we may ask you to "
@@ -1770,19 +2055,19 @@ msgstr ""
 "pero no se limita a:\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:158
+#: templates/legal/privacy_policy.html:159
 msgid "First name and last name"
 msgstr "Nombre y apellido"
 
-#: templates/legal/privacy_policy.html:159
+#: templates/legal/privacy_policy.html:160
 msgid "Cookies and Usage Data"
 msgstr "Cookies y datos de uso"
 
-#: templates/legal/privacy_policy.html:163
+#: templates/legal/privacy_policy.html:164
 msgid "Usage Data is collected automatically when using the Service."
 msgstr "Usage Data se recopila automáticamente al usar el Servicio."
 
-#: templates/legal/privacy_policy.html:166
+#: templates/legal/privacy_policy.html:167
 msgid ""
 "\n"
 "                                We may also collect information how the "
@@ -1813,11 +2098,11 @@ msgstr ""
 "                                otros datos de diagnóstico.\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:177
+#: templates/legal/privacy_policy.html:178
 msgid "Tracking & Cookies Data"
 msgstr "Datos de seguimiento y cookies"
 
-#: templates/legal/privacy_policy.html:179
+#: templates/legal/privacy_policy.html:180
 msgid ""
 "\n"
 "                                We use cookies and similar tracking "
@@ -1833,7 +2118,7 @@ msgstr ""
 "                                mantener cierta información.\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:186
+#: templates/legal/privacy_policy.html:187
 msgid ""
 "\n"
 "                                Cookies are files with small amount of data "
@@ -1859,7 +2144,7 @@ msgstr ""
 "                                para mejorar y analizar nuestro Servicio.\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:196
+#: templates/legal/privacy_policy.html:197
 msgid ""
 "\n"
 "                                You can instruct your browser to refuse all "
@@ -1881,15 +2166,15 @@ msgstr ""
 "                                Servicio.\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:204
+#: templates/legal/privacy_policy.html:205
 msgid "Examples of Cookies we use:"
 msgstr "Ejemplos de cookies que utilizamos:"
 
-#: templates/legal/privacy_policy.html:206
+#: templates/legal/privacy_policy.html:207
 msgid "Session Cookies."
 msgstr "Cookies de sesión."
 
-#: templates/legal/privacy_policy.html:207
+#: templates/legal/privacy_policy.html:208
 msgid ""
 "\n"
 "                                    We use Session Cookies to operate our "
@@ -1901,11 +2186,11 @@ msgstr ""
 "nuestro Servicio.\n"
 "                                "
 
-#: templates/legal/privacy_policy.html:211
+#: templates/legal/privacy_policy.html:212
 msgid "Preference Cookies."
 msgstr "Cookies de preferencia."
 
-#: templates/legal/privacy_policy.html:212
+#: templates/legal/privacy_policy.html:213
 msgid ""
 "\n"
 "                                    We use Preference Cookies to remember "
@@ -1917,11 +2202,11 @@ msgstr ""
 "recordar sus preferencias y varios ajustes.\n"
 "                                "
 
-#: templates/legal/privacy_policy.html:216
+#: templates/legal/privacy_policy.html:217
 msgid "Security Cookies."
 msgstr "Cookies de seguridad."
 
-#: templates/legal/privacy_policy.html:217
+#: templates/legal/privacy_policy.html:218
 msgid ""
 "\n"
 "                                    We use Security Cookies for security "
@@ -1933,11 +2218,11 @@ msgstr ""
 "razones de seguridad.\n"
 "                                "
 
-#: templates/legal/privacy_policy.html:222
+#: templates/legal/privacy_policy.html:223
 msgid "Use of Data"
 msgstr "Uso de los datos"
 
-#: templates/legal/privacy_policy.html:224
+#: templates/legal/privacy_policy.html:225
 msgid ""
 "\n"
 "                                My Company uses the collected data for "
@@ -1949,15 +2234,15 @@ msgstr ""
 "para diversos fines:\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:229
+#: templates/legal/privacy_policy.html:230
 msgid "To provide and maintain the Service"
 msgstr "Para proporcionar y mantener el Servicio"
 
-#: templates/legal/privacy_policy.html:230
+#: templates/legal/privacy_policy.html:231
 msgid "To notify you about changes to our Service"
 msgstr "Para informarle sobre los cambios en nuestro Servicio"
 
-#: templates/legal/privacy_policy.html:232
+#: templates/legal/privacy_policy.html:233
 msgid ""
 "\n"
 "                                    To allow you to participate in "
@@ -1973,11 +2258,11 @@ msgstr ""
 "                                    así\n"
 "                                "
 
-#: templates/legal/privacy_policy.html:238
+#: templates/legal/privacy_policy.html:239
 msgid "To provide customer care and support"
 msgstr "Para proporcionar atención al cliente y soporte"
 
-#: templates/legal/privacy_policy.html:240
+#: templates/legal/privacy_policy.html:241
 msgid ""
 "To provide analysis or valuable information so that we can improve the "
 "Service"
@@ -1985,19 +2270,19 @@ msgstr ""
 "Para proporcionar análisis o información valiosa para que podamos mejorar el "
 "Servicio"
 
-#: templates/legal/privacy_policy.html:242
+#: templates/legal/privacy_policy.html:243
 msgid "To monitor the usage of the Service"
 msgstr "Para monitorear el uso del Servicio"
 
-#: templates/legal/privacy_policy.html:243
+#: templates/legal/privacy_policy.html:244
 msgid "To detect, prevent and address technical issues"
 msgstr "Para detectar, evitar y abordar problemas técnicos"
 
-#: templates/legal/privacy_policy.html:245
+#: templates/legal/privacy_policy.html:246
 msgid "Transfer Of Data"
 msgstr "Transferencia de datos"
 
-#: templates/legal/privacy_policy.html:247
+#: templates/legal/privacy_policy.html:248
 msgid ""
 "\n"
 "                                Your information, including Personal Data, "
@@ -2019,7 +2304,7 @@ msgstr ""
 "                                jurisdicción.\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:255
+#: templates/legal/privacy_policy.html:256
 msgid ""
 "\n"
 "                                If you are located outside United States of "
@@ -2037,7 +2322,7 @@ msgstr ""
 "                                allí.\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:262
+#: templates/legal/privacy_policy.html:263
 msgid ""
 "\n"
 "                                Your consent to this Privacy Policy followed "
@@ -2052,7 +2337,7 @@ msgstr ""
 "transferencia.\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:268
+#: templates/legal/privacy_policy.html:269
 msgid ""
 "\n"
 "                                My Company will take all steps reasonably "
@@ -2081,15 +2366,15 @@ msgstr ""
 "información personal.\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:277
+#: templates/legal/privacy_policy.html:278
 msgid "Disclosure Of Data"
 msgstr "Divulgación de datos"
 
-#: templates/legal/privacy_policy.html:278
+#: templates/legal/privacy_policy.html:279
 msgid "Legal Requirements"
 msgstr "Requisitos legales"
 
-#: templates/legal/privacy_policy.html:280
+#: templates/legal/privacy_policy.html:281
 msgid ""
 "\n"
 "                                My Company may disclose your Personal Data "
@@ -2103,34 +2388,34 @@ msgstr ""
 "                                necesario para:\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:286
+#: templates/legal/privacy_policy.html:287
 msgid "To comply with a legal obligation"
 msgstr "Cumplir con una obligación legal"
 
-#: templates/legal/privacy_policy.html:288
+#: templates/legal/privacy_policy.html:289
 msgid "To protect and defend the rights or property of My Company"
 msgstr "Proteger y defender los derechos o propiedad de Mi empresa"
 
-#: templates/legal/privacy_policy.html:291
+#: templates/legal/privacy_policy.html:292
 msgid ""
 "To prevent or investigate possible wrongdoing in connection with the Service"
 msgstr ""
 "Para prevenir o investigar posibles delitos en relación con el Servicio"
 
-#: templates/legal/privacy_policy.html:294
+#: templates/legal/privacy_policy.html:295
 msgid "To protect the personal safety of users of the Service or the public"
 msgstr ""
 "Para proteger la seguridad personal de los usuarios del Servicio o el público"
 
-#: templates/legal/privacy_policy.html:297
+#: templates/legal/privacy_policy.html:298
 msgid "To protect against legal liability"
 msgstr "Para protegerse contra la responsabilidad legal"
 
-#: templates/legal/privacy_policy.html:300
+#: templates/legal/privacy_policy.html:301
 msgid "Security Of Data"
 msgstr "Seguridad de los datos"
 
-#: templates/legal/privacy_policy.html:302
+#: templates/legal/privacy_policy.html:303
 #, python-format
 msgid ""
 "\n"
@@ -2157,11 +2442,11 @@ msgstr ""
 "                                seguridad absoluta.\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:311
+#: templates/legal/privacy_policy.html:312
 msgid "Service Providers"
 msgstr "Proveedores de servicios"
 
-#: templates/legal/privacy_policy.html:313
+#: templates/legal/privacy_policy.html:314
 msgid ""
 "\n"
 "                                We may employ third party companies and "
@@ -2183,7 +2468,7 @@ msgstr ""
 "Servicio.\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:321
+#: templates/legal/privacy_policy.html:322
 msgid ""
 "\n"
 "                                These third parties have access to your "
@@ -2199,11 +2484,11 @@ msgstr ""
 "utilizarlos para ningún otro propósito.\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:326
+#: templates/legal/privacy_policy.html:327
 msgid "Links To Other Sites"
 msgstr "Enlaces a otros sitios"
 
-#: templates/legal/privacy_policy.html:328
+#: templates/legal/privacy_policy.html:329
 msgid ""
 "\n"
 "                                Our Service may contain links to other sites "
@@ -2227,7 +2512,7 @@ msgstr ""
 "sitio que visite.\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:337
+#: templates/legal/privacy_policy.html:338
 msgid ""
 "\n"
 "                                We have no control over and assume no "
@@ -2245,11 +2530,11 @@ msgstr ""
 "terceros.\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:343
+#: templates/legal/privacy_policy.html:344
 msgid "Children's Privacy"
 msgstr "Privacidad de los niños"
 
-#: templates/legal/privacy_policy.html:345
+#: templates/legal/privacy_policy.html:346
 msgid ""
 "\n"
 "                                Our Service does not address anyone under "
@@ -2261,7 +2546,7 @@ msgstr ""
 "de 18 años (\"Niños\").\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:350
+#: templates/legal/privacy_policy.html:351
 msgid ""
 "\n"
 "                                We do not knowingly collect personally "
@@ -2294,11 +2579,11 @@ msgstr ""
 "                                información de nuestros servidores.\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:362
+#: templates/legal/privacy_policy.html:363
 msgid "Changes To This Privacy Policy"
 msgstr "Cambios en esta política de privacidad"
 
-#: templates/legal/privacy_policy.html:364
+#: templates/legal/privacy_policy.html:365
 msgid ""
 "\n"
 "                                We may update our Privacy Policy from time "
@@ -2314,7 +2599,7 @@ msgstr ""
 "en esta página.\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:370
+#: templates/legal/privacy_policy.html:371
 msgid ""
 "\n"
 "                                We will let you know via email and/or a "
@@ -2332,7 +2617,7 @@ msgstr ""
 "\"fecha de vigencia\" en la parte superior de esta política de privacidad.\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:377
+#: templates/legal/privacy_policy.html:378
 msgid ""
 "\n"
 "                                You are advised to review this Privacy "
@@ -2350,7 +2635,7 @@ msgstr ""
 "se publican en esta página.\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:385
+#: templates/legal/privacy_policy.html:386
 msgid ""
 "\n"
 "                                If you have any questions about this Privacy "
@@ -2362,152 +2647,152 @@ msgstr ""
 "de privacidad, comuníquese con nosotros:\n"
 "                            "
 
-#: templates/legal/privacy_policy.html:390
+#: templates/legal/privacy_policy.html:391
 msgid "By email:"
 msgstr "Por correo electrónico:"
 
-#: templates/legal/privacy_policy.html:394
+#: templates/legal/privacy_policy.html:395
 msgid "By visiting this page on our website:"
 msgstr "Visitando esta página en nuestro sitio web:"
 
-#: templates/legal/terms_and_conditions.html:15
+#: templates/legal/terms_and_conditions.html:16
 msgid "November 23, 2022"
 msgstr "23 de noviembre de 2022"
 
-#: templates/legal/terms_and_conditions.html:21
-#: templates/legal/terms_and_conditions.html:49
+#: templates/legal/terms_and_conditions.html:22
+#: templates/legal/terms_and_conditions.html:50
 msgid "1. AGREEMENT TO TERMS"
 msgstr "1. ACUERDO DE TÉRMINOS"
 
-#: templates/legal/terms_and_conditions.html:22
-#: templates/legal/terms_and_conditions.html:103
+#: templates/legal/terms_and_conditions.html:23
+#: templates/legal/terms_and_conditions.html:104
 msgid "2. INTELLECTUAL PROPERTY RIGHTS"
 msgstr "2. DERECHOS DE PROPIEDAD INTELECTUAL"
 
-#: templates/legal/terms_and_conditions.html:23
-#: templates/legal/terms_and_conditions.html:129
+#: templates/legal/terms_and_conditions.html:24
+#: templates/legal/terms_and_conditions.html:130
 msgid "3. USER REPRESENTATIONS"
 msgstr "3. REPRESENTACIONES DEL USUARIO"
 
-#: templates/legal/terms_and_conditions.html:24
-#: templates/legal/terms_and_conditions.html:151
+#: templates/legal/terms_and_conditions.html:25
+#: templates/legal/terms_and_conditions.html:152
 msgid "4. USER REGISTRATION"
 msgstr "4. REGISTRO DE USUARIO"
 
-#: templates/legal/terms_and_conditions.html:25
-#: templates/legal/terms_and_conditions.html:162
+#: templates/legal/terms_and_conditions.html:26
+#: templates/legal/terms_and_conditions.html:163
 msgid "5. PROHIBITED ACTIVITIES"
 msgstr "5. ACTIVIDADES PROHIBIDAS"
 
-#: templates/legal/terms_and_conditions.html:26
-#: templates/legal/terms_and_conditions.html:276
+#: templates/legal/terms_and_conditions.html:27
+#: templates/legal/terms_and_conditions.html:277
 msgid "6. USER GENERATED CONTRIBUTIONS"
 msgstr "6. CONTRIBUCIONES GENERADAS POR EL USUARIO"
 
-#: templates/legal/terms_and_conditions.html:27
-#: templates/legal/terms_and_conditions.html:379
+#: templates/legal/terms_and_conditions.html:28
+#: templates/legal/terms_and_conditions.html:380
 msgid "7. CONTRIBUTION LICENSE"
 msgstr "7. LICENCIA DE CONTRIBUCIÓN"
 
-#: templates/legal/terms_and_conditions.html:28
-#: templates/legal/terms_and_conditions.html:427
+#: templates/legal/terms_and_conditions.html:29
+#: templates/legal/terms_and_conditions.html:428
 msgid "8. SUBMISSIONS"
 msgstr "8. PRESENTACIONES"
 
-#: templates/legal/terms_and_conditions.html:29
-#: templates/legal/terms_and_conditions.html:442
+#: templates/legal/terms_and_conditions.html:30
+#: templates/legal/terms_and_conditions.html:443
 msgid "9. THIRD-PARTY WEBSITE AND CONTENT"
 msgstr "9. SITIO WEB Y CONTENIDO DE TERCEROS"
 
-#: templates/legal/terms_and_conditions.html:30
-#: templates/legal/terms_and_conditions.html:472
+#: templates/legal/terms_and_conditions.html:31
+#: templates/legal/terms_and_conditions.html:473
 msgid "10. ADVERTISERS"
 msgstr "10. ANUNCIANTES"
 
-#: templates/legal/terms_and_conditions.html:31
-#: templates/legal/terms_and_conditions.html:487
+#: templates/legal/terms_and_conditions.html:32
+#: templates/legal/terms_and_conditions.html:488
 msgid "11. SITE MANAGEMENT"
 msgstr "11. GESTIÓN DEL SITIO"
 
-#: templates/legal/terms_and_conditions.html:32
-#: templates/legal/terms_and_conditions.html:504
+#: templates/legal/terms_and_conditions.html:33
+#: templates/legal/terms_and_conditions.html:505
 msgid "12. PRIVACY POLICY"
 msgstr "12. POLÍTICA DE PRIVACIDAD"
 
-#: templates/legal/terms_and_conditions.html:33
-#: templates/legal/terms_and_conditions.html:520
+#: templates/legal/terms_and_conditions.html:34
+#: templates/legal/terms_and_conditions.html:521
 msgid "13. COPYRIGHT INFRINGEMENTS"
 msgstr "13. INFRACCIONES DE DERECHOS DE AUTOR"
 
-#: templates/legal/terms_and_conditions.html:34
-#: templates/legal/terms_and_conditions.html:575
+#: templates/legal/terms_and_conditions.html:35
+#: templates/legal/terms_and_conditions.html:576
 msgid "14. TERM AND TERMINATION"
 msgstr "14. TÉRMINO Y TERMINACIÓN"
 
-#: templates/legal/terms_and_conditions.html:35
-#: templates/legal/terms_and_conditions.html:600
+#: templates/legal/terms_and_conditions.html:36
+#: templates/legal/terms_and_conditions.html:601
 msgid "15. MODIFICATIONS AND INTERRUPTIONS"
 msgstr "15. MODIFICACIONES E INTERRUPCIONES"
 
-#: templates/legal/terms_and_conditions.html:36
-#: templates/legal/terms_and_conditions.html:624
+#: templates/legal/terms_and_conditions.html:37
+#: templates/legal/terms_and_conditions.html:625
 msgid "16. GOVERNING LAW"
 msgstr "16. LEY APLICABLE"
 
-#: templates/legal/terms_and_conditions.html:37
-#: templates/legal/terms_and_conditions.html:639
+#: templates/legal/terms_and_conditions.html:38
+#: templates/legal/terms_and_conditions.html:640
 msgid "17. DISPUTE RESOLUTION"
 msgstr "17. RESOLUCIÓN DE DISPUTAS"
 
-#: templates/legal/terms_and_conditions.html:38
-#: templates/legal/terms_and_conditions.html:704
+#: templates/legal/terms_and_conditions.html:39
+#: templates/legal/terms_and_conditions.html:705
 msgid "18. CORRECTIONS"
 msgstr "18. CORRECCIONES"
 
-#: templates/legal/terms_and_conditions.html:39
-#: templates/legal/terms_and_conditions.html:715
+#: templates/legal/terms_and_conditions.html:40
+#: templates/legal/terms_and_conditions.html:716
 msgid "19. DISCLAIMER"
 msgstr "19. DESCARGO DE RESPONSABILIDAD"
 
-#: templates/legal/terms_and_conditions.html:40
-#: templates/legal/terms_and_conditions.html:743
+#: templates/legal/terms_and_conditions.html:41
+#: templates/legal/terms_and_conditions.html:744
 msgid "20. LIMITATION OF LIABILITY"
 msgstr "20. LIMITACIÓN DE RESPONSABILIDAD"
 
-#: templates/legal/terms_and_conditions.html:41
-#: templates/legal/terms_and_conditions.html:754
+#: templates/legal/terms_and_conditions.html:42
+#: templates/legal/terms_and_conditions.html:755
 msgid "21. INDEMNIFICATION"
 msgstr "21. INDEMNIZACIÓN"
 
-#: templates/legal/terms_and_conditions.html:42
-#: templates/legal/terms_and_conditions.html:773
+#: templates/legal/terms_and_conditions.html:43
+#: templates/legal/terms_and_conditions.html:774
 msgid "22. USER DATA"
 msgstr "22. DATOS DEL USUARIO"
 
-#: templates/legal/terms_and_conditions.html:43
-#: templates/legal/terms_and_conditions.html:786
+#: templates/legal/terms_and_conditions.html:44
+#: templates/legal/terms_and_conditions.html:787
 msgid "23. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES"
 msgstr "23. COMUNICACION ELECTRÓNICA, TRANSACCIONES Y FIRMAS"
 
-#: templates/legal/terms_and_conditions.html:44
-#: templates/legal/terms_and_conditions.html:803
+#: templates/legal/terms_and_conditions.html:45
+#: templates/legal/terms_and_conditions.html:804
 msgid "24. MISCELLANEOUS"
 msgstr "24. DIVERSOS"
 
-#: templates/legal/terms_and_conditions.html:45
-#: templates/legal/terms_and_conditions.html:824
+#: templates/legal/terms_and_conditions.html:46
+#: templates/legal/terms_and_conditions.html:825
 msgid "25. CONTACT US"
 msgstr "25. CONTACTENOS"
 
-#: templates/legal/terms_and_conditions.html:51
+#: templates/legal/terms_and_conditions.html:52
 msgid ""
 "\n"
 "                        These Terms of Use constitute a legally binding "
 "agreement made between you, whether personally\n"
-"                        or on behalf of an entity (“you”) and crueltouch.com "
+"                        or on behalf of an entity (“you”) and tchiiz.com "
 "(\"Company,\" “we,\" “us,\" or “our”),\n"
 "                        concerning your access to and use of the https://"
-"crueltouch.com website as well as any\n"
+"tchiiz.com website as well as any\n"
 "                        other media form, media channel, mobile website or "
 "mobile application related, linked, or\n"
 "                        otherwise connected thereto (collectively, the "
@@ -2523,14 +2808,14 @@ msgstr ""
 "\n"
 "                        Estos Términos de Uso constituyen un acuerdo "
 "legalmente vinculante entre usted, ya sea personalmente\n"
-"                        o en nombre de una entidad (\"usted\") y crueltouch."
+"                        o en nombre de una entidad (\"usted\") y Tchiiz."
 "com (\"Compañía\", \"nosotros\", \"nosotros\" o \"nuestro\"),\n"
 "                        con respecto a su acceso y uso del sitio web https://"
-"crueltouch.com, así como cualquier\n"
+"tchiiz.com, así como cualquier\n"
 "                        otro medio de forma, medio de comunicación, sitio "
 "web móvil o aplicación móvil relacionada, vinculada o\n"
-"                        de otra manera conectada (colectivamente, el "
-"\"Sitio\").  Usted acepta que al acceder al Sitio,\n"
+"                        de otra manera conectada (colectivamente, el \"Sitio"
+"\").  Usted acepta que al acceder al Sitio,\n"
 "                        usted ha\n"
 "                        leído, entendido y aceptado estar obligado por todos "
 "estos Términos de Uso. SI NO ESTÁ DE ACUERDO CON\n"
@@ -2539,7 +2824,7 @@ msgstr ""
 "                        DEJAR DE USAR INMEDIATAMENTE.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:65
+#: templates/legal/terms_and_conditions.html:66
 msgid ""
 "\n"
 "                        Supplemental terms and conditions or documents that "
@@ -2581,7 +2866,7 @@ msgstr ""
 "                        esos Términos de Uso revisados.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:78
+#: templates/legal/terms_and_conditions.html:79
 msgid ""
 "\n"
 "                        The information provided on the Site is not intended "
@@ -2611,7 +2896,7 @@ msgstr ""
 "                        medida en que las leyes locales sean aplicables.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:88
+#: templates/legal/terms_and_conditions.html:89
 msgid ""
 "\n"
 "                        The Site is not tailored to comply with industry-"
@@ -2635,7 +2920,7 @@ msgstr ""
 "Ley Gramm-Leach-Bliley (GLBA).\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:96
+#: templates/legal/terms_and_conditions.html:97
 msgid ""
 "\n"
 "                        The Site is intended for users who are at least 18 "
@@ -2650,7 +2935,7 @@ msgstr ""
 "Sitio.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:105
+#: templates/legal/terms_and_conditions.html:106
 msgid ""
 "\n"
 "                        Unless otherwise indicated, the Site is our "
@@ -2702,7 +2987,7 @@ msgstr ""
 "absoluto, sin nuestro permiso expreso por escrito previo.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:120
+#: templates/legal/terms_and_conditions.html:121
 msgid ""
 "\n"
 "                        Provided that you are eligible to use the Site, you "
@@ -2726,7 +3011,7 @@ msgstr ""
 "Contenido y las Marcas.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:131
+#: templates/legal/terms_and_conditions.html:132
 msgid ""
 "\n"
 "                        By using the Site, you represent and warrant that:  "
@@ -2764,7 +3049,7 @@ msgstr ""
 "                        ley o reglamento aplicable.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:143
+#: templates/legal/terms_and_conditions.html:144
 msgid ""
 "\n"
 "                        If you provide any information that is untrue, "
@@ -2782,7 +3067,7 @@ msgstr ""
 "                        el Sitio (o cualquier parte de él).\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:153
+#: templates/legal/terms_and_conditions.html:154
 msgid ""
 "\n"
 "                        You may be required to register with the Site. You "
@@ -2806,7 +3091,7 @@ msgstr ""
 "objetable de otra manera.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:164
+#: templates/legal/terms_and_conditions.html:165
 msgid ""
 "\n"
 "                        You may not access or use the Site for any purpose "
@@ -2825,7 +3110,7 @@ msgstr ""
 "por nosotros.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:171
+#: templates/legal/terms_and_conditions.html:172
 msgid ""
 "\n"
 "                        As a user of the Site, you agree not to:\n"
@@ -2835,7 +3120,7 @@ msgstr ""
 "                        Como usuario del Sitio, usted se compromete a no:\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:177
+#: templates/legal/terms_and_conditions.html:178
 msgid ""
 "\n"
 "                            Systematically retrieve data or other content "
@@ -2853,7 +3138,7 @@ msgstr ""
 "                            de nosotros.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:184
+#: templates/legal/terms_and_conditions.html:185
 msgid ""
 "\n"
 "                            Trick, defraud, or mislead us and other users, "
@@ -2868,7 +3153,7 @@ msgstr ""
 "                            de cuenta como contraseñas de usuario;\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:190
+#: templates/legal/terms_and_conditions.html:191
 msgid ""
 "\n"
 "                            Circumvent, disable, or otherwise interfere with "
@@ -2888,7 +3173,7 @@ msgstr ""
 "que contiene;\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:197
+#: templates/legal/terms_and_conditions.html:198
 msgid ""
 "\n"
 "                            Disparage, tarnish, or otherwise harm, in our "
@@ -2900,7 +3185,7 @@ msgstr ""
 "modo, en nuestra opinión, a nosotros y/o el Sitio;\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:202
+#: templates/legal/terms_and_conditions.html:203
 msgid ""
 "\n"
 "                            Use any information obtained from the Site in "
@@ -2914,7 +3199,7 @@ msgstr ""
 "                            persona;\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:208
+#: templates/legal/terms_and_conditions.html:209
 msgid ""
 "\n"
 "                            Use the Site as part of any effort to compete "
@@ -2931,7 +3216,7 @@ msgstr ""
 "generación de ingresos o empresa comercial;\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:214
+#: templates/legal/terms_and_conditions.html:215
 msgid ""
 "\n"
 "                            Decipher, decompile, disassemble, or reverse "
@@ -2945,7 +3230,7 @@ msgstr ""
 "                            cualquier forma que haga parte del Sitio;\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:220
+#: templates/legal/terms_and_conditions.html:221
 msgid ""
 "\n"
 "                            Attempt to bypass any measures of the Site "
@@ -2959,7 +3244,7 @@ msgstr ""
 "                            Sitio, o cualquier parte del Sitio.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:226
+#: templates/legal/terms_and_conditions.html:227
 msgid ""
 "\n"
 "                            Copy or adapt the Site’s software, including but "
@@ -2973,7 +3258,7 @@ msgstr ""
 "                            JavaScript, u otro código.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:232
+#: templates/legal/terms_and_conditions.html:233
 msgid ""
 "\n"
 "                            Except as permitted by applicable law, decipher, "
@@ -2989,7 +3274,7 @@ msgstr ""
 "forma que haga parte del Sitio.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:238
+#: templates/legal/terms_and_conditions.html:239
 msgid ""
 "\n"
 "                            Except as may be the result of standard search "
@@ -3013,7 +3298,7 @@ msgstr ""
 "software.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:246
+#: templates/legal/terms_and_conditions.html:247
 msgid ""
 "\n"
 "                            Use a buying agent or purchasing agent to make "
@@ -3025,7 +3310,7 @@ msgstr ""
 "para realizar compras en el Sitio.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:251
+#: templates/legal/terms_and_conditions.html:252
 msgid ""
 "\n"
 "                            Make any unauthorized use of the Site, including "
@@ -3046,7 +3331,7 @@ msgstr ""
 "automatizados o bajo falsas pretensiones.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:258
+#: templates/legal/terms_and_conditions.html:259
 msgid ""
 "\n"
 "                            Use the Site as part of any effort to compete "
@@ -3063,7 +3348,7 @@ msgstr ""
 "generación de ingresos o empresa comercial.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:264
+#: templates/legal/terms_and_conditions.html:265
 msgid ""
 "\n"
 "                            Use the Site to advertise or offer to sell goods "
@@ -3075,7 +3360,7 @@ msgstr ""
 "productos y servicios.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:269
+#: templates/legal/terms_and_conditions.html:270
 msgid ""
 "\n"
 "                            Sell or otherwise transfer your profile.\n"
@@ -3085,7 +3370,7 @@ msgstr ""
 "                            Vender o de otra manera transferir su perfil.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:278
+#: templates/legal/terms_and_conditions.html:279
 msgid ""
 "\n"
 "                        The Site does not offer unauthorized users to submit "
@@ -3125,7 +3410,7 @@ msgstr ""
 "                        usted representa y garantiza que:\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:292
+#: templates/legal/terms_and_conditions.html:293
 msgid ""
 "\n"
 "                            The creation, distribution, transmission, public "
@@ -3147,7 +3432,7 @@ msgstr ""
 "                            derechos morales de cualquier tercero.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:300
+#: templates/legal/terms_and_conditions.html:301
 msgid ""
 "\n"
 "                            You are the creator and owner of or have the "
@@ -3167,7 +3452,7 @@ msgstr ""
 "contemplada por el Sitio y estos Términos de Uso.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:307
+#: templates/legal/terms_and_conditions.html:308
 msgid ""
 "\n"
 "                            You have the written consent, release, and/or "
@@ -3190,7 +3475,7 @@ msgstr ""
 "de Uso.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:315
+#: templates/legal/terms_and_conditions.html:316
 msgid ""
 "\n"
 "                            Your Contributions are not false, inaccurate, or "
@@ -3202,7 +3487,7 @@ msgstr ""
 "engañosas.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:320
+#: templates/legal/terms_and_conditions.html:321
 msgid ""
 "\n"
 "                            Your Contributions are not unsolicited or "
@@ -3218,7 +3503,7 @@ msgstr ""
 "correos masivos, o otras formas de solicitud.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:326
+#: templates/legal/terms_and_conditions.html:327
 msgid ""
 "\n"
 "                            Your Contributions are not obscene, lewd, "
@@ -3234,7 +3519,7 @@ msgstr ""
 "determinamos nosotros).\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:332
+#: templates/legal/terms_and_conditions.html:333
 msgid ""
 "\n"
 "                            Your Contributions do not ridicule, mock, "
@@ -3246,7 +3531,7 @@ msgstr ""
 "desprecian, intimidan, o abusan de nadie.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:337
+#: templates/legal/terms_and_conditions.html:338
 msgid ""
 "\n"
 "                            Your Contributions are not used to harass or "
@@ -3262,7 +3547,7 @@ msgstr ""
 "violencia contra una persona o clase de personas específicas.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:343
+#: templates/legal/terms_and_conditions.html:344
 msgid ""
 "\n"
 "                            Your Contributions do not violate any applicable "
@@ -3274,7 +3559,7 @@ msgstr ""
 "ley, reglamento, o regla.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:348
+#: templates/legal/terms_and_conditions.html:349
 msgid ""
 "\n"
 "                            Your Contributions do not violate the privacy or "
@@ -3286,7 +3571,7 @@ msgstr ""
 "propiedad intelectual de ningún tercero.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:353
+#: templates/legal/terms_and_conditions.html:354
 msgid ""
 "\n"
 "                            Your Contributions do not violate any applicable "
@@ -3302,7 +3587,7 @@ msgstr ""
 "el bienestar de menores.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:359
+#: templates/legal/terms_and_conditions.html:360
 msgid ""
 "\n"
 "                            Your Contributions do not include any offensive "
@@ -3318,7 +3603,7 @@ msgstr ""
 "discapacidad física.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:365
+#: templates/legal/terms_and_conditions.html:366
 msgid ""
 "\n"
 "                            Your Contributions do not otherwise violate, or "
@@ -3334,7 +3619,7 @@ msgstr ""
 "cualquier ley o reglamento aplicable.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:372
+#: templates/legal/terms_and_conditions.html:373
 msgid ""
 "\n"
 "                        Any use of the Site in violation of the foregoing "
@@ -3350,7 +3635,7 @@ msgstr ""
 "los derechos de uso del Sitio.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:381
+#: templates/legal/terms_and_conditions.html:382
 msgid ""
 "\n"
 "                        By posting your Contributions to any part of the "
@@ -3402,7 +3687,7 @@ msgstr ""
 "                        canales.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:398
+#: templates/legal/terms_and_conditions.html:399
 msgid ""
 "\n"
 "                        This license will apply to any form, media, or "
@@ -3430,7 +3715,7 @@ msgstr ""
 "Contribuciones.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:407
+#: templates/legal/terms_and_conditions.html:408
 msgid ""
 "\n"
 "                        We do not assert any ownership over your "
@@ -3464,7 +3749,7 @@ msgstr ""
 "respecto a sus Contribuciones.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:418
+#: templates/legal/terms_and_conditions.html:419
 msgid ""
 "\n"
 "                        We have the right, in our sole and absolute "
@@ -3488,7 +3773,7 @@ msgstr ""
 "obligación de controlar sus Contribuciones.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:429
+#: templates/legal/terms_and_conditions.html:430
 msgid ""
 "\n"
 "                        You acknowledge and agree that any questions, "
@@ -3514,9 +3799,8 @@ msgstr ""
 "\n"
 "                        Usted reconoce y acepta que cualquier pregunta, "
 "comentario, sugerencia, idea, comentario, o otra\n"
-"                        información con respecto al Sitio "
-"(\"Contribuciones\") proporcionado por usted a nosotros no es confidencial "
-"y\n"
+"                        información con respecto al Sitio (\"Contribuciones"
+"\") proporcionado por usted a nosotros no es confidencial y\n"
 "                        se convertirá en nuestra única propiedad. Nosotros "
 "tendremos los derechos exclusivos, incluyendo todos los derechos de "
 "propiedad\n"
@@ -3534,7 +3818,7 @@ msgstr ""
 "derecho de propiedad en sus Contribuciones.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:444
+#: templates/legal/terms_and_conditions.html:445
 msgid ""
 "\n"
 "                        The Site may contain (or you may be sent through the "
@@ -3626,7 +3910,7 @@ msgstr ""
 "                        cualquier contacto con Sitios Web de Terceros.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:474
+#: templates/legal/terms_and_conditions.html:475
 msgid ""
 "\n"
 "                        We allow advertisers to display their advertisements "
@@ -3664,7 +3948,7 @@ msgstr ""
 "                        otra relación con los anunciantes.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:489
+#: templates/legal/terms_and_conditions.html:490
 msgid ""
 "\n"
 "                        We reserve the right, but not the obligation, to: "
@@ -3710,7 +3994,7 @@ msgstr ""
 "                        funcionamiento del Sitio.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:506
+#: templates/legal/terms_and_conditions.html:507
 #, python-format
 msgid ""
 "\n"
@@ -3753,7 +4037,7 @@ msgstr ""
 "                        procesados en Canadá.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:522
+#: templates/legal/terms_and_conditions.html:523
 #, python-format
 msgid ""
 "\n"
@@ -3776,7 +4060,7 @@ msgstr ""
 "proporcione la siguiente información:\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:531
+#: templates/legal/terms_and_conditions.html:532
 msgid ""
 "\n"
 "                            An electronic or physical signature of the "
@@ -3790,7 +4074,7 @@ msgstr ""
 "                            del interés de derechos de autor;\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:537
+#: templates/legal/terms_and_conditions.html:538
 msgid ""
 "\n"
 "                            A description of the copyrighted work that you "
@@ -3802,7 +4086,7 @@ msgstr ""
 "autor que usted afirma que ha sido infringido;\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:542
+#: templates/legal/terms_and_conditions.html:543
 msgid ""
 "\n"
 "                            A description of where the material that you "
@@ -3814,7 +4098,7 @@ msgstr ""
 "material que usted afirma que infringe en el Sitio;\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:547
+#: templates/legal/terms_and_conditions.html:548
 msgid ""
 "\n"
 "                            Your address, telephone number, and email "
@@ -3826,7 +4110,7 @@ msgstr ""
 "correo electrónico;\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:552
+#: templates/legal/terms_and_conditions.html:553
 msgid ""
 "\n"
 "                            A signed statement by you that you have a good "
@@ -3842,7 +4126,7 @@ msgstr ""
 "de autor, su agente, o la ley; y\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:558
+#: templates/legal/terms_and_conditions.html:559
 msgid ""
 "\n"
 "                            A signed statement by you, made under penalty of "
@@ -3862,7 +4146,7 @@ msgstr ""
 "                            propietario del derecho de autor.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:567
+#: templates/legal/terms_and_conditions.html:568
 msgid ""
 "\n"
 "                        We reserve the right to remove Content alleged to be "
@@ -3881,7 +4165,7 @@ msgstr ""
 "reincidente.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:577
+#: templates/legal/terms_and_conditions.html:578
 msgid ""
 "\n"
 "                        These Terms of Use shall remain in full force and "
@@ -3922,7 +4206,7 @@ msgstr ""
 "                        NUESTRA SOLE DISCRECIÓN.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:590
+#: templates/legal/terms_and_conditions.html:591
 msgid ""
 "\n"
 "                        If we terminate or suspend your account for any "
@@ -3950,7 +4234,7 @@ msgstr ""
 "la reparación civil, criminal, e injunctive.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:602
+#: templates/legal/terms_and_conditions.html:603
 msgid ""
 "\n"
 "                        We reserve the right to change, modify, or remove "
@@ -3979,7 +4263,7 @@ msgstr ""
 "discontinuación del Sitio.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:611
+#: templates/legal/terms_and_conditions.html:612
 msgid ""
 "\n"
 "                        We cannot guarantee the Site will be available at "
@@ -4019,7 +4303,7 @@ msgstr ""
 "actualizaciones o lanzamientos en conexión con el mismo.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:626
+#: templates/legal/terms_and_conditions.html:627
 msgid ""
 "\n"
 "                        These conditions are governed by and interpreted "
@@ -4030,7 +4314,7 @@ msgid ""
 "and you are a consumer, you additionally\n"
 "                        possess the protection provided to you by obligatory "
 "provisions of the law of your country of\n"
-"                        residence. crueltouch.com and yourself both agree to "
+"                        residence. tchiiz.com and yourself both agree to "
 "submit to the non-exclusive\n"
 "                        jurisdiction of the courts of Florida, which means "
 "that you may make a claim to defend\n"
@@ -4048,7 +4332,7 @@ msgstr ""
 "un consumidor, además usted posee la protección\n"
 "                        proporcionada por usted por disposiciones "
 "obligatorias de la ley de su país de\n"
-"                        residencia. crueltouch.com y usted mismo aceptan "
+"                        residencia. tchiiz.com y usted mismo aceptan "
 "someterse a la jurisdicción no exclusiva\n"
 "                        de los tribunales de Florida, lo que significa que "
 "usted puede hacer una reclamación para defender\n"
@@ -4057,11 +4341,11 @@ msgstr ""
 "                        en el que reside.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:641
+#: templates/legal/terms_and_conditions.html:642
 msgid "Informal Negotiations"
 msgstr "Negociaciones Informales"
 
-#: templates/legal/terms_and_conditions.html:643
+#: templates/legal/terms_and_conditions.html:644
 msgid ""
 "\n"
 "                            To expedite resolution and control the cost of "
@@ -4093,11 +4377,11 @@ msgstr ""
 "otra Parte.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:654
+#: templates/legal/terms_and_conditions.html:655
 msgid "Binding Arbitration"
 msgstr "Arbitraje vinculante"
 
-#: templates/legal/terms_and_conditions.html:656
+#: templates/legal/terms_and_conditions.html:657
 msgid ""
 "\n"
 "                            Any dispute arising from the relationships "
@@ -4132,11 +4416,11 @@ msgstr ""
 "sustantivo serán la ley de los Estados Unidos.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:668
+#: templates/legal/terms_and_conditions.html:669
 msgid "Restrictions"
 msgstr "Restricciones"
 
-#: templates/legal/terms_and_conditions.html:670
+#: templates/legal/terms_and_conditions.html:671
 msgid ""
 "\n"
 "                            The Parties agree that any arbitration shall be "
@@ -4168,11 +4452,11 @@ msgstr ""
 "                            el público en general o cualquier otra persona.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:682
+#: templates/legal/terms_and_conditions.html:683
 msgid "Exceptions to Informal Negotiations and Arbitration"
 msgstr "Excepciones a las negociaciones informales y arbitraje"
 
-#: templates/legal/terms_and_conditions.html:684
+#: templates/legal/terms_and_conditions.html:685
 msgid ""
 "\n"
 "                            The Parties agree that the following Disputes "
@@ -4226,7 +4510,7 @@ msgstr ""
 "jurisdicción personal de ese tribunal.\n"
 "                        "
 
-#: templates/legal/terms_and_conditions.html:706
+#: templates/legal/terms_and_conditions.html:707
 msgid ""
 "\n"
 "                        There may be information on the Site that contains "
@@ -4250,7 +4534,7 @@ msgstr ""
 "previo aviso.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:717
+#: templates/legal/terms_and_conditions.html:718
 msgid ""
 "\n"
 "                        THE SITE IS PROVIDED ON AN AS-IS AND AS-AVAILABLE "
@@ -4338,7 +4622,7 @@ msgstr ""
 "PRECAUCIÓN                        DONDE SEA APROPIADO.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:745
+#: templates/legal/terms_and_conditions.html:746
 msgid ""
 "\n"
 "                        IN NO EVENT WILL WE, BE LIABLE TO YOU OR ANY THIRD "
@@ -4362,7 +4646,7 @@ msgstr ""
 "POSIBILIDAD DE TAL DAÑO.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:756
+#: templates/legal/terms_and_conditions.html:757
 msgid ""
 "\n"
 "                        You agree to defend, indemnify, and hold us "
@@ -4416,7 +4700,7 @@ msgstr ""
 "                        sujeto a esta indemnización al enterarnos de ello.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:775
+#: templates/legal/terms_and_conditions.html:776
 msgid ""
 "\n"
 "                        We will maintain certain data that you transmit to "
@@ -4449,7 +4733,7 @@ msgstr ""
 "pérdida o corrupción de tales datos.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:788
+#: templates/legal/terms_and_conditions.html:789
 msgid ""
 "\n"
 "                        Visiting the Site, sending us emails, and completing "
@@ -4497,7 +4781,7 @@ msgstr ""
 "medio que no sea electrónico.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:805
+#: templates/legal/terms_and_conditions.html:806
 msgid ""
 "\n"
 "                        These Terms of Use and any policies or operating "
@@ -4561,7 +4845,7 @@ msgstr ""
 "interesadas para ejecutar estos Términos de Uso.\n"
 "                    "
 
-#: templates/legal/terms_and_conditions.html:826
+#: templates/legal/terms_and_conditions.html:827
 msgid ""
 "\n"
 "                        In order to resolve a complaint regarding the Site "
@@ -4575,7 +4859,15 @@ msgstr ""
 "                        el uso del sitio, comuníquese con nosotros en:\n"
 "                    "
 
-#: templates/portfolio/index_portfolio.html:13
+#: templates/portfolio/index_portfolio.html:6
+msgid ""
+"Have a look at the different high-quality photos that I deliver in my "
+"portfolio page"
+msgstr ""
+"Eche un vistazo a las diferentes fotos de alta calidad que entrego en mi "
+"página de cartera"
+
+#: templates/portfolio/index_portfolio.html:17
 msgid "All"
 msgstr "Todo"
 
@@ -4583,12 +4875,27 @@ msgstr "Todo"
 msgid "Contact us"
 msgstr "Contáctenos"
 
-#: templates/static_pages_and_forms/contact.html:34
+#: templates/static_pages_and_forms/contact.html:6
+msgid ""
+"\n"
+"        Get in touch with us for all your photography needs. Contact us "
+"today for booking, consultation, or any other\n"
+"        inquiry.\n"
+"    "
+msgstr ""
+"\n"
+"        Póngase en contacto con nosotros para todas sus necesidades de "
+"fotografía. Póngase en contacto con nosotros hoy para reservar, consultar o "
+"cualquier otro\n"
+"        consulta.\n"
+"    "
+
+#: templates/static_pages_and_forms/contact.html:41
 #: templates/static_pages_and_forms/success.html:34
 msgid "GET IN TOUCH"
 msgstr "PONTE EN CONTACTO"
 
-#: templates/static_pages_and_forms/contact.html:36
+#: templates/static_pages_and_forms/contact.html:43
 #: templates/static_pages_and_forms/success.html:36
 msgid ""
 "\n"
@@ -4622,7 +4929,11 @@ msgstr ""
 "todo.\n"
 "                            "
 
-#: templates/static_pages_and_forms/contact.html:81
+#: templates/static_pages_and_forms/contact.html:88
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/email_change_verification_code.html:25
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/manage_day_off.html:67
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/enter_verification_code.html:25
+#: venv/lib/python3.11/site-packages/appointment/templates/modal/event_details_modal.html:27
 msgid "Submit"
 msgstr "Enviar"
 
@@ -4645,6 +4956,2486 @@ msgstr "¿Quieres reservarme?"
 #: templates/static_pages_and_forms/success.html:70
 msgid "Click"
 msgstr "Haga clic"
+
+#: venv/lib/python3.11/site-packages/appointment/email_messages.py:11
+msgid ""
+"We're excited to have you on board! Thank you for booking us.\n"
+"We hope you enjoy using our services and find them valuable."
+msgstr ""
+"¡Estamos emocionados de tenerte a bordo! Gracias por reservarnos.\n"
+"Esperamos que disfrute utilizando nuestros servicios y los encuentre "
+"valiosos."
+
+#: venv/lib/python3.11/site-packages/appointment/email_messages.py:14
+msgid ""
+"We're excited to have you on board! Thank you for booking us. The next step "
+"is \n"
+"to pay for the booking. You have the choice to pay the whole amount or a "
+"down deposit.\n"
+"If you choose the deposit, you will have to pay the rest of the amount on "
+"the day of the booking."
+msgstr ""
+"¡Estamos emocionados de tenerte a bordo! Gracias por reservarnos. El "
+"siguiente paso es \n"
+"para pagar la reserva. Tiene la opción de pagar todo el monto o un depósito "
+"de depósito.\n"
+"Si elige el depósito, deberá pagar el resto del monto el día de la reserva."
+
+#: venv/lib/python3.11/site-packages/appointment/email_messages.py:18
+msgid ""
+"We're excited to have you on board! Thank you for booking us. The next step "
+"is to pay for\n"
+"the booking."
+msgstr ""
+"¡Estamos emocionados de tenerte a bordo! Gracias por reservarnos. El "
+"siguiente paso es pagar por\n"
+"la reserva."
+
+#: venv/lib/python3.11/site-packages/appointment/forms.py:75
+msgid "This email is already taken."
+msgstr "Este correo electrónico ya está tomado."
+
+#: venv/lib/python3.11/site-packages/appointment/forms.py:89
+msgid "Example value: 30, 60, 90, 120... (in minutes)"
+msgstr "Ejemplo de valor: 30, 60, 90, 120... (en minutos)"
+
+#: venv/lib/python3.11/site-packages/appointment/forms.py:93
+msgid "Example value: 08:00:00, 09:00:00... (24-hour format)"
+msgstr "Ejemplo de valor: 08:00:00, 09:00:00... (formato de 24 horas)"
+
+#: venv/lib/python3.11/site-packages/appointment/forms.py:97
+msgid "Example value: 17:00:00, 18:00:00... (24-hour format)"
+msgstr "Ejemplo de valor: 17:00:00, 18:00:00... (formato de 24 horas)"
+
+#: venv/lib/python3.11/site-packages/appointment/forms.py:101
+msgid "Example value: 15, 30, 45, 60... (in minutes)"
+msgstr "Ejemplo de valor: 15, 30, 45, 60... (en minutos)"
+
+#: venv/lib/python3.11/site-packages/appointment/forms.py:140
+msgid "Example: First Consultation"
+msgstr "Ejemplo: Primera consulta"
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:27
+msgid "Full payment"
+msgstr "Pago completo"
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:28
+msgid "Down payment"
+msgstr "Pago inicial"
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:84
+msgid "Duration must be greater than 0"
+msgstr "La duración debe ser superior a 0"
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:87
+msgid "Name cannot be empty"
+msgstr "El nombre no puede estar vacío"
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:90
+msgid "Price cannot be negative"
+msgstr "El precio no puede ser negativo"
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:170
+#: venv/lib/python3.11/site-packages/appointment/models.py:541
+msgid "Minimum time for an appointment in minutes, recommended 30."
+msgstr "Tiempo mínimo para una cita en minutos, recomendado 30."
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:174
+msgid "Time when the staff member starts working."
+msgstr "Hora en que el miembro del personal comienza a trabajar."
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:178
+msgid "Time when the staff member stops working."
+msgstr "Hora en que el miembro del personal deja de trabajar."
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:182
+msgid ""
+"Time between now and the first available slot for the current day (doesn't "
+"affect tomorrow). e.g: If you start working at 9:00 AM and the current time "
+"is 8:30 AM and you set it to 30 minutes, the first available slot will be at "
+"9:00 AM. If you set the appointment buffer time to 60 minutes, the first "
+"available slot will be at 9:30 AM."
+msgstr ""
+"Tiempo entre ahora y la primera ranura disponible para el día actual (no "
+"afecta al mañana). por ejemplo: Si comienza a trabajar a las 9:00 AM y la "
+"hora actual es las 8:30 AM y lo establece en 30 minutos, la primera ranura "
+"disponible será a las 9:00 AM. Si establece el tiempo de búfer de "
+"apuntamiento en 60 minutos, la primera ranura disponible será a las 9:30 AM."
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:237
+msgid "Saturday and Sunday"
+msgstr "Sábado y domingo"
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:239
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:12
+msgid "Saturday"
+msgstr "Sábado"
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:241
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:13
+msgid "Sunday"
+msgstr "Domingo"
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:301
+msgid "Start time must be before end time"
+msgstr "La hora de inicio debe ser anterior a la hora de finalización"
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:303
+#: venv/lib/python3.11/site-packages/appointment/models.py:322
+msgid "Start time and end time cannot be the same"
+msgstr "La hora de inicio y la hora de finalización no pueden ser iguales"
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:310
+#: venv/lib/python3.11/site-packages/appointment/models.py:332
+msgid "The date is not valid"
+msgstr "La fecha no es válida"
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:314
+#: venv/lib/python3.11/site-packages/appointment/models.py:325
+msgid "Date cannot be in the past"
+msgstr "La fecha no puede estar en el pasado"
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:328
+msgid "Duration cannot exceed the service duration"
+msgstr "La duración no puede exceder la duración del servicio"
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:499
+#, python-brace-format
+msgid "{staff_member} does not work on this day."
+msgstr "{staff_member} no trabaja en este día."
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:504
+#, python-brace-format
+msgid ""
+"The appointment start time is outside of {staff_member}'s working hours."
+msgstr ""
+"La hora de inicio de la cita está fuera del horario de trabajo de {staff_member}."
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:515
+#, python-brace-format
+msgid "{staff_member} already has an appointment at this time."
+msgstr "{staff_member} ya tiene una cita en este momento."
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:521
+#, python-brace-format
+msgid "{staff_member} has a day off on this date."
+msgstr "{staff_member} tiene un día libre en esta fecha."
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:545
+msgid "Time when we start working."
+msgstr "Hora en que comenzamos a trabajar."
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:549
+msgid "Time when we stop working."
+msgstr "Hora en que dejamos de trabajar."
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:553
+msgid ""
+"Time between now and the first available slot for the current day (doesn't "
+"affect tomorrow)."
+msgstr ""
+"Tiempo entre ahora y la primera ranura disponible para el día actual (no "
+"afecta al mañana)."
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:558
+msgid "Name of your website."
+msgstr "Nombre de tu sitio web."
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:567
+msgid "You can only create one Config object"
+msgstr "Solo puedes crear un objeto de configuración"
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:570
+msgid "Lead time must be before finish time"
+msgstr "El tiempo de espera debe ser antes de la hora de finalización"
+
+#: venv/lib/python3.11/site-packages/appointment/models.py:677
+msgid "Start date must be before end date"
+msgstr "La fecha de inicio debe ser anterior a la fecha de finalización"
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:59
+#: venv/lib/python3.11/site-packages/appointment/tests/test_services.py:80
+msgid "Appointment does not exist."
+msgstr "La cita no existe."
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:63
+#: venv/lib/python3.11/site-packages/appointment/tests/test_services.py:88
+msgid "You are not authorized to view this appointment."
+msgstr "No está autorizado para ver esta cita."
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:66
+#, python-brace-format
+msgid "Appointment Details for {client_name}"
+msgstr "Detalles de la cita para {client_name}"
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:101
+msgid "You can only view your own profile"
+msgstr "Solo puedes ver tu propio perfil"
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:110
+#: venv/lib/python3.11/site-packages/appointment/views_admin.py:199
+#: venv/lib/python3.11/site-packages/appointment/views_admin.py:317
+msgid "Not authorized."
+msgstr "No autorizado."
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:120
+msgid ""
+"Here you can add/remove services offered by this staff member by modifying "
+"this section."
+msgstr ""
+"Aquí puede agregar/eliminar los servicios ofrecidos por este miembro del "
+"personal modificando esta sección."
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:122
+msgid ""
+"Here you can add/remove services offered by you by modifying this section."
+msgstr ""
+"Aquí puede agregar/eliminar los servicios que ofrece modificando esta "
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:161
+msgid "Add"
+msgstr "Añadir"
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:179
+msgid "Days off for this date range already exist."
+msgstr "Los días libres para este rango de fechas ya existen."
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:207
+msgid "Day off saved successfully."
+msgstr "Día libre guardado con éxito."
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:227
+msgid "Invalid data."
+msgstr "Datos inválidos."
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:235
+msgid "Start time must be before end time."
+msgstr "La hora de inicio debe ser anterior a la hora de finalización."
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:241
+msgid "Working hours already exist for this day."
+msgstr "Las horas de trabajo ya existen para este día."
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:247
+msgid "Invalid or no working_hours_id provided."
+msgstr "Se proporcionó un ID de horas de trabajo no válido o no."
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:257
+msgid "Working hours does not exist."
+msgstr "Las horas de trabajo no existen."
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:266
+msgid "Working hours saved successfully."
+msgstr "Las horas de trabajo se guardaron correctamente."
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:429
+#: venv/lib/python3.11/site-packages/appointment/tests/test_utils.py:201
+msgid "Pay Now"
+msgstr "Pagar ahora"
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:430
+#: venv/lib/python3.11/site-packages/appointment/tests/test_utils.py:195
+msgid "Finish"
+msgstr "Terminar"
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:466
+#: venv/lib/python3.11/site-packages/appointment/tests/test_services.py:486
+msgid "Empty fields are not allowed."
+msgstr "No se permiten campos vacíos."
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:474
+#: venv/lib/python3.11/site-packages/appointment/tests/test_services.py:479
+msgid "User not found."
+msgstr "Usuario no encontrado."
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:508
+msgid "A user with this email already exists."
+msgstr "Ya existe un usuario con este correo electrónico."
+
+#: venv/lib/python3.11/site-packages/appointment/services.py:532
+msgid "Service saved successfully."
+msgstr "Servicio guardado con éxito."
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/display_appointment.html:27
+msgid "Start time"
+msgstr "Hora de inicio"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/display_appointment.html:31
+msgid "End time"
+msgstr "Hora de finalización"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/display_appointment.html:51
+msgid "Want reminder"
+msgstr "¿Quieres un recordatorio?"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/display_appointment.html:55
+msgid "Client address"
+msgstr "Dirección del cliente"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/display_appointment.html:59
+msgid "Additional client info"
+msgstr "Información adicional del cliente"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/display_appointment.html:63
+msgid "Is paid"
+msgstr "Está pagado"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/display_appointment.html:67
+msgid "Service price"
+msgstr "Precio del servicio"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/email_change_verification_code.html:8
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/email_change_verification_code.html:11
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/email_change_verification_code.html:17
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/enter_verification_code.html:8
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/enter_verification_code.html:11
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/enter_verification_code.html:17
+msgid "Enter Verification Code"
+msgstr "Introduzca el código de verificación"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/email_change_verification_code.html:18
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/enter_verification_code.html:18
+msgid "We've sent a verification code to your email. Please enter it below"
+msgstr "Hemos enviado un código de verificación a su correo electrónico. Por favor, introdúzcalo a continuación"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/email_change_verification_code.html:22
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/enter_verification_code.html:22
+msgid "Code"
+msgstr "Código"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/manage_day_off.html:15
+msgid "Manage Days Off"
+msgstr "Gestionar días libres"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/manage_day_off.html:30
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/manage_working_hours.html:28
+msgid "Staff Member"
+msgstr "Miembro del personal"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/manage_day_off.html:37
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:97
+msgid "Start Date"
+msgstr "Fecha de inicio"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/manage_day_off.html:49
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:98
+msgid "End Date"
+msgstr "Fecha de finalización"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/manage_day_off.html:61
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:99
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:229
+msgid "Description"
+msgstr "Descripción"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/manage_staff_member.html:13
+msgid "Staff Appointment Information"
+msgstr "Información de la cita del personal"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/manage_staff_member.html:53
+#: venv/lib/python3.11/site-packages/appointment/views_admin.py:413
+msgid "Save"
+msgstr "Guardar"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/manage_staff_personal_info.html:13
+msgid "Staff Personal Information"
+msgstr "Información personal del personal"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/manage_working_hours.html:18
+msgid "Manage Working Hours"
+msgstr "Gestionar horas de trabajo"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/manage_working_hours.html:34
+msgid "Day of Week"
+msgstr "Día de la semana"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/manage_working_hours.html:39
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:164
+msgid "Start Time"
+msgstr "Hora de inicio"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/manage_working_hours.html:53
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:165
+msgid "End Time"
+msgstr "Hora de finalización"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/service_list.html:9
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/service_list.html:12
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/service_list.html:19
+msgid "Service List"
+msgstr "Lista de servicios"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/service_list.html:26
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:230
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/default_thank_you.html:24
+#: venv/lib/python3.11/site-packages/appointment/views.py:441
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1793
+msgid "Duration"
+msgstr "Duración"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/service_list.html:28
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:100
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:166
+#: venv/lib/python3.11/site-packages/appointment/templates/modal/confirm_modal.html:17
+msgid "Action"
+msgstr "Acción"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/service_list.html:39
+msgid "Are you sure you want to delete this service?"
+msgstr "¿Estás seguro de que quieres eliminar este servicio?"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/service_list.html:56
+msgid "No service found"
+msgstr "No se encontró ningún servicio"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/staff_list.html:12
+msgid "List of all staff members"
+msgstr "Lista de todos los miembros del personal"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/staff_list.html:19
+msgid "Staff Members"
+msgstr "Miembros del personal"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/staff_list.html:37
+msgid "Details"
+msgstr "Detalles"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/staff_list.html:46
+msgid "View Profile"
+msgstr "Ver perfil"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/staff_list.html:50
+msgid "No staff members found"
+msgstr "No se encontraron miembros del personal"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:26
+msgid "Confirm Deletion"
+msgstr "Confirmar eliminación"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:29
+msgid "Personal Information"
+msgstr "Información personal"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:32
+msgid "First Name"
+msgstr "Nombre de pila"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:33
+msgid "Last Name"
+msgstr "Apellido"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:44
+msgid "Appointment Information"
+msgstr "Información de la cita"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:51
+msgid "Slot duration"
+msgstr "Duración de la ranura"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:55
+msgid "General start time"
+msgstr "Hora de inicio general"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:56
+msgid "General end time"
+msgstr "Hora de finalización general"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:58
+msgid "Weekend days you work"
+msgstr "Días de fin de semana en los que trabajas"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:62
+msgid "Appointment buffer time"
+msgstr "Tiempo de búfer de cita"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:73
+msgid "No staff member information yet for this user"
+msgstr "Aún no hay información del miembro del personal para este usuario"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:85
+msgid "Days Off"
+msgstr "Días libres"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:91
+msgid ""
+"Days off are days you're not working, you need to set them for holidays as "
+"well so clients don't book you those days."
+msgstr ""
+"Los días libres son días en los que no estás trabajando, debes establecerlos "
+"también para las vacaciones para que los clientes no te reserven esos días."
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:122
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:188
+msgid "Are you sure you want to delete this working hours?"
+msgstr "¿Estás seguro de que quieres eliminar estas horas de trabajo?"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:141
+msgid "No days off have been set"
+msgstr "No se han establecido días libres"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:151
+msgid "Working Hours"
+msgstr "Horas de trabajo"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:157
+msgid ""
+"Note: If you are a staff member, your working hours will be used to "
+"determine when you are available for appointments."
+msgstr ""
+"Notas: Si es un miembro del personal, su horario de trabajo se utilizará "
+"para determinar cuándo está disponible para las citas."
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:163
+#| msgid "day"
+#| msgid_plural "days"
+msgid "Day"
+msgstr "Día"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:207
+msgid "No working hours have been set"
+msgstr "No se han establecido horas de trabajo"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:217
+#| msgid "Service Provider"
+msgid "Service Offered"
+msgstr "Proveedor de servicios"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:220
+msgid "To add/modify a new service, make a request to an admin."
+msgstr "Para agregar/modificar un nuevo servicio, haga una solicitud a un administrador."
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:221
+msgid "Changes made in one service will change it for every staff member."
+msgstr "Los cambios realizados en un servicio lo cambiarán para cada miembro del personal."
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:232
+msgid "Down Payment"
+msgstr "Pago inicial"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:246
+msgid "No service offered yet"
+msgstr "Aún no se ofrece ningún servicio"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:8
+#, python-format
+msgid ""
+"\n"
+"        Client Information - %(ar.get_service_name)s\n"
+"    "
+msgstr ""
+"\n"
+"        Información del cliente - %(ar.get_service_name)s\n"
+"    "
+
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:13
+#, python-format
+msgid ""
+"\n"
+"        Your appointment request for %(ar.get_service_name)s has been "
+"submitted. Please provide your information to\n"
+"        create an account and complete the payment process.\n"
+"    "
+msgstr ""
+"\n"
+"        Su solicitud de cita para %(ar.get_service_name)s ha sido "
+"enviada. Por favor proporcione su información para\n"
+"        crear una cuenta y completar el proceso de pago.\n"
+"    "
+
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:79
+msgid "Additional Information"
+msgstr "Información adicional"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:111
+#| msgid "day"
+#| msgid_plural "days"
+msgid "Pay"
+msgstr "Pagar"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:116
+msgid "Pay DP"
+msgstr "Pagar DP"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointments.html:54
+msgid "Offered by"
+msgstr "Ofrecido por"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointments.html:57
+msgid "Please select a staff member"
+msgstr "Por favor seleccione un miembro del personal"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointments.html:75
+msgid "Next"
+msgstr "Siguiente"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/default_thank_you.html:16
+msgid "See you soon"
+msgstr "Hasta pronto"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/default_thank_you.html:17
+msgid ""
+"We've successfully scheduled your appointment! Please check your email for "
+"all the details"
+msgstr ""
+"¡Hemos programado su cita con éxito! Por favor revise su correo electrónico "
+"para todos los detalles"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/default_thank_you.html:18
+#: venv/lib/python3.11/site-packages/appointment/templates/email_sender/thank_you_email.html:201
+msgid "Appointment Details"
+msgstr "Detalles de la cita"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/default_thank_you.html:21
+#: venv/lib/python3.11/site-packages/appointment/views.py:438
+msgid "Appointment ID"
+msgstr "ID de cita"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/default_thank_you.html:22
+#: venv/lib/python3.11/site-packages/appointment/views.py:439
+msgid "Appointment Date"
+msgstr "Fecha de la cita"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/appointment/default_thank_you.html:23
+#: venv/lib/python3.11/site-packages/appointment/views.py:440
+msgid "Appointment Time"
+msgstr "Hora de la cita"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/base_templates/base.html:7
+#: venv/lib/python3.11/site-packages/payment/templates/base_templates/base.html:7
+msgid "Appointment application"
+msgstr "Aplicación de cita"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/email_sender/thank_you_email.html:90
+msgid "Booking session successfully saved."
+msgstr "La sesión de reserva se guardó correctamente."
+
+#: venv/lib/python3.11/site-packages/appointment/templates/email_sender/thank_you_email.html:113
+msgid "Booking Session Registered"
+msgstr "Sesión de reserva registrada"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/email_sender/thank_you_email.html:173
+msgid "Account Details"
+msgstr "Detalles de la cuenta"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/email_sender/thank_you_email.html:223
+msgid ""
+"\n"
+"                                If you have any questions or need "
+"assistance, please don't hesitate to reach out to our\n"
+"                                support team.\n"
+"                            "
+msgstr ""
+"\n"
+"                                Si tiene alguna pregunta o necesita ayuda, "
+"no dude en comunicarse con nuestro\n"
+"                                equipo de soporte.\n"
+"                            "
+
+#: venv/lib/python3.11/site-packages/appointment/templates/email_sender/thank_you_email.html:228
+#: venv/lib/python3.11/site-packages/payment/templates/email_sender/payment_email.html:63
+msgid "Best regards"
+msgstr "Saludos cordiales"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/email_sender/thank_you_email.html:229
+#: venv/lib/python3.11/site-packages/payment/templates/email_sender/payment_email.html:64
+msgid "The Team"
+msgstr "El equipo"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/error_pages/403_forbidden.html:88
+msgid "Reality"
+msgstr "Realidad"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/error_pages/403_forbidden.html:92
+msgid "Error 403"
+msgstr "Error 403"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/error_pages/403_forbidden.html:99
+msgid "You don't have permission to view this resource, and you know it"
+msgstr "No tiene permiso para ver este recurso, y lo sabe"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/error_pages/403_forbidden.html:106
+msgid "Go to profile"
+msgstr "Ir al perfil"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/error_pages/403_forbidden.html:110
+#: venv/lib/python3.11/site-packages/appointment/templates/error_pages/404_not_found.html:213
+msgid "Go back"
+msgstr "Volver"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/error_pages/404_not_found.html:211
+msgid "O-o-oh! Something broke."
+msgstr "¡O-o-oh! Algo se rompió."
+
+#: venv/lib/python3.11/site-packages/appointment/templates/modal/confirm_modal.html:16
+#: venv/lib/python3.11/site-packages/appointment/templates/modal/error_modal.html:17
+#: venv/lib/python3.11/site-packages/appointment/templates/modal/event_details_modal.html:19
+msgid "Close"
+msgstr "Cerrar"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/modal/error_modal.html:7
+msgid "Error"
+msgstr "Error"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/modal/event_details_modal.html:8
+msgid "Event Details"
+msgstr "Detalles del evento"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/modal/event_details_modal.html:17
+msgid "Go"
+msgstr "Ir"
+
+#: venv/lib/python3.11/site-packages/appointment/templates/modal/event_details_modal.html:25
+msgid "Edit"
+msgstr "Editar"
+
+#: venv/lib/python3.11/site-packages/appointment/tests/test_services.py:656
+msgid "Service matching query does not exist"
+msgstr "No existe ningún servicio que coincida con la consulta"
+
+#: venv/lib/python3.11/site-packages/appointment/tests/test_views.py:131
+#: venv/lib/python3.11/site-packages/appointment/views.py:378
+#: venv/lib/python3.11/site-packages/appointment/views.py:412
+msgid "Invalid verification code."
+msgstr "Código de verificación no válido."
+
+#: venv/lib/python3.11/site-packages/appointment/utils/date_time.py:43
+msgid "Not set."
+msgstr "No establecido."
+
+#: venv/lib/python3.11/site-packages/appointment/utils/date_time.py:50
+#, python-brace-format
+msgid "{value} {name}"
+msgstr "{value} {name}"
+
+#: venv/lib/python3.11/site-packages/appointment/utils/date_time.py:62
+msgid " and "
+msgstr " y "
+
+#: venv/lib/python3.11/site-packages/appointment/utils/date_time.py:64
+#, python-brace-format
+msgid "{days}, {hours} and {minutes}"
+msgstr "{days}, {hours} y {minutes}"
+
+#: venv/lib/python3.11/site-packages/appointment/utils/email_ops.py:51
+msgid ""
+"We've created an account for you to manage your appointment for the "
+"requested service "
+msgstr ""
+"Hemos creado una cuenta para que pueda administrar su cita para el servicio "
+"solicitado "
+
+#: venv/lib/python3.11/site-packages/appointment/utils/email_ops.py:52
+#, python-brace-format
+msgid "{s}. Your password is temporary. Please change it on your first login."
+msgstr "{s}. Su contraseña es temporal. Por favor cámbialo en tu primer inicio de sesión."
+
+#: venv/lib/python3.11/site-packages/appointment/utils/email_ops.py:68
+msgid "Thank you for booking us."
+msgstr "Gracias por reservarnos."
+
+#: venv/lib/python3.11/site-packages/appointment/utils/email_ops.py:84
+#, python-brace-format
+msgid "Your verification code is {code}."
+msgstr "Tu código de verificación es {code}."
+
+#: venv/lib/python3.11/site-packages/appointment/utils/email_ops.py:85
+msgid "Email Verification"
+msgstr "Verificación de correo electrónico"
+
+#: venv/lib/python3.11/site-packages/appointment/utils/session.py:56
+#, python-brace-format
+msgid "Email '{email}' already exists. Login to your account."
+msgstr "El correo electrónico '{email}' ya existe. Inicie sesión en su cuenta."
+
+#: venv/lib/python3.11/site-packages/appointment/views.py:54
+msgid "Date is in the past"
+msgstr "La fecha está en el pasado"
+
+#: venv/lib/python3.11/site-packages/appointment/views.py:65
+#: venv/lib/python3.11/site-packages/appointment/views.py:146
+#: venv/lib/python3.11/site-packages/appointment/views.py:156
+msgid "No staff member selected"
+msgstr "No se seleccionó ningún miembro del personal"
+
+#: venv/lib/python3.11/site-packages/appointment/views.py:73
+msgid "Day off. Please select another date!"
+msgstr "Día libre. Por favor seleccione otra fecha!"
+
+#: venv/lib/python3.11/site-packages/appointment/views.py:80
+#, python-brace-format
+msgid "Not a working day for {staff_member}. Please select another date!"
+msgstr "No es un día laborable para {staff_member}. Por favor seleccione otra fecha!"
+
+#: venv/lib/python3.11/site-packages/appointment/views.py:95
+msgid "No availability"
+msgstr "Sin disponibilidad"
+
+#: venv/lib/python3.11/site-packages/appointment/views.py:141
+msgid "Successfully retrieved next available date"
+msgstr "Fecha disponible más próxima recuperada con éxito"
+
+#: venv/lib/python3.11/site-packages/appointment/views.py:153
+msgid "Successfully retrieved non-working days"
+msgstr "Días no laborables recuperados con éxito"
+
+#: venv/lib/python3.11/site-packages/appointment/views.py:197
+#, python-brace-format
+msgid "Book an appointment for {s} at {wn}."
+msgstr "Reserve una cita para {s} en {wn}."
+
+#: venv/lib/python3.11/site-packages/appointment/views.py:229
+msgid "Selected staff member does not exist."
+msgstr "El miembro del personal seleccionado no existe."
+
+#: venv/lib/python3.11/site-packages/appointment/views.py:240
+msgid ""
+"There was an error in your submission. Please check the form and try again."
+msgstr ""
+"Hubo un error en su envío. Por favor revise el formulario y vuelva a intentarlo."
+
+#: venv/lib/python3.11/site-packages/appointment/views.py:319
+msgid "An account was created for you."
+msgstr "Se creó una cuenta para ti."
+
+#: venv/lib/python3.11/site-packages/appointment/views.py:375
+msgid "Email verified successfully."
+msgstr "Correo electrónico verificado con éxito."
+
+#: venv/lib/python3.11/site-packages/appointment/views.py:444
+msgid "The email address linked to this account"
+msgstr "La dirección de correo electrónico vinculada a esta cuenta"
+
+#: venv/lib/python3.11/site-packages/appointment/views.py:445
+msgid "Your temporary password"
+msgstr "Tu contraseña temporal"
+
+#: venv/lib/python3.11/site-packages/appointment/views.py:448
+msgid "Your username"
+msgstr "Tu nombre de usuario"
+
+#: venv/lib/python3.11/site-packages/appointment/views_admin.py:93
+msgid "You can only add your own days off"
+msgstr "Solo puedes agregar tus propios días libres"
+
+#: venv/lib/python3.11/site-packages/appointment/views_admin.py:114
+msgid "You can only update your own days off."
+msgstr "Solo puedes actualizar tus propios días libres."
+
+#: venv/lib/python3.11/site-packages/appointment/views_admin.py:125
+msgid "You can only delete your own days off."
+msgstr "Solo puedes eliminar tus propios días libres."
+
+#: venv/lib/python3.11/site-packages/appointment/views_admin.py:141
+msgid "You can only add your own working hours."
+msgstr "Solo puedes agregar tus propias horas de trabajo."
+
+#: venv/lib/python3.11/site-packages/appointment/views_admin.py:163
+msgid "You can only update your own working hours."
+msgstr "Solo puedes actualizar tus propias horas de trabajo."
+
+#: venv/lib/python3.11/site-packages/appointment/views_admin.py:177
+msgid "You can only delete your own working hours."
+msgstr "Solo puedes eliminar tus propias horas de trabajo."
+
+#: venv/lib/python3.11/site-packages/appointment/views_admin.py:354
+msgid "Email updated successfully!"
+msgstr "¡Correo electrónico actualizado con éxito!"
+
+#: venv/lib/python3.11/site-packages/appointment/views_admin.py:357
+msgid "The verification code provided is incorrect. Please try again."
+msgstr "El código de verificación proporcionado es incorrecto. Por favor, inténtelo de nuevo."
+
+#: venv/lib/python3.11/site-packages/appointment/views_admin.py:420
+msgid "Update Service"
+msgstr "Actualizar servicio"
+
+#: venv/lib/python3.11/site-packages/appointment/views_admin.py:433
+msgid "Service deleted successfully!"
+msgstr "¡Servicio eliminado con éxito!"
+
+#: venv/lib/python3.11/site-packages/appointment/views_admin.py:442
+msgid "Staff member deleted successfully!"
+msgstr "¡Miembro del personal eliminado con éxito!"
+
+#: venv/lib/python3.11/site-packages/click/_termui_impl.py:518
+#, python-brace-format
+msgid "{editor}: Editing failed"
+msgstr "{editor}: Error al editar"
+
+#: venv/lib/python3.11/site-packages/click/_termui_impl.py:522
+#, python-brace-format
+msgid "{editor}: Editing failed: {e}"
+msgstr "{editor}: Error al editar: {e}"
+
+#: venv/lib/python3.11/site-packages/click/core.py:1120
+msgid "Aborted!"
+msgstr "¡Abortado!"
+
+#: venv/lib/python3.11/site-packages/click/core.py:1309
+#: venv/lib/python3.11/site-packages/click/decorators.py:559
+msgid "Show this message and exit."
+msgstr "Muestra este mensaje y sale."
+
+#: venv/lib/python3.11/site-packages/click/core.py:1340
+#: venv/lib/python3.11/site-packages/click/core.py:1370
+#, python-brace-format
+msgid "(Deprecated) {text}"
+msgstr "(Obsoleto) {text}"
+
+#: venv/lib/python3.11/site-packages/click/core.py:1387
+msgid "Options"
+msgstr "Opciones"
+
+#: venv/lib/python3.11/site-packages/click/core.py:1413
+#, python-brace-format
+msgid "Got unexpected extra argument ({args})"
+msgid_plural "Got unexpected extra arguments ({args})"
+msgstr[0] "Se ha recibido un argumento extra inesperado ({args})"
+msgstr[1] "Se han recibido argumentos extra inesperados ({args})"
+
+#: venv/lib/python3.11/site-packages/click/core.py:1429
+msgid "DeprecationWarning: The command {name!r} is deprecated."
+msgstr "DeprecationWarning: El comando {name!r} está obsoleto."
+
+#: venv/lib/python3.11/site-packages/click/core.py:1636
+msgid "Commands"
+msgstr "Comandos"
+
+#: venv/lib/python3.11/site-packages/click/core.py:1668
+msgid "Missing command."
+msgstr "Falta el comando."
+
+#: venv/lib/python3.11/site-packages/click/core.py:1746
+msgid "No such command {name!r}."
+msgstr "No existe el comando {name!r}."
+
+#: venv/lib/python3.11/site-packages/click/core.py:2310
+msgid "Value must be an iterable."
+msgstr "El valor debe ser iterable."
+
+#: venv/lib/python3.11/site-packages/click/core.py:2331
+#, python-brace-format
+msgid "Takes {nargs} values but 1 was given."
+msgid_plural "Takes {nargs} values but {len} were given."
+msgstr[0] "Toma {nargs} valores pero se ha dado 1."
+msgstr[1] "Toma {nargs} valores pero se han dado {len}."
+
+#: venv/lib/python3.11/site-packages/click/core.py:2778
+#, python-brace-format
+msgid "env var: {var}"
+msgstr "var. env: {var}"
+
+#: venv/lib/python3.11/site-packages/click/core.py:2808
+msgid "(dynamic)"
+msgstr "(dinámico)"
+
+#: venv/lib/python3.11/site-packages/click/core.py:2821
+#, python-brace-format
+msgid "default: {default}"
+msgstr "predeterminado: {default}"
+
+#: venv/lib/python3.11/site-packages/click/decorators.py:465
+#, python-format
+msgid "%(prog)s, version %(version)s"
+msgstr "%(prog)s, versión %(version)s"
+
+#: venv/lib/python3.11/site-packages/click/decorators.py:528
+msgid "Show the version and exit."
+msgstr "Muestra la versión y sale."
+
+#: venv/lib/python3.11/site-packages/click/exceptions.py:44
+#: venv/lib/python3.11/site-packages/click/exceptions.py:80
+#, python-brace-format
+msgid "Error: {message}"
+msgstr "Error: {message}"
+
+#: venv/lib/python3.11/site-packages/click/exceptions.py:72
+#, python-brace-format
+msgid "Try '{command} {option}' for help."
+msgstr "Pruebe '{command} {option}' para obtener ayuda."
+
+#: venv/lib/python3.11/site-packages/click/exceptions.py:121
+#, python-brace-format
+msgid "Invalid value: {message}"
+msgstr "Valor no válido: {message}"
+
+#: venv/lib/python3.11/site-packages/click/exceptions.py:123
+#, python-brace-format
+msgid "Invalid value for {param_hint}: {message}"
+msgstr "Valor no válido para {param_hint}: {message}"
+
+#: venv/lib/python3.11/site-packages/click/exceptions.py:179
+msgid "Missing argument"
+msgstr "Falta el argumento"
+
+#: venv/lib/python3.11/site-packages/click/exceptions.py:181
+msgid "Missing option"
+msgstr "Falta la opción"
+
+#: venv/lib/python3.11/site-packages/click/exceptions.py:183
+msgid "Missing parameter"
+msgstr "Falta el parámetro"
+
+#: venv/lib/python3.11/site-packages/click/exceptions.py:185
+#, python-brace-format
+msgid "Missing {param_type}"
+msgstr "Falta {param_type}"
+
+#: venv/lib/python3.11/site-packages/click/exceptions.py:192
+#, python-brace-format
+msgid "Missing parameter: {param_name}"
+msgstr "Falta el parámetro: {param_name}"
+
+#: venv/lib/python3.11/site-packages/click/exceptions.py:212
+#, python-brace-format
+msgid "No such option: {name}"
+msgstr "No existe la opción: {name}"
+
+#: venv/lib/python3.11/site-packages/click/exceptions.py:224
+#, python-brace-format
+msgid "Did you mean {possibility}?"
+msgid_plural "(Possible options: {possibilities})"
+msgstr[0] "¿Quiso decir {possibility}?"
+msgstr[1] "(Opciones posibles: {possibilities})"
+
+#: venv/lib/python3.11/site-packages/click/exceptions.py:262
+msgid "unknown error"
+msgstr "error desconocido"
+
+#: venv/lib/python3.11/site-packages/click/exceptions.py:269
+msgid "Could not open file {filename!r}: {message}"
+msgstr "No se pudo abrir el archivo {filename!r}: {message}"
+
+#: venv/lib/python3.11/site-packages/click/parser.py:231
+msgid "Argument {name!r} takes {nargs} values."
+msgstr "Argumento {name!r} toma valores {nargs}."
+
+#: venv/lib/python3.11/site-packages/click/parser.py:413
+msgid "Option {name!r} does not take a value."
+msgstr "La opción {name!r} no toma un valor."
+
+#: venv/lib/python3.11/site-packages/click/parser.py:474
+msgid "Option {name!r} requires an argument."
+msgid_plural "Option {name!r} requires {nargs} arguments."
+msgstr[0] "La opción {name!r} requiere un argumento."
+msgstr[1] "La opción {name!r} requiere {nargs} argumentos."
+
+#: venv/lib/python3.11/site-packages/click/shell_completion.py:318
+msgid "Shell completion is not supported for Bash versions older than 4.4."
+msgstr "Las versiones de Bash anteriores a la 4.4 no permiten completar el shell."
+
+#: venv/lib/python3.11/site-packages/click/shell_completion.py:324
+msgid "Couldn't detect Bash version, shell completion is not supported."
+msgstr "No se pudo detectar la versión de Bash, no se admite la finalización del shell."
+
+#: venv/lib/python3.11/site-packages/click/termui.py:158
+msgid "Repeat for confirmation"
+msgstr "Repetir para confirmación"
+
+#: venv/lib/python3.11/site-packages/click/termui.py:174
+msgid "Error: The value you entered was invalid."
+msgstr "Error: El valor que ingresó no es válido."
+
+#: venv/lib/python3.11/site-packages/click/termui.py:176
+#, python-brace-format
+msgid "Error: {e.message}"
+msgstr "Error: {e.message}"
+
+#: venv/lib/python3.11/site-packages/click/termui.py:187
+msgid "Error: The two entered values do not match."
+msgstr "Error: Los dos valores ingresados no coinciden."
+
+#: venv/lib/python3.11/site-packages/click/termui.py:243
+msgid "Error: invalid input"
+msgstr "Error: entrada no válida"
+
+#: venv/lib/python3.11/site-packages/click/termui.py:773
+msgid "Press any key to continue..."
+msgstr "Presione cualquier tecla para continuar..."
+
+#: venv/lib/python3.11/site-packages/click/types.py:266
+#, python-brace-format
+msgid ""
+"Choose from:\n"
+"\t{choices}"
+msgstr ""
+"Elija entre:\n"
+"\t{choices}"
+
+#: venv/lib/python3.11/site-packages/click/types.py:298
+msgid "{value!r} is not {choice}."
+msgid_plural "{value!r} is not one of {choices}."
+msgstr[0] "{value!r} no es {choice}."
+msgstr[1] "{value!r} no es uno de {choices}."
+
+#: venv/lib/python3.11/site-packages/click/types.py:392
+msgid "{value!r} does not match the format {format}."
+msgid_plural "{value!r} does not match the formats {formats}."
+msgstr[0] "{value!r} no coincide con el formato {format}."
+msgstr[1] "{value!r} no coincide con los formatos {formats}."
+
+#: venv/lib/python3.11/site-packages/click/types.py:414
+msgid "{value!r} is not a valid {number_type}."
+msgstr "{value!r} no es un {number_type} válido."
+
+#: venv/lib/python3.11/site-packages/click/types.py:470
+#, python-brace-format
+msgid "{value} is not in the range {range}."
+msgstr "{value} no está en el rango {range}."
+
+#: venv/lib/python3.11/site-packages/click/types.py:611
+msgid "{value!r} is not a valid boolean."
+msgstr "{value!r} no es un booleano válido."
+
+#: venv/lib/python3.11/site-packages/click/types.py:635
+msgid "{value!r} is not a valid UUID."
+msgstr "{value!r} no es un UUID válido."
+
+#: venv/lib/python3.11/site-packages/click/types.py:822
+msgid "file"
+msgstr "archivo"
+
+#: venv/lib/python3.11/site-packages/click/types.py:824
+msgid "directory"
+msgstr "directorio"
+
+#: venv/lib/python3.11/site-packages/click/types.py:826
+msgid "path"
+msgstr "ruta"
+
+#: venv/lib/python3.11/site-packages/click/types.py:877
+msgid "{name} {filename!r} does not exist."
+msgstr "{name} {filename!r} no existe."
+
+#: venv/lib/python3.11/site-packages/click/types.py:886
+msgid "{name} {filename!r} is a file."
+msgstr "{name} {filename!r} es un archivo."
+
+#: venv/lib/python3.11/site-packages/click/types.py:894
+#, python-brace-format
+msgid "{name} '{filename}' is a directory."
+msgstr "{name} '{filename}' es un directorio."
+
+#: venv/lib/python3.11/site-packages/click/types.py:903
+msgid "{name} {filename!r} is not readable."
+msgstr "{name} {filename!r} no es legible."
+
+#: venv/lib/python3.11/site-packages/click/types.py:912
+msgid "{name} {filename!r} is not writable."
+msgstr "{name} {filename!r} no es escribible."
+
+#: venv/lib/python3.11/site-packages/click/types.py:921
+msgid "{name} {filename!r} is not executable."
+msgstr "{name} {filename!r} no es ejecutable."
+
+#: venv/lib/python3.11/site-packages/click/types.py:988
+#, python-brace-format
+msgid "{len_type} values are required, but {len_value} was given."
+msgid_plural "{len_type} values are required, but {len_value} were given."
+msgstr[0] "{len_type} valores son requeridos, pero se dio {len_value}."
+msgstr[1] "{len_type} valores son requeridos, pero se dieron {len_value}."
+
+#: venv/lib/python3.11/site-packages/django/contrib/messages/apps.py:15
+msgid "Messages"
+msgstr "Mensajes"
+
+#: venv/lib/python3.11/site-packages/django/contrib/sitemaps/apps.py:8
+msgid "Site Maps"
+msgstr "Mapas del sitio"
+
+#: venv/lib/python3.11/site-packages/django/contrib/staticfiles/apps.py:9
+msgid "Static Files"
+msgstr "Archivos estáticos"
+
+#: venv/lib/python3.11/site-packages/django/contrib/syndication/apps.py:7
+msgid "Syndication"
+msgstr "Sindicación"
+
+#. Translators: String used to replace omitted page numbers in elided page
+#. range generated by paginators, e.g. [1, 2, '…', 5, 6, 7, '…', 9, 10].
+#: venv/lib/python3.11/site-packages/django/core/paginator.py:30
+msgid "…"
+msgstr "…"
+
+#: venv/lib/python3.11/site-packages/django/core/paginator.py:50
+msgid "That page number is not an integer"
+msgstr "Ese número de página no es un número entero"
+
+#: venv/lib/python3.11/site-packages/django/core/paginator.py:52
+msgid "That page number is less than 1"
+msgstr "Ese número de página es menor que 1"
+
+#: venv/lib/python3.11/site-packages/django/core/paginator.py:54
+msgid "That page contains no results"
+msgstr "Esa página no contiene resultados"
+
+#: venv/lib/python3.11/site-packages/django/core/validators.py:22
+msgid "Enter a valid value."
+msgstr "Introduzca un valor válido."
+
+#: venv/lib/python3.11/site-packages/django/core/validators.py:104
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:752
+msgid "Enter a valid URL."
+msgstr "Introduzca una URL válida."
+
+#: venv/lib/python3.11/site-packages/django/core/validators.py:165
+msgid "Enter a valid integer."
+msgstr "Introduzca un número entero válido."
+
+#: venv/lib/python3.11/site-packages/django/core/validators.py:176
+msgid "Enter a valid email address."
+msgstr "Introduzca una dirección de correo electrónico válida."
+
+#. Translators: "letters" means latin letters: a-z and A-Z.
+#: venv/lib/python3.11/site-packages/django/core/validators.py:259
+msgid ""
+"Enter a valid “slug” consisting of letters, numbers, underscores or hyphens."
+msgstr ""
+"Introduzca un “slug” válido que consista en letras, números, guiones bajos o "
+"guiones."
+
+#: venv/lib/python3.11/site-packages/django/core/validators.py:267
+msgid ""
+"Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or "
+"hyphens."
+msgstr ""
+"Introduzca un “slug” válido que consista en letras, números, guiones bajos o "
+"guiones."
+
+#: venv/lib/python3.11/site-packages/django/core/validators.py:279
+#: venv/lib/python3.11/site-packages/django/core/validators.py:287
+#: venv/lib/python3.11/site-packages/django/core/validators.py:316
+msgid "Enter a valid IPv4 address."
+msgstr "Introduzca una dirección IPv4 válida."
+
+#: venv/lib/python3.11/site-packages/django/core/validators.py:296
+#: venv/lib/python3.11/site-packages/django/core/validators.py:317
+msgid "Enter a valid IPv6 address."
+msgstr "Introduzca una dirección IPv6 válida."
+
+#: venv/lib/python3.11/site-packages/django/core/validators.py:308
+#: venv/lib/python3.11/site-packages/django/core/validators.py:315
+msgid "Enter a valid IPv4 or IPv6 address."
+msgstr "Introduzca una dirección IPv4 o IPv6 válida."
+
+#: venv/lib/python3.11/site-packages/django/core/validators.py:351
+msgid "Enter only digits separated by commas."
+msgstr "Introduzca solo dígitos separados por comas."
+
+#: venv/lib/python3.11/site-packages/django/core/validators.py:357
+#, python-format
+msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
+msgstr "Asegúrese de que este valor es %(limit_value)s (es %(show_value)s)."
+
+#: venv/lib/python3.11/site-packages/django/core/validators.py:392
+#, python-format
+msgid "Ensure this value is less than or equal to %(limit_value)s."
+msgstr "Asegúrese de que este valor es menor o igual que %(limit_value)s."
+
+#: venv/lib/python3.11/site-packages/django/core/validators.py:401
+#, python-format
+msgid "Ensure this value is greater than or equal to %(limit_value)s."
+msgstr "Asegúrese de que este valor es mayor o igual que %(limit_value)s."
+
+#: venv/lib/python3.11/site-packages/django/core/validators.py:410
+#, python-format
+msgid "Ensure this value is a multiple of step size %(limit_value)s."
+msgstr "Asegúrese de que este valor es un múltiplo del tamaño del paso %(limit_value)s."
+
+#: venv/lib/python3.11/site-packages/django/core/validators.py:420
+#, python-format
+msgid ""
+"Ensure this value has at least %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at least %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] "Asegúrese de que este valor tiene al menos %(limit_value)d carácter (tiene %(show_value)d)."
+msgstr[1] "Asegúrese de que este valor tiene al menos %(limit_value)d caracteres (tiene %(show_value)d)."
+
+#: venv/lib/python3.11/site-packages/django/core/validators.py:438
+#, python-format
+msgid ""
+"Ensure this value has at most %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at most %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+"Asegúrese de que este valor tiene como máximo %(valor_límite)d carácter (tiene "
+"%(show_value)d)."
+msgstr[1] ""
+"Asegúrese de que este valor tiene como máximo %(valor_límite)d caracteres (tiene "
+"%(show_value)d)."
+
+#: venv/lib/python3.11/site-packages/django/core/validators.py:461
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:347
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:386
+msgid "Enter a number."
+msgstr "Introduzca un número."
+
+#: venv/lib/python3.11/site-packages/django/core/validators.py:463
+#, python-format
+msgid "Ensure that there are no more than %(max)s digit in total."
+msgid_plural "Ensure that there are no more than %(max)s digits in total."
+msgstr[0] "Asegúrese de que no hay más de %(max)s dígitos en total."
+msgstr[1] "Asegúrese de que no hay más de %(max)s dígitos en total."
+
+#: venv/lib/python3.11/site-packages/django/core/validators.py:468
+#, python-format
+msgid "Ensure that there are no more than %(max)s decimal place."
+msgid_plural "Ensure that there are no more than %(max)s decimal places."
+msgstr[0] "Asegúrese de que no hay más de %(max)s lugar decimal."
+msgstr[1] "Asegúrese de que no hay más de %(max)s lugares decimales."
+
+#: venv/lib/python3.11/site-packages/django/core/validators.py:473
+#, python-format
+msgid ""
+"Ensure that there are no more than %(max)s digit before the decimal point."
+msgid_plural ""
+"Ensure that there are no more than %(max)s digits before the decimal point."
+msgstr[0] ""
+"Asegúrese de que no hay más de %(max)s dígitos antes del punto decimal."
+msgstr[1] ""
+"Asegúrese de que no hay más de %(max)s dígitos antes del punto decimal."
+
+#: venv/lib/python3.11/site-packages/django/core/validators.py:544
+#, python-format
+msgid ""
+"File extension “%(extension)s” is not allowed. Allowed extensions are: "
+"%(allowed_extensions)s."
+msgstr ""
+
+
+#: venv/lib/python3.11/site-packages/django/core/validators.py:605
+msgid "Null characters are not allowed."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/base.py:1423
+#: venv/lib/python3.11/site-packages/django/forms/models.py:893
+#, fuzzy
+#| msgid "Orlando"
+msgid "and"
+msgstr "Orlando"
+
+#: venv/lib/python3.11/site-packages/django/db/models/base.py:1425
+#, python-format
+msgid "%(model_name)s with this %(field_labels)s already exists."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/constraints.py:17
+#, python-format
+msgid "Constraint “%(name)s” is violated."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:128
+#, python-format
+msgid "Value %(value)r is not a valid choice."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:129
+msgid "This field cannot be null."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:130
+msgid "This field cannot be blank."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:131
+#, python-format
+msgid "%(model_name)s with this %(field_label)s already exists."
+msgstr ""
+
+#. Translators: The 'lookup_type' is one of 'date', 'year' or
+#. 'month'. Eg: "Title must be unique for pub_date year"
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:135
+#, python-format
+msgid ""
+"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:173
+#, python-format
+msgid "Field of type: %(field_type)s"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1094
+#, python-format
+msgid "“%(value)s” value must be either True or False."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1095
+#, python-format
+msgid "“%(value)s” value must be either True, False, or None."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1097
+msgid "Boolean (Either True or False)"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1147
+#, python-format
+msgid "String (up to %(max_length)s)"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1149
+msgid "String (unlimited)"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1253
+msgid "Comma-separated integers"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1354
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD "
+"format."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1358
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1493
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid "
+"date."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1362
+msgid "Date (without time)"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1489
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[."
+"uuuuuu]][TZ] format."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1497
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
+"[TZ]) but it is an invalid date/time."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1502
+msgid "Date (with time)"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1626
+#, python-format
+msgid "“%(value)s” value must be a decimal number."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1628
+#, fuzzy
+#| msgid "Phone number"
+msgid "Decimal number"
+msgstr "Teléfono"
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1789
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[."
+"uuuuuu] format."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1870
+msgid "File path"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1948
+#, python-format
+msgid "“%(value)s” value must be a float."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1950
+msgid "Floating point number"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1990
+#, python-format
+msgid "“%(value)s” value must be an integer."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1992
+msgid "Integer"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:2088
+msgid "Big (8 byte) integer"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:2105
+msgid "Small integer"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:2113
+#, fuzzy
+#| msgid "Email address"
+msgid "IPv4 address"
+msgstr "Correo electrónico"
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:2144
+#, fuzzy
+#| msgid "Address"
+msgid "IP address"
+msgstr "Dirección"
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:2237
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:2238
+#, python-format
+msgid "“%(value)s” value must be either None, True or False."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:2240
+msgid "Boolean (Either True, False or None)"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:2291
+msgid "Positive big integer"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:2306
+msgid "Positive integer"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:2321
+msgid "Positive small integer"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:2337
+#, python-format
+msgid "Slug (up to %(max_length)s)"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:2373
+msgid "Text"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:2448
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
+"format."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:2452
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
+"invalid time."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:2456
+msgid "Time"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:2564
+msgid "URL"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:2588
+msgid "Raw binary data"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:2653
+#, python-format
+msgid "“%(value)s” is not a valid UUID."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:2655
+msgid "Universally unique identifier"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/files.py:232
+msgid "File"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/files.py:393
+msgid "Image"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/json.py:26
+#, fuzzy
+#| msgid "Subject"
+msgid "A JSON object"
+msgstr "Tema"
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/json.py:28
+msgid "Value must be valid JSON."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/related.py:919
+#, python-format
+msgid "%(model)s instance with %(field)s %(value)r does not exist."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/related.py:921
+msgid "Foreign Key (type determined by related field)"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/related.py:1212
+msgid "One-to-one relationship"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/related.py:1269
+#, python-format
+msgid "%(from)s-%(to)s relationship"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/related.py:1271
+#, python-format
+msgid "%(from)s-%(to)s relationships"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/db/models/fields/related.py:1319
+msgid "Many-to-many relationship"
+msgstr ""
+
+#. Translators: If found as last label character, these punctuation
+#. characters will prevent the default label_suffix to be appended to the label
+#: venv/lib/python3.11/site-packages/django/forms/boundfield.py:184
+msgid ":?.!"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:91
+msgid "This field is required."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:298
+#, fuzzy
+#| msgid "Phone number"
+msgid "Enter a whole number."
+msgstr "Teléfono"
+
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:467
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:1241
+msgid "Enter a valid date."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:490
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:1242
+msgid "Enter a valid time."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:517
+msgid "Enter a valid date/time."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:551
+msgid "Enter a valid duration."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:552
+#, python-brace-format
+msgid "The number of days must be between {min_days} and {max_days}."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:621
+msgid "No file was submitted. Check the encoding type on the form."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:622
+msgid "No file was submitted."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:623
+msgid "The submitted file is empty."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:625
+#, python-format
+msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
+msgid_plural ""
+"Ensure this filename has at most %(max)d characters (it has %(length)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:630
+msgid "Please either submit a file or check the clear checkbox, not both."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:694
+msgid ""
+"Upload a valid image. The file you uploaded was either not an image or a "
+"corrupted image."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:857
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:949
+#: venv/lib/python3.11/site-packages/django/forms/models.py:1566
+#, python-format
+msgid "Select a valid choice. %(value)s is not one of the available choices."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:951
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:1070
+#: venv/lib/python3.11/site-packages/django/forms/models.py:1564
+msgid "Enter a list of values."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:1071
+msgid "Enter a complete value."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:1310
+msgid "Enter a valid UUID."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/fields.py:1340
+msgid "Enter a valid JSON."
+msgstr ""
+
+#. Translators: This is the default suffix added to form field labels
+#: venv/lib/python3.11/site-packages/django/forms/forms.py:98
+msgid ":"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/forms.py:244
+#: venv/lib/python3.11/site-packages/django/forms/forms.py:328
+#, python-format
+msgid "(Hidden field %(name)s) %(error)s"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/formsets.py:63
+#, python-format
+msgid ""
+"ManagementForm data is missing or has been tampered with. Missing fields: "
+"%(field_names)s. You may need to file a bug report if the issue persists."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/formsets.py:67
+#, python-format
+msgid "Please submit at most %(num)d form."
+msgid_plural "Please submit at most %(num)d forms."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.11/site-packages/django/forms/formsets.py:72
+#, python-format
+msgid "Please submit at least %(num)d form."
+msgid_plural "Please submit at least %(num)d forms."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.11/site-packages/django/forms/formsets.py:484
+#: venv/lib/python3.11/site-packages/django/forms/formsets.py:491
+msgid "Order"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/models.py:886
+#, python-format
+msgid "Please correct the duplicate data for %(field)s."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/models.py:891
+#, python-format
+msgid "Please correct the duplicate data for %(field)s, which must be unique."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/models.py:898
+#, python-format
+msgid ""
+"Please correct the duplicate data for %(field_name)s which must be unique "
+"for the %(lookup)s in %(date_field)s."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/models.py:907
+msgid "Please correct the duplicate values below."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/models.py:1338
+msgid "The inline value did not match the parent instance."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/models.py:1429
+msgid "Select a valid choice. That choice is not one of the available choices."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/models.py:1568
+#, python-format
+msgid "“%(pk)s” is not a valid value."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/utils.py:226
+#, python-format
+msgid ""
+"%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; it "
+"may be ambiguous or it may not exist."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/widgets.py:463
+msgid "Clear"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/widgets.py:464
+msgid "Currently"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/widgets.py:465
+msgid "Change"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/forms/widgets.py:794
+msgid "Unknown"
+msgstr ""
+
+#. Translators: Please do not add spaces around commas.
+#: venv/lib/python3.11/site-packages/django/template/defaultfilters.py:861
+msgid "yes,no,maybe"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/template/defaultfilters.py:891
+#: venv/lib/python3.11/site-packages/django/template/defaultfilters.py:908
+#, python-format
+msgid "%(size)d byte"
+msgid_plural "%(size)d bytes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.11/site-packages/django/template/defaultfilters.py:910
+#, python-format
+msgid "%s KB"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/template/defaultfilters.py:912
+#, python-format
+msgid "%s MB"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/template/defaultfilters.py:914
+#, python-format
+msgid "%s GB"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/template/defaultfilters.py:916
+#, python-format
+msgid "%s TB"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/template/defaultfilters.py:918
+#, python-format
+msgid "%s PB"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dateformat.py:73
+msgid "p.m."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dateformat.py:74
+msgid "a.m."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dateformat.py:79
+msgid "PM"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dateformat.py:80
+msgid "AM"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dateformat.py:152
+msgid "midnight"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dateformat.py:154
+msgid "noon"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:7
+msgid "Monday"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:8
+msgid "Tuesday"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:9
+msgid "Wednesday"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:10
+msgid "Thursday"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:11
+#, fuzzy
+#| msgid "Florida"
+msgid "Friday"
+msgstr "Florida"
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:16
+msgid "Mon"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:17
+msgid "Tue"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:18
+msgid "Wed"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:19
+msgid "Thu"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:20
+#, fuzzy
+#| msgid "Florida"
+msgid "Fri"
+msgstr "Florida"
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:21
+#, fuzzy
+#| msgid "Status"
+msgid "Sat"
+msgstr "Estado"
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:22
+msgid "Sun"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:25
+msgid "January"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:26
+msgid "February"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:27
+msgid "March"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:28
+msgid "April"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:29
+#, fuzzy
+#| msgid "day"
+#| msgid_plural "days"
+msgid "May"
+msgstr "día"
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:30
+msgid "June"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:31
+msgid "July"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:32
+msgid "August"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:33
+msgid "September"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:34
+msgid "October"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:35
+#, fuzzy
+#| msgid "November 10, 2022"
+msgid "November"
+msgstr "10 de noviembre de 2022"
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:36
+msgid "December"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:39
+msgid "jan"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:40
+msgid "feb"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:41
+msgid "mar"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:42
+msgid "apr"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:43
+#, fuzzy
+#| msgid "day"
+#| msgid_plural "days"
+msgid "may"
+msgstr "día"
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:44
+msgid "jun"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:45
+msgid "jul"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:46
+msgid "aug"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:47
+msgid "sep"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:48
+#, fuzzy
+#| msgid "Contact"
+msgid "oct"
+msgstr "Contacta"
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:49
+msgid "nov"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:50
+msgid "dec"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:53
+msgctxt "abbrev. month"
+msgid "Jan."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:54
+msgctxt "abbrev. month"
+msgid "Feb."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:55
+msgctxt "abbrev. month"
+msgid "March"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:56
+msgctxt "abbrev. month"
+msgid "April"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:57
+#, fuzzy
+#| msgid "day"
+#| msgid_plural "days"
+msgctxt "abbrev. month"
+msgid "May"
+msgstr "día"
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:58
+msgctxt "abbrev. month"
+msgid "June"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:59
+msgctxt "abbrev. month"
+msgid "July"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:60
+msgctxt "abbrev. month"
+msgid "Aug."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:61
+msgctxt "abbrev. month"
+msgid "Sept."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:62
+msgctxt "abbrev. month"
+msgid "Oct."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:63
+msgctxt "abbrev. month"
+msgid "Nov."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:64
+msgctxt "abbrev. month"
+msgid "Dec."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:67
+msgctxt "alt. month"
+msgid "January"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:68
+msgctxt "alt. month"
+msgid "February"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:69
+msgctxt "alt. month"
+msgid "March"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:70
+msgctxt "alt. month"
+msgid "April"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:71
+#, fuzzy
+#| msgid "day"
+#| msgid_plural "days"
+msgctxt "alt. month"
+msgid "May"
+msgstr "día"
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:72
+msgctxt "alt. month"
+msgid "June"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:73
+msgctxt "alt. month"
+msgid "July"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:74
+msgctxt "alt. month"
+msgid "August"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:75
+msgctxt "alt. month"
+msgid "September"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:76
+msgctxt "alt. month"
+msgid "October"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:77
+#, fuzzy
+#| msgid "November 10, 2022"
+msgctxt "alt. month"
+msgid "November"
+msgstr "10 de noviembre de 2022"
+
+#: venv/lib/python3.11/site-packages/django/utils/dates.py:78
+msgctxt "alt. month"
+msgid "December"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/ipv6.py:8
+msgid "This is not a valid IPv6 address."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/text.py:84
+#, python-format
+msgctxt "String to return when truncating text"
+msgid "%(truncated_text)s…"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/text.py:269
+msgid "or"
+msgstr ""
+
+#. Translators: This string is used as a separator between list elements
+#: venv/lib/python3.11/site-packages/django/utils/text.py:288
+#: venv/lib/python3.11/site-packages/django/utils/timesince.py:135
+msgid ", "
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/utils/timesince.py:8
+#, python-format
+msgid "%(num)d year"
+msgid_plural "%(num)d years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.11/site-packages/django/utils/timesince.py:9
+#, python-format
+msgid "%(num)d month"
+msgid_plural "%(num)d months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.11/site-packages/django/utils/timesince.py:10
+#, python-format
+msgid "%(num)d week"
+msgid_plural "%(num)d weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.11/site-packages/django/utils/timesince.py:11
+#, python-format
+msgid "%(num)d day"
+msgid_plural "%(num)d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.11/site-packages/django/utils/timesince.py:12
+#, python-format
+msgid "%(num)d hour"
+msgid_plural "%(num)d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.11/site-packages/django/utils/timesince.py:13
+#, python-format
+msgid "%(num)d minute"
+msgid_plural "%(num)d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.11/site-packages/django/views/csrf.py:111
+msgid "Forbidden"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/views/csrf.py:112
+msgid "CSRF verification failed. Request aborted."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/views/csrf.py:116
+msgid ""
+"You are seeing this message because this HTTPS site requires a “Referer "
+"header” to be sent by your web browser, but none was sent. This header is "
+"required for security reasons, to ensure that your browser is not being "
+"hijacked by third parties."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/views/csrf.py:122
+msgid ""
+"If you have configured your browser to disable “Referer” headers, please re-"
+"enable them, at least for this site, or for HTTPS connections, or for “same-"
+"origin” requests."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/views/csrf.py:127
+msgid ""
+"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or "
+"including the “Referrer-Policy: no-referrer” header, please remove them. The "
+"CSRF protection requires the “Referer” header to do strict referer checking. "
+"If you’re concerned about privacy, use alternatives like <a rel=\"noreferrer"
+"\" …> for links to third-party sites."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/views/csrf.py:136
+msgid ""
+"You are seeing this message because this site requires a CSRF cookie when "
+"submitting forms. This cookie is required for security reasons, to ensure "
+"that your browser is not being hijacked by third parties."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/views/csrf.py:142
+msgid ""
+"If you have configured your browser to disable cookies, please re-enable "
+"them, at least for this site, or for “same-origin” requests."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/views/csrf.py:148
+msgid "More information is available with DEBUG=True."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/views/generic/dates.py:44
+msgid "No year specified"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/views/generic/dates.py:64
+#: venv/lib/python3.11/site-packages/django/views/generic/dates.py:115
+#: venv/lib/python3.11/site-packages/django/views/generic/dates.py:214
+msgid "Date out of range"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/views/generic/dates.py:94
+msgid "No month specified"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/views/generic/dates.py:147
+msgid "No day specified"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/views/generic/dates.py:194
+msgid "No week specified"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/views/generic/dates.py:349
+#: venv/lib/python3.11/site-packages/django/views/generic/dates.py:380
+#, python-format
+msgid "No %(verbose_name_plural)s available"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/views/generic/dates.py:652
+#, python-format
+msgid ""
+"Future %(verbose_name_plural)s not available because %(class_name)s."
+"allow_future is False."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/views/generic/dates.py:692
+#, python-format
+msgid "Invalid date string “%(datestr)s” given format “%(format)s”"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/views/generic/detail.py:56
+#, python-format
+msgid "No %(verbose_name)s found matching the query"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django/views/generic/list.py:70
+msgid "Page is not “last”, nor can it be converted to an int."
+msgstr "Página no es “última”, ni se puede convertir a un int."
+
+#: venv/lib/python3.11/site-packages/django/views/generic/list.py:77
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr "Página no válida (%(page_number)s): %(message)s"
+
+#: venv/lib/python3.11/site-packages/django/views/generic/list.py:169
+#, python-format
+msgid "Empty list and “%(class_name)s.allow_empty” is False."
+msgstr "Lista vacía y “%(class_name)s.allow_empty” es False."
+
+#: venv/lib/python3.11/site-packages/django/views/static.py:38
+msgid "Directory indexes are not allowed here."
+msgstr "Los índices de directorio no están permitidos aquí."
+
+#: venv/lib/python3.11/site-packages/django/views/static.py:40
+#, python-format
+msgid "“%(path)s” does not exist"
+msgstr "“%(ruta)s” no existe"
+
+#: venv/lib/python3.11/site-packages/django/views/static.py:79
+#, python-format
+msgid "Index of %(directory)s"
+msgstr "Índice de %(directorio)s"
+
+#: venv/lib/python3.11/site-packages/django/views/templates/default_urlconf.html:7
+#: venv/lib/python3.11/site-packages/django/views/templates/default_urlconf.html:220
+msgid "The install worked successfully! Congratulations!"
+msgstr "¡La instalación funcionó correctamente! ¡Felicidades!"
+
+#: venv/lib/python3.11/site-packages/django/views/templates/default_urlconf.html:206
+#, python-format
+msgid ""
+"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+msgstr ""
+"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+
+#: venv/lib/python3.11/site-packages/django/views/templates/default_urlconf.html:221
+#, python-format
+msgid ""
+"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
+"\">DEBUG=True</a> is in your settings file and you have not configured any "
+"URLs."
+msgstr ""
+"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
+"\">DEBUG=True</a> is in your settings file and you have not configured any "
+"URLs."
+
+#: venv/lib/python3.11/site-packages/django/views/templates/default_urlconf.html:229
+msgid "Django Documentation"
+msgstr "Documentación de Django"
+
+#: venv/lib/python3.11/site-packages/django/views/templates/default_urlconf.html:230
+msgid "Topics, references, &amp; how-to’s"
+msgstr "Temas, referencias, &amp; how-to's"
+
+#: venv/lib/python3.11/site-packages/django/views/templates/default_urlconf.html:238
+msgid "Tutorial: A Polling App"
+msgstr "Tutorial: Una aplicación de sondeo"
+
+#: venv/lib/python3.11/site-packages/django/views/templates/default_urlconf.html:239
+msgid "Get started with Django"
+msgstr "Introducción a Django"
+
+#: venv/lib/python3.11/site-packages/django/views/templates/default_urlconf.html:247
+msgid "Django Community"
+msgstr "Comunidad Django"
+
+#: venv/lib/python3.11/site-packages/django/views/templates/default_urlconf.html:248
+msgid "Connect, get help, or contribute"
+msgstr "Conéctese, obtenga ayuda o contribuya"
+
+#: venv/lib/python3.11/site-packages/payment/templates/email_sender/payment_email.html:51
+msgid "Payment Received"
+msgstr "Pago recibido"
+
+#: venv/lib/python3.11/site-packages/payment/templates/email_sender/payment_email.html:54
+msgid "Hello"
+msgstr "Hola"
+
+#: venv/lib/python3.11/site-packages/payment/templates/email_sender/payment_email.html:59
+msgid ""
+"\n"
+"                If you have any questions or need assistance, please don't "
+"hesitate to reach out to our support team.\n"
+"            "
+msgstr ""
+"\n"
+"                Si tiene alguna pregunta o necesita ayuda, no dude en "
+"comunicarse con nuestro equipo de soporte.\n"
+"            "
+
+#: venv/lib/python3.11/site-packages/payment/templates/payment/payment_details.html:8
+#: venv/lib/python3.11/site-packages/payment/templates/payment/success.html:8
+msgid "Your payment was successful! Thank you for your purchase."
+msgstr "Su pago se ha realizado correctamente. Gracias por su compra."
+
+#: venv/lib/python3.11/site-packages/payment/templates/payment/success.html:15
+msgid "PAYMENT RECEIVED"
+msgstr "PAGO RECIBIDO"
+
+#: venv/lib/python3.11/site-packages/payment/templates/payment/success.html:16
+msgid "Thank you for your payment, it’s processing"
+msgstr "Gracias por su pago, se está procesando"
+
+#: venv/lib/python3.11/site-packages/payment/templates/payment/success.html:18
+msgid "Your confirmation # is"
+msgstr "Su número de confirmación es"
+
+#: venv/lib/python3.11/site-packages/payment/templates/payment/success.html:21
+msgid ""
+"\n"
+"                You will receive a confirmation email with details of the "
+"payment and a\n"
+"                link to track it. Thank you\n"
+"                "
+msgstr ""
+"\n"
+"                Recibirá un correo electrónico de confirmación con los "
+"detalles del pago y un\n"
+"                enlace para rastrearlo. Gracias\n"
+"                "
+
+#: venv/lib/python3.11/site-packages/payment/templates/payment/success.html:29
+msgid "CONTINUE"
+msgstr "CONTINÚE"
+
+#~ msgid "Session list"
+#~ msgstr "Lista de sesiones"
+
+#~ msgid "Latest promotions"
+#~ msgstr "Últimas promociones"
+
+#~ msgid "Register"
+#~ msgstr "Registrarse"
+
+#~ msgid "CRUELTOUCH"
+#~ msgstr "CRUELTOUCH"
+
+#~ msgid "Meet Crueltouch"
+#~ msgstr "Conocer Crueltouch"
 
 #~ msgid ""
 #~ "NB: A $100 deposit is required to book the date. No deposit, no obligation"
@@ -4673,8 +7464,3 @@ msgstr "Haga clic"
 
 #~ msgid "I understand"
 #~ msgstr "Lo entiendo"
-
-#~ msgid "day"
-#~ msgid_plural "days"
-#~ msgstr[0] "día"
-#~ msgstr[1] "días"
