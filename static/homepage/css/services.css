@@ -32,7 +32,7 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding: 0 20px;
-    height: 80vh;
+    height: 65vh;
     align-items: center;
 }
 
@@ -49,8 +49,8 @@ body {
 }
 
 .item-picture img {
-    height: 629px;
-    width: 530px;
+    height: 529px;
+    width: 430px;
     object-fit: contain;
 }
 

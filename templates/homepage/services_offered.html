@@ -31,7 +31,7 @@
                             </div>
                             <div class="item-description">
                                 <h2 class="item-name">{{ service.name }}</h2>
-                                <p class="description-paragraph">{{ service.description }}</p>
+                                <p class="description-paragraph">{{ service.description|safe }}</p>
                                 <hr>
                                 <p>{{ service.get_duration }}</p>
                                 <p>{{ service.get_price_text }}</p>
@@ -43,7 +43,7 @@
                 </div>
 
                 <button class="category-button" onclick="toggleService('portrait-service')">
-                    <span>Portrait</span>
+                    <span>Portrait/Birthday</span>
                     <span class="arrow">></span>
                 </button>
                 <div class="portrait-service service-list">
@@ -54,7 +54,7 @@
                             </div>
                             <div class="item-description">
                                 <h2 class="item-name">{{ service.name }}</h2>
-                                <p class="description-paragraph">{{ service.description }}</p>
+                                <p class="description-paragraph">{{ service.description|safe }}</p>
                                 <hr>
                                 <p>{{ service.get_duration }}</p>
                                 <p>{{ service.get_price_text }}</p>
@@ -65,19 +65,42 @@
                     {% endfor %}
                 </div>
 
-                <button class="category-button" onclick="toggleService('birthday-service')">
-                    <span>Birthday</span>
+                <button class="category-button" onclick="toggleService('product-service')">
+                    <span>Product Photography</span>
                     <span class="arrow">></span>
                 </button>
-                <div class="birthday-service service-list">
-                    {% for service in birthday_service %}
+                <div class="product-service service-list">
+                    {% for service in product_service %}
                         <div class="page-item">
                             <div class="item-picture">
                                 <img src="{{ service.get_image_url }}" alt="{{ service.name }}">
                             </div>
                             <div class="item-description">
                                 <h2 class="item-name">{{ service.name }}</h2>
-                                <p class="description-paragraph">{{ service.description }}</p>
+                                <p class="description-paragraph">{{ service.description|safe }}</p>
+                                <hr>
+                                <p>{{ service.get_duration }}</p>
+                                <p>{{ service.get_price_text }}</p>
+                                <a href="{% url 'appointment:appointment_request' service_id=service.id %}"
+                                   class="btn btn-dark">Book Now</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <button class="category-button" onclick="toggleService('event-service')">
+                    <span>Events</span>
+                    <span class="arrow">></span>
+                </button>
+                <div class="event-service service-list">
+                    {% for service in event_service %}
+                        <div class="page-item">
+                            <div class="item-picture">
+                                <img src="{{ service.get_image_url }}" alt="{{ service.name }}">
+                            </div>
+                            <div class="item-description">
+                                <h2 class="item-name">{{ service.name }}</h2>
+                                <p class="description-paragraph">{{ service.description|safe }}</p>
                                 <hr>
                                 <p>{{ service.get_duration }}</p>
                                 <p>{{ service.get_price_text }}</p>

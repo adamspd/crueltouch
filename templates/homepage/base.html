@@ -7,7 +7,8 @@
     <meta charset="UTF-8">
     <title>{% block title %}{% trans "Welcome to Tchiiz Studio" %}{% endblock %}</title>
     <meta name="description" content="{% block description %}Crueltouch Website{% endblock %}">
-    <meta name="keywords" content="photographer, crueltouch, contact crueltouch, roos laurore, tchiiz, tchiiz studio, tchiiz photography">
+    <meta name="keywords"
+          content="photographer, crueltouch, contact crueltouch, roos laurore, tchiiz, tchiiz studio, tchiiz photography">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="canonical" href="https://tchiiz.com{% block canonical %}/{% endblock %}">
 
@@ -78,14 +79,14 @@
             <li>
                 <a href="#">{% trans "Booking" %}</a>
                 <ul class="sub-menu">
-                    {% if request.user.is_authenticated %}
-                        <li><a href="{% url 'homepage:services_offered' %}">{% trans "Book Me" %}</a></li>
-                        <li><a href="{% url 'homepage:promotions' %}">{% trans "Latest Promotions" %}</a></li>
-                        <li><a href="{% url 'client:book_me' %}">{% trans "OBM (deprecated)" %}</a></li>
-                    {% else %}
-                        <li><a href="{% url 'client:book_me' %}">{% trans "Book Me" %}</a></li>
-                        <li><a href="{% url 'homepage:promotions' %}">{% trans "Latest Promotions" %}</a></li>
-                    {% endif %}
+                    {#                    {% if request.user.is_authenticated %}#}
+                    {#                        #}
+                    {#                    {% else %}#}
+                    {#                        <li><a href="{% url 'client:book_me' %}">{% trans "Book Me" %}</a></li>#}
+                    {#                        <li><a href="{% url 'homepage:promotions' %}">{% trans "Latest Promotions" %}</a></li>#}
+                    {#                    {% endif %}#}
+                    <li><a href="{% url 'homepage:services_offered' %}">{% trans "Book Me" %}</a></li>
+                    <li><a href="{% url 'homepage:promotions' %}">{% trans "Latest Promotions" %}</a></li>
                 </ul>
             </li>
 
