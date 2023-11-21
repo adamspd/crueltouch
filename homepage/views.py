@@ -75,20 +75,21 @@ def promotions(request):
     return render(request, 'client/booking_and_promotions/promotions.html')
 
 
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
 def services_offered(request):
     page_title = _("Services | TCHIIZ")
     page_description = _("Services offered by Tchiiz studio Photography")
     all_services = Service.objects.all()
     wedding_services = all_services.filter(name__icontains='wedding')
     portrait_services = all_services.filter(name__icontains='portrait')
-    birthday_services = all_services.filter(name__icontains='birthday')
+    # rest of category that isn't wedding and portrait
+    product_services = all_services.filter(name__icontains='product')
+    event_services = all_services.filter(name__icontains='event')
     context = {
         'page_title': page_title,
         'page_description': page_description,
         'wedding_service': wedding_services,
         'portrait_service': portrait_services,
-        'birthday_service': birthday_services,
+        'product_service': product_services,
+        'event_service': event_services,
     }
     return render(request, 'homepage/services_offered.html', context=context)
