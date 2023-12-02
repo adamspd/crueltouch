@@ -147,6 +147,9 @@
                 <div class="image">
                     {% if user.profile_photo %}
                         <img src="{{ user.profile_photo.get_url }}" class="img-circle elevation-2" alt="User Image">
+                    {% else %}
+                        <img src="{% static 'client/img/default_profile.jpg' %}"
+                             class="img-circle elevation-2" alt="User Image">
                     {% endif %}
                 </div>
                 <div class="info">
