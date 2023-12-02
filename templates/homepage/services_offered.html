@@ -3,6 +3,7 @@
 {% load static %}
 {% block priceTableCSS %}
     <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/services.css' %}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 {% endblock %}
 {% block title %}
     {{ page_title }}
@@ -12,15 +13,15 @@
 {% endblock %}
 {% block body %}
     <div class="main-container">
-        <h1 class="page-title">{% trans "Book your service here" %}</h1>
+        <h1 class="page-title">{% trans "Select and Schedule Your Appointment" %}</h1>
         <div class="page-menu">
 
         </div>
         <div class="page-body">
             <div class="category-container">
-                <button class="category-button" onclick="toggleService('wedding-service')">
+                <button class="category-button wedding" onclick="toggleService('wedding-service')">
                     <span>Wedding</span>
-                    <span class="arrow">></span>
+                    <i class="fas fa-chevron-right arrow"></i>
                 </button>
                 <div class="wedding-service service-list">
                     <!-- Wedding services go here -->
@@ -42,9 +43,9 @@
                     {% endfor %}
                 </div>
 
-                <button class="category-button" onclick="toggleService('portrait-service')">
+                <button class="category-button portrait" onclick="toggleService('portrait-service')">
                     <span>Portrait/Birthday</span>
-                    <span class="arrow">></span>
+                    <i class="fas fa-chevron-right arrow"></i>
                 </button>
                 <div class="portrait-service service-list">
                     {% for service in portrait_service %}
@@ -65,9 +66,9 @@
                     {% endfor %}
                 </div>
 
-                <button class="category-button" onclick="toggleService('product-service')">
+                <button class="category-button product" onclick="toggleService('product-service')">
                     <span>Product Photography</span>
-                    <span class="arrow">></span>
+                    <i class="fas fa-chevron-right arrow"></i>
                 </button>
                 <div class="product-service service-list">
                     {% for service in product_service %}
@@ -88,9 +89,9 @@
                     {% endfor %}
                 </div>
 
-                <button class="category-button" onclick="toggleService('event-service')">
+                <button class="category-button event" onclick="toggleService('event-service')">
                     <span>Events</span>
-                    <span class="arrow">></span>
+                    <i class="fas fa-chevron-right arrow"></i>
                 </button>
                 <div class="event-service service-list">
                     {% for service in event_service %}
@@ -117,17 +118,42 @@
 
 {% block customJS %}
     <script>
-        function toggleService(serviceClassName) {
-            let element = document.querySelector('.' + serviceClassName);
-            let arrow = element.previousElementSibling.querySelector('.arrow');
+        function toggleServiceList(serviceClassName) {
+            let allServices = document.querySelectorAll('.service-list');
+            let targetService = document.querySelector('.' + serviceClassName);
+            let isCurrentlyVisible = targetService.style.display === 'block';
 
-            if (element.style.display === 'none' || element.style.display === '') {
-                element.style.display = 'block';
-                arrow.style.transform = 'rotate(90deg)';
-            } else {
-                element.style.display = 'none';
-                arrow.style.transform = 'rotate(0deg)';
+            allServices.forEach(service => {
+                service.style.display = 'none'; // Hide all service lists
+            });
+
+            let allArrows = document.querySelectorAll('.category-container .arrow');
+            allArrows.forEach(arrow => {
+                arrow.style.transform = 'rotate(0deg)'; // Reset all arrows
+            });
+
+            if (!isCurrentlyVisible) {
+                targetService.style.display = 'block'; // Show the target service list
+                let targetArrow = targetService.previousElementSibling.querySelector('.arrow');
+                if (targetArrow) {
+                    targetArrow.style.transform = 'rotate(90deg)'; // Rotate the corresponding arrow
+                }
             }
+        }
+
+        function updateActiveButton(serviceClassName) {
+            let buttons = document.querySelectorAll('.category-button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+                if (button.nextElementSibling && button.nextElementSibling.classList.contains(serviceClassName)) {
+                    button.classList.add('active');
+                }
+            });
+        }
+
+        function toggleService(serviceClassName) {
+            toggleServiceList(serviceClassName);
+            updateActiveButton(serviceClassName);
         }
     </script>
 {% endblock %}
