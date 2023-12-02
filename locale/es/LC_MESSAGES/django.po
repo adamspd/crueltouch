@@ -1775,7 +1775,7 @@ msgstr "Sesión de fotos"
 
 #: templates/homepage/services_offered.html:15
 msgid "Book your service here"
-msgstr ""
+msgstr "Reserve aquí su servicio"
 
 #: templates/legal/privacy_policy.html:18
 #: templates/legal/terms_and_conditions.html:16
