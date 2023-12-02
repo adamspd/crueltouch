@@ -168,85 +168,86 @@
                     </div>
                 </div>
             </div>
-            {% if user.is_admin %}
-                <!-- Sidebar Menu -->
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-                             with font-awesome or any other icon font library -->
 
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
+                    <!-- Add icons to the links using the .nav-icon class
+                         with font-awesome or any other icon font library -->
+
+                    <li class="nav-item">
+                        <a href="{% url 'administration:index' %}" class="nav-link active">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                {% translate "Dashboard" %}
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                    </li>
+                    {# Only Adams here #}
+                    {% if user.email == "adamspierredavid@gmail.com" %}
                         <li class="nav-item">
-                            <a href="{% url 'administration:index' %}" class="nav-link active">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <a href="/admin" class="nav-link">
+                                <i class="nav-icon fas fa-lock"></i>
                                 <p>
-                                    {% translate "Dashboard" %}
-                                    <i class="right fas fa-angle-left"></i>
+                                    {% translate "Django Admin" %}
                                 </p>
                             </a>
                         </li>
-                        {# Only Adams here #}
-                        {% if user.email == "adamspierredavid@gmail.com" %}
+                    {% endif %}
+                    {#                        <li class="nav-item">#}
+                    {#                            <a href="{% url 'administration:session_list' %}" class="nav-link">#}
+                    {#                                &nbsp;&nbsp;<i class="fa-solid fa-list"></i>#}
+                    {#                                <p>#}
+                    {#                                    &nbsp;&nbsp;{% translate "Session list" %}#}
+                    {#                                </p>#}
+                    {#                            </a>#}
+                    {#                        </li>#}
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-calendar"></i>
+                            <p>
+                                {% translate "Appointment" %}
+                                <i class="fas fa-angle-left right"></i>
+                                <span class="badge badge-info right">3</span>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="/admin" class="nav-link">
-                                    <i class="nav-icon fas fa-lock"></i>
-                                    <p>
-                                        {% translate "Django Admin" %}
-                                    </p>
+                                <a href="{% url 'appointment:get_user_appointments' %}" class="nav-link">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <i class="far fa-solid fa-eye fa-sm nav-icon"></i>
+                                    <p>{% translate "View all" %}</p>
                                 </a>
                             </li>
-                        {% endif %}
-                        {#                        <li class="nav-item">#}
-                        {#                            <a href="{% url 'administration:session_list' %}" class="nav-link">#}
-                        {#                                &nbsp;&nbsp;<i class="fa-solid fa-list"></i>#}
-                        {#                                <p>#}
-                        {#                                    &nbsp;&nbsp;{% translate "Session list" %}#}
-                        {#                                </p>#}
-                        {#                            </a>#}
-                        {#                        </li>#}
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-calendar"></i>
-                                <p>
-                                    {% translate "Appointment" %}
-                                    <i class="fas fa-angle-left right"></i>
-                                    <span class="badge badge-info right">3</span>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{% url 'appointment:get_user_appointments' %}" class="nav-link">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="far fa-solid fa-eye fa-sm nav-icon"></i>
-                                        <p>{% translate "View all" %}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'appointment:user_profile' %}" class="nav-link">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="far fa-user-circle nav-icon"></i>
-                                        <p>{% translate "User Profile" %}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'appointment:add_service' %}" class="nav-link">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="far fa-plus-square nav-icon"></i>
-                                        <p>{% translate "Add Service" %}</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-home"></i>
-                                <p>
-                                    {% translate "Homepage" %}
-                                    <i class="fas fa-angle-left right"></i>
-                                    <span class="badge badge-info right">2</span>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{% url 'appointment:user_profile' %}" class="nav-link">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <i class="far fa-user-circle nav-icon"></i>
+                                    <p>{% translate "User Profile" %}</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{% url 'appointment:add_service' %}" class="nav-link">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <i class="far fa-plus-square nav-icon"></i>
+                                    <p>{% translate "Add Service" %}</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-home"></i>
+                            <p>
+                                {% translate "Homepage" %}
+                                <i class="fas fa-angle-left right"></i>
+                                <span class="badge badge-info right">2</span>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            {% if user.is_admin %}
                                 <li class="nav-item">
                                     <a href="{% url 'administration:add_photos_homepage' %}" class="nav-link">
                                         &nbsp;&nbsp;&nbsp;&nbsp;
@@ -254,25 +255,27 @@
                                         <p>{% translate "Add photos" %}</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'administration:list_photos_homepage' %}" class="nav-link">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="far fa-copy nav-icon"></i>
-                                        <p>{% translate "View all photos" %}</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-image"></i>
-                                <p>
-                                    {% translate "Portfolio" %}
-                                    <i class="fas fa-angle-left right"></i>
-                                    <span class="badge badge-info right">3</span>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
+                            {% endif %}
+                            <li class="nav-item">
+                                <a href="{% url 'administration:list_photos_homepage' %}" class="nav-link">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <i class="far fa-copy nav-icon"></i>
+                                    <p>{% translate "View all photos" %}</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-image"></i>
+                            <p>
+                                {% translate "Portfolio" %}
+                                <i class="fas fa-angle-left right"></i>
+                                <span class="badge badge-info right">3</span>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            {% if user.is_admin %}
                                 <li class="nav-item">
                                     <a href="{% url 'administration:add_photos_portfolio' %}" class="nav-link">
                                         &nbsp;&nbsp;&nbsp;&nbsp;
@@ -280,13 +283,15 @@
                                         <p>{% translate "Add photos" %}</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'administration:list_photos_portfolio' %}" class="nav-link">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="far fa-file nav-icon"></i>
-                                        <p>{% translate "View all photos" %}</p>
-                                    </a>
-                                </li>
+                            {% endif %}
+                            <li class="nav-item">
+                                <a href="{% url 'administration:list_photos_portfolio' %}" class="nav-link">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <i class="far fa-file nav-icon"></i>
+                                    <p>{% translate "View all photos" %}</p>
+                                </a>
+                            </li>
+                            {% if user.is_admin %}
                                 <li class="nav-item">
                                     <a href="{% url 'administration:add_album' %}" class="nav-link">
                                         &nbsp;&nbsp;&nbsp;&nbsp;
@@ -294,119 +299,119 @@
                                         <p>{% translate "Create new album" %}</p>
                                     </a>
                                 </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fa-solid fa-paper-plane"></i>
-                                <p>
-                                    {% translate "Send photo" %}
-                                    <i class="fas fa-angle-left right"></i>
-                                    <span class="badge badge-info right">5</span>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{% url 'administration:send_photos_for_client_to_choose_from' %}"
-                                       class="nav-link">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="fa fa-check-circle nav-icon"></i>
-                                        <p>{% translate "To choose from" %}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'administration:view_client_album_created' %}" class="nav-link">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="fa fa-heart nav-icon"></i>
-                                        <p>{% translate "View all chosen" %}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'administration:create_downloadable_file' %}" class="nav-link">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="fa fa-chain nav-icon"></i>
-                                        <p>{% translate "Final via link" %}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'administration:show_all_links_created' %}" class="nav-link">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="far fa-eye nav-icon"></i>
-                                        <p>{% translate "View all links" %}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'administration:create_downloadable_file' %}"
-                                       class="nav-link disabled">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="fa fa-user-plus nav-icon"></i>
-                                        <p>{% translate "Final via account" %}</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{% url 'administration:user_list' %}" class="nav-link">
-                                &nbsp;&nbsp;<i class="fa-solid fa-users"></i>
-                                <p>
-                                    &nbsp;&nbsp;{% translate "Client management" %}
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{% url 'administration:message_list' %}" class="nav-link">
-                                &nbsp;&nbsp;<i class="fa-solid fa-comment"></i>
-                                <p>
-                                    &nbsp;&nbsp;{% translate "Message list" %}
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{% url 'administration:invoice_form' %}" class="nav-link">
-                                &nbsp;&nbsp;<i class="fa-solid fa-file-invoice"></i>
-                                <p>
-                                    &nbsp;&nbsp;{% translate "Generate Invoice" %}
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{% url 'administration:help' %}" class="nav-link">
-                                &nbsp;&nbsp;<i class="fa-solid fa-hand"></i>
-                                <p>
-                                    &nbsp;&nbsp;{% translate "Help" %}
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/admin" class="nav-link disabled">
-                                &nbsp;&nbsp;<i class="fa-solid fa-gears"></i>
-                                <p>
-                                    &nbsp;&nbsp;{% translate "Settings" %}
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{% url 'reset_password' %}" class="nav-link">
-                                &nbsp;&nbsp;<i class="fa-solid fa-user-secret"></i>
-                                <p>
-                                    &nbsp;&nbsp;{% translate "Change password" %}
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{% url 'client:logout' %}" class="nav-link">
-                                &nbsp;&nbsp;<i class="fa-solid fa-sign-out"></i>
-                                <p>
-                                    &nbsp;&nbsp;{% translate "Sign out" %}
-                                </p>
-                            </a>
-                        </li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa-solid fa-paper-plane"></i>
+                            <p>
+                                {% translate "Send photo" %}
+                                <i class="fas fa-angle-left right"></i>
+                                <span class="badge badge-info right">5</span>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{% url 'administration:send_photos_for_client_to_choose_from' %}"
+                                   class="nav-link">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <i class="fa fa-check-circle nav-icon"></i>
+                                    <p>{% translate "To choose from" %}</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{% url 'administration:view_client_album_created' %}" class="nav-link">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <i class="fa fa-heart nav-icon"></i>
+                                    <p>{% translate "View all chosen" %}</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{% url 'administration:create_downloadable_file' %}" class="nav-link">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <i class="fa fa-chain nav-icon"></i>
+                                    <p>{% translate "Final via link" %}</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{% url 'administration:show_all_links_created' %}" class="nav-link">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <i class="far fa-eye nav-icon"></i>
+                                    <p>{% translate "View all links" %}</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{% url 'administration:create_downloadable_file' %}"
+                                   class="nav-link disabled">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <i class="fa fa-user-plus nav-icon"></i>
+                                    <p>{% translate "Final via account" %}</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'administration:user_list' %}" class="nav-link">
+                            &nbsp;&nbsp;<i class="fa-solid fa-users"></i>
+                            <p>
+                                &nbsp;&nbsp;{% translate "Client management" %}
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'administration:message_list' %}" class="nav-link">
+                            &nbsp;&nbsp;<i class="fa-solid fa-comment"></i>
+                            <p>
+                                &nbsp;&nbsp;{% translate "Message list" %}
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'administration:invoice_form' %}" class="nav-link">
+                            &nbsp;&nbsp;<i class="fa-solid fa-file-invoice"></i>
+                            <p>
+                                &nbsp;&nbsp;{% translate "Generate Invoice" %}
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'administration:help' %}" class="nav-link">
+                            &nbsp;&nbsp;<i class="fa-solid fa-hand"></i>
+                            <p>
+                                &nbsp;&nbsp;{% translate "Help" %}
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin" class="nav-link disabled">
+                            &nbsp;&nbsp;<i class="fa-solid fa-gears"></i>
+                            <p>
+                                &nbsp;&nbsp;{% translate "Settings" %}
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'reset_password' %}" class="nav-link">
+                            &nbsp;&nbsp;<i class="fa-solid fa-user-secret"></i>
+                            <p>
+                                &nbsp;&nbsp;{% translate "Change password" %}
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'client:logout' %}" class="nav-link">
+                            &nbsp;&nbsp;<i class="fa-solid fa-sign-out"></i>
+                            <p>
+                                &nbsp;&nbsp;{% translate "Sign out" %}
+                            </p>
+                        </a>
+                    </li>
 
-                    </ul>
-                </nav>
-                <!-- /.sidebar-menu -->
-                {# TODO: add possibility here for the admin to change account authorization #}
-            {% endif %}
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
+            {# TODO: add possibility here for the admin to change account authorization #}
         </div>
         <!-- /.sidebar -->
     </aside>

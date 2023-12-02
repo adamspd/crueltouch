@@ -38,15 +38,17 @@
                                 <img src="{{ photo.file.url }}" alt="" style="height: 150px">
                             </div>
                             <br>
-                            <div>
-                                {% if portfolio == True %}
-                                    <a class="btn btn-danger" style="background-color: red"
-                                       href="{% url 'administration:delete_photo_portfolio' photo.pk %}">Remove</a>
-                                {% else %}
-                                    <a class="btn btn-danger" style="background-color: red"
-                                       href="{% url 'administration:delete_photo_homepage' photo.pk %}">Remove</a>
-                                {% endif %}
-                            </div>
+                            {% if user.is_admin %}
+                                <div>
+                                    {% if portfolio == True %}
+                                        <a class="btn btn-danger" style="background-color: red"
+                                           href="{% url 'administration:delete_photo_portfolio' photo.pk %}">Remove</a>
+                                    {% else %}
+                                        <a class="btn btn-danger" style="background-color: red"
+                                           href="{% url 'administration:delete_photo_homepage' photo.pk %}">Remove</a>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
                             <br><br>
                         </div>
                     {% endfor %}

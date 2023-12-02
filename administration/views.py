@@ -28,7 +28,8 @@ from homepage.models import Photo as PhotoHomepage
 from portfolio.models import Album as AlbumPortfolio
 from portfolio.models import Photo as PhotoPortfolio
 from static_pages_and_forms.models import ContactForm
-from utils.crueltouch_utils import email_check, c_print, send_client_email, is_ajax, work_with_file_photos
+from utils.crueltouch_utils import check_user_login, email_check, c_print, send_client_email, is_ajax, \
+    work_with_file_photos
 
 
 # Create your views here.
@@ -98,8 +99,12 @@ def get_context(request):
 
 
 def login_admin(request):
-    # if request.user.is_authenticated:
-    #     check_user_login(request)
+    if request.user.is_authenticated:
+        resp = check_user_login(request)
+        if resp == "admin":
+            return redirect('administration:index')
+        elif resp == "active":
+            return redirect('client:client_homepage')
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
@@ -108,10 +113,6 @@ def login_admin(request):
             if user.is_admin:
                 login(request, user)
                 print("admin is logged in")
-                # Redirect to a success page.
-                if request.GET.get('next') is not None:
-                    c_print(f"next is {request.GET.get('next')}")
-                    return redirect(request.GET.get('next'))
                 return redirect('administration:index')
         else:
             # Return an 'invalid login' error message.
