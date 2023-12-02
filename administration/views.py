@@ -5,7 +5,7 @@ from datetime import timedelta
 from io import BytesIO
 from sqlite3 import IntegrityError
 
-from appointment.models import Appointment
+from appointment.models import Appointment, StaffMember
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
@@ -60,20 +60,17 @@ def get_book_me_by_month():
 
 
 def get_context(request):
+    base_context = get_base_context(request)  # Get the base context
+
     requested_session = Appointment.objects.all()
-    # get last 10 book_me
     last_10_book_me = Appointment.objects.all().order_by("-created_at")[:10]
     photo_delivered = Photo.objects.all()
     all_clients = UserClient.objects.filter(admin=False)
     contact_forms = ContactForm.objects.all()
 
-    # get all book_me from this month
     this_month = Appointment.objects.filter(created_at__month=datetime.datetime.now().month)
-
-    # get all book_me from last month
     last_month = Appointment.objects.filter(created_at__month=datetime.datetime.now().month - 1)
 
-    # increasing/decreasing percentage of book_me compared to last month
     if len(this_month) == 0 and len(last_month) == 0:
         percentage = 0
     elif len(last_month) == 0:
@@ -81,21 +78,29 @@ def get_context(request):
     else:
         percentage = ((len(this_month) - len(last_month)) / len(last_month)) * 100
 
-    # return table of book_me by month
     book_me_by_month = get_book_me_by_month()
 
-    contexts = {'photo_delivered': photo_delivered,
-                'clients': all_clients,
-                'request_session': last_10_book_me,
-                'contact_forms': contact_forms,
-                'total_photos_delivered': len(photo_delivered),
-                'total_clients': len(all_clients),
-                'total_request_session': len(requested_session),
-                'total_contact_forms': len(contact_forms),
-                'increase_percentage': percentage,
-                'book_me_by_month': book_me_by_month,
-                }
-    return contexts
+    # Update the base context with additional information
+    base_context.update({
+        'photo_delivered': photo_delivered,
+        'clients': all_clients,
+        'request_session': last_10_book_me,
+        'contact_forms': contact_forms,
+        'total_photos_delivered': len(photo_delivered),
+        'total_clients': len(all_clients),
+        'total_request_session': len(requested_session),
+        'total_contact_forms': len(contact_forms),
+        'increase_percentage': percentage,
+        'book_me_by_month': book_me_by_month,
+    })
+
+    return base_context
+
+
+def get_base_context(request):
+    return {
+        'user': request.user
+    }
 
 
 def login_admin(request):
@@ -131,26 +136,22 @@ def login_admin(request):
 @login_required(login_url='/administration/login/')
 @user_passes_test(email_check, login_url='/administration/login/')
 def admin_index(request):
-    user = request.user
     context = get_context(request)
-    context['user'] = user
     return render(request, 'administration/view/index.html', context)
 
 
 @login_required(login_url='/administration/login/')
 @user_passes_test(email_check, login_url='/administration/login/')
 def list_requested_session(request):
-    user = request.user
     requested_session = BookMe.objects.all().order_by("-time_book_taken")
-    context = {'request_session': requested_session,
-               'user': user}
+    context = get_base_context(request)
+    context.update({'request_session': requested_session})
     return render(request, 'administration/list/list_requested_session.html', context)
 
 
 @login_required(login_url='/administration/login/')
 @user_passes_test(email_check, login_url='/administration/login/')
 def update_requested_session(request, pk):
-    user = request.user
     book = BookMe.objects.get(id=pk)
     form = UpdateBook(instance=book)
     if request.method == 'POST':
@@ -160,10 +161,8 @@ def update_requested_session(request, pk):
             next_ = request.POST.get('next', '/')
             c_print("previous url is: ", next_)
             return HttpResponseRedirect(next_)
-    context = {
-        'user': user,
-        'form': form,
-    }
+    context = get_base_context(request)
+    context.update({'form': form})
     return render(request, 'administration/edit/update_requested_session.html', context)
 
 
@@ -182,10 +181,9 @@ def delete_requested_session(request, pk):
 @login_required(login_url='/administration/login/')
 @user_passes_test(email_check, login_url='/administration/login/')
 def list_requested_user(request):
-    user = request.user
     all_clients = UserClient.objects.filter(admin=False)
-    context = {'clients': all_clients,
-               'user': user}
+    context = get_base_context(request)
+    context.update({'clients': all_clients})
     return render(request, 'administration/list/list_user.html', context)
 
 
@@ -210,10 +208,9 @@ def send_late_booking_confirmation_email_to_users(request, pk):
 @login_required(login_url='/administration/login/')
 @user_passes_test(email_check, login_url='/administration/login/')
 def list_contact_form(request):
-    user = request.user
     contact_forms = ContactForm.objects.all()
-    context = {'contact_forms': contact_forms,
-               'user': user}
+    context = get_base_context(request)
+    context.update({'contact_forms': contact_forms})
     return render(request, 'administration/list/list_contact_forms.html', context)
 
 
@@ -233,8 +230,7 @@ def delete_contact_form(request, pk):
 @login_required(login_url='/administration/login/')
 @user_passes_test(email_check, login_url='/administration/login/')
 def help_view(request):
-    user = request.user
-    context = {'user': user}
+    context = get_base_context(request)
     return render(request, 'administration/view/help.html', context)
 
 
@@ -253,14 +249,14 @@ def add_photos_homepage(request):
                 )
 
             redirect('administration:index')
-        context = {
-            'user': request.user,
+        context = get_base_context(request)
+        context.update({
             'albums': albums,
             'number_of_photos': len(PhotoHomepage.objects.all()),
             'homepage': True,
             'select': "Select a row",
             'title': "Add photo to homepage",
-        }
+        })
         return render(request, 'administration/add/add_photos.html', context)
     else:
         return redirect('administration:login')
@@ -284,14 +280,14 @@ def add_photos_portfolio(request):
                 c_print(f"photo created: {pc}")
 
             redirect('administration:index')
-        context = {
-            'user': request.user,
+        context = get_base_context(request)
+        context.update({
             'albums': albums,
             'homepage': False,
             'number_of_photos': len(PhotoPortfolio.objects.all()),
             'select': "Select album",
             'title': "Add photo to portfolio",
-        }
+        })
         return render(request, 'administration/add/add_photos.html', context)
     else:
         return redirect('administration:login')
@@ -309,7 +305,8 @@ def add_album_portfolio(request):
             return HttpResponseRedirect(next_)
     else:
         form = CreateAlbumForm()
-    context = {'form': form}
+    context = get_base_context(request)
+    context.update({'form': form})
     return render(request, 'administration/add/add_album.html', context)
 
 
@@ -317,14 +314,13 @@ def add_album_portfolio(request):
 @user_passes_test(email_check, login_url='/administration/login/')
 def list_photos_portfolio(request):
     photos = PhotoPortfolio.objects.all()
-    user = request.user
-    context = {
+    context = get_base_context(request)
+    context.update({
         'photos': photos,
-        'user': user,
         'title': "List of photos in portfolio",
         'total_photos_label': "Total photos in portfolio",
         'portfolio': True,
-    }
+    })
     return render(request, 'administration/list/list_photos_portfolio.html', context)
 
 
@@ -332,14 +328,13 @@ def list_photos_portfolio(request):
 @user_passes_test(email_check, login_url='/administration/login/')
 def list_photos_homepage(request):
     photos = PhotoHomepage.objects.all()
-    user = request.user
-    context = {
+    context = get_base_context(request)
+    context.update({
         'photos': photos,
-        'user': user,
         'title': "List of photos in homepage",
         'total_photos_label': "Total photos in homepage",
         'portfolio': False,
-    }
+    })
     return render(request, 'administration/list/list_photos_portfolio.html', context)
 
 
@@ -402,10 +397,11 @@ def create_downloadable_file(request):
     nota_bene = _(f"If you want the website to send the link automatically to the client, please, put the client "
                   f"email in the field below. If you don't want to send the link automatically, leave the field "
                   f"empty.")
-    context = {
+    context = get_base_context(request)
+    context.update({
         'title': _("Create downloadable file"),
         'nota_bene': nota_bene,
-    }
+    })
 
     return render(request, 'administration/add/add_downloadable_file.html', context)
 
@@ -414,10 +410,11 @@ def create_downloadable_file(request):
 @user_passes_test(email_check, login_url='/administration/login/')
 def list_downloadable_files_link(request):
     deliveries = PhotoDelivery.objects.all()
-    context = {
+    context = get_base_context(request)
+    context.update({
         'deliveries': deliveries,
         'title': _("List of link to download images"),
-    }
+    })
     return render(request, 'administration/list/list_created_link.html', context)
 
 
@@ -426,11 +423,12 @@ def get_downloadable_client_images(request, id_delivery):
         photos = PhotoDelivery.objects.get(id_delivery=id_delivery)
     except PhotoDelivery.DoesNotExist:
         return HttpResponseNotFound("Not found")
-    context = {
+    context = get_base_context(request)
+    context.update({
         'client_name': photos.get_client_name,
         'photos': photos.get_photos(),
         'id_delivery': id_delivery,
-    }
+    })
     return render(request, 'administration/download/downloadable_images.html', context)
 
 
@@ -558,10 +556,11 @@ def send_photos_for_client_to_choose_from(request):
 
             c_print(f"client: {user_client}", f"photos: {files}", f"next: {next_}", f"client album: {client_album}")
 
-    context = {
+    context = get_base_context(request)
+    context.update({
         'title': _("Send photos to client"),
         'client_list': client_list,
-    }
+    })
     return render(request, 'administration/add/add_client_photos.html', context)
 
 
@@ -584,10 +583,11 @@ def create_new_client(request):
             client.set_first_login()
             client.send_password_email()
             return JsonResponse({'success': True, 'client': client.id, 'message': 'Client created successfully !'})
-    context = {
+    context = get_base_context(request)
+    context.update({
         'title': _("Create new client"),
         'previous': previous,
-    }
+    })
     return render(request, 'administration/add/add_new_client.html', context)
 
 
@@ -614,11 +614,12 @@ def must_change_password(request, pk):
         form = UserChangePasswordForm()
     first_logon = True
     msg = "You must change your password before you can log in"
-    context = {
+    context = get_base_context(request)
+    context.update({
         'form': form,
         'first_login': first_logon,
         'msg': msg
-    }
+    })
     return render(request, "administration/password/has_to_change_password.html", context)
 
 
@@ -626,10 +627,11 @@ def must_change_password(request, pk):
 @user_passes_test(email_check, login_url='/administration/login/')
 def view_client_album_created(request):
     album = AlbumClient.objects.all()
-    context = {
+    context = get_base_context(request)
+    context.update({
         'title': _("View chosen photos"),
         'album_list': album,
-    }
+    })
     return render(request, 'administration/list/list_album_client.html', context)
 
 
@@ -637,13 +639,14 @@ def view_client_album_created(request):
 @user_passes_test(email_check, login_url='/administration/login/')
 def view_all_liked_photos(request, pk):
     album = AlbumClient.objects.get(pk=pk)
-    context = {
+    context = get_base_context(request)
+    context.update({
         'title': _("View chosen photos"),
         'album': album,
         'photos_liked': album.get_photos_liked(),
         'photos_not_liked': album.get_photos_not_liked(),
         'total_photos_label': _("Total photos sent"),
-    }
+    })
     return render(request, 'administration/list/list_album_client_photos.html', context)
 
 
