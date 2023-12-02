@@ -196,14 +196,6 @@
                             </a>
                         </li>
                     {% endif %}
-                    {#                        <li class="nav-item">#}
-                    {#                            <a href="{% url 'administration:session_list' %}" class="nav-link">#}
-                    {#                                &nbsp;&nbsp;<i class="fa-solid fa-list"></i>#}
-                    {#                                <p>#}
-                    {#                                    &nbsp;&nbsp;{% translate "Session list" %}#}
-                    {#                                </p>#}
-                    {#                            </a>#}
-                    {#                        </li>#}
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-calendar"></i>
@@ -221,13 +213,23 @@
                                     <p>{% translate "View all" %}</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{% url 'appointment:user_profile' %}" class="nav-link">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="far fa-user-circle nav-icon"></i>
-                                    <p>{% translate "User Profile" %}</p>
-                                </a>
-                            </li>
+                            {% if user.is_admin %}
+                                <li class="nav-item">
+                                    <a href="{% url 'appointment:user_profile' %}" class="nav-link">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="far fa-user-circle nav-icon"></i>
+                                        <p>{% translate "User Profile" %}</p>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item">
+                                    <a href="{% url 'appointment:user_profile' user.id %}" class="nav-link">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="far fa-user-circle nav-icon"></i>
+                                        <p>{% translate "User Profile" %}</p>
+                                    </a>
+                                </li>
+                            {% endif %}
                             {% if user.is_admin %}
                                 <li class="nav-item">
                                     <a href="{% url 'appointment:add_service' %}" class="nav-link">
