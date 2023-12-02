@@ -101,7 +101,8 @@ def get_context(request):
 def login_admin(request):
     if request.user.is_authenticated:
         resp = check_user_login(request)
-        if resp == "admin":
+        print(f"resp: {resp}")
+        if resp == "admin" or resp == "staff":
             return redirect('administration:index')
         elif resp == "active":
             return redirect('client:client_homepage')
@@ -110,9 +111,9 @@ def login_admin(request):
         password = request.POST['password']
         user = authenticate(request, email=email, password=password)
         if user is not None:
-            if user.is_admin:
+            if user.is_admin or user.is_staff:
                 login(request, user)
-                print("admin is logged in")
+                print(f"User {user} with role admin/staff logged in")
                 return redirect('administration:index')
         else:
             # Return an 'invalid login' error message.
