@@ -79,15 +79,15 @@
             <li><a href="{% url 'homepage:services_offered' %}">{% trans "Appointments" %}</a></li>
 
             <li>
-                <a href="#">{% trans "Client Login" %}</a>
+                <a href="#">{% trans "Login & Register" %}</a>
                 <ul class="sub-menu">
-                    <li><a href="{% url 'client:login' %}">{% trans "View Your Images" %}</a></li>
+                    <li><a href="{% url 'client:login' %}">{% trans "Login" %}</a></li>
                     <li><a href="{% url 'client:register' %}">{% trans "Registration" %}</a></li>
                     {% if not request.user.is_authenticated %}
-                        <li><a href="{% url 'administration:login' %}">{% trans "Admin Login" %}</a></li>
+                        <li><a href="{% url 'administration:login' %}">{% trans "Admin" %}</a></li>
                     {% endif %}
                     {% if request.user.is_authenticated %}
-                        <li><a href="{% url 'administration:index' %}">{% trans 'Admin Dashboard' %}</a></li>
+                        <li><a href="{% url 'administration:index' %}">{% trans 'Admin' %}</a></li>
                         <li><a href="{% url 'client:logout' %}">{% trans "Logout" %}</a></li>
                     {% endif %}
                 </ul>

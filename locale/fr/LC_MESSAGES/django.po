@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-01 21:54-0500\n"
+"POT-Creation-Date: 2023-12-01 22:01-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1026,6 +1026,7 @@ msgstr "Demande de nouveau mot de passe"
 #: templates/client/login_registration/login.html:4
 #: templates/client/login_registration/login.html:51
 #: templates/client/login_registration/register.html:84
+#: templates/homepage/base.html:84
 msgid "Login"
 msgstr "Se connecter"
 
@@ -1454,7 +1455,6 @@ msgid "book now"
 msgstr "réserver maintenant"
 
 #: templates/client/login_registration/log_as_owner.html:4
-#: templates/homepage/base.html:87
 msgid "Admin Login"
 msgstr "Connexion admin"
 
@@ -1552,20 +1552,16 @@ msgid "Appointments"
 msgstr "Rendez-vous"
 
 #: templates/homepage/base.html:82
-msgid "Client Login"
-msgstr "Connexion client"
-
-#: templates/homepage/base.html:84
-msgid "View Your Images"
-msgstr "Voir vos images"
+msgid "Login & Register"
+msgstr "Connexion & Inscription"
 
 #: templates/homepage/base.html:85
 msgid "Registration"
 msgstr "Créer un compte"
 
-#: templates/homepage/base.html:90
-msgid "Admin Dashboard"
-msgstr "Tableau de bord admin"
+#: templates/homepage/base.html:87 templates/homepage/base.html:90
+msgid "Admin"
+msgstr "Admin"
 
 #: templates/homepage/base.html:97
 msgid "Legal"
@@ -7519,6 +7515,15 @@ msgstr ""
 msgid "CONTINUE"
 msgstr "CONTINUER"
 
+#~ msgid "Client Login"
+#~ msgstr "Connexion client"
+
+#~ msgid "View Your Images"
+#~ msgstr "Voir vos images"
+
+#~ msgid "Admin Dashboard"
+#~ msgstr "Tableau de bord admin"
+
 #~ msgid "Book your service here"
 #~ msgstr "Réservez votre service ici"
 
@@ -7551,9 +7556,6 @@ msgstr "CONTINUER"
 
 #~ msgid "Latest promotions"
 #~ msgstr "Dernières promotions"
-
-#~ msgid "Register"
-#~ msgstr "Créer un compte"
 
 #~ msgid "CRUELTOUCH"
 #~ msgstr "CRUELTOUCH"
