@@ -48,6 +48,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.css"
               integrity="sha512-ngQ4IGzHQ3s/Hh8kMyG4FC74wzitukRMIcTOoKT3EyzFZCILOPF0twiXOQn75eDINUfKBYmzYn2AA8DkAk8veQ=="
               crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        <link rel="stylesheet" href="{% static "administration/dist/css/lang.css" %}">
     {% endblock %}
     {% block customCSS %}{% endblock %}
 </head>
@@ -70,7 +71,7 @@
             <li class="nav-item d-sm-inline-block">
                 <div class="language_fr ml-auto">
                     {% get_current_language as LANGUAGE_CODE %}
-                    <form action="" method="post">
+                    <form action="{% url 'set_language' %}" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="next" value="{{ redirect_to }}">
                         <select name="language" id="language_selection" onchange="this.form.submit()"
@@ -184,7 +185,7 @@
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 {% translate "Dashboard" %}
-                                <i class="right fas fa-angle-left"></i>
+                                <i class="right fas fa-angle-right"></i>
                             </p>
                         </a>
                     </li>
