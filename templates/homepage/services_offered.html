@@ -15,16 +15,16 @@
     <div class="main-container">
         <h1 class="page-title">{% trans "Select and Schedule Your Appointment" %}</h1>
         <div class="page-menu">
-
+            <div class="category-button wedding-service" onclick="showService('wedding-service')">Wedding</div>
+            <div class="category-button portrait-service" onclick="showService('portrait-service')">Portrait/Birthday
+            </div>
+            <div class="category-button product-service" onclick="showService('product-service')">Product Photography
+            </div>
+            <div class="category-button event-service" onclick="showService('event-service')">Events</div>
         </div>
         <div class="page-body">
             <div class="category-container">
-                <button class="category-button wedding" onclick="toggleService('wedding-service')">
-                    <span>Wedding</span>
-                    <i class="fas fa-chevron-right arrow"></i>
-                </button>
-                <div class="wedding-service service-list">
-                    <!-- Wedding services go here -->
+                <div class="wedding-service service-list" id="wedding-service">
                     {% for service in wedding_service %}
                         <div class="page-item">
                             <div class="item-picture">
@@ -42,12 +42,7 @@
                         </div>
                     {% endfor %}
                 </div>
-
-                <button class="category-button portrait" onclick="toggleService('portrait-service')">
-                    <span>Portrait/Birthday</span>
-                    <i class="fas fa-chevron-right arrow"></i>
-                </button>
-                <div class="portrait-service service-list">
+                <div class="portrait-service service-list" id="portrait-service">
                     {% for service in portrait_service %}
                         <div class="page-item">
                             <div class="item-picture">
@@ -65,12 +60,7 @@
                         </div>
                     {% endfor %}
                 </div>
-
-                <button class="category-button product" onclick="toggleService('product-service')">
-                    <span>Product Photography</span>
-                    <i class="fas fa-chevron-right arrow"></i>
-                </button>
-                <div class="product-service service-list">
+                <div class="product-service service-list" id="product-service">
                     {% for service in product_service %}
                         <div class="page-item">
                             <div class="item-picture">
@@ -88,12 +78,7 @@
                         </div>
                     {% endfor %}
                 </div>
-
-                <button class="category-button event" onclick="toggleService('event-service')">
-                    <span>Events</span>
-                    <i class="fas fa-chevron-right arrow"></i>
-                </button>
-                <div class="event-service service-list">
+                <div class="event-service service-list" id="event-service">
                     {% for service in event_service %}
                         <div class="page-item">
                             <div class="item-picture">
@@ -118,25 +103,20 @@
 
 {% block customJS %}
     <script>
-        function toggleServiceList(serviceClassName) {
-            let allServices = document.querySelectorAll('.service-list');
-            let targetService = document.querySelector('.' + serviceClassName);
-            let isCurrentlyVisible = targetService.style.display === 'block';
+        function showService(serviceId) {
+            const selectedService = document.getElementById(serviceId);
+            const isActive = selectedService && selectedService.style.display === 'block';
 
-            allServices.forEach(service => {
-                service.style.display = 'none'; // Hide all service lists
-            });
-
-            let allArrows = document.querySelectorAll('.category-container .arrow');
-            allArrows.forEach(arrow => {
-                arrow.style.transform = 'rotate(0deg)'; // Reset all arrows
-            });
-
-            if (!isCurrentlyVisible) {
-                targetService.style.display = 'block'; // Show the target service list
-                let targetArrow = targetService.previousElementSibling.querySelector('.arrow');
-                if (targetArrow) {
-                    targetArrow.style.transform = 'rotate(90deg)'; // Rotate the corresponding arrow
+            if (!isActive) {
+                updateActiveButton(serviceId);
+                const serviceLists = document.getElementsByClassName('service-list');
+                for (let i = 0; i < serviceLists.length; i++) {
+                    serviceLists[i].style.display = 'none'; // Hide all service lists
+                }
+                if (selectedService) {
+                    selectedService.style.display = 'block'; // Show the clicked service
+                } else {
+                    console.error('Element with ID ' + serviceId + ' not found.');
                 }
             }
         }
@@ -144,16 +124,12 @@
         function updateActiveButton(serviceClassName) {
             let buttons = document.querySelectorAll('.category-button');
             buttons.forEach(button => {
-                button.classList.remove('active');
-                if (button.nextElementSibling && button.nextElementSibling.classList.contains(serviceClassName)) {
+                if (button.classList.contains(serviceClassName)) {
                     button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
                 }
             });
-        }
-
-        function toggleService(serviceClassName) {
-            toggleServiceList(serviceClassName);
-            updateActiveButton(serviceClassName);
         }
     </script>
 {% endblock %}

@@ -9,7 +9,8 @@ body {
 
 .main-container {
     font-family: Arial, sans-serif; /* Choose your preferred font */
-    max-width: 980px; /* Maximum width of the main container */
+    max-width: 1200px; /* Maximum width of the main container */
+    width: 100%; /* Full width of the main container */
     margin: 0 auto; /* Center align the main container */
     padding: 20px;
     display: flex;
@@ -28,46 +29,29 @@ body {
     width: 100%; /* Full width */
     margin-bottom: 20px; /* Space below the menu */
     /* Add additional styling as needed */
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+    /* center the menu */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .page-body {
-    width: 100%; /* Full width */
-    /* Add additional styling as needed */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
-/* Vertically stacked buttons design */
-/*.category-container {*/
-/*    max-width: 100%;*/
-/*    width: 100%; !* Full width of the parent container *!*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: stretch; !* This ensures the buttons stretch to fill the container *!*/
-/*}*/
-
-/*.category-button {*/
-/*    width: calc(100% - 10px); !* Full width of the parent container *!*/
-/*    padding: 10px; !* Adjust padding for sizing *!*/
-/*    margin: 5px 0; !* Space between buttons *!*/
-/*    text-align: center;*/
-/*    background-color: #e0e0e0; !* Light grey, adjust as needed *!*/
-/*    border: none;*/
-/*    border-radius: 5px;*/
-/*    cursor: pointer;*/
-/*    transition: background-color 0.2s;*/
-/*}*/
-
-/*.category-button:hover {*/
-/*    background-color: #c0c0c0; !* Slightly darker on hover *!*/
-/*}*/
 
 
 /* Horizontally aligned buttons design */
 .category-container {
-    width: 100%;
     display: flex;
-    flex-direction: row;
     justify-content: center;
-    flex-wrap: wrap;
+    width: 75%;
+    margin: 0 auto; /* Center container within its parent */
 }
 
 .category-button {
@@ -81,35 +65,25 @@ body {
     color: #777; /* Dimmed text color for inactive state */
     font-size: 16px; /* Slightly larger font size */
     border: 1px solid #d4d4d4; /* Subtle border */
-    border-radius: 30px; /* More rounded corners */
+    border-radius: 20px; /* More rounded corners */
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.category-button:hover, .category-button:focus {
-    background-image: linear-gradient(to right, rgba(194, 211, 248, 0.84), rgba(221, 196, 248, 0.83), rgba(250, 197, 197, 0.84));
+.category-button:hover, .category-button:focus, .active {
+    background-image: linear-gradient(to right, rgba(194, 211, 248, 0.5), rgba(228, 209, 248, 0.5), rgba(250, 197, 197, 0.5));
     color: #010159;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
     transform: translateY(-2px); /* Slight raise effect on hover */
 }
 
-.arrow {
-    margin-left: 10px;
-    transition: transform 0.3s ease;
-}
-
-.category-button.active .arrow {
-    transform: rotate(180deg); /* Flips the chevron when active */
-}
-
-
 /* Services list design initially hidden */
 .service-list {
-    width: 100%;
-    display: none; /* Hidden by default */
-    /* Additional styling as needed */
-    margin-top: 50px;
+    width: 100%; /* Adjust as needed */
+    display: none; /* Initially hidden */
+    margin: 0 auto;
+    justify-content: center; /* Center items horizontally */
 }
 
 /* Service list item design */
@@ -139,10 +113,10 @@ body {
 }
 
 .item-description {
-    width: 420px; /* Width of the description */
-    height: 480px; /* Height of the description, making it square */
+    width: 400px; /* Width of the description */
+    height: 400px; /* Height of the description, making it square */
     position: absolute; /* Absolute positioning to overlap the image */
-    left: 435px; /* Adjust as needed to overlap the image */
+    left: 430px; /* Adjust as needed to overlap the image */
     top: 50%; /* Center vertically */
     transform: translateY(-50%); /* Adjust vertical positioning */
     padding: 25px; /* Adequate padding around the text */
