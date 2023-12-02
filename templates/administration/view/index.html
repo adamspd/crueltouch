@@ -14,6 +14,8 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-buttons-bs4/2.2.3/buttons.bootstrap4.min.css"
           integrity="sha512-qjgDB3iTYTDAAZDtyv6xdGedzfFon3y1yjE/yI2R7HuxKEsY50aXysYFrb2hP3UZbHKiNWKj8tEIhXXFyCi0cA=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 {% endblock %}
 
 {% block body %}
@@ -54,12 +56,16 @@
                         <div class="small-box bg-warning">
                             <div class="inner">
                                 <h3>{{ total_request_session }}</h3>
-                                <p>{% translate "Request Session" %}</p>
+                                <p>{% blocktrans count counter=total_request_session %}
+                                    Appointment
+                                {% plural %}
+                                    Appointments
+                                {% endblocktrans %}</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-ios-albums"></i>
                             </div>
-                            <a href="{% url 'administration:session_list' %}" class="small-box-footer">
+                            <a href="{% url 'appointment:get_user_appointments' %}" class="small-box-footer">
                                 {% translate "More info" %}&nbsp;
                                 <i class="fas fa-arrow-circle-right"></i>
                             </a>
@@ -177,85 +183,84 @@
                                 <table id="example2" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
-                                        <th>{% translate "Date taken" %}</th>
-                                        <th>{% translate "Desired date" %}</th>
-                                        <th>{% translate "Name" %}</th>
-                                        <th>{% translate "Email" %}</th>
-                                        <th>{% translate "Phone" %}</th>
-                                        <th>{% translate "Address" %}</th>
-                                        <th>{% translate "Status" %}</th>
-                                        <th>{% translate "Email sent" %}</th>
+                                        <th>{% translate "On" %}</th>
+                                        <th>{% translate "Client, AKA" %}</th>
+                                        <th>{% translate "Booked for" %}</th>
+                                        <th>{% translate "For only" %}</th>
+                                        <th>{% translate "See them on" %}</th>
+                                        <th>{% translate "Ping at" %}</th>
+                                        <th>{% translate "Buzz at" %}</th>
+                                        <th>{% translate "Found at" %}</th>
+                                        <th>{% translate "Snapper" %}</th>
                                         <th>{% translate "Actions" %}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     {% for rs in request_session %}
                                         <tr>
+                                            <td>{{ rs.created_at|date }}</td>
+                                            <td>{{ rs.client.first_name }} {{ rs.client.last_name }}</td>
+                                            <td>{{ rs.get_service_name }}</td>
+                                            <td>{{ rs.get_appointment_amount_to_pay_str }}</td>
+                                            <td>{{ rs.get_start_time }}</td>
                                             <td>
-                                                {{ rs.time_book_taken }}
-                                            </td>
-                                            <td>
-                                                {{ rs.get_desired_date }}
-                                            </td>
-                                            <td>
-                                                {{ rs.full_name }}
-                                            </td>
-                                            <td>
-                                                <a href="mailto:{{ rs.email }}">
-                                                    {{ rs.email }}
+                                                <a href="mailto:{{ rs.client.email }}">
+                                                    {{ rs.client.email }}
                                                 </a>
                                             </td>
                                             <td>
-                                                {% if rs.is_phone %}
-                                                    <a href="tel:{{ rs.get_phone_number }}">
-                                                        {{ rs.get_phone_number }}
+                                                {% if rs.phone %}
+                                                    <a href="tel:{{ rs.phone }}">
+                                                        {{ rs.phone }}
                                                     </a>
                                                 {% else %}
-                                                    {{ rs.get_phone_number }}
+                                                    {{ rs.phone }}
                                                 {% endif %}
                                             </td>
                                             <td>
-                                                {{ rs.get_address }}
+                                                {{ rs.address }}
                                             </td>
+                                            <td>{{ rs.get_staff_member_name }}</td>
                                             <td>
-                                                <span>{{ rs.status.title }}</span>
-                                            </td>
-                                            <td>{{ rs.get_if_email_was_sent_string }}</td>
-                                            <td>
-                                                {% if not rs.get_if_email_was_sent_boolean and not rs.status_changed %}
-                                                    <a href="{% url 'administration:send_email' rs.id %}"
-                                                       class="btn btn-primary btn-sm">
-                                                        <i class="fas fa-envelope"></i>
-                                                        {% translate "Send" %}
-                                                    </a>
-                                                {% else %}
-                                                    <a href="" class="btn btn-primary btn-sm disabled">
-                                                        <i class="fas fa-envelope"></i>
-                                                        {% translate "Send" %}
-                                                    </a>
-                                                {% endif %}&nbsp;
-                                                <a href="{% url 'administration:session_update' rs.pk %}"
-                                                   class="btn btn-success btn-sm">
-                                                    <i class="fas fa-edit"></i>&nbsp;Edit
+                                                {#                                                {% if not rs.get_if_email_was_sent_boolean and not rs.status_changed %}#}
+                                                {#                                                    <a href="{% url 'administration:send_email' rs.id %}"#}
+                                                {#                                                       class="btn btn-primary btn-sm">#}
+                                                {#                                                        <i class="fas fa-envelope"></i>#}
+                                                {#                                                        {% translate "Send" %}#}
+                                                {#                                                    </a>#}
+                                                {#                                                {% else %}#}
+                                                {#                                                    <a href="" class="btn btn-primary btn-sm disabled">#}
+                                                {#                                                        <i class="fas fa-envelope"></i>#}
+                                                {#                                                        {% translate "Send" %}#}
+                                                {#                                                    </a>#}
+                                                {#                                                {% endif %}&nbsp;#}
+                                                {#                                                <a href="{% url 'appointment:de' rs.pk %}"#}
+                                                {#                                                   class="btn btn-success btn-sm">#}
+                                                {#                                                    <i class="fas fa-edit"></i>&nbsp;Edit#}
+                                                {#                                                </a>&nbsp;#}
+                                                {#                                                <a href="{% url 'administration:session_delete' rs.pk %}"#}
+                                                {#                                                   class="btn btn-danger btn-sm">#}
+                                                {#                                                    <i class="fas fa-trash"></i>&nbsp;Delete#}
+                                                {#                                                </a>#}
+                                                <a href="{% url 'appointment:display_appointment' rs.pk %}"
+                                                   class="btn btn-info btn-sm">
+                                                    <i class="fas fa-eye"></i>&nbsp;View
                                                 </a>&nbsp;
-                                                <a href="{% url 'administration:session_delete' rs.pk %}"
-                                                   class="btn btn-danger btn-sm">
-                                                    <i class="fas fa-trash"></i>&nbsp;Delete
-                                                </a>
                                             </td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <th>{% translate "Date taken" %}</th>
-                                        <th>{% translate "Desired date" %}</th>
-                                        <th>{% translate "Name" %}</th>
-                                        <th>{% translate "Email" %}</th>
-                                        <th>{% translate "Phone" %}</th>
-                                        <th>{% translate "Address" %}</th>
-                                        <th>{% translate "Status" %}</th>
-                                        <th>{% translate "Email sent" %}</th>
+                                        <th>{% translate "On" %}</th>
+                                        <th>{% translate "Client, AKA" %}</th>
+                                        <th>{% translate "Booked For" %}</th>
+                                        <th>{% translate "For Only" %}</th>
+                                        <th>{% translate "See Them On" %}</th>
+                                        <th>{% translate "Ping At" %}</th>
+                                        <th>{% translate "Buzz At" %}</th>
+                                        <th>{% translate "Found At" %}</th>
+                                        <th>{% translate "Chosen Snap" %}</th>
                                         <th>{% translate "Actions" %}</th>
                                     </tr>
                                     </tfoot>

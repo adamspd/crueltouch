@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-26 20:23-0400\n"
+"POT-Creation-Date: 2023-12-01 19:32-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,7 +95,6 @@ msgid "Phone number"
 msgstr "Téléphone"
 
 #: administration/forms.py:75
-#| msgid "Service"
 msgid "Service name"
 msgstr "Nom Service"
 
@@ -169,23 +168,23 @@ msgstr "Nom client"
 msgid "Client email"
 msgstr "Email client"
 
-#: administration/views.py:197
+#: administration/views.py:198
 msgid "Email sent successfully"
 msgstr "Email envoyé avec succès"
 
-#: administration/views.py:199
+#: administration/views.py:200
 msgid "Email not sent"
 msgstr "Email non envoyé"
 
-#: administration/views.py:201
+#: administration/views.py:202
 msgid "Email already sent"
 msgstr "Email déjà envoyé"
 
-#: administration/views.py:203
+#: administration/views.py:204
 msgid "Session request does not exist"
 msgstr "La demande de reservation n'existe pas"
 
-#: administration/views.py:399
+#: administration/views.py:400
 msgid ""
 "If you want the website to send the link automatically to the client, "
 "please, put the client "
@@ -193,38 +192,38 @@ msgstr ""
 "Si vous voulez que le site envoie le lien automatiquement au client, "
 "veuillez mettre le client "
 
-#: administration/views.py:403 administration/views.py:505
+#: administration/views.py:404 administration/views.py:506
 msgid "Create downloadable file"
 msgstr "Créer un fichier téléchargeable"
 
-#: administration/views.py:416
+#: administration/views.py:417
 msgid "List of link to download images"
 msgstr "Liste des liens de téléchargement des images"
 
-#: administration/views.py:559
+#: administration/views.py:560
 msgid "Send photos to client"
 msgstr "Envoie photo à client"
 
-#: administration/views.py:585
+#: administration/views.py:586
 msgid "Create new client"
 msgstr "Ajout client"
 
-#: administration/views.py:600
+#: administration/views.py:601
 msgid "You can't use your old password"
 msgstr "Vous ne pouvez pas utiliser votre ancien mot de passe"
 
-#: administration/views.py:608
+#: administration/views.py:609
 msgid "This user no longer exists !"
 msgstr "Cet utilisateur n'existe plus !"
 
-#: administration/views.py:627 administration/views.py:638
+#: administration/views.py:628 administration/views.py:639
 #: templates/administration/list/list_album_client.html:5
 #: templates/administration/list/list_album_client.html:8
 #: templates/administration/list/list_album_client.html:11
 msgid "View chosen photos"
 msgstr "Voir photos choisies"
 
-#: administration/views.py:642
+#: administration/views.py:643
 msgid "Total photos sent"
 msgstr "Total photos envoyé"
 
@@ -304,8 +303,6 @@ msgstr "Nom complet"
 #: templates/administration/list/list_requested_session.html:118
 #: templates/administration/list/list_user.html:27
 #: templates/administration/list/list_user.html:57
-#: templates/administration/view/index.html:183
-#: templates/administration/view/index.html:254
 #: templates/appointments/appointment_client_information.html:48
 #: templates/client/login_registration/login.html:31
 #: venv/lib/python3.11/site-packages/appointment/templates/administration/display_appointment.html:43
@@ -339,8 +336,6 @@ msgstr "Date souhaitée"
 #: client/form.py:70
 #: templates/administration/list/list_requested_session.html:43
 #: templates/administration/list/list_requested_session.html:120
-#: templates/administration/view/index.html:185
-#: templates/administration/view/index.html:256
 msgid "Address"
 msgstr "Adresse"
 
@@ -449,11 +444,11 @@ msgstr "Espagnol"
 msgid "French"
 msgstr "Français"
 
-#: homepage/views.py:81
+#: homepage/views.py:79
 msgid "Services | TCHIIZ"
 msgstr "Services | TCHIIZ"
 
-#: homepage/views.py:82
+#: homepage/views.py:80
 msgid "Services offered by Tchiiz studio Photography"
 msgstr "Services offerts par Tchiiz studio Photography"
 
@@ -518,7 +513,7 @@ msgstr "Merci pour votre message, mais il n'a pas été envoyé !"
 msgid "Something went wrong. Please try again later."
 msgstr "Quelque chose s'est mal passé. Veuillez réessayer plus tard."
 
-#: static_pages_and_forms/views.py:78 templates/homepage/base.html:110
+#: static_pages_and_forms/views.py:78 templates/homepage/base.html:99
 #: templates/legal/privacy_policy.html:17
 msgid "Privacy Policy"
 msgstr "Politique de confidentialité"
@@ -552,8 +547,6 @@ msgstr "Envoyer une image"
 #: templates/administration/add/add_photos.html:52
 #: templates/administration/list/list_requested_session.html:94
 #: templates/administration/list/list_requested_session.html:99
-#: templates/administration/view/index.html:229
-#: templates/administration/view/index.html:234
 msgid "Send"
 msgstr "Envoyer"
 
@@ -589,8 +582,8 @@ msgstr "Générer facture"
 
 #: templates/administration/base.html:10 templates/administration/base.html:183
 #: templates/administration/list/data.html:43
-#: templates/administration/view/index.html:28
-#: templates/administration/view/index.html:36
+#: templates/administration/view/index.html:30
+#: templates/administration/view/index.html:38
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
@@ -598,7 +591,7 @@ msgstr "Tableau de bord"
 msgid "Homepage"
 msgstr "Accueil"
 
-#: templates/administration/base.html:68 templates/homepage/base.html:102
+#: templates/administration/base.html:68 templates/homepage/base.html:91
 msgid "Logout"
 msgstr "Déconnexion"
 
@@ -611,7 +604,6 @@ msgid "Appointment"
 msgstr "Rendez-vous"
 
 #: templates/administration/base.html:221
-#| msgid "View all links"
 msgid "View all"
 msgstr "Voir tous"
 
@@ -621,7 +613,6 @@ msgstr "Profil utilisateur"
 
 #: templates/administration/base.html:235
 #: venv/lib/python3.11/site-packages/appointment/views_admin.py:414
-#| msgid "Service"
 msgid "Add Service"
 msgstr "Ajouter Service"
 
@@ -635,7 +626,7 @@ msgstr "Ajouter photos"
 msgid "View all photos"
 msgstr "Voir toutes les photos"
 
-#: templates/administration/base.html:270 templates/homepage/base.html:73
+#: templates/administration/base.html:270 templates/homepage/base.html:74
 #: templates/portfolio/index_portfolio.html:4
 msgid "Portfolio"
 msgstr "Portfolio"
@@ -781,7 +772,6 @@ msgstr "Mise à jour"
 
 #: templates/administration/email_template/session_request_received.html:76
 #, python-format
-#| msgid ""
 msgid ""
 "\n"
 "        Hi %(full_name)s, the Tchiiz  team is pleased to announce that your "
@@ -789,18 +779,16 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"        Bonjour %(full_name)s, l'équipe Tchiiz est heureuse de vous "
-"annoncer que votre réservation a été traitée.\n"
+"        Bonjour %(full_name)s, l'équipe Tchiiz est heureuse de vous annoncer "
+"que votre réservation a été traitée.\n"
 "    "
 
 #: templates/administration/email_template/session_request_received.html:141
-#| msgid "Thank you for booking Crueltouch!"
 msgid "Thank you for booking Tchiiz Studio!"
 msgstr "Merci d'avoir réservé avec Tchiiz Studio !"
 
 #: templates/administration/email_template/session_request_received.html:149
 #, python-format
-#| msgid ""
 msgid ""
 "\n"
 "                                            Hi %(full_name)s, the Tchiiz "
@@ -846,8 +834,6 @@ msgstr "Lieu"
 #: templates/administration/email_template/session_request_received.html:205
 #: templates/administration/list/list_requested_session.html:47
 #: templates/administration/list/list_requested_session.html:124
-#: templates/administration/view/index.html:186
-#: templates/administration/view/index.html:257
 msgid "Status"
 msgstr "Statut"
 
@@ -876,7 +862,7 @@ msgid "please let us know"
 msgstr "laissez-nous le savoir"
 
 #: templates/administration/email_template/session_request_received.html:392
-#: templates/homepage/base.html:169
+#: templates/homepage/base.html:158
 #: venv/lib/python3.11/site-packages/appointment/templates/email_sender/thank_you_email.html:251
 #: venv/lib/python3.11/site-packages/payment/templates/email_sender/payment_email.html:67
 msgid "All rights reserved"
@@ -914,7 +900,7 @@ msgstr "aimé"
 #: templates/administration/list/list_contact_forms.html:7
 #: templates/administration/list/list_contact_forms.html:10
 #: templates/administration/list/list_contact_forms.html:18
-#: templates/administration/view/index.html:73
+#: templates/administration/view/index.html:79
 msgid "Contact Forms"
 msgstr "Formulaires de contact"
 
@@ -965,23 +951,17 @@ msgstr ""
 
 #: templates/administration/list/list_requested_session.html:38
 #: templates/administration/list/list_requested_session.html:115
-#: templates/administration/view/index.html:180
-#: templates/administration/view/index.html:251
 msgid "Date taken"
 msgstr "Date prise"
 
 #: templates/administration/list/list_requested_session.html:39
 #: templates/administration/list/list_requested_session.html:116
-#: templates/administration/view/index.html:181
-#: templates/administration/view/index.html:252
 #: templates/client/booking_and_promotions/bookme.html:155
 msgid "Desired date"
 msgstr "Date souhaitée"
 
 #: templates/administration/list/list_requested_session.html:40
 #: templates/administration/list/list_requested_session.html:117
-#: templates/administration/view/index.html:182
-#: templates/administration/view/index.html:253
 #: venv/lib/python3.11/site-packages/appointment/templates/administration/service_list.html:25
 #: venv/lib/python3.11/site-packages/appointment/templates/administration/staff_list.html:35
 #: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:228
@@ -990,8 +970,6 @@ msgstr "Nom"
 
 #: templates/administration/list/list_requested_session.html:42
 #: templates/administration/list/list_requested_session.html:119
-#: templates/administration/view/index.html:184
-#: templates/administration/view/index.html:255
 #: venv/lib/python3.11/site-packages/appointment/templates/administration/display_appointment.html:47
 msgid "Phone"
 msgstr "Téléphone"
@@ -1003,28 +981,22 @@ msgstr "Type"
 
 #: templates/administration/list/list_requested_session.html:48
 #: templates/administration/list/list_requested_session.html:125
-#: templates/administration/view/index.html:187
-#: templates/administration/view/index.html:258
 msgid "Email sent"
 msgstr "Email envoyé"
 
 #: templates/administration/list/list_requested_session.html:49
 #: templates/administration/list/list_requested_session.html:126
-#: templates/administration/view/index.html:188
-#: templates/administration/view/index.html:259
+#: templates/administration/view/index.html:195
+#: templates/administration/view/index.html:264
 msgid "Actions"
 msgstr "Actions"
 
 #: templates/administration/list/list_user.html:5
 #: templates/administration/list/list_user.html:8
 #: templates/administration/list/list_user.html:11
+#: templates/administration/list/list_user.html:19
 msgid "User List"
 msgstr "Liste utilisateurs"
-
-#: templates/administration/list/list_user.html:19
-#: templates/administration/view/index.html:173
-msgid "Last 10 requested photoshoot session"
-msgstr "Derniers 10 photoshoot demandés"
 
 #: templates/administration/list/list_user.html:28
 #: templates/administration/list/list_user.html:58
@@ -1116,28 +1088,128 @@ msgstr ""
 msgid "Back to homepage"
 msgstr "Retour à la page d'accueil"
 
-#: templates/administration/view/index.html:39
+#: templates/administration/view/index.html:41
 msgid "Index"
 msgstr "Index"
 
-#: templates/administration/view/index.html:57
-msgid "Request Session"
-msgstr "Demande photoshoot"
+#: templates/administration/view/index.html:59
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                                    We use Session Cookies to operate our "
+#| "Service.\n"
+#| "                                "
+msgid ""
+"\n"
+"                                    Appointment\n"
+"                                "
+msgid_plural ""
+"\n"
+"                                    Appointments\n"
+"                                "
+msgstr[0] ""
+"\n"
+"                                    Nous utilisons les cookies de session "
+"pour exploiter notre Service.\n"
+"                                "
+msgstr[1] ""
+"\n"
+"                                    Nous utilisons les cookies de session "
+"pour exploiter notre Service.\n"
+"                                "
 
-#: templates/administration/view/index.html:63
-#: templates/administration/view/index.html:79
-#: templates/administration/view/index.html:94
-#: templates/administration/view/index.html:110
+#: templates/administration/view/index.html:69
+#: templates/administration/view/index.html:85
+#: templates/administration/view/index.html:100
+#: templates/administration/view/index.html:116
 msgid "More info"
 msgstr "Plus d'info"
 
-#: templates/administration/view/index.html:88
+#: templates/administration/view/index.html:94
 msgid "Photos Delivered"
 msgstr "Photos livrées"
 
-#: templates/administration/view/index.html:104
+#: templates/administration/view/index.html:110
 msgid "Clients"
 msgstr "Clients"
+
+#: templates/administration/view/index.html:179
+msgid "Last 10 requested photoshoot session"
+msgstr "Derniers 10 photoshoot demandés"
+
+#: templates/administration/view/index.html:186
+#: templates/administration/view/index.html:255
+msgid "On"
+msgstr ""
+
+#: templates/administration/view/index.html:187
+#: templates/administration/view/index.html:256
+#, fuzzy
+#| msgid "Client"
+msgid "Client, AKA"
+msgstr "Client"
+
+#: templates/administration/view/index.html:188
+#, fuzzy
+#| msgid "Book Now"
+msgid "Booked for"
+msgstr "Réserver maintenant"
+
+#: templates/administration/view/index.html:189
+msgid "For only"
+msgstr ""
+
+#: templates/administration/view/index.html:190
+#, fuzzy
+#| msgid "See you soon"
+msgid "See them on"
+msgstr "À bientôt"
+
+#: templates/administration/view/index.html:191
+msgid "Ping at"
+msgstr ""
+
+#: templates/administration/view/index.html:192
+msgid "Buzz at"
+msgstr ""
+
+#: templates/administration/view/index.html:193
+msgid "Found at"
+msgstr ""
+
+#: templates/administration/view/index.html:194
+msgid "Snapper"
+msgstr ""
+
+#: templates/administration/view/index.html:257
+#, fuzzy
+#| msgid "Book Now"
+msgid "Booked For"
+msgstr "Réserver maintenant"
+
+#: templates/administration/view/index.html:258
+msgid "For Only"
+msgstr ""
+
+#: templates/administration/view/index.html:259
+msgid "See Them On"
+msgstr ""
+
+#: templates/administration/view/index.html:260
+msgid "Ping At"
+msgstr ""
+
+#: templates/administration/view/index.html:261
+msgid "Buzz At"
+msgstr ""
+
+#: templates/administration/view/index.html:262
+msgid "Found At"
+msgstr ""
+
+#: templates/administration/view/index.html:263
+msgid "Chosen Snap"
+msgstr ""
 
 #: templates/appointments/appointment_client_information.html:30
 #: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:35
@@ -1167,7 +1239,9 @@ msgstr "pour une réservation plus rapide."
 #: templates/appointments/appointment_client_information.html:57
 #: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:62
 msgid "I want to receive an EMAIL reminder 24 hours before this session starts"
-msgstr "Je veux recevoir un RAPPEL par EMAIL 24 heures avant le début de cette session"
+msgstr ""
+"Je veux recevoir un RAPPEL par EMAIL 24 heures avant le début de cette "
+"session"
 
 #: templates/appointments/appointment_client_information.html:61
 #: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointment_client_information.html:67
@@ -1224,7 +1298,8 @@ msgstr "TVA"
 msgid ""
 "Check out our availability and book the date and time that works for you"
 msgstr ""
-"Consultez notre disponibilité et réservez la date et l'heure qui vous conviennent "
+"Consultez notre disponibilité et réservez la date et l'heure qui vous "
+"conviennent "
 
 #: templates/appointments/appointments.html:26
 #: venv/lib/python3.11/site-packages/appointment/templates/appointment/appointments.html:27
@@ -1379,7 +1454,7 @@ msgid "book now"
 msgstr "réserver maintenant"
 
 #: templates/client/login_registration/log_as_owner.html:4
-#: templates/homepage/base.html:98
+#: templates/homepage/base.html:87
 msgid "Admin Login"
 msgstr "Connexion admin"
 
@@ -1397,8 +1472,8 @@ msgid ""
 msgstr ""
 "\n"
 "        Accédez à votre galerie privée en ligne et visualisez vos "
-"magnifiques photographies en toute sécurité avec notre fonction de "
-"connexion client.\n"
+"magnifiques photographies en toute sécurité avec notre fonction de connexion "
+"client.\n"
 "        Connectez-vous maintenant pour voir vos souvenirs\n"
 "    "
 
@@ -1452,79 +1527,67 @@ msgstr "Déjà inscrit"
 msgid "Welcome to Tchiiz Studio"
 msgstr "Bienvenue sur Tchiiz Studio"
 
-#: templates/homepage/base.html:62
+#: templates/homepage/base.html:63
 msgid "Home"
 msgstr "Accueil"
 
-#: templates/homepage/base.html:65
+#: templates/homepage/base.html:66
 msgid "Meet"
 msgstr "Rencontre"
 
-#: templates/homepage/base.html:65
+#: templates/homepage/base.html:66
 msgid "Contact"
 msgstr "Contact"
 
-#: templates/homepage/base.html:67
+#: templates/homepage/base.html:68
 msgid "Meet Us"
 msgstr "Nous rencontrer"
 
-#: templates/homepage/base.html:68 templates/legal/privacy_policy.html:384
+#: templates/homepage/base.html:69 templates/legal/privacy_policy.html:384
 msgid "Contact Us"
 msgstr "Contactez-nous"
 
 #: templates/homepage/base.html:79
-msgid "Booking"
-msgstr "Réservation"
+msgid "Appointments"
+msgstr "Rendez-vous"
 
-#: templates/homepage/base.html:82 templates/homepage/base.html:86
-msgid "Book Me"
-msgstr "Réservation"
-
-#: templates/homepage/base.html:83 templates/homepage/base.html:87
-msgid "Latest Promotions"
-msgstr "Dernières promotions"
-
-#: templates/homepage/base.html:84
-msgid "OBM (deprecated)"
-msgstr "OBM (obsolète)"
-
-#: templates/homepage/base.html:93
+#: templates/homepage/base.html:82
 msgid "Client Login"
 msgstr "Connexion client"
 
-#: templates/homepage/base.html:95
+#: templates/homepage/base.html:84
 msgid "View Your Images"
 msgstr "Voir vos images"
 
-#: templates/homepage/base.html:96
+#: templates/homepage/base.html:85
 msgid "Registration"
 msgstr "Créer un compte"
 
-#: templates/homepage/base.html:101
+#: templates/homepage/base.html:90
 msgid "Admin Dashboard"
 msgstr "Tableau de bord admin"
 
-#: templates/homepage/base.html:108
+#: templates/homepage/base.html:97
 msgid "Legal"
 msgstr "Légal"
 
-#: templates/homepage/base.html:111
+#: templates/homepage/base.html:100
 msgid "Terms & Conditions"
 msgstr "Termes & conditions"
 
-#: templates/homepage/base.html:169
+#: templates/homepage/base.html:158
 msgid "Made with"
 msgstr "Fait avec"
 
-#: templates/homepage/base.html:170
+#: templates/homepage/base.html:159
 msgid "Love"
 msgstr "Amour"
 
-#: templates/homepage/base.html:170
+#: templates/homepage/base.html:159
 msgid "by"
 msgstr "par"
 
-#: templates/homepage/base.html:184
+#: templates/homepage/base.html:173
 msgid "Search here"
 msgstr "Rechercher ici"
 
@@ -1571,6 +1634,22 @@ msgid "I’m a photographer"
 msgstr "Je suis photographe"
 
 #: templates/homepage/index.html:55
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                                    Born in the 90's, I am very "
+#| "passionate about everything related to art, music and\n"
+#| "                                    photography. I spent 1 year in France "
+#| "doing photography and sharing with others in\n"
+#| "                                    the field. I learned how to use "
+#| "Photoshop, and I'm really good at it. While in\n"
+#| "                                    France, I landed my first wedding gig "
+#| "on a yatch. I am actually interested in\n"
+#| "                                    computer science and long term "
+#| "investing. I'm planning to travel a little in the\n"
+#| "                                    next years in Indonesia, Greece and "
+#| "China. Long term goal : Digital Nomad.\n"
+#| "                                "
 msgid ""
 "\n"
 "                                    Born in the 90's, I am very passionate "
@@ -1581,10 +1660,10 @@ msgid ""
 "Photoshop, and I'm really good at it. While in\n"
 "                                    France, I landed my first wedding gig on "
 "a yatch. I am actually interested in\n"
-"                                    computer science and long term "
+"                                    computer science and long-term "
 "investing. I'm planning to travel a little in the\n"
 "                                    next years in Indonesia, Greece and "
-"China. Long term goal : Digital Nomad.\n"
+"China. Long-term goal: Digital Nomad.\n"
 "                                "
 msgstr ""
 "\n"
@@ -1605,18 +1684,6 @@ msgstr ""
 #: templates/homepage/index.html:65
 msgid "Take a look @my portfolio"
 msgstr "Voir @mon portfolio"
-
-#: templates/homepage/index.html:72
-msgid "Business"
-msgstr "Business"
-
-#: templates/homepage/index.html:76
-msgid "Passion"
-msgstr "Passion"
-
-#: templates/homepage/index.html:80
-msgid "Travels"
-msgstr "Voyages"
 
 #: templates/homepage/index_about_me.html:5
 msgid "About us"
@@ -4319,8 +4386,8 @@ msgstr ""
 "et que vous êtes un consommateur, vous possédez également\n"
 "                        la protection qui vous est accordée par les "
 "dispositions obligatoires de la loi de votre pays de\n"
-"                        résidence. tchiiz.com et vous-même acceptez de "
-"vous soumettre à la compétence non-exclusive\n"
+"                        résidence. tchiiz.com et vous-même acceptez de vous "
+"soumettre à la compétence non-exclusive\n"
 "                        des tribunaux de Florida, ce qui signifie que vous "
 "pouvez faire valoir un recours pour défendre\n"
 "                        vos droits de protection du consommateur en ce qui "
@@ -4982,7 +5049,6 @@ msgstr ""
 "Nous sommes ravis de vous avoir à bord ! Merci de nous avoir réservé. La "
 "prochaine étape est de payer la réservation."
 
-
 #: venv/lib/python3.11/site-packages/appointment/forms.py:75
 msgid "This email is already taken."
 msgstr "Cet email est déjà pris."
@@ -5048,11 +5114,11 @@ msgid ""
 "9:00 AM. If you set the appointment buffer time to 60 minutes, the first "
 "available slot will be at 9:30 AM."
 msgstr ""
-"Temps entre maintenant et le premier créneau disponible pour le jour "
-"actuel (n'affecte pas demain). Exemple: Si vous commencez à travailler à 9h "
-"et que l'heure actuelle est 8h30 et que vous le réglez à 30 minutes, le "
-"premier créneau disponible sera à 9h. Si vous réglez le temps tampon de "
-"rendez-vous à 60 minutes, le premier créneau disponible sera à 9h30."
+"Temps entre maintenant et le premier créneau disponible pour le jour actuel "
+"(n'affecte pas demain). Exemple: Si vous commencez à travailler à 9h et que "
+"l'heure actuelle est 8h30 et que vous le réglez à 30 minutes, le premier "
+"créneau disponible sera à 9h. Si vous réglez le temps tampon de rendez-vous "
+"à 60 minutes, le premier créneau disponible sera à 9h30."
 
 #: venv/lib/python3.11/site-packages/appointment/models.py:237
 msgid "Saturday and Sunday"
@@ -5127,8 +5193,8 @@ msgid ""
 "Time between now and the first available slot for the current day (doesn't "
 "affect tomorrow)."
 msgstr ""
-"Temps entre maintenant et le premier créneau disponible pour le jour "
-"actuel (n'affecte pas demain)."
+"Temps entre maintenant et le premier créneau disponible pour le jour actuel "
+"(n'affecte pas demain)."
 
 #: venv/lib/python3.11/site-packages/appointment/models.py:558
 msgid "Name of your website."
@@ -5183,8 +5249,8 @@ msgstr ""
 msgid ""
 "Here you can add/remove services offered by you by modifying this section."
 msgstr ""
-"Ici, vous pouvez ajouter/supprimer les services offerts par vous en modifiant "
-"cette section."
+"Ici, vous pouvez ajouter/supprimer les services offerts par vous en "
+"modifiant cette section."
 
 #: venv/lib/python3.11/site-packages/appointment/services.py:161
 msgid "Add"
@@ -5290,7 +5356,8 @@ msgstr "Entrez le code de vérification"
 #: venv/lib/python3.11/site-packages/appointment/templates/administration/email_change_verification_code.html:18
 #: venv/lib/python3.11/site-packages/appointment/templates/appointment/enter_verification_code.html:18
 msgid "We've sent a verification code to your email. Please enter it below"
-msgstr "On a envoyé un code de vérification à votre email. Entrez-le ci-dessous"
+msgstr ""
+"On a envoyé un code de vérification à votre email. Entrez-le ci-dessous"
 
 #: venv/lib/python3.11/site-packages/appointment/templates/administration/email_change_verification_code.html:22
 #: venv/lib/python3.11/site-packages/appointment/templates/appointment/enter_verification_code.html:22
@@ -5494,11 +5561,14 @@ msgstr "Service offert"
 
 #: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:220
 msgid "To add/modify a new service, make a request to an admin."
-msgstr "Pour ajouter/modifier un nouveau service, faites une demande à un admin."
+msgstr ""
+"Pour ajouter/modifier un nouveau service, faites une demande à un admin."
 
 #: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:221
 msgid "Changes made in one service will change it for every staff member."
-msgstr "Les modifications apportées à un service le changeront pour chaque membre du personnel."
+msgstr ""
+"Les modifications apportées à un service le changeront pour chaque membre du "
+"personnel."
 
 #: venv/lib/python3.11/site-packages/appointment/templates/administration/user_profile.html:232
 msgid "Down Payment"
@@ -5641,7 +5711,8 @@ msgstr "Erreur 403"
 
 #: venv/lib/python3.11/site-packages/appointment/templates/error_pages/403_forbidden.html:99
 msgid "You don't have permission to view this resource, and you know it"
-msgstr "Vous n'avez pas la permission de voir cette ressource, et vous le savez"
+msgstr ""
+"Vous n'avez pas la permission de voir cette ressource, et vous le savez"
 
 #: venv/lib/python3.11/site-packages/appointment/templates/error_pages/403_forbidden.html:106
 msgid "Go to profile"
@@ -5717,7 +5788,9 @@ msgstr ""
 #: venv/lib/python3.11/site-packages/appointment/utils/email_ops.py:52
 #, python-brace-format
 msgid "{s}. Your password is temporary. Please change it on your first login."
-msgstr "{s}. Votre mot de passe est temporaire. Veuillez le changer lors de votre première connexion."
+msgstr ""
+"{s}. Votre mot de passe est temporaire. Veuillez le changer lors de votre "
+"première connexion."
 
 #: venv/lib/python3.11/site-packages/appointment/utils/email_ops.py:68
 msgid "Thank you for booking us."
@@ -5754,7 +5827,9 @@ msgstr "Jour de congé. Veuillez sélectionner une autre date!"
 #: venv/lib/python3.11/site-packages/appointment/views.py:80
 #, python-brace-format
 msgid "Not a working day for {staff_member}. Please select another date!"
-msgstr "Pas un jour de travail pour {staff_member}. Veuillez sélectionner une autre date!"
+msgstr ""
+"Pas un jour de travail pour {staff_member}. Veuillez sélectionner une autre "
+"date!"
 
 #: venv/lib/python3.11/site-packages/appointment/views.py:95
 msgid "No availability"
@@ -6012,11 +6087,15 @@ msgstr[1] "Cette option {name!r} nécessite {nargs} arguments."
 
 #: venv/lib/python3.11/site-packages/click/shell_completion.py:318
 msgid "Shell completion is not supported for Bash versions older than 4.4."
-msgstr "Completion de shell n'est pas supportée pour les versions de Bash antérieures à 4.4."
+msgstr ""
+"Completion de shell n'est pas supportée pour les versions de Bash "
+"antérieures à 4.4."
 
 #: venv/lib/python3.11/site-packages/click/shell_completion.py:324
 msgid "Couldn't detect Bash version, shell completion is not supported."
-msgstr "Impossible de détecter la version de Bash, la complétion de shell n'est pas supportée."
+msgstr ""
+"Impossible de détecter la version de Bash, la complétion de shell n'est pas "
+"supportée."
 
 #: venv/lib/python3.11/site-packages/click/termui.py:158
 msgid "Repeat for confirmation"
@@ -6215,17 +6294,20 @@ msgstr "Entrez uniquement des chiffres séparés par des virgules."
 #: venv/lib/python3.11/site-packages/django/core/validators.py:357
 #, python-format
 msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
-msgstr "Assurez-vous que cette valeur est %(limit_value)s (elle est %(show_value)s)."
+msgstr ""
+"Assurez-vous que cette valeur est %(limit_value)s (elle est %(show_value)s)."
 
 #: venv/lib/python3.11/site-packages/django/core/validators.py:392
 #, python-format
 msgid "Ensure this value is less than or equal to %(limit_value)s."
-msgstr "Assurez-vous que cette valeur est inférieure ou égale à %(limit_value)s."
+msgstr ""
+"Assurez-vous que cette valeur est inférieure ou égale à %(limit_value)s."
 
 #: venv/lib/python3.11/site-packages/django/core/validators.py:401
 #, python-format
 msgid "Ensure this value is greater than or equal to %(limit_value)s."
-msgstr "Assurez-vous que cette valeur est supérieure ou égale à %(limit_value)s."
+msgstr ""
+"Assurez-vous que cette valeur est supérieure ou égale à %(limit_value)s."
 
 #: venv/lib/python3.11/site-packages/django/core/validators.py:410
 #, python-format
@@ -6240,8 +6322,12 @@ msgid ""
 msgid_plural ""
 "Ensure this value has at least %(limit_value)d characters (it has "
 "%(show_value)d)."
-msgstr[0] "Assurez-vous que cette valeur a au moins %(limit_value)d caractère (elle en a %(show_value)d)."
-msgstr[1] "Assurez-vous que cette valeur a au moins %(limit_value)d caractères (elle en a %(show_value)d)."
+msgstr[0] ""
+"Assurez-vous que cette valeur a au moins %(limit_value)d caractère (elle en "
+"a %(show_value)d)."
+msgstr[1] ""
+"Assurez-vous que cette valeur a au moins %(limit_value)d caractères (elle en "
+"a %(show_value)d)."
 
 #: venv/lib/python3.11/site-packages/django/core/validators.py:438
 #, python-format
@@ -6251,8 +6337,12 @@ msgid ""
 msgid_plural ""
 "Ensure this value has at most %(limit_value)d characters (it has "
 "%(show_value)d)."
-msgstr[0] "Assurez-vous que cette valeur a au plus %(limit_value)d caractère (elle en a %(show_value)d)."
-msgstr[1] "Assurez-vous que cette valeur a au plus %(limit_value)d caractères (elle en a %(show_value)d)."
+msgstr[0] ""
+"Assurez-vous que cette valeur a au plus %(limit_value)d caractère (elle en a "
+"%(show_value)d)."
+msgstr[1] ""
+"Assurez-vous que cette valeur a au plus %(limit_value)d caractères (elle en "
+"a %(show_value)d)."
 
 #: venv/lib/python3.11/site-packages/django/core/validators.py:461
 #: venv/lib/python3.11/site-packages/django/forms/fields.py:347
@@ -6280,8 +6370,10 @@ msgid ""
 "Ensure that there are no more than %(max)s digit before the decimal point."
 msgid_plural ""
 "Ensure that there are no more than %(max)s digits before the decimal point."
-msgstr[0] "Assurez-vous qu'il n'y a pas plus de %(max)s chiffre avant le point décimal."
-msgstr[1] "Assurez-vous qu'il n'y a pas plus de %(max)s chiffres avant le point décimal."
+msgstr[0] ""
+"Assurez-vous qu'il n'y a pas plus de %(max)s chiffre avant le point décimal."
+msgstr[1] ""
+"Assurez-vous qu'il n'y a pas plus de %(max)s chiffres avant le point décimal."
 
 #: venv/lib/python3.11/site-packages/django/core/validators.py:544
 #, python-format
@@ -6429,8 +6521,8 @@ msgid ""
 "“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[."
 "uuuuuu] format."
 msgstr ""
-"La valeur “%(value)s” a un format invalide. Il doit être au format [JJ] [[HH:"
-"]MM:]ss[.uuuuuu]."
+"La valeur “%(value)s” a un format invalide. Il doit être au format [JJ] "
+"[[HH:]MM:]ss[.uuuuuu]."
 
 #: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1870
 msgid "File path"
@@ -6507,8 +6599,8 @@ msgid ""
 "“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
 "format."
 msgstr ""
-"La valeur “%(value)s” a un format invalide. Il doit être au format HH:MM[:ss["
-".uuuuuu]]."
+"La valeur “%(value)s” a un format invalide. Il doit être au format HH:MM[:"
+"ss[.uuuuuu]]."
 
 #: venv/lib/python3.11/site-packages/django/db/models/fields/__init__.py:2452
 #, python-format
@@ -6622,7 +6714,8 @@ msgstr "Le nombre de jours doit être compris entre {min_days} et {max_days}."
 
 #: venv/lib/python3.11/site-packages/django/forms/fields.py:621
 msgid "No file was submitted. Check the encoding type on the form."
-msgstr "Aucun fichier n'a été soumis. Vérifiez le type d'encodage du formulaire."
+msgstr ""
+"Aucun fichier n'a été soumis. Vérifiez le type d'encodage du formulaire."
 
 #: venv/lib/python3.11/site-packages/django/forms/fields.py:622
 msgid "No file was submitted."
@@ -6637,12 +6730,18 @@ msgstr "Le fichier soumis est vide."
 msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
 msgid_plural ""
 "Ensure this filename has at most %(max)d characters (it has %(length)d)."
-msgstr[0] "Assurez-vous que ce nom de fichier a au plus %(max)d caractère (il en a %(length)d)."
-msgstr[1] "Assurez-vous que ce nom de fichier a au plus %(max)d caractères (il en a %(length)d)."
+msgstr[0] ""
+"Assurez-vous que ce nom de fichier a au plus %(max)d caractère (il en a "
+"%(length)d)."
+msgstr[1] ""
+"Assurez-vous que ce nom de fichier a au plus %(max)d caractères (il en a "
+"%(length)d)."
 
 #: venv/lib/python3.11/site-packages/django/forms/fields.py:630
 msgid "Please either submit a file or check the clear checkbox, not both."
-msgstr "Veuillez soit soumettre un fichier soit cocher la case de suppression, pas les deux."
+msgstr ""
+"Veuillez soit soumettre un fichier soit cocher la case de suppression, pas "
+"les deux."
 
 #: venv/lib/python3.11/site-packages/django/forms/fields.py:694
 msgid ""
@@ -6657,7 +6756,8 @@ msgstr ""
 #: venv/lib/python3.11/site-packages/django/forms/models.py:1566
 #, python-format
 msgid "Select a valid choice. %(value)s is not one of the available choices."
-msgstr "Sélectionnez un choix valide. %(value)s n'est pas un des choix disponibles."
+msgstr ""
+"Sélectionnez un choix valide. %(value)s n'est pas un des choix disponibles."
 
 #: venv/lib/python3.11/site-packages/django/forms/fields.py:951
 #: venv/lib/python3.11/site-packages/django/forms/fields.py:1070
@@ -6725,7 +6825,8 @@ msgstr "Veuillez corriger les données en double pour %(field)s."
 #: venv/lib/python3.11/site-packages/django/forms/models.py:891
 #, python-format
 msgid "Please correct the duplicate data for %(field)s, which must be unique."
-msgstr "Veuillez corriger les données en double pour %(field)s, qui doit être unique."
+msgstr ""
+"Veuillez corriger les données en double pour %(field)s, qui doit être unique."
 
 #: venv/lib/python3.11/site-packages/django/forms/models.py:898
 #, python-format
@@ -6746,7 +6847,8 @@ msgstr "La valeur en ligne ne correspondait pas à l'instance parent."
 
 #: venv/lib/python3.11/site-packages/django/forms/models.py:1429
 msgid "Select a valid choice. That choice is not one of the available choices."
-msgstr "Sélectionnez un choix valide. Ce choix n'est pas un des choix disponibles."
+msgstr ""
+"Sélectionnez un choix valide. Ce choix n'est pas un des choix disponibles."
 
 #: venv/lib/python3.11/site-packages/django/forms/models.py:1568
 #, python-format
@@ -6759,7 +6861,8 @@ msgid ""
 "%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; it "
 "may be ambiguous or it may not exist."
 msgstr ""
-"%(datetime)s n'a pas pu être interprété dans le fuseau horaire %(current_timezone)s; il peut être ambigu ou il peut ne pas exister."
+"%(datetime)s n'a pas pu être interprété dans le fuseau horaire "
+"%(current_timezone)s; il peut être ambigu ou il peut ne pas exister."
 
 #: venv/lib/python3.11/site-packages/django/forms/widgets.py:463
 msgid "Clear"
@@ -7321,7 +7424,8 @@ msgid ""
 "target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
 msgstr ""
 "Voir les <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">notes de version</a> pour Django %(version)s"
+"target=\"_blank\" rel=\"noopener\">notes de version</a> pour Django "
+"%(version)s"
 
 #: venv/lib/python3.11/site-packages/django/views/templates/default_urlconf.html:221
 #, python-format
@@ -7333,8 +7437,8 @@ msgid ""
 msgstr ""
 "Vous voyez cette page car <a href=\"https://docs.djangoproject.com/en/"
 "%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
-"\">DEBUG=True</a> est dans votre fichier de configuration et vous n'avez "
-"pas configuré d'URL."
+"\">DEBUG=True</a> est dans votre fichier de configuration et vous n'avez pas "
+"configuré d'URL."
 
 #: venv/lib/python3.11/site-packages/django/views/templates/default_urlconf.html:229
 msgid "Django Documentation"
@@ -7414,6 +7518,30 @@ msgstr ""
 #: venv/lib/python3.11/site-packages/payment/templates/payment/success.html:29
 msgid "CONTINUE"
 msgstr "CONTINUER"
+
+#~ msgid "Request Session"
+#~ msgstr "Demande photoshoot"
+
+#~ msgid "Booking"
+#~ msgstr "Réservation"
+
+#~ msgid "Book Me"
+#~ msgstr "Réservation"
+
+#~ msgid "Latest Promotions"
+#~ msgstr "Dernières promotions"
+
+#~ msgid "OBM (deprecated)"
+#~ msgstr "OBM (obsolète)"
+
+#~ msgid "Business"
+#~ msgstr "Business"
+
+#~ msgid "Passion"
+#~ msgstr "Passion"
+
+#~ msgid "Travels"
+#~ msgstr "Voyages"
 
 #~ msgid "Session list"
 #~ msgstr "Liste photoshoot"

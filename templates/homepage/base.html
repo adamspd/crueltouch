@@ -76,19 +76,7 @@
 
 
         {% block login %}
-            <li>
-                <a href="#">{% trans "Booking" %}</a>
-                <ul class="sub-menu">
-                    {#                    {% if request.user.is_authenticated %}#}
-                    {#                        #}
-                    {#                    {% else %}#}
-                    {#                        <li><a href="{% url 'client:book_me' %}">{% trans "Book Me" %}</a></li>#}
-                    {#                        <li><a href="{% url 'homepage:promotions' %}">{% trans "Latest Promotions" %}</a></li>#}
-                    {#                    {% endif %}#}
-                    <li><a href="{% url 'homepage:services_offered' %}">{% trans "Book Me" %}</a></li>
-                    <li><a href="{% url 'homepage:promotions' %}">{% trans "Latest Promotions" %}</a></li>
-                </ul>
-            </li>
+            <li><a href="{% url 'homepage:services_offered' %}">{% trans "Appointments" %}</a></li>
 
             <li>
                 <a href="#">{% trans "Client Login" %}</a>
