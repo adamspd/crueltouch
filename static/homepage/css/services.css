@@ -1,178 +1,243 @@
-/* General styles */
+/* General styling for the services page */
+
 body {
-    font-family: forum, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f5f5f5; /* Light background for the whole page */
+    color: #333; /* Default text color */
 }
 
 .main-container {
+    font-family: Arial, sans-serif; /* Choose your preferred font */
+    max-width: 980px; /* Maximum width of the main container */
+    margin: 0 auto; /* Center align the main container */
+    padding: 20px;
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-}
-
-/* Page body */
-.page-body {
-    max-width: 980px;
+    align-items: center; /* Center align the content vertically */
 }
 
 .page-title {
-    font-family: Lobster, cursive;
-    margin: 10px;
-    padding: 15px;
+    font-size: 24px; /* Adjust the font size as needed */
+    font-weight: bold; /* Makes the title stand out */
     text-align: center;
+    margin: 20px 0; /* Top and bottom margin for the title */
 }
 
-/* Page item */
-.page-item {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 20px;
-    height: 65vh;
-    align-items: center;
+.page-menu {
+    width: 100%; /* Full width */
+    margin-bottom: 20px; /* Space below the menu */
+    /* Add additional styling as needed */
 }
 
-
-.item-name {
-    font: normal normal lighter 45px/1.4em forum;
+.page-body {
+    width: 100%; /* Full width */
+    /* Add additional styling as needed */
 }
 
-/* Item picture */
-.item-picture {
-    flex: 1;
-    overflow: hidden;
-    position: relative;
-}
+/* Vertically stacked buttons design */
+/*.category-container {*/
+/*    max-width: 100%;*/
+/*    width: 100%; !* Full width of the parent container *!*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: stretch; !* This ensures the buttons stretch to fill the container *!*/
+/*}*/
 
-.item-picture img {
-    height: 529px;
-    width: 430px;
-    object-fit: contain;
-}
+/*.category-button {*/
+/*    width: calc(100% - 10px); !* Full width of the parent container *!*/
+/*    padding: 10px; !* Adjust padding for sizing *!*/
+/*    margin: 5px 0; !* Space between buttons *!*/
+/*    text-align: center;*/
+/*    background-color: #e0e0e0; !* Light grey, adjust as needed *!*/
+/*    border: none;*/
+/*    border-radius: 5px;*/
+/*    cursor: pointer;*/
+/*    transition: background-color 0.2s;*/
+/*}*/
 
-/* Item description */
-.item-description {
-    padding: 70px 70px;
-    margin-left: -25px;
-    height: 503px;
-    width: auto;
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    border: 1px solid #000;
-    border-radius: 5px;
-    z-index: 1;
-    background: white;
-    align-self: center;
-}
+/*.category-button:hover {*/
+/*    background-color: #c0c0c0; !* Slightly darker on hover *!*/
+/*}*/
 
 
-/* Media queries */
-@media screen and (max-width: 1024px) {
-    .item-picture img {
-        height: 550px;
-        width: 450px;
-    }
-
-    .item-description {
-        padding: 50px 50px;
-        margin-left: -15px;
-        height: 450px;
-    }
-}
-
-/* Media queries for max-width: 880px */
-@media screen and (max-width: 880px) {
-    .page-item {
-        grid-template-columns: 1fr;
-        height: auto;
-    }
-
-    .item-picture img {
-        height: 500px;
-        width: 400px;
-    }
-
-    .item-description {
-        padding: 40px 40px;
-        margin: -40px auto 0;
-        width: 320px;
-        height: 400px;
-    }
-}
-
-/* Media queries for max-width: 768px */
-@media screen and (max-width: 768px) {
-}
-
-/* Media queries for max-width: 600px */
-@media screen and (max-width: 600px) {
-}
-
-
-@media screen and (max-width: 480px) {
-    .page-body {
-        margin-bottom: 30px;
-    }
-
-    .page-item {
-        margin-bottom: 55px;
-    }
-
-    .item-picture img {
-        height: auto;
-        width: 100%;
-    }
-
-    .description-paragraph {
-        font-family: Lobster, cursive;
-    }
-    .item-description {
-        padding: 20px 20px;
-        margin: -30px auto 0;
-        height: auto;
-        width: 92%;
-    }
-
-    .item-name {
-        font: normal normal normal 25px/1.4em forum;
-    }
-}
-
-
+/* Horizontally aligned buttons design */
 .category-container {
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .category-button {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    justify-content: space-between;
-    background-color: #f7f7f7;
-    border: 1px solid #e0e0e0;
-    padding: 10px 20px;
+    justify-content: center;
+    padding: 12px 20px;
+    margin: 10px;
+    text-align: center;
+    background-color: #e0e0e0; /* Default gray background */
+    color: #777; /* Dimmed text color for inactive state */
+    font-size: 16px; /* Slightly larger font size */
+    border: 1px solid #d4d4d4; /* Subtle border */
+    border-radius: 30px; /* More rounded corners */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
     cursor: pointer;
-    transition: background-color 0.2s ease;
-    width: 100%;
-    gap: 5px;
+    transition: all 0.3s ease;
 }
 
-.category-button:hover {
-    background-color: #e0e0e0;
+.category-button:hover, .category-button:focus {
+    background-image: linear-gradient(to right, rgba(194, 211, 248, 0.84), rgba(221, 196, 248, 0.83), rgba(250, 197, 197, 0.84));
+    color: #010159;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px); /* Slight raise effect on hover */
 }
 
 .arrow {
-    transform: rotate(0deg);
-    transition: transform 0.2s ease;
-    gap: 5px;
+    margin-left: 10px;
+    transition: transform 0.3s ease;
 }
 
+.category-button.active .arrow {
+    transform: rotate(180deg); /* Flips the chevron when active */
+}
+
+
+/* Services list design initially hidden */
 .service-list {
-    display: none;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
+    width: 100%;
+    display: none; /* Hidden by default */
+    /* Additional styling as needed */
+    margin-top: 50px;
+}
+
+/* Service list item design */
+.page-item {
+    display: flex; /* Enables flexbox layout */
+    align-items: center; /* Vertically centers the items */
+    justify-content: flex-start; /* Aligns items to the start */
+    margin-bottom: 80px; /* Space between each item */
+    position: relative; /* Sets relative positioning */
+}
+
+.item-picture {
+    flex: 0 0 450px; /* Fixed size for square images */
+    height: 450px; /* Same as width for square aspect ratio */
+    overflow: hidden; /* Ensures image does not overflow the container */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-picture img {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    object-fit: cover; /* Ensures image covers the area */
+    object-position: top center; /* Aligns the image to the top center */
+}
+
+.item-description {
+    width: 420px; /* Width of the description */
+    height: 480px; /* Height of the description, making it square */
+    position: absolute; /* Absolute positioning to overlap the image */
+    left: 435px; /* Adjust as needed to overlap the image */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust vertical positioning */
+    padding: 25px; /* Adequate padding around the text */
+    background-color: rgba(255, 255, 255, 0.99); /* Semi-transparent background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: adds depth */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 15px;
+    border: 0.5px solid rgba(56, 44, 44, 0.87);
+}
+
+
+/* Service item description */
+.item-name {
+    font-size: 24px; /* Larger font size for the title */
+    font-weight: bold; /* Bold for emphasis */
+    color: #333; /* Dark color for title */
+    margin-bottom: 10px; /* Spacing after the title */
+}
+
+.description-paragraph {
+    font-size: 16px; /* Comfortable reading size */
+    color: #666; /* Slightly lighter than the title */
+    margin-bottom: 10px; /* Spacing after the paragraph */
+}
+
+.item-description p {
+    font-size: 16px; /* Consistent font size */
+    color: #666; /* Slightly lighter color */
+    margin-bottom: 5px; /* Smaller spacing */
+}
+
+.item-description .btn-dark {
+    padding: 10px 20px; /* Adequate padding */
+    background-color: #333333; /* Dark color */
+    color: white; /* Text color */
+    text-align: center; /* Center text */
+    border-radius: 5px; /* Rounded corners */
+    text-decoration: none; /* Removes underline from links */
+    display: inline-block; /* Allows setting padding and other box model properties */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.item-description .btn-dark:hover {
+    background-color: #555; /* Slightly lighter on hover */
+}
+
+
+
+/* Responsive design for tablet screens */
+@media screen and (max-width: 768px) {
+    .page-item {
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 40px; /* Increase space between items */
+        border: 1px solid #ddd; /* Add a border */
+        padding: 20px; /* Add padding inside the item */
+        border-radius: 10px; /* Optional: rounded corners for aesthetics */
+    }
+
+    .item-picture, .item-description {
+        flex: 0 0 auto; /* Adjust size for smaller screens */
+        width: 100%; /* Full width */
+        height: auto; /* Adjust height */
+        position: relative; /* Reset positioning */
+        left: 0;
+        top: 0;
+        transform: translateY(0);
+    }
+
+    .item-description {
+        padding: 15px;
+        margin-top: 20px; /* Space between image and description */
+    }
+}
+
+
+/* Responsive design for mobile screens */
+@media screen and (max-width: 480px) {
+    .category-button {
+        padding: 8px 15px; /* Smaller padding */
+        margin: 5px; /* Smaller margin */
+        font-size: 14px; /* Smaller font size */
+    }
+
+    .item-name {
+        font-size: 20px; /* Slightly smaller font size */
+    }
+
+    .description-paragraph, .item-description p {
+        font-size: 14px; /* Smaller font size for readability */
+    }
+
+    .item-description .btn-dark {
+        padding: 8px 15px; /* Smaller button padding */
+    }
 }

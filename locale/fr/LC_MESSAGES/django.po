@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-01 19:32-0500\n"
+"POT-Creation-Date: 2023-12-01 21:54-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1777,9 +1777,9 @@ msgstr "Clients satisfaits"
 msgid "Photoshoot"
 msgstr "Photoshoot"
 
-#: templates/homepage/services_offered.html:15
-msgid "Book your service here"
-msgstr "Réservez votre service ici"
+#: templates/homepage/services_offered.html:16
+msgid "Select and Schedule Your Appointment"
+msgstr "Choisissez et Planifiez votre Rendez-vous"
 
 #: templates/legal/privacy_policy.html:18
 #: templates/legal/terms_and_conditions.html:16
@@ -7518,6 +7518,9 @@ msgstr ""
 #: venv/lib/python3.11/site-packages/payment/templates/payment/success.html:29
 msgid "CONTINUE"
 msgstr "CONTINUER"
+
+#~ msgid "Book your service here"
+#~ msgstr "Réservez votre service ici"
 
 #~ msgid "Request Session"
 #~ msgstr "Demande photoshoot"
