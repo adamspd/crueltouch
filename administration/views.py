@@ -100,7 +100,7 @@ def get_context(request):
 
 def get_base_context(request):
     user = request.user
-    profile_link = "#"
+    profile_link = None
     try:
         sm = StaffMember.objects.get(user=user)
         if sm:
