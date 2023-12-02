@@ -31,14 +31,114 @@ DATABASE_UPDATE = os.getenv('DATABASE_UPDATE') == 'True'
 TEST_EMAIL = os.getenv('TEST_EMAIL')
 
 phone_regex = RegexValidator(
-    regex=r'^\d{10}$',
-    message=_("Phone number must not contain spaces, letters, parentheses or dashes. It must contain 10 digits.")
+    regex=r'^\d{15}$',
+    message=_("Phone number must not contain spaces, letters, parentheses or dashes. It must contain 15 digits.")
 )
+
+
+class Photo(models.Model):
+    file = models.ImageField(upload_to='Client', null=True, blank=True)
+    is_favorite = models.BooleanField(default=False)
+    can_be_downloaded = models.BooleanField(default=False)
+    thumbnail = models.FileField(upload_to='Client/thumbnails', null=True, blank=True)
+
+    def __str__(self):
+        return self.file.name
+
+    def set_favorite(self):
+        self.is_favorite = True
+        self.save()
+
+    def set_not_favorite(self):
+        self.is_favorite = False
+        self.save()
+
+    def set_can_be_downloaded(self):
+        self.can_be_downloaded = True
+        self.save()
+
+    def set_can_not_be_downloaded(self):
+        self.can_be_downloaded = False
+        self.save()
+
+    def create_thumbnail(self, base_height=300):
+        if not self.thumbnail:
+            img = Image.open(self.file)
+            # get image's name without path and extension
+            name = os.path.basename(self.file.name)
+            name, extension = os.path.splitext(name)[0], os.path.splitext(name)[1]
+            name = name + '_thumbnail' + extension
+            # extract orientation information from image's metadata
+            try:
+                for orientation in TAGS.keys():
+                    if TAGS[orientation] == 'Orientation':
+                        break
+                exif = dict(img._getexif().items())
+                if exif[orientation] == 3:
+                    img = img.rotate(180, expand=True)
+                elif exif[orientation] == 6:
+                    img = img.rotate(-90, expand=True)
+                elif exif[orientation] == 8:
+                    img = img.rotate(90, expand=True)
+            except (AttributeError, KeyError, IndexError):
+                # no EXIF information found
+                pass
+            # resize image
+            height_percent = (base_height / float(img.size[1]))
+            width_size = int((float(img.size[0]) * float(height_percent)))
+            img = img.resize((width_size, base_height), PIL.Image.Resampling.LANCZOS)
+            # convert RGBA image to RGB
+            if img.mode == 'RGBA':
+                img = img.convert('RGB')
+            # save thumbnail in self.thumbnail_url field
+            thumbnail_io = BytesIO()
+            img.save(thumbnail_io, format='JPEG')
+            thumbnail_file = ContentFile(thumbnail_io.getvalue())
+            self.thumbnail.save(name, thumbnail_file, save=False)
+            self.save()
+
+    def get_thumbnail_url(self):
+        if self.file:
+            if self.thumbnail:
+                return self.thumbnail.url
+            else:
+                self.create_thumbnail()
+                return self.thumbnail.url if self.thumbnail else ''
+        else:
+            return ''
+
+    def get_name(self):
+        name = os.path.basename(self.file.name)
+        return name
+
+    def get_is_favorite(self):
+        if self.is_favorite:
+            return "like is-active"
+        else:
+            return ""
+
+    def delete(self, *args, **kwargs):
+        # Delete the files from the file system.
+        if self.file:
+            default_storage.delete(self.file.name)
+        if self.thumbnail:
+            default_storage.delete(self.thumbnail.name)
+
+        # Call the superclass delete() method.
+        super(Photo, self).delete(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.create_thumbnail()
+
+    def get_url(self):
+        return self.file.url if self.file else ''
 
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, first_name, email, last_name=None, password=None, is_admin=False, is_staff=False, is_active=True):
+    def create_user(self, first_name, email, last_name=None, password=None, is_admin=False, is_staff=False,
+                    is_active=True):
         if not email:
             raise ValueError(_('You must provide an email address'))
         if not first_name:
@@ -68,16 +168,17 @@ class UserClient(AbstractBaseUser, PermissionsMixin, models.Model):
     email = models.EmailField(max_length=255, unique=True, default="", help_text=_("A valid email address, please"))
     first_name = models.CharField(max_length=255, default=None)
     last_name = models.CharField(max_length=255, default=None, null=True, blank=True)
-    phone_number = models.CharField(validators=[phone_regex], max_length=10, blank=True, null=True, default="",
+    phone_number = models.CharField(validators=[phone_regex], max_length=15, blank=True, null=True, default="",
                                     help_text=_("Phone number must not contain spaces, letters, parentheses or "
-                                                "dashes. It must contain 10 digits."))
+                                                "dashes. It must contain 15 digits."))
     address = models.CharField(max_length=255, blank=True, null=True, default="",
                                help_text=_("Does not have to be specific, just the city and the state"))
 
     is_active = models.BooleanField(default=True)  # can login
     admin = models.BooleanField(default=False)  # superuser
     staff = models.BooleanField(default=False)  # staff member
-
+    profile_photo = models.ForeignKey(Photo, on_delete=models.SET_NULL, null=True, blank=True,
+                                      related_name='user_clients')
     start_date = models.DateTimeField(default=now)
     first_login = models.BooleanField(default=False)
 
@@ -90,7 +191,7 @@ class UserClient(AbstractBaseUser, PermissionsMixin, models.Model):
 
     def get_full_name(self):
         # The user is identified by their Username ;)
-        return self.first_name
+        return self.first_name if self.last_name is None else self.first_name + " " + self.last_name
 
     def get_short_name(self):
         # The user is identified by their Username address
@@ -146,105 +247,6 @@ class UserClient(AbstractBaseUser, PermissionsMixin, models.Model):
     def user_active(self):
         """Is the user active / can he log in?"""
         return self.is_active
-
-
-class Photo(models.Model):
-    file = models.ImageField(upload_to='Client', null=True, blank=True)
-    is_favorite = models.BooleanField(default=False)
-    can_be_downloaded = models.BooleanField(default=False)
-    thumbnail = models.FileField(upload_to='Client/thumbnails', null=True, blank=True)
-
-    def __str__(self):
-        return self.file.name
-
-    def set_favorite(self):
-        self.is_favorite = True
-        self.save()
-
-    def set_not_favorite(self):
-        self.is_favorite = False
-        self.save()
-
-    def set_can_be_downloaded(self):
-        self.can_be_downloaded = True
-        self.save()
-
-    def set_can_not_be_downloaded(self):
-        self.can_be_downloaded = False
-        self.save()
-
-    def create_thumbnail(self, base_height=300):
-        if not self.thumbnail:
-            img = Image.open(self.file)
-            # get image's name without path and extension
-            name = os.path.basename(self.file.name)
-            name, extension = os.path.splitext(name)[0], os.path.splitext(name)[1]
-            name = name + '_thumbnail' + extension
-            # extract orientation information from image's metadata
-            try:
-                for orientation in TAGS.keys():
-                    if TAGS[orientation] == 'Orientation':
-                        break
-                exif = dict(img._getexif().items())
-                if exif[orientation] == 3:
-                    img = img.rotate(180, expand=True)
-                elif exif[orientation] == 6:
-                    img = img.rotate(-90, expand=True)
-                elif exif[orientation] == 8:
-                    img = img.rotate(90, expand=True)
-            except (AttributeError, KeyError, IndexError):
-                # no EXIF information found
-                pass
-            # resize image
-            height_percent = (base_height / float(img.size[1]))
-            width_size = int((float(img.size[0]) * float(height_percent)))
-            img = img.resize((width_size, base_height), PIL.Image.ANTIALIAS)
-            # convert RGBA image to RGB
-            if img.mode == 'RGBA':
-                img = img.convert('RGB')
-            # save thumbnail in self.thumbnail_url field
-            thumbnail_io = BytesIO()
-            img.save(thumbnail_io, format='JPEG')
-            thumbnail_file = ContentFile(thumbnail_io.getvalue())
-            self.thumbnail.save(name, thumbnail_file, save=False)
-            self.save()
-
-    def get_thumbnail_url(self):
-        if self.file:
-            if self.thumbnail:
-                return self.thumbnail.url
-            else:
-                self.create_thumbnail()
-                return self.thumbnail.url if self.thumbnail else ''
-        else:
-            return ''
-
-    def get_name(self):
-        name = os.path.basename(self.file.name)
-        return name
-
-    def get_is_favorite(self):
-        if self.is_favorite:
-            return "like is-active"
-        else:
-            return ""
-
-    def delete(self, *args, **kwargs):
-        # Delete the files from the file system.
-        if self.file:
-            default_storage.delete(self.file.name)
-        if self.thumbnail:
-            default_storage.delete(self.thumbnail.name)
-
-        # Call the superclass delete() method.
-        super(Photo, self).delete(*args, **kwargs)
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        self.create_thumbnail()
-
-    def get_url(self):
-        return self.file.url if self.file else ''
 
 
 class Album(models.Model):
