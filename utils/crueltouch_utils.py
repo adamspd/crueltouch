@@ -59,21 +59,14 @@ def check_user_login(request):
     if request.user.is_authenticated:
         user = request.user
         if user.is_superuser or user.is_admin:
-            c_print("User is superuser already")
-            return redirect('administration:index')
+            return 'admin'
         elif user.is_active:
-            c_print("User is active but not admin")
-            if user.has_to_change_password:
-                return redirect("administration:must_change_password", user.pk)
-            else:
-                return redirect("client:client_homepage")
-        else:
-            messages.error(request, "User is anonymous")
-            return redirect('client:login')
+            return 'active'
+    return 'anonymous'
 
 
 def email_check(user):
-    if user.email.startswith('roos.laurore5') or user.email.startswith('adamspierredavid'):
+    if user.is_superuser or user.is_admin or user.is_staff:
         return True
     else:
         return False

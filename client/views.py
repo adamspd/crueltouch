@@ -46,27 +46,37 @@ def register_page(request):
 
 
 def login_page(request):
-    if not request.user.is_anonymous:
-        if request.user.has_to_change_password:
-            return redirect("administration:must_change_password", request.user.pk)
-        check_user_login(request)
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
         user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user)
-            print("user is logged in ")
-            # Redirect to a success page.
+            print("user is logged in")
+            # Check if user needs to change password
             if user.has_to_change_password:
                 return redirect("administration:must_change_password", user.pk)
-            return redirect('client:client_homepage')
+
+            # Redirect based on user type
+            if user.is_admin:
+                return redirect('administration:index')
+            else:
+                return redirect('client:client_homepage')
         else:
             # Return an 'invalid login' error message.
             messages.info(request, 'Username or Password is incorrect')
     else:
         if request.user.is_authenticated:
-            return redirect('client:client_homepage')
+            # Check if logged in user needs to change password
+            if request.user.has_to_change_password:
+                return redirect("administration:must_change_password", request.user.pk)
+
+            # Redirect based on user type
+            if request.user.is_admin:
+                return redirect('administration:index')
+            else:
+                return redirect('client:client_homepage')
+
     contexts = {}
     return render(request, 'client/login_registration/login.html', contexts)
 
