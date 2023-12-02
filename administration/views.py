@@ -5,6 +5,7 @@ from datetime import timedelta
 from io import BytesIO
 from sqlite3 import IntegrityError
 
+from appointment.models import Appointment
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
@@ -53,23 +54,23 @@ def create_book_me():
 def get_book_me_by_month():
     book_me_by_month = []
     for i in range(1, 13):
-        book_me_by_month.append(BookMe.objects.filter(time_book_taken__month=i).count())
+        book_me_by_month.append(Appointment.objects.filter(created_at__month=i).count())
     return book_me_by_month
 
 
 def get_context(request):
-    requested_session = BookMe.objects.all()
+    requested_session = Appointment.objects.all()
     # get last 10 book_me
-    last_10_book_me = BookMe.objects.all().order_by("-time_book_taken")[:10]
+    last_10_book_me = Appointment.objects.all().order_by("-created_at")[:10]
     photo_delivered = Photo.objects.all()
     all_clients = UserClient.objects.filter(admin=False)
     contact_forms = ContactForm.objects.all()
 
     # get all book_me from this month
-    this_month = BookMe.objects.filter(time_book_taken__month=datetime.datetime.now().month)
+    this_month = Appointment.objects.filter(created_at__month=datetime.datetime.now().month)
 
     # get all book_me from last month
-    last_month = BookMe.objects.filter(time_book_taken__month=datetime.datetime.now().month - 1)
+    last_month = Appointment.objects.filter(created_at__month=datetime.datetime.now().month - 1)
 
     # increasing/decreasing percentage of book_me compared to last month
     if len(this_month) == 0 and len(last_month) == 0:
@@ -532,7 +533,7 @@ def send_photos_for_client_to_choose_from(request):
                 photo = Photo.objects.create(file=f)
                 photos.append(photo)
             client_album.save()
-            # if client album already have photos, add new photos to it
+            # if client album already has photos, add new photos to it
             if client_album.photos.all():
                 client_album.photos.add(*photos)
             else:
