@@ -51,11 +51,15 @@ class BookMeConfig(admin.ModelAdmin):
     list_display = ('full_name', 'time_book_taken', 'package', 'session_type', 'place')
 
 
+@admin.register(UserClient)
+class UserClientAdmin(admin.ModelAdmin):
+    search_fields = ('first_name', 'last_name', 'email')
+    list_filter = ('first_name', 'last_name', 'email')
+    ordering = ('first_name',)
+    list_display = ('first_name', 'last_name', 'email', 'phone_number', 'is_active', 'is_staff', 'is_superuser')
+
+
 User = get_user_model()
-# Register your models here.
-# admin.site.register(Photo, PhotoAdmin)
-# admin.site.register(UserClient, UserAdminConfig)
-admin.site.register(UserClient)
 admin.site.register(BookMe, BookMeConfig)
 admin.site.register(Album)
 admin.site.register(Photo)

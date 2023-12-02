@@ -15,6 +15,7 @@ from django.contrib.staticfiles import finders
 from django.http import HttpResponseRedirect, HttpResponseNotFound, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.template.loader import get_template
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from xhtml2pdf import pisa
 
@@ -98,15 +99,24 @@ def get_context(request):
 
 
 def get_base_context(request):
+    user = request.user
+    profile_link = "#"
+    try:
+        sm = StaffMember.objects.get(user=user)
+        if sm:
+            profile_link = reverse('appointment:user_profile', args=[user.id])
+    except StaffMember.DoesNotExist:
+        pass
+
     return {
-        'user': request.user
+        'user': user,
+        'profile_link': profile_link,
     }
 
 
 def login_admin(request):
     if request.user.is_authenticated:
         resp = check_user_login(request)
-        print(f"resp: {resp}")
         if resp == "admin" or resp == "staff":
             return redirect('administration:index')
         elif resp == "active":
