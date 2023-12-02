@@ -58,7 +58,7 @@ def check_user_login(request):
     """
     if request.user.is_authenticated:
         user = request.user
-        if user.is_superuser or user.is_admin:
+        if user.is_superuser or user.is_admin or user.is_staff:
             return 'admin'
         elif user.is_active:
             return 'active'
