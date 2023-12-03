@@ -1,6 +1,6 @@
 import random
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from portfolio.models import Photo, Album
 
 
@@ -20,3 +20,4 @@ def index_portfolio(request):
 def check_format_photo(list_of_photo: list[Photo]):
     for photo in list_of_photo:
         photo.change_file_format()
+        photo.create_thumbnail()
