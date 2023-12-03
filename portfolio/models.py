@@ -43,7 +43,7 @@ class Photo(models.Model):
         return self.file
 
     def create_thumbnail(self, base_height=500):
-        if not os.path.exists(self.thumbnail.path):
+        if not self.thumbnail or not os.path.exists(self.thumbnail.path):
             img = Image.open(self.file)
             # Get image's name without a path and extension
             name = os.path.basename(self.file.name)
