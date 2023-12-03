@@ -1,0 +1,11 @@
+body {
+    background-color: rgba(0, 0, 0, 0.94) !important;
+}
+
+.main-menu li a {
+    color: whitesmoke !important;
+}
+
+.main-menu li .sub-menu {
+    background-color: rgba(0, 0, 0, 0.8);
+}

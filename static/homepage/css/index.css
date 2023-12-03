@@ -667,7 +667,7 @@ body {
 		display: inline-block;
 	}
 	.slicknav_nav {
-		background: #081624;
+		background: rgba(15, 15, 15, 0.87);
 		text-align: left;
 		padding: 8px 5px;
 		margin-bottom: 15px;

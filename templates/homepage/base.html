@@ -59,8 +59,10 @@
         {% endblock %}
     </a>
     <div class="header-controls">
-        <button class="nav-switch-btn"><i class="fa fa-bars"></i></button>
-        <button class="search-btn"><i class="fa fa-search"></i></button>
+        <button class="nav-switch-btn"><i class="fa fa-bars"
+                                          style="color: {% block bars_color %}black{% endblock %}"></i></button>
+        <button class="search-btn"><i class="fa fa-search"
+                                      style="color: {% block search_button_color %}black{% endblock %}"></i></button>
     </div>
     <ul class="main-menu">
         <li><a href="{% url 'homepage:index' %}">{% trans "Home" %}</a></li>
