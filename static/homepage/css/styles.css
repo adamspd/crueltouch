@@ -169,10 +169,15 @@ ol {
 .hero-section {
 	clear: both;
 	position: relative;
+	height: 90vh !important;
+}
+
+.hero-slider {
+	height: 41vh !important;
 }
 
 .hero-item {
-	height: 278px;
+	height: 41vh !important;
 	position: relative;
 }
 
