@@ -6,8 +6,15 @@
     {% trans "Have a look at the different high-quality photos that I deliver in my portfolio page" %}
 {% endblock %}
 {% block canonical %}{% url 'pf:index_portfolio' %}{% endblock %}
-{% block homepageCSS %}
+{% block search_button_color %}white{% endblock %}
+{% block bars_color %}white{% endblock %}
+{% block logoImg %}
+    <img src="{% static 'homepage/img/logos/logo-white.png' %}" style="height: 60px; width: 100px" alt="logo">
+{% endblock %}
+{% block priceTableCSS %}
     <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/magnific-popup.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/homepage.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/portfolio.css' %}"/>
 {% endblock %}
 
 {% block body %}

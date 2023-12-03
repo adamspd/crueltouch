@@ -169,18 +169,28 @@ body {
 
 /* Responsive design for tablet screens */
 @media screen and (max-width: 768px) {
+    .page-menu {
+        /* I want the menu button to use the space available and break into multiple lines */
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .category-container {
+        width: 100%;
+    }
+
     .page-item {
         flex-direction: column;
         align-items: center;
         margin-bottom: 40px; /* Increase space between items */
         border: 1px solid #ddd; /* Add a border */
-        padding: 20px; /* Add padding inside the item */
-        border-radius: 10px; /* Optional: rounded corners for aesthetics */
+        padding: 5px; /* Add padding inside the item */
+        border-radius: 10px;
     }
 
     .item-picture, .item-description {
         flex: 0 0 auto; /* Adjust size for smaller screens */
-        width: 100%; /* Full width */
+        width: 95%; /* Full width */
         height: auto; /* Adjust height */
         position: relative; /* Reset positioning */
         left: 0;
