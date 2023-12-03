@@ -762,3 +762,20 @@ ol {
 .text-msg:-ms-input-placeholder {
 	padding-top: 130px;
 }
+
+@media only screen and (max-width: 479px) {
+    .hero-section {
+        clear: both;
+        position: relative;
+        height: auto !important;
+    }
+
+    .hero-slider {
+        height: auto !important;
+    }
+
+    .hero-item {
+        height: 378px !important;
+        position: relative;
+    }
+}
