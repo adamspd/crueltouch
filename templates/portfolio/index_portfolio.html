@@ -30,7 +30,7 @@
             {% for photo in all_photos %}
                 <div class="mix col-xl-2 col-md-3 col-sm-4 col-6 p-0 {{ photo.album }}">
                     <a href="{{ photo.file.url }}" class="portfolio-item img-popup set-bg"
-                       data-setbg="{{ photo.file.url }}">
+                       data-setbg="{{ photo.thumbnail.url }}">
                     </a>
                 </div>
             {% endfor %}
