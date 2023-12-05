@@ -1,9 +1,7 @@
 {% extends 'homepage/base.html' %}
 {% load i18n %}
 {% load static %}
-{% block canonical %}
-	{% url 'homepage:about' %}
-{% endblock %}
+{% block canonical %}{% url 'homepage:about' %}{% endblock %}
 {% block customCSS %}
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
