@@ -57,7 +57,7 @@ class AboutView(generic.ListView):
 
 def get_logo(request):
     try:
-        with open(settings.BASE_DIR / 'static/homepage/img/logos/logo.png', 'rb') as f:
+        with open(settings.BASE_DIR / 'static/homepage/img/logos/logo.web', 'rb') as f:
             return HttpResponse(f.read(), content_type="image/png")
     except IOError:
         raise Http404
@@ -65,7 +65,7 @@ def get_logo(request):
 
 def get_logo_mini(request):
     try:
-        with open(settings.BASE_DIR / 'static/homepage/img/logos/logo-mini.png', 'rb') as f:
+        with open(settings.BASE_DIR / 'static/homepage/img/logos/logo-mini.webp', 'rb') as f:
             return HttpResponse(f.read(), content_type="image/png")
     except IOError:
         raise Http404
