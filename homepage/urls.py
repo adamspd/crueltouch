@@ -1,12 +1,19 @@
+from django.contrib.sitemaps.views import sitemap
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import path
 from django.views.generic.base import RedirectView
 
-from administration.views import get_downloadable_client_images, download_zip
+from administration.views import download_zip, get_downloadable_client_images
+from crueltouch.sitemaps import ImportantStaticViewSitemap, StaticViewSitemap
 from static_pages_and_forms.views import privacy_policy, terms_and_conditions
 from .views import *
 
 app_name = 'homepage'
+
+sitemaps = {
+    'important': ImportantStaticViewSitemap,
+    'static': StaticViewSitemap,
+}
 
 urlpatterns = [
     # homepage
@@ -31,4 +38,7 @@ urlpatterns = [
     path('terms-and-conditions/', terms_and_conditions, name='terms_and_conditions'),
     # /services/
     path('services/', services_offered, name='services_offered'),
+    path('sitemap.xml/', sitemap, {'sitemaps': sitemaps},
+         name='django.contrib.sitemaps.views.sitemap'),
+
 ]
