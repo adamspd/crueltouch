@@ -24,7 +24,7 @@ class ImportantStaticViewSitemap(Sitemap):
 
 class StaticViewSitemap(Sitemap):
     priority = 0.5
-    changefreq = 'monthly'
+    changefreq = 'yearly'
     protocol = 'https'
 
     def items(self):
