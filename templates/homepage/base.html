@@ -55,7 +55,7 @@
 <header class="header-section">
     <a href="{% url 'homepage:index' %}" class="site-logo">
         {% block logoImg %}
-            <img src="/media/Logo/crucru.png" style="height: 60px; width: 100px" alt="logo">
+            <img src="{% static 'homepage/img/logos/logo.webp' %}" style="height: 60px; width: 100px" alt="logo">
         {% endblock %}
     </a>
     <div class="header-controls">
