@@ -88,6 +88,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.admindocs.middleware.XViewMiddleware',
+    'homepage.middleware.CacheControlMiddleware'
 ]
 
 ROOT_URLCONF = 'crueltouch.urls'
