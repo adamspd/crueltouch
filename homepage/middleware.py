@@ -13,5 +13,5 @@ class CacheControlMiddleware:
             add_never_cache_headers(response)
         else:
             if 'image' in response['Content-Type']:
-                patch_cache_control(response, public=True, max_age=31536000)
+                patch_cache_control(response, public=True, max_age=604800, must_revalidate=True)
         return response
