@@ -727,10 +727,13 @@ def generate_invoice(request):
     header = "https://tchiiz.com/media/photos_clients/crueltouch_header.png"
     footer = "https://productionsdesign.com/wp-content/uploads/2022/06/footer.png"
     paid_stamps = 'https://tchiiz.com/media/photos_clients/paid_ct_ww.png'
+    unpaid_stamps = 'https://tchiiz.com/media/photos_clients/unpaid_invoice.jpg'
     context['header'] = header
     context['footer'] = footer
-    if context.get('payment_method', '') != 'None':
+    if context.get('payment_method', '') != 'None' and context.get('paid', '') == 'True':
         context['paid_stamps'] = paid_stamps
+    else:
+        context['paid_stamps'] = unpaid_stamps
 
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
