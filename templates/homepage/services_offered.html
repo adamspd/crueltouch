@@ -27,7 +27,7 @@
                     {% for service in wedding_service %}
                         <div class="page-item">
                             <div class="item-picture">
-                                <img src="{{ service.get_image_url }}" alt="{{ service.name }}">
+                                <img src="{{ service.get_image_url }}" alt="{{ service.name }}" loading="lazy">
                             </div>
                             <div class="item-description">
                                 <h2 class="item-name">{{ service.name }}</h2>
@@ -45,7 +45,7 @@
                     {% for service in portrait_service %}
                         <div class="page-item">
                             <div class="item-picture">
-                                <img src="{{ service.get_image_url }}" alt="{{ service.name }}">
+                                <img src="{{ service.get_image_url }}" alt="{{ service.name }}" loading="lazy">
                             </div>
                             <div class="item-description">
                                 <h2 class="item-name">{{ service.name }}</h2>
@@ -63,7 +63,7 @@
                     {% for service in product_service %}
                         <div class="page-item">
                             <div class="item-picture">
-                                <img src="{{ service.get_image_url }}" alt="{{ service.name }}">
+                                <img src="{{ service.get_image_url }}" alt="{{ service.name }}" loading="lazy">
                             </div>
                             <div class="item-description">
                                 <h2 class="item-name">{{ service.name }}</h2>
@@ -81,7 +81,7 @@
                     {% for service in event_service %}
                         <div class="page-item">
                             <div class="item-picture">
-                                <img src="{{ service.get_image_url }}" alt="{{ service.name }}">
+                                <img src="{{ service.get_image_url }}" alt="{{ service.name }}" loading="lazy">
                             </div>
                             <div class="item-description">
                                 <h2 class="item-name">{{ service.name }}</h2>
