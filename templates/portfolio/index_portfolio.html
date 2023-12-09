@@ -37,3 +37,34 @@
         </div>
     </div>
 {% endblock body %}
+
+{% block customJS %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let lazyLoadElements = document.querySelectorAll('.set-bg');
+
+            if ('IntersectionObserver' in window) {
+                let observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            let element = entry.target;
+                            let imageUrl = element.getAttribute('data-setbg');
+                            element.style.backgroundImage = `url(${imageUrl})`;
+                            observer.unobserve(element);
+                        }
+                    });
+                });
+
+                lazyLoadElements.forEach(element => {
+                    observer.observe(element);
+                });
+            } else {
+                // Fallback for browsers that do not support IntersectionObserver
+                lazyLoadElements.forEach(element => {
+                    let imageUrl = element.getAttribute('data-setbg');
+                    element.style.backgroundImage = `url(${imageUrl})`;
+                });
+            }
+        });
+    </script>
+{% endblock %}
