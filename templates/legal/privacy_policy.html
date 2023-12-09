@@ -125,9 +125,9 @@
                             <li>
                                 <p><strong>{% trans 'You' %}</strong>
                                     {% blocktranslate %}
-                                        means the individual accessing or using the Service, or the
-                                        company, or other legal entity on behalf of which such individual is accessing
-                                        or using the Service, as applicable.
+                                        means the individual accessing or using the Service, or the company, or other
+                                        legal entity on behalf of which such an individual is accessing or using the
+                                        Service, as applicable.
                                     {% endblocktranslate %}
                                 </p>
                             </li>
@@ -202,7 +202,7 @@
                             </li>
                             <li><strong>{% trans "Security Cookies." %}</strong>
                                 {% blocktranslate %}
-                                    We use Security Cookies for security purposes.
+                                    We use Security Cookies for security.
                                 {% endblocktranslate %}
                             </li>
                         </ul>
@@ -213,7 +213,7 @@
                                 improve and market our products/services. Website usage data is captured using first and
                                 third-party cookies and other tracking technologies to determine the popularity of
                                 products/services and online activity. Additionally, we use this information for site
-                                optimization, fraud/security purposes, and advertising. For more information about how
+                                optimization, security purposes, and advertising. For more information about how
                                 Microsoft collects and uses your data, visit the
                                 <a href="https://privacy.microsoft.com/privacystatement">Microsoft Privacy
                                     Statement.</a>
@@ -252,9 +252,9 @@
                         </p>
                         <p>
                             {% blocktranslate %}
-                                If you are located outside United States of America and choose to provide information to
-                                us, please note that we transfer the data, including Personal Data, to United States of
-                                America and process it there.
+                                If you are located outside the United States of America and choose to provide
+                                information to us, please note that we transfer the data, including Personal Data, to
+                                the United States of America and process it there.
                             {% endblocktranslate %}
                         </p>
                         <p>
@@ -268,7 +268,7 @@
                                 My Company will take all steps reasonably necessary to ensure that your data is treated
                                 securely and in accordance with this Privacy Policy and no transfer of your Personal
                                 Data will take place to an organization or a country unless there are adequate controls
-                                in  place including the security of your data and other personal information.
+                                in place including the security of your data and other personal information.
                             {% endblocktranslate %}
                         </p>
                         <h3>{% trans "Disclosure Of Data" %}</h3>
@@ -340,7 +340,7 @@
                         <p>
                             {% blocktranslate %}
                                 We do not knowingly collect personally identifiable information from anyone under the
-                                age of 18. If you are a parent or guardian, and you are aware that your Children has
+                                age of 18. If you are a parent or guardian, and you are aware that your Children have
                                 provided us with Personal Data, please contact us. If we become aware that we have
                                 collected Personal Data from children without verification of parental consent, we take
                                 steps to remove that information from our servers.
@@ -394,7 +394,7 @@
 {% endblock %}
 {% block customJS %}
     <script>
-        const mybutton = document.getElementById("myBtnTop");
+        const myButton = document.getElementById("myBtnTop");
 
         // When the user scrolls down 20px from the top of the document, show the button
         window.onscroll = function () {
@@ -403,9 +403,9 @@
 
         function scrollFunction() {
             if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                mybutton.style.display = "block";
+                myButton.style.display = "block";
             } else {
-                mybutton.style.display = "none";
+                myButton.style.display = "none";
             }
         }
 
