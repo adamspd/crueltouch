@@ -26,12 +26,9 @@
                         <p>
                             {% blocktranslate %}
                                 We use your data to provide and improve the Service. By using the Service, you agree to
-                                the
-                                collection and use of information in accordance with this policy. Unless otherwise
-                                defined
-                                in this Privacy Policy, terms used in this Privacy Policy have the same meanings as in
-                                our
-                                Terms and Conditions, accessible from
+                                the collection and use of information in accordance with this policy. Unless otherwise
+                                defined in this Privacy Policy, terms used in this Privacy Policy have the same meanings
+                                as in our Terms and Conditions, accessible from
                             {% endblocktranslate %}
                             <a href="{% url 'homepage:terms_and_conditions' %}">{% trans 'here' %}</a>.</p>
                         <h2>{% trans 'Interpretation' %}</h2>
@@ -74,7 +71,9 @@
                                 </p>
                             </li>
                             <li>
-                                <p><strong>{% translate "Country" %}</strong> {% trans 'refers to: United States of America' %}</p>
+                                <p>
+                                    <strong>{% translate "Country" %}</strong> {% trans 'refers to: United States of America' %}
+                                </p>
                             </li>
                             <li>
                                 <p>
@@ -99,13 +98,11 @@
                                 <p>
                                     <strong>{% trans "Service Provider" %}</strong>
                                     {% blocktranslate %}
-                                        means any natural or legal person who processes the
-                                        data on behalf of the Company. It refers to third-party companies or individuals
-                                        employed by the Company to facilitate the Service, to provide the Service on
-                                        behalf
-                                        of the Company, to perform services related to the Service or to assist the
-                                        Company
-                                        in analyzing how the Service is used.
+                                        means any natural or legal person who processes the data on behalf of the
+                                        Company. It refers to third-party companies or individuals employed by the
+                                        Company to facilitate the Service, to provide the Service on behalf of the
+                                        Company, to perform services related to the Service or to assist the Company in
+                                        analyzing how the Service is used.
                                     {% endblocktranslate %}
                                 </p>
                             </li>
@@ -115,8 +112,7 @@
                                     {% blocktranslate %}
                                         refers to data collected automatically, either generated
                                         by the use of the Service or from the Service infrastructure itself (for
-                                        example,
-                                        the duration of a page visit).
+                                        example, the duration of a page visit).
                                     {% endblocktranslate %}
                                 </p>
                             </li>
@@ -131,8 +127,7 @@
                                     {% blocktranslate %}
                                         means the individual accessing or using the Service, or the
                                         company, or other legal entity on behalf of which such individual is accessing
-                                        or
-                                        using the Service, as applicable.
+                                        or using the Service, as applicable.
                                     {% endblocktranslate %}
                                 </p>
                             </li>
@@ -149,9 +144,8 @@
                         <p>
                             {% blocktranslate %}
                                 While using our Service, we may ask you to provide us with certain personally
-                                identifiable
-                                information that can be used to contact or identify you ("Personal Data"). Personally
-                                identifiable information may include, but is not limited to:
+                                identifiable information that can be used to contact or identify you ("Personal Data").
+                                Personally identifiable information may include, but is not limited to:
                             {% endblocktranslate %}
                         </p>
                         <ul>
@@ -166,40 +160,32 @@
                         <p>
                             {% blocktranslate %}
                                 We may also collect information how the Service is accessed and used ("Usage Data").
-                                This
-                                Usage Data may include information such as your computer's Internet Protocol address
-                                (e.g.
-                                IP address), browser type, browser version, the pages of our Service that you visit, the
-                                time and date of your visit, the time spent on those pages, unique device identifiers
-                                and
-                                other diagnostic data.
+                                This Usage Data may include information such as your computer's Internet Protocol
+                                address (e.g. IP address), browser type, browser version, the pages of our Service that
+                                you visit, the time and date of your visit, the time spent on those pages, unique device
+                                identifiers and other diagnostic data.
                             {% endblocktranslate %}
                         </p>
                         <h5>{% trans 'Tracking & Cookies Data' %}</h5>
                         <p>
                             {% blocktranslate %}
                                 We use cookies and similar tracking technologies to track the activity on our Service
-                                and
-                                hold certain information.
+                                and hold certain information.
                             {% endblocktranslate %}
                         </p>
                         <p id="what_is_cookie">
                             {% blocktranslate %}
                                 Cookies are files with small amount of data which may include an anonymous unique
-                                identifier.
-                                Cookies are sent to your browser from a website and stored on your device. Tracking
-                                technologies also used are beacons, tags, and scripts to collect and track information
-                                and
-                                to improve and analyze our Service.
+                                identifier. Cookies are sent to your browser from a website and stored on your device.
+                                Tracking technologies also used are beacons, tags, and scripts to collect and track
+                                information and to improve and analyze our Service.
                             {% endblocktranslate %}
                         </p>
                         <p>
                             {% blocktranslate %}
                                 You can instruct your browser to refuse all cookies or to indicate when a cookie is
-                                being
-                                sent. However, if you do not accept cookies, you may not be able to use some portions of
-                                our
-                                Service.
+                                being sent. However, if you do not accept cookies, you may not be able to use some
+                                portions of our Service.
                             {% endblocktranslate %}
                         </p>
                         <p>{% trans "Examples of Cookies we use:" %}</p>
@@ -220,6 +206,19 @@
                                 {% endblocktranslate %}
                             </li>
                         </ul>
+                        <p>
+                            {% blocktranslate %}
+                                We partner with Microsoft Clarity and Microsoft Advertising to capture how you use and
+                                interact with our website through behavioral metrics, heatmaps, and session replay to
+                                improve and market our products/services. Website usage data is captured using first and
+                                third-party cookies and other tracking technologies to determine the popularity of
+                                products/services and online activity. Additionally, we use this information for site
+                                optimization, fraud/security purposes, and advertising. For more information about how
+                                Microsoft collects and uses your data, visit the
+                                <a href="https://privacy.microsoft.com/privacystatement">Microsoft Privacy
+                                    Statement.</a>
+                            {% endblocktranslate %}
+                        </p>
                         <h3>{% trans "Use of Data" %}</h3>
                         <p>
                             {% blocktranslate %}
@@ -232,8 +231,7 @@
                             <li>
                                 {% blocktranslate %}
                                     To allow you to participate in interactive features of our Service when you choose
-                                    to do
-                                    so
+                                    to do so
                                 {% endblocktranslate %}
                             </li>
                             <li>{% trans "To provide customer care and support" %}</li>
@@ -254,9 +252,9 @@
                         </p>
                         <p>
                             {% blocktranslate %}
-                                If you are located outside United States of America and choose to provide information to us, please note
-                                that we transfer the data, including Personal Data, to United States of America and process it
-                                there.
+                                If you are located outside United States of America and choose to provide information to
+                                us, please note that we transfer the data, including Personal Data, to United States of
+                                America and process it there.
                             {% endblocktranslate %}
                         </p>
                         <p>
@@ -269,10 +267,8 @@
                             {% blocktranslate %}
                                 My Company will take all steps reasonably necessary to ensure that your data is treated
                                 securely and in accordance with this Privacy Policy and no transfer of your Personal
-                                Data
-                                will take place to an organization or a country unless there are adequate controls in
-                                place
-                                including the security of your data and other personal information.
+                                Data will take place to an organization or a country unless there are adequate controls
+                                in  place including the security of your data and other personal information.
                             {% endblocktranslate %}
                         </p>
                         <h3>{% trans "Disclosure Of Data" %}</h3>
@@ -302,11 +298,9 @@
                         <p>
                             {% blocktranslate %}
                                 The security of your data is important to us, but remember that no method of
-                                transmission
-                                over the Internet, or method of electronic storage is 100% secure. While we strive to
-                                use
-                                commercially acceptable means to protect your Personal Data, we cannot guarantee its
-                                absolute security.
+                                transmission over the Internet, or method of electronic storage is 100% secure. While we
+                                strive to use commercially acceptable means to protect your Personal Data, we cannot
+                                guarantee its absolute security.
                             {% endblocktranslate %}
                         </p>
                         <h3>{% trans "Service Providers" %}</h3>
@@ -314,8 +308,7 @@
                             {% blocktranslate %}
                                 We may employ third party companies and individuals to facilitate our Service ("Service
                                 Providers"), to provide the Service on our behalf, to perform Service-related services
-                                or to
-                                assist us in analyzing how our Service is used.
+                                or to assist us in analyzing how our Service is used.
                             {% endblocktranslate %}
                         </p>
                         <p>
@@ -328,17 +321,14 @@
                         <p>
                             {% blocktranslate %}
                                 Our Service may contain links to other sites that are not operated by us. If you click
-                                on a
-                                third party link, you will be directed to that third party's site. We strongly advise
-                                you to
-                                review the Privacy Policy of every site you visit.
+                                on a third party link, you will be directed to that third party's site. We strongly
+                                advise you to review the Privacy Policy of every site you visit.
                             {% endblocktranslate %}
                         </p>
                         <p>
                             {% blocktranslate %}
                                 We have no control over and assume no responsibility for the content, privacy policies
-                                or
-                                practices of any third party sites or services.
+                                or practices of any third party sites or services.
                             {% endblocktranslate %}
                         </p>
                         <h3>{% trans "Children's Privacy" %}</h3>
@@ -350,14 +340,10 @@
                         <p>
                             {% blocktranslate %}
                                 We do not knowingly collect personally identifiable information from anyone under the
-                                age of
-                                18. If you are a parent or guardian, and you are aware that your Children has provided
-                                us
-                                with Personal Data, please contact us. If we become aware that we have collected
-                                Personal
-                                Data from children without verification of parental consent, we take steps to remove
-                                that
-                                information from our servers.
+                                age of 18. If you are a parent or guardian, and you are aware that your Children has
+                                provided us with Personal Data, please contact us. If we become aware that we have
+                                collected Personal Data from children without verification of parental consent, we take
+                                steps to remove that information from our servers.
                             {% endblocktranslate %}
                         </p>
                         <h3>{% trans "Changes To This Privacy Policy" %}</h3>
@@ -370,15 +356,14 @@
                         <p>
                             {% blocktranslate %}
                                 We will let you know via email and/or a prominent notice on our Service, prior to the
-                                change
-                                becoming effective and update the "effective date" at the top of this Privacy Policy.
+                                change becoming effective and update the "effective date" at the top of this Privacy
+                                Policy.
                             {% endblocktranslate %}
                         </p>
                         <p>
                             {% blocktranslate %}
                                 You are advised to review this Privacy Policy periodically for any changes. Changes to
-                                this
-                                Privacy Policy are effective when they are posted on this page.
+                                this Privacy Policy are effective when they are posted on this page.
                             {% endblocktranslate %}
                         </p>
                         <h3>{% trans "Contact Us" %}</h3>
