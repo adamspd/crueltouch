@@ -724,7 +724,7 @@ def invoice_form(request):
 def generate_invoice(request):
     template_path = 'administration/add/invoice.html'
     context = request.session.get('invoice_data', {})
-    header = "https://tchiiz.com/media/photos_clients/crueltouch_header.png"
+    header = "https://tchiiz.com/media/photos_clients/header_w_logo.png"
     footer = "https://productionsdesign.com/wp-content/uploads/2022/06/footer.png"
     paid_stamps = 'https://tchiiz.com/media/photos_clients/paid_ct_ww.png'
     unpaid_stamps = 'https://tchiiz.com/media/photos_clients/unpaid_invoice.jpg'
