@@ -51,10 +51,10 @@ class AboutView(generic.ListView):
 
 def get_logo(request):
     try:
-        with open(settings.BASE_DIR / 'static/homepage/img/logos/logo.web', 'rb') as f:
+        with open(settings.BASE_DIR / 'static/homepage/img/logos/logo.webp', 'rb') as f:
             return HttpResponse(f.read(), content_type="image/webp")
     except IOError:
-        raise Http404
+        raise Http404("Image not found")
 
 
 def get_logo_mini(request):
@@ -62,7 +62,7 @@ def get_logo_mini(request):
         with open(settings.BASE_DIR / 'static/homepage/img/logos/logo-mini.webp', 'rb') as f:
             return HttpResponse(f.read(), content_type="image/webp")
     except IOError:
-        raise Http404
+        raise Http404("Image not found")
 
 
 def promotions(request):
