@@ -1,20 +1,14 @@
-import json
 import random
 
 from appointment.models import Service
 from django.conf import settings
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.http import HttpResponse, Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import render
 from django.utils.translation import gettext as _
 from django.views import generic
 
 from crueltouch import settings
-from utils.crueltouch_utils import email_check
 from .models import Photo
-
-
-# Create your views here.
 
 
 def index(request):
@@ -58,7 +52,7 @@ class AboutView(generic.ListView):
 def get_logo(request):
     try:
         with open(settings.BASE_DIR / 'static/homepage/img/logos/logo.web', 'rb') as f:
-            return HttpResponse(f.read(), content_type="image/png")
+            return HttpResponse(f.read(), content_type="image/webp")
     except IOError:
         raise Http404
 
@@ -66,7 +60,7 @@ def get_logo(request):
 def get_logo_mini(request):
     try:
         with open(settings.BASE_DIR / 'static/homepage/img/logos/logo-mini.webp', 'rb') as f:
-            return HttpResponse(f.read(), content_type="image/png")
+            return HttpResponse(f.read(), content_type="image/webp")
     except IOError:
         raise Http404
 
