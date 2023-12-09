@@ -47,6 +47,7 @@ class InvoiceForm(forms.Form):
     package_name = forms.CharField()
     package_price = forms.DecimalField()
     package_qty = forms.IntegerField()
+    paid = forms.BooleanField(required=False)
     # add choices for payment method
     payment_method = forms.ChoiceField(choices=PAYMENT_METHOD)
 
