@@ -25,21 +25,6 @@ class UserChangePasswordForm(forms.Form):
             })
 
 
-PAYMENT_METHOD = (
-    ('_', _('--- Select a payment method ---')),
-    ('cash', _('Cash')),
-    ('credit', _('Credit')),
-    ('debit', _('Debit')),
-    ('paypal', _('Paypal')),
-    ('cashapp', _('CashApp')),
-    ('venmo', _('Venmo')),
-    ('zelle', _('Zelle')),
-    ('check', _('Check')),
-    ('others', _('Others')),
-    ('none', _('None')),
-)
-
-
 class InvoiceServiceForm(forms.ModelForm):
     class Meta:
         model = InvoiceService
@@ -77,20 +62,41 @@ InvoiceAttachmentFormset = inlineformset_factory(
 
 
 class InvoiceForm(forms.ModelForm):
+    client_email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'data-ajax-url': '/administration/get-client-emails/',
+        'autocomplete': 'off',
+        'id': 'id_client_email'
+    }))
+    client_first_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'onkeyup': 'return forceTitle(this);',
+        'placeholder': _('First name')
+    }))
+    client_last_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'onkeyup': 'return forceTitle(this);',
+        'placeholder': _('Last name')
+    }))
+    client_phone = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': _('Phone number')
+    }))
+    client_address = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',
+            'rows': 1,
+            'placeholder': _('Address'),
+        }))
+
     class Meta:
         model = Invoice
         fields = [
-            'client_name', 'client_email', 'client_phone', 'payment_method', 'client_address',
-            'discount', 'tax_rate', 'amount_paid', 'due_date', 'details', 'notes', 'status'
+            'payment_method', 'discount', 'tax_rate', 'amount_paid', 'due_date', 'details', 'notes', 'status'
         ]
         widgets = {
-            'client_name': forms.TextInput(
-                attrs={'class': 'form-control', 'onkeyup': 'return forceTitle(this);', 'placeholder': _('Full name')}),
-            'client_email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': _('Email address'),
-                                                    'onkeyup': 'return forceLower(this);'}),
-            'client_phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Phone number')}),
             'payment_method': forms.Select(attrs={'class': 'form-control'}),
-            'client_address': forms.Textarea(attrs={'class': 'form-control', 'rows': 1}),
             'discount': forms.NumberInput(attrs={'class': 'form-control', 'min': 0, 'max': 100}),
             'tax_rate': forms.NumberInput(attrs={'class': 'form-control', 'min': 0, 'max': 100}),
             'amount_paid': forms.NumberInput(attrs={'class': 'form-control'}),
@@ -100,7 +106,19 @@ class InvoiceForm(forms.ModelForm):
             'status': forms.Select(attrs={'class': 'form-control'}),
         }
 
+        field_order = ['client_email', 'client_first_name', 'client_last_name', 'client_phone', 'client_address',
+                       'payment_method', 'discount', 'tax_rate', 'amount_paid', 'due_date', 'details', 'notes',
+                       'status']
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Initialize additional fields if needed
         self.fields['status'].choices = Invoice.INVOICE_STATUS_CHOICES
+
+        # Rearranging field order
+        new_order = ['client_email', 'client_first_name', 'client_last_name', 'client_phone', 'client_address',
+                     'payment_method', 'discount', 'tax_rate', 'amount_paid', 'due_date', 'details', 'notes', 'status']
+        from collections import OrderedDict
+        new_fields = OrderedDict()
+        for key in new_order:
+            new_fields[key] = self.fields.pop(key)
+        self.fields = new_fields

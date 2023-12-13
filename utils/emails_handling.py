@@ -88,6 +88,7 @@ def send_invoice_email(email_address, full_name, invoice_number, url,
             file = open(invoice_file, 'rb')
             email.attach(invoice_number + '.pdf', file.read(), 'application/pdf')
         if attachments:
+            print(attachments)
             for attachment in attachments:
                 email.attach_file(attachment.file.path)
 

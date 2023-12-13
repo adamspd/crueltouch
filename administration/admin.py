@@ -56,23 +56,20 @@ class InvoiceAttachmentInline(admin.TabularInline):
 @admin.register(Invoice)
 class InvoiceAdmin(SimpleHistoryAdmin):
     list_display = (
-        'client_name', 'status',
-        'payment_method', 'invoice_number', 'created_at', 'total_amount')
+        'client', 'status', 'payment_method', 'invoice_number', 'created_at', 'total_amount')
     list_display_links = (
-        'client_name', 'status',
-        'payment_method', 'invoice_number', 'created_at')
+        'client', 'status', 'payment_method', 'invoice_number', 'created_at')
     list_filter = (
-        'client_name', 'client_email', 'client_phone', 'status',
-        'payment_method', 'invoice_number', 'created_at')
+        'client', 'status', 'payment_method', 'invoice_number', 'created_at')
     search_fields = (
-        'client_name', 'client_email', 'client_phone', 'status',
-        'payment_method', 'invoice_number', 'created_at')
+        'client', 'status', 'payment_method', 'invoice_number', 'created_at')
     list_per_page = 25
     inlines = [InvoiceServiceInline, InvoiceAttachmentInline]
 
     fieldsets = (
         (None, {
-            'fields': ('client_name', 'client_email', 'client_phone', 'payment_method', 'due_date', 'status', 'details',
-                       'client_address', 'discount', 'tax_rate', 'amount_paid', 'notes')
-        }),
+            'fields': (
+                'client', 'payment_method', 'due_date', 'status', 'details', 'discount', 'tax_rate', 'amount_paid',
+                'notes', 'email_sent'
+            )}),
     )

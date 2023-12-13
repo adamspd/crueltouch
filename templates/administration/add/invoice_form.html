@@ -2,6 +2,28 @@
 {% load i18n %}
 {% load static %}
 {% block title %}TCHIIZ | {% translate "Generate Invoice" %}{% endblock %}
+{% block customCSS %}
+    <style>
+        .autocomplete-results {
+            border: 1px solid #ccc;
+            position: absolute;
+            z-index: 1000;
+            background-color: white;
+            width: calc(100% - 2px);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .autocomplete-item {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .autocomplete-item:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+{% endblock %}
 {% block body %}
     <section class="content content-wrapper">
         <div class="container-fluid">
@@ -43,14 +65,14 @@
                             let formIndex = parseInt(totalFormsInput.value);
 
                             const newForm = container.querySelector(`.${formClass}:last-of-type`).cloneNode(true);
-                            newForm.querySelectorAll(':input').forEach(function (inputElement) {
-                                const name = inputElement.getAttribute('name').replace('-' + (formIndex - 1) + '-', '-' + formIndex + '-');
+                            newForm.querySelectorAll('input, select, textarea').forEach(function (inputElement) {
+                                const name = inputElement.name.replace('-' + (formIndex - 1) + '-', '-' + formIndex + '-');
                                 const id = 'id_' + name;
-                                inputElement.setAttribute('name', name);
-                                inputElement.setAttribute('id', id);
+                                inputElement.name = name;
+                                inputElement.id = id;
                                 inputElement.value = '';
-                                if (inputElement.hasAttribute('checked')) {
-                                    inputElement.removeAttribute('checked');
+                                if (inputElement.type === 'checkbox' || inputElement.type === 'radio') {
+                                    inputElement.checked = false;
                                 }
                             });
 
@@ -61,6 +83,57 @@
 
                     addFormToContainer('services', 'service-form', 'add-service');
                     addFormToContainer('attachments', 'attachment-form', 'add-attachment');
+
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const emailInput = document.getElementById('id_client_email');
+                        const autocompleteResults = document.createElement('div');
+                        autocompleteResults.setAttribute('class', 'autocomplete-results');
+                        emailInput.parentNode.appendChild(autocompleteResults);
+
+                        emailInput.addEventListener('input', function () {
+                            const ajaxUrl = emailInput.getAttribute('data-ajax-url');
+                            const query = emailInput.value;
+
+                            fetch(`${ajaxUrl}?query=${query}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    autocompleteResults.innerHTML = '';  // Clear previous results
+
+                                    data.forEach(client => {
+                                        const div = document.createElement('div');
+                                        div.innerHTML = client.email;
+                                        div.setAttribute('class', 'autocomplete-item');
+                                        div.addEventListener('click', function () {
+                                            emailInput.value = client.email;
+                                            console.log("client name: " + client.first_name + " " + client.last_name)
+                                            console.log("client phone: " + client.phone_number)
+                                            console.log("client address: " + client.address)
+                                            if (client.first_name) {
+                                                document.getElementById('id_client_first_name').value = client.first_name;
+                                            }
+                                            if (client.last_name) {
+                                                document.getElementById('id_client_last_name').value = client.last_name;
+                                            }
+                                            if (client.phone_number) {
+                                                document.getElementById('id_client_phone').value = client.phone_number;
+                                            }
+                                            if (client.address) {
+                                                document.getElementById('id_client_address').value = client.address;
+                                            }
+                                            autocompleteResults.innerHTML = ''; // Clear results after selection
+                                        });
+                                        autocompleteResults.appendChild(div);
+                                    });
+                                })
+                                .catch(error => console.error('Error:', error));
+                        });
+                        // Hide results when clicking outside
+                        document.addEventListener('click', function (event) {
+                            if (event.target !== emailInput) {
+                                autocompleteResults.innerHTML = '';
+                            }
+                        });
+                    });
                 </script>
             </div>
         </div>
