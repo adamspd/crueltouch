@@ -17,10 +17,11 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import get_template
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.views.decorators.http import require_POST
 from endesive import pdf as endesive_pdf
 from xhtml2pdf import pisa
 
@@ -701,6 +702,15 @@ def link_callback(uri, rel):
     return path
 
 
+def get_client_emails(request):
+    query = request.GET.get('query', '')
+    clients = UserClient.objects.filter(email__icontains=query).values('email', 'first_name', 'last_name',
+                                                                       'phone_number', 'address')[
+              :5]  # Limit to 5 results for example
+    client_list = list(clients)
+    return JsonResponse(client_list, safe=False)
+
+
 @login_required(login_url="/administration/login/")
 @user_passes_test(email_check, login_url='/administration/login/')
 def invoice_form(request):
@@ -709,40 +719,100 @@ def invoice_form(request):
         attachment_formset = InvoiceAttachmentFormset(request.POST, request.FILES, prefix='attachments')
         service_formset = InvoiceServiceFormset(request.POST, prefix='services')
         if form.is_valid():
-            invoice = form.save()
-            attachment_formset = InvoiceAttachmentFormset(request.POST, request.FILES, prefix='attachments',
-                                                          instance=invoice)
-            service_formset = InvoiceServiceFormset(request.POST, prefix='services', instance=invoice)
+            client_email = form.cleaned_data['client_email']
+            first_name = form.cleaned_data['client_first_name']
+            last_name = form.cleaned_data['client_last_name']
+            client_phone = form.cleaned_data['client_phone']
+            client_address = form.cleaned_data['client_address']
+
+            client, created = UserClient.objects.get_or_create(
+                email=client_email,
+                defaults={'first_name': first_name, 'last_name': last_name, 'phone_number': client_phone,
+                          'address': client_address}
+            )
+
+            if client.phone_number is None or client.phone_number == "":
+                client.phone_number = client_phone
+            if client.address is None or client.address == "":
+                client.address = client_address
+            if client.last_name is None or client.last_name == "":
+                client.last_name = last_name
+            client.save()
+
+            # Save Invoice instance to database
+            invoice = form.save(commit=False)
+            invoice.client = client
+            invoice.save()
+
+            # Now that the invoice instance is saved, assign it to the formsets
+            attachment_formset.instance = invoice
+            service_formset.instance = invoice
+
             if attachment_formset.is_valid() and service_formset.is_valid():
                 attachment_formset.save()
                 service_formset.save()
+                invoice.save()
             return redirect('administration:generate_invoice', invoice_number=invoice.invoice_number)
     else:
         form = InvoiceForm()
         attachment_formset = InvoiceAttachmentFormset(prefix='attachments')
         service_formset = InvoiceServiceFormset(prefix='services')
+
     context = {
         'form': form,
         'attachment_formset': attachment_formset,
         'service_formset': service_formset
     }
-    return render(request, 'administration/add/invoice_form.html', context=context)
+    return render(request, 'administration/add/invoice_form.html', context)
 
 
 def view_invoice(request, invoice_number):
     invoice = Invoice.objects.get(invoice_number=invoice_number)
     pdf_path = f'media/invoices/{invoice.get_name()}.pdf'
+
+    # Check if the PDF exists
+    if not os.path.exists(pdf_path):
+        generate_and_process_invoice(request, invoice.invoice_number)
+    else:
+        # Get the updated date info about the file (Linux/ macOS)
+        updated_date = datetime.datetime.fromtimestamp(os.path.getmtime(pdf_path))
+
+        # If the PDF updated date is not the same as the invoice updated date, regenerate the PDF
+        if updated_date.replace(microsecond=0) != invoice.updated_at.replace(tzinfo=None, microsecond=0):
+            # rename the old PDF by adding its updated date to the name
+            os.rename(pdf_path, f'media/invoices/{invoice.get_name()}_{invoice.updated_at}.pdf')
+            generate_and_process_invoice(request, invoice.invoice_number)
+
+    # After regeneration or if no regeneration was needed, open and return the PDF
     with open(pdf_path, 'rb') as f:
         pdf_content = f.read()
+
     response = HttpResponse(pdf_content, content_type='application/pdf')
     response['Content-Disposition'] = f'filename="{invoice.get_name()}.pdf"'
     return response
 
 
+@require_POST
+def update_invoice_status(request, invoice_number):
+    invoice = get_object_or_404(Invoice, invoice_number=invoice_number)
+    new_status = request.POST.get('status')
+
+    # Check if the new status is valid
+    if new_status in dict(Invoice.INVOICE_STATUS_CHOICES):
+        invoice.status = new_status
+        invoice.save()
+        # Optionally, add a message to notify the user of the update
+        messages.success(request, f'Invoice {invoice_number} status updated to {new_status}.')
+    else:
+        # Handle invalid status update
+        messages.error(request, 'Invalid status update.')
+
+    return redirect('administration:index')
+
+
 @login_required(login_url="/administration/login/")
 @user_passes_test(email_check, login_url='/administration/login/')
 def generate_and_process_invoice(request, invoice_number):
-    print(f"I was called with invoice number {invoice_number}")
     invoice = Invoice.objects.get(invoice_number=invoice_number)
 
     # Step 1: Generate Invoice PDF
@@ -761,7 +831,6 @@ def generate_and_process_invoice(request, invoice_number):
         pdf_content = f.read()
     response = HttpResponse(pdf_content, content_type='application/pdf')
     response['Content-Disposition'] = f'filename="{invoice.get_name()}.pdf"'
-    invoice = Invoice.objects.get(invoice_number=invoice_number)
     return response
 
 
@@ -770,36 +839,46 @@ def generate_invoice_pdf(request, invoice_number):
     template_path = 'administration/add/invoice.html'
     header = "media/Logo/header_tchiiz.webp"
     footer = "media/Logo/footer_tchiiz.webp"
-    p_stamps = 'media/Logo/paid_stamps.webp'
-    u_stamps = 'media/Logo/unpaid_stamps.webp'
-    if invoice.status == "paid":
-        stamps = p_stamps
-    else:
-        stamps = u_stamps
-    if invoice.client_phone == "" or invoice.client_phone is None:
-        invoice.client_phone = "N/A"
+    if invoice.client.phone_number == "" or invoice.client.phone_number is None:
+        invoice.client.phone_number = "N/A"
     if invoice.payment_method == "_":
         invoice.payment_method = "none"
-    print(f"Invoice services in generate_invoice_pdf: {invoice.invoice_services.all()}")
-    # print it in for loop
-    services = invoice.invoice_services.all()
-    for service in services:
-        print(f"service in for loop using services variable: {service}")
+
+    if invoice.discount > 0:
+        discount_percent = round(invoice.discount, 1)
+        discount_value = round(invoice.get_discount(invoice.get_base_amount()), 1)
+    else:
+        discount_percent = None
+        discount_value = None
+
+    if invoice.tax_rate > 0:
+        tax_percent = round(invoice.tax_rate, 1)
+        tax_value = round(invoice.get_tax(invoice.get_net_amount()), 1)
+    else:
+        tax_percent = None
+        tax_value = None
+
     context = {
         'invoice_number': invoice.invoice_number,
-        'client_name': invoice.client_name,
-        'client_email': invoice.client_email,
-        'client_phone': invoice.client_phone,
+        'client_name': invoice.client.get_full_name(),
+        'client_email': invoice.client.email,
+        'client_phone': invoice.client.phone_number,
         'services': invoice.invoice_services.all(),
         'payment_method': invoice.payment_method,
         'invoice_date': invoice.created_at,
         'details': invoice.details,
-        'total': invoice.total_amount(),
+        'total': invoice.get_base_amount(),
         'header': header,
         'footer': footer,
-        'stamps': stamps,
+        'stamps': invoice.get_stamp_link(),
         'url': request.build_absolute_uri(),
         'due_date': invoice.due_date,
+        'discount_percent': discount_percent,
+        'discount_value': discount_value,
+        'amount_paid': invoice.amount_paid,
+        'balance_due': invoice.balance_due(),
+        'tax_percent': tax_percent,
+        'tax_value': tax_value,
     }
     # Create a Django response object, and specify content_type as pdf
     filename = f"{invoice.get_name()}_generated.pdf"

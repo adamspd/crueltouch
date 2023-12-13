@@ -77,4 +77,8 @@ urlpatterns = [
     path('invoices/<str:invoice_number>/', generate_and_process_invoice, name="generate_invoice"),
     # /administration/invoices/view/<str:invoice_number>/
     path('invoice/<str:invoice_number>/', view_invoice, name='view_invoice'),
+    # /administration/invoices/update/<str:invoice_number>/status/
+    path('invoices/<str:invoice_number>/update_status/', update_invoice_status, name='update_invoice_status'),
+    # /administration/administration/get-client-emails/
+    path('get-client-emails/', get_client_emails, name='get_client_emails'),
 ]

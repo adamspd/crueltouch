@@ -293,11 +293,11 @@
                                     <tr>
                                         <th>{% translate "Date" %}</th>
                                         <th>{% translate "Client" %}</th>
-                                        <th>{% translate "Service" %}</th>
                                         <th>{% translate "Total" %}</th>
                                         <th>{% translate "Ping at" %}</th>
                                         <th>{% translate "Buzz at" %}</th>
                                         <th>{% translate "Email Sent" %}</th>
+                                        <th>{% translate "Status" %}</th>
                                         <th>{% translate "Actions" %}</th>
                                     </tr>
                                     </thead>
@@ -306,7 +306,6 @@
                                         <tr>
                                             <td>{{ rs.created_at|date }}</td>
                                             <td>{{ rs.client_name }}</td>
-                                            <td>{{ rs.package_name }}</td>
                                             <td>${{ rs.total_amount }}</td>
                                             <td>
                                                 <a href="mailto:{{ rs.client_email }}">
@@ -325,6 +324,23 @@
                                             <td>
                                                 {{ rs.get_if_email_sent }}
                                             </td>
+                                            <td>
+                                                <form action="{% url 'administration:update_invoice_status' rs.invoice_number %}"
+                                                      method="post">
+                                                    {% csrf_token %}
+                                                    <label>
+                                                        <select name="status" onchange="this.form.submit()">
+                                                            {% for status, status_display in rs.INVOICE_STATUS_CHOICES %}
+                                                                <option value="{{ status }}"
+                                                                        {% if rs.status == status %}selected{% endif %}>
+                                                                    {{ status_display }}
+                                                                </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </label>
+                                                </form>
+                                            </td>
+
                                             <td>
                                                 {% if not rs.email_sent and not rs.status_changed %}
                                                     <a href="{% url 'administration:send_invoice' rs.invoice_number %}"
@@ -358,11 +374,11 @@
                                     <tr>
                                         <th>{% translate "Date" %}</th>
                                         <th>{% translate "Client" %}</th>
-                                        <th>{% translate "Service" %}</th>
                                         <th>{% translate "Total" %}</th>
                                         <th>{% translate "Ping at" %}</th>
                                         <th>{% translate "Buzz at" %}</th>
                                         <th>{% translate "Email Sent" %}</th>
+                                        <th>{% translate "Status" %}</th>
                                         <th>{% translate "Actions" %}</th>
                                     </tr>
                                     </tfoot>

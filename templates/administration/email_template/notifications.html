@@ -72,11 +72,25 @@
         <li><strong>Invoice Number:</strong> {{ invoice_number }}</li>
         <li><strong>Status:</strong> {{ status }}</li>
         <li><strong>Total Amount:</strong> {{ total }}</li>
-        <li><strong>Due Date:</strong> {{ due_date }}</li>
+        {% if due_date != "" and due_date %}
+        	<li><strong>Due Date:</strong> {{ due_date }}</li>
+        {% endif %}
     </ul>
     <p>To directly view your invoice on our website, please click the button below:</p>
 
-    <button onclick="location.href='{{ url }}'" type="button">View Invoice</button>
+    <a href="{{ url }}" style="background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;">
+        View Invoice
+    </a>
+
     <p>Otherwise, it is also attached to this email.</p>
     <p>If you have any questions or need further assistance, please do not hesitate to contact us.</p>
     <p>Best regards,</p>
