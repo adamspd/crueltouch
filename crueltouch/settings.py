@@ -14,6 +14,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 from django.conf import global_settings
+
 # Add custom languages not provided by Django
 from django.conf import locale
 from django.utils.translation import gettext_lazy as _
@@ -29,15 +30,15 @@ if not debug_value or not secret_key_value:
     debug_value = production_debug
     secret_key_value = production_secret_key
 
-LIST_OF_ALLOWED_HOSTS = allowed_hosts_str.split(',') if allowed_hosts_str else []
-ADMIN_NAME = os.getenv('ADMIN_NAME', default="")
 ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', default="")
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', default="")
+ADMIN_NAME = os.getenv('ADMIN_NAME', default="")
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', default="")
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', default="")
+LIST_OF_ALLOWED_HOSTS = allowed_hosts_str.split(',') if allowed_hosts_str else []
 OTHER_ADMIN_EMAIL = os.getenv('OTHER_ADMIN_EMAIL', default="")
-PAYPAL_ENVIRONMENT = os.getenv('PAYPAL_ENVIRONMENT', default="")
 PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID', default="")
 PAYPAL_CLIENT_SECRET = os.getenv('PAYPAL_CLIENT_SECRET', default="")
+PAYPAL_ENVIRONMENT = os.getenv('PAYPAL_ENVIRONMENT', default="")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -305,3 +306,7 @@ PAYMENT_REDIRECT_SUCCESS_URL = 'homepage:index'  # Replace with your app and suc
 
 PAYMENT_APPLY_PAYPAL_FEES = True
 PAYMENT_FEES = 0.03 if not PAYMENT_APPLY_PAYPAL_FEES else 0.00
+
+PDF_CERTIFICATE_PATH = os.path.join(BASE_DIR, 'crueltouch', 'secrets', 'pdf_certificate.pfx')
+CERTIFICATE_PATH = os.path.join(BASE_DIR, 'crueltouch', 'secrets', 'pdf_certificate.crt')
+PRIVATE_KEY_PATH = os.path.join(BASE_DIR, 'crueltouch', 'secrets', 'pdfkey.key')

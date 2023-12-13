@@ -10,8 +10,58 @@
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary">Generate Invoice</button>
+                    <h3>{% translate 'Add Services' %}</h3>
+                    <div id="services">
+                        {{ service_formset.management_form }}
+                        {% for form in service_formset %}
+                            <div class="service-form">
+                                {{ form.as_p }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button type="button" id="add-service" class="btn btn-info">Add more service</button>
+                    <br><br>
+                    <h3>{% translate 'Add attachments' %}</h3>
+                    <div id="attachments">
+                        {{ attachment_formset.management_form }}
+                        {% for form in attachment_formset %}
+                            <div class="attachment-form">
+                                {{ form.as_p }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button type="button" id="add-attachment" class="btn btn-warning">Add more attachment</button>
+                    <br><br>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
+
+                <script>
+                    function addFormToContainer(containerId, formClass, buttonId) {
+                        document.getElementById(buttonId).addEventListener('click', function () {
+                            const container = document.getElementById(containerId);
+                            const totalFormsInput = container.querySelector("input[name$='-TOTAL_FORMS']");
+                            let formIndex = parseInt(totalFormsInput.value);
+
+                            const newForm = container.querySelector(`.${formClass}:last-of-type`).cloneNode(true);
+                            newForm.querySelectorAll(':input').forEach(function (inputElement) {
+                                const name = inputElement.getAttribute('name').replace('-' + (formIndex - 1) + '-', '-' + formIndex + '-');
+                                const id = 'id_' + name;
+                                inputElement.setAttribute('name', name);
+                                inputElement.setAttribute('id', id);
+                                inputElement.value = '';
+                                if (inputElement.hasAttribute('checked')) {
+                                    inputElement.removeAttribute('checked');
+                                }
+                            });
+
+                            container.appendChild(newForm);
+                            totalFormsInput.value = formIndex + 1;
+                        });
+                    }
+
+                    addFormToContainer('services', 'service-form', 'add-service');
+                    addFormToContainer('attachments', 'attachment-form', 'add-attachment');
+                </script>
             </div>
         </div>
     </section>

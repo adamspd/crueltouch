@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice Notification</title>
+    <style>
+        :root {
+            --main-bg-color: #f4f4f4;
+            --main-text-color: #333;
+            --footer-text-color: #666;
+            --link-color: #007bff;
+            --container-bg-color: #fff;
+            --container-border-color: #ddd;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--main-bg-color);
+            color: var(--main-text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+            background: var(--container-bg-color);
+            border: 1px solid var(--container-border-color);
+        }
+
+        .footer {
+            text-align: center;
+            margin-bottom: 0.5rem; /* 20px assuming base font-size is 16px */
+            font-size: 0.8em;
+            color: var(--footer-text-color);
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Invoice Notification</h2>
+    <p>Hello {{ full_name }},</p>
+    <p>Thank you for choosing our services. Please find the details of your invoice below:</p>
+    <ul>
+        <li><strong>Invoice Number:</strong> {{ invoice_number }}</li>
+        <li><strong>Status:</strong> {{ status }}</li>
+        <li><strong>Total Amount:</strong> {{ total }}</li>
+        <li><strong>Due Date:</strong> {{ due_date }}</li>
+    </ul>
+    <p>To directly view your invoice on our website, please click the button below:</p>
+
+    <button onclick="location.href='{{ url }}'" type="button">View Invoice</button>
+    <p>Otherwise, it is also attached to this email.</p>
+    <p>If you have any questions or need further assistance, please do not hesitate to contact us.</p>
+    <p>Best regards,</p>
+    <p>TCHIIZ Studio</p>
+
+    <div class="footer">
+        <p>&copy; {{ current_year }} TCHIIZ Studio. All rights reserved.</p>
+    </div>
+</div>
+</body>
+</html>

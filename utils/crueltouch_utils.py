@@ -7,14 +7,12 @@ import re
 from datetime import datetime
 
 from PIL import Image
-from django.contrib import messages
 from django.core.mail import mail_admins, send_mail
-from django.shortcuts import redirect
 from django.template import loader
 
-from administration.models import PermissionsEmails
 from crueltouch import settings
 from crueltouch.productions import production_debug
+from utils.emails_handling import get_permissions
 
 
 def c_print(msg, *args, **kwargs):
@@ -70,49 +68,6 @@ def email_check(user):
         return True
     else:
         return False
-
-
-def get_permissions(is_booking: bool, is_contact_form: bool, is_other: bool) -> bool:
-    """
-    Check if the permission is granted to send email, meaning that the quota is not exceeded.
-    :param is_booking: bool
-    :param is_contact_form: bool
-    :param is_other: bool
-    :return: bool
-    """
-    today = datetime.now().strftime("%Y-%m-%d")
-    try:
-        permission = PermissionsEmails.objects.get(date=today)
-        if permission.can_send_email and is_booking:
-            permission.booking_request += 1
-            permission.save()
-            return True
-        elif permission.can_send_email and is_contact_form:
-            permission.contact_form += 1
-            permission.save()
-            return True
-        elif permission.can_send_email and is_other:
-            permission.other += 1
-            permission.save()
-            return True
-        else:
-            return False
-    except PermissionsEmails.DoesNotExist:
-        if is_booking:
-            PermissionsEmails.objects.create(
-                date=today,
-                booking_request=1)
-            return True
-        elif is_contact_form:
-            PermissionsEmails.objects.create(
-                date=today,
-                contact_form=1)
-            return True
-        elif is_other:
-            PermissionsEmails.objects.create(
-                date=today,
-                other=1)
-            return True
 
 
 def send_session_request_received_email(email_address, full_name: str, session_type: str, place: str, package: str,

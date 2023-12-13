@@ -5,35 +5,36 @@ from datetime import timedelta
 from io import BytesIO
 from sqlite3 import IntegrityError
 
+import PyPDF2
+from PyPDF2.constants import UserAccessPermissions
 from appointment.models import Appointment, StaffMember
+from cryptography import x509
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.hashers import make_password
-from django.contrib.staticfiles import finders
-from django.http import HttpResponseRedirect, HttpResponseNotFound, HttpResponse, JsonResponse
-from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, JsonResponse
+from django.shortcuts import redirect, render
 from django.template.loader import get_template
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from endesive import pdf as endesive_pdf
 from xhtml2pdf import pisa
 
-from administration.forms import UserChangePasswordForm, InvoiceForm
-from administration.models import PhotoDelivery, PhotoClient
+from administration.forms import InvoiceAttachmentFormset, InvoiceForm, InvoiceServiceFormset, UserChangePasswordForm
+from administration.models import Invoice, PhotoClient, PhotoDelivery
 from client.form import CreateAlbumForm, UpdateBook
-from client.models import BookMe, UserClient, Photo, Album as AlbumClient
+from client.models import Album as AlbumClient, BookMe, Photo, UserClient
 from crueltouch.productions import production_debug
-from homepage.models import Album as AlbumHomepage
-from homepage.models import Photo as PhotoHomepage
-from portfolio.models import Album as AlbumPortfolio
-from portfolio.models import Photo as PhotoPortfolio
+from homepage.models import Album as AlbumHomepage, Photo as PhotoHomepage
+from portfolio.models import Album as AlbumPortfolio, Photo as PhotoPortfolio
 from static_pages_and_forms.models import ContactForm
-from utils.crueltouch_utils import check_user_login, email_check, c_print, send_client_email, is_ajax, \
+from utils.crueltouch_utils import c_print, check_user_login, email_check, is_ajax, send_client_email, \
     work_with_file_photos
 
-
-# Create your views here.
 
 def delete_all_book_me():
     BookMe.objects.all().delete()
@@ -64,7 +65,8 @@ def get_context(request):
     base_context = get_base_context(request)  # Get the base context
 
     requested_session = Appointment.objects.all()
-    last_10_book_me = Appointment.objects.all().order_by("-created_at")[:10]
+    last_10_book_me = Appointment.objects.all().order_by("-created_at")[:5]
+    last_10_invoices = Invoice.objects.all().order_by("-created_at")[:5]
     photo_delivered = Photo.objects.all()
     all_clients = UserClient.objects.filter(admin=False)
     contact_forms = ContactForm.objects.all()
@@ -93,6 +95,7 @@ def get_context(request):
         'total_contact_forms': len(contact_forms),
         'increase_percentage': percentage,
         'book_me_by_month': book_me_by_month,
+        'invoices': last_10_invoices,
     })
 
     return base_context
@@ -669,36 +672,32 @@ def delete_client_album(request, pk):
 
 
 def link_callback(uri, rel):
-    """
-    Convert HTML URIs to absolute system paths so xhtml2pdf can access those
-    resources
-    """
-    sUrl = settings.STATIC_URL  # Typically /static/
-    sRoot = settings.STATIC_ROOT  # Typically /home/userX/project_static/
-    mUrl = settings.MEDIA_URL  # Typically /media/
-    mRoot = settings.MEDIA_ROOT  # Typically /home/userX/project_static/media/
+    from django.contrib.staticfiles import finders
+    import os
+    from django.conf import settings
 
+    # Check if the URI is in static files
     result = finders.find(uri)
     if result:
-        if not isinstance(result, (list, tuple)):
-            result = [result]
-        result = list(os.path.realpath(path) for path in result)
-        path = result[0]
-    else:
-        print(f"uri: {uri}")
-        if uri.startswith(mUrl):
-            path = os.path.join(mRoot, uri.replace(mUrl, ""))
-        elif uri.startswith(sUrl):
-            path = os.path.join(sRoot, uri.replace(sUrl, ""))
-        else:
-            print("URI causing issue:", uri)  # Add this line
-            return uri
+        return result
 
-    # make sure that file exists
+    # Handling media files
+    if uri.startswith(settings.MEDIA_URL):
+        path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.MEDIA_URL, ""))
+    elif uri.startswith('/media/'):  # If the URI starts with '/media/'
+        path = os.path.join(settings.MEDIA_ROOT, uri.replace('/media/', ""))
+    elif uri.startswith('media/'):  # Directly starts with 'media/'
+        path = os.path.join(settings.MEDIA_ROOT, uri[6:])  # Skip 'media/' part
+    else:
+        # Log or print the problematic URI
+        print("URI causing issue:", uri)
+        return uri  # Return as is for further investigation
+
+    # Check if the file exists
     if not os.path.isfile(path):
-        raise Exception(
-            'media URI must start with %s or %s' % (sUrl, mUrl)
-        )
+        print("File not found:", path)
+        raise Exception(f'File with URI {uri} not found.')
+
     return path
 
 
@@ -707,57 +706,242 @@ def link_callback(uri, rel):
 def invoice_form(request):
     if request.method == 'POST':
         form = InvoiceForm(request.POST, request.FILES)
-        print(f"request received {form.data}")
+        attachment_formset = InvoiceAttachmentFormset(request.POST, request.FILES, prefix='attachments')
+        service_formset = InvoiceServiceFormset(request.POST, prefix='services')
         if form.is_valid():
-            # You might want to save the form data in session or database
-            print(f"form is valid {form.cleaned_data}")
-            request.session['invoice_data'] = form.cleaned_data
-            return redirect('administration:generate_invoice')
+            invoice = form.save()
+            attachment_formset = InvoiceAttachmentFormset(request.POST, request.FILES, prefix='attachments',
+                                                          instance=invoice)
+            service_formset = InvoiceServiceFormset(request.POST, prefix='services', instance=invoice)
+            if attachment_formset.is_valid() and service_formset.is_valid():
+                attachment_formset.save()
+                service_formset.save()
+            return redirect('administration:generate_invoice', invoice_number=invoice.invoice_number)
     else:
         form = InvoiceForm()
+        attachment_formset = InvoiceAttachmentFormset(prefix='attachments')
+        service_formset = InvoiceServiceFormset(prefix='services')
+    context = {
+        'form': form,
+        'attachment_formset': attachment_formset,
+        'service_formset': service_formset
+    }
+    return render(request, 'administration/add/invoice_form.html', context=context)
 
-    return render(request, 'administration/add/invoice_form.html', {'form': form})
+
+def view_invoice(request, invoice_number):
+    invoice = Invoice.objects.get(invoice_number=invoice_number)
+    pdf_path = f'media/invoices/{invoice.get_name()}.pdf'
+    with open(pdf_path, 'rb') as f:
+        pdf_content = f.read()
+    response = HttpResponse(pdf_content, content_type='application/pdf')
+    response['Content-Disposition'] = f'filename="{invoice.get_name()}.pdf"'
+    return response
 
 
 @login_required(login_url="/administration/login/")
 @user_passes_test(email_check, login_url='/administration/login/')
-def generate_invoice(request):
+def generate_and_process_invoice(request, invoice_number):
+    print(f"I was called with invoice number {invoice_number}")
+    invoice = Invoice.objects.get(invoice_number=invoice_number)
+
+    # Step 1: Generate Invoice PDF
+    pdf_path = generate_invoice_pdf(request, invoice.invoice_number)
+    # Step 2: Sign the PDF
+    signed_pdf_path = sign_pdf(invoice_number)
+    # Step 3: Secure the PDF
+    secure_pdf_path = f'media/invoices/{invoice.get_name()}.pdf'
+    secure_pdf(signed_pdf_path, secure_pdf_path, "owner_password", invoice)
+    # Cleanup: Remove temporary PDFs and serve the final secured PDF
+    os.remove(pdf_path)
+    os.remove(signed_pdf_path)
+
+    # Serve the final secured PDF
+    with open(secure_pdf_path, 'rb') as f:
+        pdf_content = f.read()
+    response = HttpResponse(pdf_content, content_type='application/pdf')
+    response['Content-Disposition'] = f'filename="{invoice.get_name()}.pdf"'
+    invoice = Invoice.objects.get(invoice_number=invoice_number)
+    return response
+
+
+def generate_invoice_pdf(request, invoice_number):
+    invoice = Invoice.objects.get(invoice_number=invoice_number)
     template_path = 'administration/add/invoice.html'
-    context = request.session.get('invoice_data', {})
-    header = "https://tchiiz.com/media/photos_clients/header_w_logo.png"
-    footer = "https://productionsdesign.com/wp-content/uploads/2022/06/footer.png"
-    paid_stamps = 'https://tchiiz.com/media/photos_clients/paid_ct_ww.png'
-    unpaid_stamps = 'https://tchiiz.com/media/photos_clients/unpaid_invoice.jpg'
-    context['header'] = header
-    context['footer'] = footer
-    if context.get('payment_method', '') != 'None' and context.get('paid', '') == 'True':
-        context['paid_stamps'] = paid_stamps
+    header = "media/Logo/header_tchiiz.webp"
+    footer = "media/Logo/footer_tchiiz.webp"
+    p_stamps = 'media/Logo/paid_stamps.webp'
+    u_stamps = 'media/Logo/unpaid_stamps.webp'
+    if invoice.status == "paid":
+        stamps = p_stamps
     else:
-        context['paid_stamps'] = unpaid_stamps
-
+        stamps = u_stamps
+    if invoice.client_phone == "" or invoice.client_phone is None:
+        invoice.client_phone = "N/A"
+    if invoice.payment_method == "_":
+        invoice.payment_method = "none"
+    print(f"Invoice services in generate_invoice_pdf: {invoice.invoice_services.all()}")
+    # print it in for loop
+    services = invoice.invoice_services.all()
+    for service in services:
+        print(f"service in for loop using services variable: {service}")
+    context = {
+        'invoice_number': invoice.invoice_number,
+        'client_name': invoice.client_name,
+        'client_email': invoice.client_email,
+        'client_phone': invoice.client_phone,
+        'services': invoice.invoice_services.all(),
+        'payment_method': invoice.payment_method,
+        'invoice_date': invoice.created_at,
+        'details': invoice.details,
+        'total': invoice.total_amount(),
+        'header': header,
+        'footer': footer,
+        'stamps': stamps,
+        'url': request.build_absolute_uri(),
+        'due_date': invoice.due_date,
+    }
     # Create a Django response object, and specify content_type as pdf
-    response = HttpResponse(content_type='application/pdf')
+    filename = f"{invoice.get_name()}_generated.pdf"
+    pdf_path = os.path.join(settings.MEDIA_ROOT, 'invoices', filename)
 
-    # if download
-    # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
-    # if view
-    # invoice filename should be invoice_client_name_invoice_number.pdf
-    invoice_number = context.get('invoice_number', '')
-    # remove spaces and - from name
-    client_name = context.get('client_name', '')
-    client_name = client_name.replace(" ", "_")
-    client_name = client_name.replace("-", "_")
-    response['Content-Disposition'] = f'filename="{client_name}_invoice_{invoice_number}.pdf"'
     # find the template and render it.
     template = get_template(template_path)
     html = template.render(context)
 
     # create a pdf
-    pisa_status = pisa.CreatePDF(
-        html, dest=response, link_callback=link_callback)
-    # clean session
-    request.session['invoice_data'] = {}
+    buffer = BytesIO()
+
+    # Generate PDF
+    pisa_status = pisa.CreatePDF(html, dest=buffer, link_callback=link_callback)
     # if error then show some funny view
     if pisa_status.err:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
-    return response
+    with open(pdf_path, 'wb') as f:
+        f.write(buffer.getvalue())
+    buffer.close()
+    return pdf_path
+
+
+def sign_pdf(invoice_number):
+    pdf_obj = Invoice.objects.get(invoice_number=invoice_number)
+    pdf_path = f"media/invoices/{pdf_obj.get_name()}_generated.pdf"
+
+    # Read the contents of the private key and certificate files
+    with open(settings.PRIVATE_KEY_PATH, 'rb') as key_file:
+        private_key_data = key_file.read()
+    with open(settings.CERTIFICATE_PATH, 'rb') as cert_file:
+        certificate_data = cert_file.read()
+
+    # Load the private key and certificate
+    private_key = serialization.load_pem_private_key(
+        private_key_data,
+        password=None,  # Assuming the private key is not password protected
+        backend=default_backend()
+    )
+    certificate = x509.load_pem_x509_certificate(
+        certificate_data,
+        default_backend()
+    )
+
+    # Read the PDF
+    reader = PyPDF2.PdfReader(pdf_path)
+    writer = PyPDF2.PdfWriter()
+    for page in reader.pages:
+        writer.add_page(page)
+
+    # Save to a temporary file
+    tmp_pdf_path = f'media/invoices/{pdf_obj.get_name()}_tmp.pdf'
+    with open(tmp_pdf_path, 'wb') as f:
+        writer.write(f)
+
+    # Sign the PDF
+    dct = {
+        'sigflags': 3,
+        'contact': 'tchiiz.web.studio@gmail.com',
+        'location': 'Naples/Florida',
+        'signingdate': datetime.datetime.utcnow().strftime("D:%Y%m%d%H%M%S+00'00'"),
+        'reason': 'Signing the invoice',
+    }
+
+    with open(tmp_pdf_path, 'rb') as f:
+        datau = f.read()
+
+    # Pass the certificate object directly to the sign function
+    datas = endesive_pdf.cms.sign(
+        datau, dct,
+        private_key,  # Private key object
+        certificate,  # Certificate object
+        [],  # Additional certificates, if any, as a list
+        'sha256'
+    )
+
+    output_pdf_path = f'media/invoices/{pdf_obj.get_name()}_signed.pdf'
+    with open(output_pdf_path, 'wb') as fp:
+        fp.write(datau)
+        fp.write(datas)
+    # delete tmp file
+    os.remove(tmp_pdf_path)
+    return output_pdf_path
+
+
+def secure_pdf(input_pdf_path, output_pdf_path, owner_password, invoice):
+    """
+    Apply security restrictions to a PDF without requiring a user password to open.
+
+    Args:
+    input_pdf_path (str): Path to the input PDF file.
+    output_pdf_path (str): Path where the secured PDF will be saved.
+    owner_password (str): Owner password to change permissions.
+    """
+    with open(input_pdf_path, "rb") as input_stream:
+        reader = PyPDF2.PdfReader(input_stream)
+
+        writer = PyPDF2.PdfWriter()
+        for page in reader.pages:
+            writer.add_page(page)
+
+        # Set up permissions
+        permissions = UserAccessPermissions.MODIFY | UserAccessPermissions.EXTRACT | UserAccessPermissions.ADD_OR_MODIFY | UserAccessPermissions.FILL_FORM_FIELDS | UserAccessPermissions.EXTRACT_TEXT_AND_GRAPHICS | UserAccessPermissions.ASSEMBLE_DOC | UserAccessPermissions.PRINT_TO_REPRESENTATION
+        permissions = ~permissions  # Invert permissions to restrict these actions
+        # Add metadata to the PDF like author, title, etc.
+        metadata = {
+            '/Author': 'tchiiz.com',
+            '/Title': invoice.get_name(),
+            '/Subject': 'Invoice from tchiiz.com for photography services',
+            '/Producer': 'https://tchiiz.com',
+            '/Creator': 'https://tchiiz.com',
+            '/CreationDate': 'D:' + invoice.created_at.strftime('%Y%m%d%H%M%S'),
+            '/ModDate': 'D:' + invoice.updated_at.strftime('%Y%m%d%H%M%S'),
+            '/Keywords': f'tchiiz.com, invoice, services, secure, pdf, {invoice.status}',
+            '/Trapped': '/False',
+            '/PTEX.Fullbanner': 'This document was created by tchiiz.com',
+            '/BaseURL': 'https://tchiiz.com',
+        }
+
+        writer.add_metadata(metadata)
+        # Encrypt the PDF with an empty user password and the owner password
+        writer.encrypt(user_password='', owner_pwd=owner_password, use_128bit=True, permissions_flag=permissions)
+
+        with open(output_pdf_path, "wb") as output_stream:
+            writer.write(output_stream)
+
+
+def send_invoice_to_client(request, invoice_number):
+    invoice = Invoice.objects.get(invoice_number=invoice_number)
+    # get default domain
+    domain = request.get_host()
+    if settings.DEBUG:
+        prefix = "http://"
+    else:
+        prefix = "https://"
+    url = f"{prefix}{domain}{invoice.get_absolute_url()}"
+
+    # Check and generate the PDF if it doesn't exist
+    pdf_generation_response = invoice.generate_pdf_if_no_file(request)
+    if isinstance(pdf_generation_response, HttpResponseRedirect):
+        return pdf_generation_response
+
+    # Continue to send the email
+    invoice.send_email(request, url)
+    return redirect('administration:index')

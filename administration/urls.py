@@ -1,4 +1,4 @@
-from django.urls import path, re_path, include
+from django.urls import include, path
 
 from .views import *
 
@@ -26,6 +26,7 @@ message_patterns = [
     path('list/', list_contact_form, name='message_list'),
     path('delete/<int:pk>/', delete_contact_form, name='message_delete'),
     path('send-reply/<int:pk>/', send_late_booking_confirmation_email_to_users, name='send_email'),
+    path('send-invoice/<str:invoice_number>/', send_invoice_to_client, name='send_invoice'),
 ]
 
 add_photos_patterns = [
@@ -73,5 +74,7 @@ urlpatterns = [
     # /administration/invoice-form/
     path('invoice-form/', invoice_form, name="invoice_form"),
     # /administration/generate-invoice/
-    path('generate-invoice/', generate_invoice, name="generate_invoice"),
+    path('invoices/<str:invoice_number>/', generate_and_process_invoice, name="generate_invoice"),
+    # /administration/invoices/view/<str:invoice_number>/
+    path('invoice/<str:invoice_number>/', view_invoice, name='view_invoice'),
 ]

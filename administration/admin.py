@@ -1,8 +1,7 @@
 from django.contrib import admin
+from simple_history.admin import SimpleHistoryAdmin
 
-# Register your models here.
-
-from .models import PermissionsEmails, PhotoClient, PhotoDelivery
+from .models import Invoice, InvoiceAttachment, InvoiceService, PermissionsEmails, PhotoClient, PhotoDelivery
 
 
 @admin.register(PermissionsEmails)
@@ -30,3 +29,50 @@ class PhotoDeliveryAdmin(admin.ModelAdmin):
     list_filter = ('date', 'is_active', 'expiration_date', 'was_downloaded', 'link_to_download', 'id_delivery')
     search_fields = ('date', 'is_active', 'expiration_date', 'was_downloaded', 'link_to_download', 'id_delivery')
     list_per_page = 25
+
+
+@admin.register(InvoiceService)
+class InvoiceServiceAdmin(admin.ModelAdmin):
+    fields = ('invoice', 'service_name', 'service_price', 'service_quantity')
+
+
+@admin.register(InvoiceAttachment)
+class InvoiceAttachmentAdmin(admin.ModelAdmin):
+    fields = ('invoice', 'file',)
+
+
+class InvoiceServiceInline(admin.TabularInline):
+    model = InvoiceService
+    extra = 1
+    fields = ('service_name', 'service_price', 'service_quantity')
+
+
+class InvoiceAttachmentInline(admin.TabularInline):
+    model = InvoiceAttachment
+    extra = 1
+    fields = ('file',)
+
+
+@admin.register(Invoice)
+class InvoiceAdmin(SimpleHistoryAdmin):
+    list_display = (
+        'client_name', 'status',
+        'payment_method', 'invoice_number', 'created_at', 'total_amount')
+    list_display_links = (
+        'client_name', 'status',
+        'payment_method', 'invoice_number', 'created_at')
+    list_filter = (
+        'client_name', 'client_email', 'client_phone', 'status',
+        'payment_method', 'invoice_number', 'created_at')
+    search_fields = (
+        'client_name', 'client_email', 'client_phone', 'status',
+        'payment_method', 'invoice_number', 'created_at')
+    list_per_page = 25
+    inlines = [InvoiceServiceInline, InvoiceAttachmentInline]
+
+    fieldsets = (
+        (None, {
+            'fields': ('client_name', 'client_email', 'client_phone', 'payment_method', 'due_date', 'status', 'details',
+                       'client_address', 'discount', 'tax_rate', 'amount_paid', 'notes')
+        }),
+    )
