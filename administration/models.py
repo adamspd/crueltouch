@@ -1,12 +1,15 @@
 import random
 import string
+import uuid
+from decimal import Decimal
 
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from simple_history.models import HistoricalRecords
 
-
-# Create your models here.
 
 class PermissionsEmails(models.Model):
     date = models.CharField(max_length=255, null=False, blank=False, unique=True, verbose_name=_('The date'))
@@ -36,7 +39,7 @@ class PhotoClient(models.Model):
     was_downloaded = models.BooleanField(default=False, verbose_name=_('Was downloaded'))
 
     def __str__(self):
-        # filename without extension
+        # filename without an extension
         name = self.file.path.split('/')[-1].split('.')[0]
         return name
 
@@ -177,3 +180,165 @@ class PhotoDelivery(models.Model):
             photo.delete()
         return super().delete(*args, **kwargs)
 
+
+class Invoice(models.Model):
+    PAYMENT_METHOD_CHOICES = [
+        ('_', '--- Select a payment method ---'),
+        ('cash', 'Cash'),
+        ('credit', 'Credit'),
+        ('debit', 'Debit'),
+        ('paypal', 'Paypal'),
+        ('cashapp', 'CashApp'),
+        ('venmo', 'Venmo'),
+        ('zelle', 'Zelle'),
+        ('check', 'Check'),
+        ('others', 'Others'),
+        ('none', 'N/A'),
+    ]
+
+    INVOICE_STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('paid', 'Paid'),
+        ('cancelled', 'Cancelled'),
+        ('refunded', 'Refunded'),
+        ('failed', 'Failed'),
+        ('partially_paid', 'Partially Paid'),
+        ('overdue', 'Overdue')
+    ]
+
+    invoice_number = models.CharField(max_length=50, unique=True)
+    client_name = models.CharField(max_length=100)
+    client_email = models.EmailField()
+    client_phone = models.CharField(max_length=18, null=True, blank=True)
+    payment_method = models.CharField(max_length=10, choices=PAYMENT_METHOD_CHOICES, default='_')
+    due_date = models.DateField(null=True, blank=True)
+    status = models.CharField(max_length=14, choices=INVOICE_STATUS_CHOICES, default='pending')
+    details = models.TextField(null=True, blank=True,
+                               help_text="Details about the invoice (will be displayed to the client)")
+
+    client_address = models.TextField(null=True, blank=True)
+    discount = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
+    tax_rate = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
+    amount_paid = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    notes = models.TextField(null=True, blank=True,
+                             help_text="Internal notes about the invoice (won't be displayed to the client)")
+    history = HistoricalRecords()
+    # meta data
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    email_sent = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Invoice {self.invoice_number} for {self.client_name}"
+
+    @classmethod
+    def verify_invoice(cls, invoice_number):
+        try:
+            invoice = cls.objects.get(invoice_number=invoice_number)
+            return invoice
+        except cls.DoesNotExist:
+            return None
+
+    def clean(self):
+        if not self.discount_correct():
+            raise ValidationError(_('Discount must be between 0 and 100'))
+        if not self.tax_rate_correct():
+            raise ValidationError(_('Tax rate must be between 0 and 100'))
+
+    def discount_correct(self):
+        if 0 <= self.discount <= 100:
+            return True
+
+    def tax_rate_correct(self):
+        if 0 <= self.tax_rate <= 100:
+            return True
+
+    def total_amount(self):
+        base_amount = sum(service.get_subtotal() for service in self.invoice_services.all())
+        discount_amount = base_amount * (self.discount / 100)
+        net_amount = base_amount - discount_amount
+        tax_amount = net_amount * (self.tax_rate / 100)
+        total = net_amount + tax_amount
+        return round(total, 2)
+
+    def balance_due(self):
+        return max(self.total_amount() - self.amount_paid, Decimal(0))
+
+    @staticmethod
+    def set_invoice_number():
+        while True:
+            invoice_number = uuid.uuid4().hex[:8]
+            if not Invoice.objects.filter(invoice_number=invoice_number).exists():
+                return invoice_number
+
+    def save(self, *args, **kwargs):
+        if not self.invoice_number:
+            self.invoice_number = self.set_invoice_number()
+        self.full_clean()  # Call full_clean to run clean method
+        super().save(*args, **kwargs)
+
+    def generate_pdf_if_no_file(self, request):
+        from administration.views import generate_and_process_invoice
+        try:
+            with open(self.get_path(), 'r'):
+                print(f"File exists, {self.get_path()}")
+                return True
+        except FileNotFoundError:
+            print(f"File does not exist, {self.get_path()}")
+            # Directly call the function to generate the PDF
+            generate_and_process_invoice(request, self.invoice_number)
+            return False
+
+    def get_absolute_url(self):
+        return reverse('administration:view_invoice', args=[self.invoice_number])
+
+    def get_name(self):
+        client_name = (self.client_name.replace(" ", "_").replace("-", "_")
+                       .replace("'", "_").lower())
+        return f'{client_name}_invoice_{self.invoice_number}'
+
+    def get_path(self):
+        # return media/invoices/invoice_name
+        return f'media/invoices/{self.get_name()}.pdf'
+
+    def get_if_email_sent(self):
+        if self.email_sent:
+            return 'Yes'
+        else:
+            return 'No'
+
+    def send_email(self, request, url):
+        from utils.emails_handling import send_invoice_email
+        self.generate_pdf_if_no_file(request)
+        send_invoice_email(self.client_email, self.client_name, self.invoice_number, url,
+                           self.status, self.total_amount(), self.due_date, 'Invoice from Tchiiz',
+                           self.get_path(), self.attachments)
+        self.email_sent = True
+        self.save()
+
+
+class InvoiceService(models.Model):
+    invoice = models.ForeignKey(Invoice, related_name='invoice_services', on_delete=models.CASCADE)
+    service_name = models.CharField(max_length=255)
+    service_price = models.DecimalField(max_digits=10, decimal_places=2)
+    service_quantity = models.IntegerField(default=1)
+
+    # meta data
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.service_name} - {self.service_quantity} x {self.service_price}"
+
+    def get_subtotal(self):
+        return self.service_price * self.service_quantity
+
+
+class InvoiceAttachment(models.Model):
+    invoice = models.ForeignKey(Invoice, related_name='attachments', on_delete=models.CASCADE)
+    file = models.FileField(upload_to='invoice_attachments/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.file.name

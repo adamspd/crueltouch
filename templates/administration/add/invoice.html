@@ -7,53 +7,61 @@
         @page {
             size: a4 portrait;
             @frame logo_frame {
-            -pdf-frame-content: logo_frame;
-            left: 0pt;
-            right: 0pt;
-            top: 0pt;
-            height: 500pt;
-        }
-        @frame pd_title {
-            /* Static Frame */
-        -pdf-frame-content:pd_title;
-        left: 286pt;
-        width: 230pt;
-        top: 120pt;
-        height: 120pt;
-        }
+                -pdf-frame-content: logo_frame;
+                left: 0pt;
+                right: 0pt;
+                top: 0pt;
+                height: 500pt;
+            }
+            @frame pd_title {
+                /* Static Frame */
+                -pdf-frame-content: pd_title;
+                left: 286pt;
+                width: 230pt;
+                top: 120pt;
+                height: 120pt;
+            }
 
-        @frame header_frame_left {
-        -pdf-frame-content:header_frame_left;
-        left: 30pt;
-        width: 256pt;
-        top: 200pt;
-        height: 80pt;
-        }
+            @frame header_frame_left {
+                -pdf-frame-content: header_frame_left;
+                left: 30pt;
+                width: 256pt;
+                top: 200pt;
+                height: 80pt;
+            }
 
-        @frame header_frame_right {
-        -pdf-frame-content:header_frame_right;
-        left: 286pt;
-        width: 256pt;
-        top: 200pt;
-        height: 60pt;
-        text-align:right;
-        }
+            @frame header_frame_right {
+                -pdf-frame-content: header_frame_right;
+                left: 286pt;
+                width: 256pt;
+                top: 200pt;
+                height: 60pt;
+                text-align: right;
+            }
 
-        @frame content_frame {
-            /* Content Frame */
-        left: 30pt;
-        width: 512pt;
-        top: 330pt;
-        height: 632pt;
-        }
-        @frame footer_frame {
-            /* Another static Frame */
-        -pdf-frame-content:footer_content;
-        left: 0pt;
-        right: 0pt;
-        top: 720pt;
-        height: 300pt;
-        }
+            @frame content_frame {
+                /* Content Frame */
+                left: 30pt;
+                width: 512pt;
+                top: 330pt;
+                height: 632pt;
+            }
+
+            @frame notes {
+                -pdf-frame-content: footer_frame;
+                left: 30pt;
+                width: 410pt;
+                bottom: 0pt;  /* Position at the bottom */
+                height: 120pt; /* Adjust height to fit contents */
+            }
+
+            @frame footer_content {
+                -pdf-frame-content: footer_content;
+                left: 30pt;
+                right: 0;
+                bottom: 0pt;  /* Position at the bottom */
+                height: 123.5pt; /* Adjust height to fit contents */
+            }
         }
     </style>
 
@@ -65,7 +73,7 @@
 </div>
 
 <div id="pd_title">
-    <h1 style="font-size: 40px; color: rgb(248, 124, 84); text-align: right; letter-spacing: 5px">INVOICE</h1>
+    <h1 style="font-size: 35px; color: rgb(248, 124, 84); text-align: right; letter-spacing: 5px">INVOICE</h1>
 </div>
 
 <div id="header_frame_left" style="line-height: 0.5em; font-size: 14px">
@@ -74,9 +82,12 @@
     <p>{{ client_phone }}</p>
 </div>
 
-<div id="header_frame_right" style="text-align: right; line-height: 0.5em; font-size: 14px">
-    <p>Invoice Number: #{{ invoice_number }}</p>
-    <p>Invoice Date: {{ invoice_date }}</p>
+<div id="header_frame_right" style="text-align: right; line-height: 0.4em; font-size: 13px">
+    <p>Invoice Number: # <a href="{{ url }}">{{ invoice_number }}</a></p>
+    <p>Invoice Date: {{ invoice_date|date }}</p>
+    {% if due_date %}
+        <p>Due Date: {{ due_date|date }}</p>
+    {% endif %}
 </div>
 
 <div>
@@ -90,29 +101,14 @@
         <th style="background-color: rgb(255, 188, 156)">Subtotal</th>
         </thead>
         <tbody style="font-size: 14px; background-color: rgb(255, 188, 156)">
-        <tr style="font-size: 14px; border: 1px solid rgb(255, 188, 156)">
-            <td style="text-align: left; height: 55px; padding-left: 15px; width: 250pt">{{ package_name }}</td>
-            <td style="text-align: center; height: 55px">${{ package_price }}</td>
-            <td style="text-align: center; height: 55px">{{ package_qty }}</td>
-            <td style="text-align: center; height: 55px">${{ package_subtotal }}</td>
-        </tr>
-        {% if additional %}
-            {% for add in additional %}
-                <tr style="font-size: 14px; border: 1px solid rgb(255, 188, 156)">
-                    <td style="text-align: left; height: 55px; padding-left: 15px; width: 250pt">{{ add.name }}</td>
-                    <td style="text-align: center; height: 55px">${{ add.price }}</td>
-                    <td style="text-align: center; height: 55px">{{ add.quantity }}</td>
-                    <td style="text-align: center; height: 55px">${{ add.subtotal }}</td>
-                </tr>
-            {% endfor %}
-        {% endif %}
-
-        <tr style="font-size: 14px; border: 1px solid rgb(255, 188, 156)">
-            <td style="text-align: left; height: 55px; padding-left: 15px; width: 250pt"></td>
-            <td style="text-align: center; height: 55px"></td>
-            <td style="text-align: center; height: 55px"></td>
-            <td style="text-align: center; height: 55px"></td>
-        </tr>
+        {% for service in services %}
+            <tr style="font-size: 14px; border: 1px solid rgb(255, 188, 156)">
+                <td style="text-align: left; height: 55px; padding-left: 15px; width: 250pt">{{ service.service_name }}</td>
+                <td style="text-align: center; height: 55px">${{ service.service_price }}</td>
+                <td style="text-align: center; height: 55px">{{ service.service_quantity }}</td>
+                <td style="text-align: center; height: 55px">${{ service.get_subtotal }}</td>
+            </tr>
+        {% endfor %}
         <tr style="font-size: 14px; background-color: rgb(255, 188, 156)">
             <td style="background-color: rgb(255, 188, 156); height: 55px; width: 250pt; text-align: left; padding-left: 15px"></td>
             <td style="background-color: rgb(255, 188, 156)"></td>
@@ -122,17 +118,30 @@
         </tbody>
     </table>
     <div id="payment_frame_left" style="line-height: 0.5em; font-size: 14px; padding-top: 10px; margin-bottom: 10px">
-        <p>Payment method: {{ payment_method | title }}</p>
+        <p>Payment method: {{ payment_method }}</p>
     </div>
-    <div id="payment_frame_right" style="text-align: left; line-height: 0.5em; font-size: 14px; padding-top: 10px; margin-bottom: 10px; max-width: 50px">
-        <img src="{{ paid_stamps }}" alt="" style="width: 100px; transform: rotate(45deg);" class="paid-stamps">
+    <div id="payment_frame_right"
+         style="text-align: left; line-height: 0.5em; font-size: 14px; padding-top: 10px; margin-bottom: 10px; max-width: 50px">
+        <img src="{{ stamps }}" alt="" style="width: 100px; transform: rotate(90deg);" class="paid-stamps">
     </div>
 </div>
 
-
 <!-- Content for Static Frame 'footer_frame' -->
-<div id="footer_content">
-    <img src="{{ footer }}" alt="" style="width: 350pt;" align="right">
+<div id="footer_frame">
+    {% if details != '' %}
+        <div id="notes" style="font-size: 11px; padding: 0; margin: 0;">
+            <p><b>Notes:</b> {{ details }}</p>
+        </div>
+    {% endif %}
+    <!-- Legal Disclaimer Section -->
+    <div id="legal_disclaimer" style="margin-top: 10px; font-size: 9px; text-align: left;">
+        <p><strong>Legal Disclaimer:</strong> This invoice is a legal document and is intended for the use of the
+            addressee only. Unauthorized copying, disclosure, or tampering with this document is strictly prohibited and
+            may be subject to legal action.</p>
+    </div>
+    <div id="footer_content" style="text-align: right; padding: 0; margin: 0;">
+        <img src="{{ footer }}" alt="Footer image" style="width: 350pt;">
+    </div>
 </div>
 
 </body>

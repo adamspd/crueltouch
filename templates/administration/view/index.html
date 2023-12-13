@@ -14,8 +14,8 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-buttons-bs4/2.2.3/buttons.bootstrap4.min.css"
           integrity="sha512-qjgDB3iTYTDAAZDtyv6xdGedzfFon3y1yjE/yI2R7HuxKEsY50aXysYFrb2hP3UZbHKiNWKj8tEIhXXFyCi0cA=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 {% endblock %}
 
 {% block body %}
@@ -176,7 +176,8 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header" id="requested_session">
-                                <h3 class="card-title">{% translate "Last 10 requested photoshoot session" %}</h3>
+                                <h3 class="card-title"
+                                    style="text-transform: uppercase; font-size: 20px !important; font-weight: bold !important;">{% translate "Last 5 Appointments" %}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -261,6 +262,107 @@
                                         <th>{% translate "Buzz At" %}</th>
                                         <th>{% translate "Found At" %}</th>
                                         <th>{% translate "Chosen Snap" %}</th>
+                                        <th>{% translate "Actions" %}</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </section>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header" id="invoices">
+                                <h3 class="card-title"
+                                    style="text-transform: uppercase; font-size: 20px !important; font-weight: bold !important;">{% translate "Last 5 Invoices" %}</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>{% translate "Date" %}</th>
+                                        <th>{% translate "Client" %}</th>
+                                        <th>{% translate "Service" %}</th>
+                                        <th>{% translate "Total" %}</th>
+                                        <th>{% translate "Ping at" %}</th>
+                                        <th>{% translate "Buzz at" %}</th>
+                                        <th>{% translate "Email Sent" %}</th>
+                                        <th>{% translate "Actions" %}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for rs in invoices %}
+                                        <tr>
+                                            <td>{{ rs.created_at|date }}</td>
+                                            <td>{{ rs.client_name }}</td>
+                                            <td>{{ rs.package_name }}</td>
+                                            <td>${{ rs.total_amount }}</td>
+                                            <td>
+                                                <a href="mailto:{{ rs.client_email }}">
+                                                    {{ rs.client_email }}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                {% if rs.client_phone %}
+                                                    <a href="tel:{{ rs.client_phone }}">
+                                                        {{ rs.client_phone }}
+                                                    </a>
+                                                {% else %}
+                                                    N/A
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {{ rs.get_if_email_sent }}
+                                            </td>
+                                            <td>
+                                                {% if not rs.email_sent and not rs.status_changed %}
+                                                    <a href="{% url 'administration:send_invoice' rs.invoice_number %}"
+                                                       class="btn btn-primary btn-sm">
+                                                        <i class="fas fa-envelope"></i>
+                                                        {% translate "Send" %}
+                                                    </a>
+                                                {% else %}
+                                                    <a href="" class="btn btn-primary btn-sm disabled">
+                                                        <i class="fas fa-envelope"></i>
+                                                        {% translate "Send" %}
+                                                    </a>
+                                                {% endif %}&nbsp;
+                                                {#                                                <a href="{% url 'appointment:de' rs.pk %}"#}
+                                                {#                                                   class="btn btn-success btn-sm">#}
+                                                {#                                                    <i class="fas fa-edit"></i>&nbsp;Edit#}
+                                                {#                                                </a>&nbsp;#}
+                                                {#                                                <a href="{% url 'administration:session_delete' rs.pk %}"#}
+                                                {#                                                   class="btn btn-danger btn-sm">#}
+                                                {#                                                    <i class="fas fa-trash"></i>&nbsp;Delete#}
+                                                {#                                                </a>#}
+                                                <a href="{% url 'administration:view_invoice' rs.invoice_number %}"
+                                                   class="btn btn-info btn-sm">
+                                                    <i class="fas fa-eye"></i>&nbsp;View
+                                                </a>&nbsp;
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>{% translate "Date" %}</th>
+                                        <th>{% translate "Client" %}</th>
+                                        <th>{% translate "Service" %}</th>
+                                        <th>{% translate "Total" %}</th>
+                                        <th>{% translate "Ping at" %}</th>
+                                        <th>{% translate "Buzz at" %}</th>
+                                        <th>{% translate "Email Sent" %}</th>
                                         <th>{% translate "Actions" %}</th>
                                     </tr>
                                     </tfoot>
