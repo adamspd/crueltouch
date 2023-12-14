@@ -1,5 +1,5 @@
-Django==4.2.7
-django-js-asset==2.1.0
+Django==4.2.8
+django-js-asset==2.2.0
 dnspython==2.4.2
 docutils==0.20.1
 markdown2==2.4.11
@@ -9,3 +9,8 @@ requests==2.31.0
 django-appointment==2.1.1
 django-payment-manager==1.0.1
 python-dotenv~=1.0.0
+django-simple-history~=3.4.0
+xhtml2pdf~=0.2.13
+pypdf2~=3.0.1
+endesive~=2.16
+cryptography~=41.0.7

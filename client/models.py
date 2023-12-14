@@ -168,7 +168,7 @@ class UserClient(AbstractBaseUser, PermissionsMixin, models.Model):
     email = models.EmailField(max_length=255, unique=True, default="", help_text=_("A valid email address, please"))
     first_name = models.CharField(max_length=255, default=None)
     last_name = models.CharField(max_length=255, default=None, null=True, blank=True)
-    phone_number = models.CharField(validators=[phone_regex], max_length=15, blank=True, null=True, default="",
+    phone_number = models.CharField(max_length=18, blank=True, null=True, default="",
                                     help_text=_("Phone number must not contain spaces, letters, parentheses or "
                                                 "dashes. It must contain 15 digits."))
     address = models.CharField(max_length=255, blank=True, null=True, default="",

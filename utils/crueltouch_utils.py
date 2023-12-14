@@ -7,14 +7,12 @@ import re
 from datetime import datetime
 
 from PIL import Image
-from django.contrib import messages
 from django.core.mail import mail_admins, send_mail
-from django.shortcuts import redirect
 from django.template import loader
 
-from administration.models import PermissionsEmails
 from crueltouch import settings
 from crueltouch.productions import production_debug
+from utils.emails_handling import get_permissions
 
 
 def c_print(msg, *args, **kwargs):
@@ -70,49 +68,6 @@ def email_check(user):
         return True
     else:
         return False
-
-
-def get_permissions(is_booking: bool, is_contact_form: bool, is_other: bool) -> bool:
-    """
-    Check if the permission is granted to send email, meaning that the quota is not exceeded.
-    :param is_booking: bool
-    :param is_contact_form: bool
-    :param is_other: bool
-    :return: bool
-    """
-    today = datetime.now().strftime("%Y-%m-%d")
-    try:
-        permission = PermissionsEmails.objects.get(date=today)
-        if permission.can_send_email and is_booking:
-            permission.booking_request += 1
-            permission.save()
-            return True
-        elif permission.can_send_email and is_contact_form:
-            permission.contact_form += 1
-            permission.save()
-            return True
-        elif permission.can_send_email and is_other:
-            permission.other += 1
-            permission.save()
-            return True
-        else:
-            return False
-    except PermissionsEmails.DoesNotExist:
-        if is_booking:
-            PermissionsEmails.objects.create(
-                date=today,
-                booking_request=1)
-            return True
-        elif is_contact_form:
-            PermissionsEmails.objects.create(
-                date=today,
-                contact_form=1)
-            return True
-        elif is_other:
-            PermissionsEmails.objects.create(
-                date=today,
-                other=1)
-            return True
 
 
 def send_session_request_received_email(email_address, full_name: str, session_type: str, place: str, package: str,
@@ -325,17 +280,6 @@ def send_client_email(email_address, subject: str, header: str, message: str, fo
     It checks if there is a permission to send email, meaning that the number of emails sent today is less than 300.
     Before sending email, it checks if the email address is valid and exists.
     Use models `ContactForm` and `PermissionsEmails`.
-    :param email_address: client's email address
-    :param subject: subject of the email
-    :param header: header of the email
-    :param message: message of the email
-    :param footer: footer of the email
-    :param button_label: button label
-    :param button_text: button text
-    :param button_link: button link
-    :param is_contact_form: True if email is sent when client filled out the contact form
-    :param is_other: True if email is sent when admin wants to reply to client
-    :return: True if email is sent successfully
     """
     if get_permissions(is_booking=False, is_contact_form=is_contact_form, is_other=is_other):
         recipient_list = [
@@ -375,11 +319,6 @@ def send_email_admin(subject: str, message: str, is_contact_form: bool, is_other
     It sends email when client filled out the contact form to notify admin.
     It checks if there is a permission to send email, meaning that the number of emails sent today is less than 300.
     Use models `PermissionsEmails`.
-    :param subject: subject of the email
-    :param message: message of the email
-    :param is_contact_form: True if email is sent when client filled out the contact form
-    :param is_other: True if email is sent when admin wants to reply to client
-    :return: True if email is sent successfully
     """
     get_permissions(is_booking=False, is_contact_form=is_contact_form, is_other=is_other)
     html_message = loader.render_to_string(
@@ -461,9 +400,6 @@ def send_password_reset_email(first_name: str, email_address: str) -> bool:
     """
     This function sends email to client with his password, and returns True if email is sent successfully.
     Use models `PermissionsEmails`.
-    :param first_name: first name of the client
-    :param email_address: client's email address
-    :return: True if email is sent successfully
     """
     if get_permissions(is_booking=False, is_contact_form=False, is_other=True):
         recipient_list = [

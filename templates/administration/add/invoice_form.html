@@ -1,17 +1,143 @@
 {% extends 'administration/base.html' %}
 {% load i18n %}
 {% load static %}
-{% block title %}TCHIIZ | {% translate "Generate Invoice" %}{% endblock %}
+
+{% block title %}
+    {{ title }} | TCHIIZ
+{% endblock %}
+{% block customCSS %}
+    <style>
+        .autocomplete-results {
+            border: 1px solid #ccc;
+            position: absolute;
+            z-index: 1000;
+            background-color: white;
+            width: calc(100% - 2px);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .autocomplete-item {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .autocomplete-item:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+{% endblock %}
 {% block body %}
     <section class="content content-wrapper">
         <div class="container-fluid">
             <div class="row" style="margin: 0 auto; padding-top: 20px; padding-bottom: 20px">
-                <h2>Create Invoice</h2>
+                <h2>{{ title }}</h2>
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary">Generate Invoice</button>
+                    <h3>{% translate 'Add Services' %}</h3>
+                    <div id="services">
+                        {{ service_formset.management_form }}
+                        {% for form in service_formset %}
+                            <div class="service-form">
+                                {{ form.as_p }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button type="button" id="add-service" class="btn btn-info">Add more service</button>
+                    <br><br>
+                    <h3>{% translate 'Add attachments' %}</h3>
+                    <div id="attachments">
+                        {{ attachment_formset.management_form }}
+                        {% for form in attachment_formset %}
+                            <div class="attachment-form">
+                                {{ form.as_p }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button type="button" id="add-attachment" class="btn btn-warning">Add more attachment</button>
+                    <br><br>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
+
+                <script>
+                    function addFormToContainer(containerId, formClass, buttonId) {
+                        document.getElementById(buttonId).addEventListener('click', function () {
+                            const container = document.getElementById(containerId);
+                            const totalFormsInput = container.querySelector("input[name$='-TOTAL_FORMS']");
+                            let formIndex = parseInt(totalFormsInput.value);
+
+                            const newForm = container.querySelector(`.${formClass}:last-of-type`).cloneNode(true);
+                            newForm.querySelectorAll('input, select, textarea').forEach(function (inputElement) {
+                                const name = inputElement.name.replace('-' + (formIndex - 1) + '-', '-' + formIndex + '-');
+                                const id = 'id_' + name;
+                                inputElement.name = name;
+                                inputElement.id = id;
+                                inputElement.value = '';
+                                if (inputElement.type === 'checkbox' || inputElement.type === 'radio') {
+                                    inputElement.checked = false;
+                                }
+                            });
+
+                            container.appendChild(newForm);
+                            totalFormsInput.value = formIndex + 1;
+                        });
+                    }
+
+                    addFormToContainer('services', 'service-form', 'add-service');
+                    addFormToContainer('attachments', 'attachment-form', 'add-attachment');
+
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const emailInput = document.getElementById('id_client_email');
+                        const autocompleteResults = document.createElement('div');
+                        autocompleteResults.setAttribute('class', 'autocomplete-results');
+                        emailInput.parentNode.appendChild(autocompleteResults);
+
+                        emailInput.addEventListener('input', function () {
+                            const ajaxUrl = emailInput.getAttribute('data-ajax-url');
+                            const query = emailInput.value;
+
+                            fetch(`${ajaxUrl}?query=${query}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    autocompleteResults.innerHTML = '';  // Clear previous results
+
+                                    data.forEach(client => {
+                                        const div = document.createElement('div');
+                                        div.innerHTML = client.email;
+                                        div.setAttribute('class', 'autocomplete-item');
+                                        div.addEventListener('click', function () {
+                                            emailInput.value = client.email;
+                                            console.log("client name: " + client.first_name + " " + client.last_name)
+                                            console.log("client phone: " + client.phone_number)
+                                            console.log("client address: " + client.address)
+                                            if (client.first_name) {
+                                                document.getElementById('id_client_first_name').value = client.first_name;
+                                            }
+                                            if (client.last_name) {
+                                                document.getElementById('id_client_last_name').value = client.last_name;
+                                            }
+                                            if (client.phone_number) {
+                                                document.getElementById('id_client_phone').value = client.phone_number;
+                                            }
+                                            if (client.address) {
+                                                document.getElementById('id_client_address').value = client.address;
+                                            }
+                                            autocompleteResults.innerHTML = ''; // Clear results after selection
+                                        });
+                                        autocompleteResults.appendChild(div);
+                                    });
+                                })
+                                .catch(error => console.error('Error:', error));
+                        });
+                        // Hide results when clicking outside
+                        document.addEventListener('click', function (event) {
+                            if (event.target !== emailInput) {
+                                autocompleteResults.innerHTML = '';
+                            }
+                        });
+                    });
+                </script>
             </div>
         </div>
     </section>

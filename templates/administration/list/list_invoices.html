@@ -1,0 +1,136 @@
+{% extends 'administration/list/data.html' %}
+{% load i18n %}
+{% load static %}
+{% block title %}TCHIIZ | {% translate "Contact Forms" %}{% endblock %}
+
+{% block pageTitle %}
+    {% translate "Contact Forms" %}
+{% endblock %}
+{% block pageLink %}
+    {% translate "Contact Forms" %}
+{% endblock %}
+
+
+{% block table %}
+    <!-- Main content -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{% translate "Contact Forms" %}</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>{% translate "Date" %}</th>
+                    <th>{% translate "Client" %}</th>
+                    <th>{% translate "Total" %}</th>
+                    <th>{% translate "Ping at" %}</th>
+                    <th>{% translate "Buzz at" %}</th>
+                    <th>{% translate "Email Sent" %}</th>
+                    <th>{% translate "Status" %}</th>
+                    <th>{% translate "Actions" %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for rs in invoices %}
+                    <tr>
+                        <td>{{ rs.created_at|date }}</td>
+                        <td>{{ rs.client.get_short_name }}</td>
+                        <td>${{ rs.total_amount }}</td>
+                        <td>
+                            <a href="mailto:{{ rs.client.email }}">
+                                {{ rs.client.email }}
+                            </a>
+                        </td>
+                        <td>
+                            {% if rs.client.phone_number %}
+                                <a href="tel:{{ rs.client.phone_number }}">
+                                    {{ rs.client.phone_number }}
+                                </a>
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ rs.get_if_email_sent }}
+                        </td>
+                        <td>
+                            <form action="{% url 'administration:update_invoice_status' rs.invoice_number %}"
+                                  method="post">
+                                {% csrf_token %}
+                                <label>
+                                    <select name="status" onchange="this.form.submit()">
+                                        {% for status, status_display in rs.INVOICE_STATUS_CHOICES %}
+                                            <option value="{{ status }}"
+                                                    {% if rs.status == status %}selected{% endif %}>
+                                                {{ status_display }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </label>
+                            </form>
+                        </td>
+
+                        <td>
+                            {% if not rs.email_sent or not rs.status_changed %}
+                                <a href="{% url 'administration:send_invoice' rs.invoice_number %}"
+                                   class="btn btn-primary btn-sm">
+                                    <i class="fas fa-envelope"></i>
+                                    &nbsp;{% translate "Send" %}
+                                </a>
+                            {% else %}
+                                <a href="" class="btn btn-primary btn-sm disabled">
+                                    <i class="fas fa-envelope"></i>
+                                    &nbsp;{% translate "Send" %}
+                                </a>
+                            {% endif %}&nbsp;
+                            <a href="{% url 'administration:edit_invoice' rs.pk %}"
+                               class="btn btn-success btn-sm">
+                                <i class="fas fa-edit"></i>&nbsp;Edit
+                            </a>&nbsp;
+                            <a href="{% url 'administration:' rs.pk %}"
+                               class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash"></i>&nbsp;Delete
+                            </a>
+                            <a href="{% url 'administration:view_invoice' rs.invoice_number %}"
+                               class="btn btn-info btn-sm">
+                                <i class="fas fa-eye"></i>&nbsp;View
+                            </a>&nbsp;
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="8">
+                            <div class="alert alert-info">
+                                {% translate "No invoice found" %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>{% translate "Date" %}</th>
+                    <th>{% translate "Client" %}</th>
+                    <th>{% translate "Total" %}</th>
+                    <th>{% translate "Ping at" %}</th>
+                    <th>{% translate "Buzz at" %}</th>
+                    <th>{% translate "Email Sent" %}</th>
+                    <th>{% translate "Status" %}</th>
+                    <th>{% translate "Actions" %}</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <!-- /.table-responsive -->
+    </div>
+    <!-- /.card-body -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}"
+                 role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
