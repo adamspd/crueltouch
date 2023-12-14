@@ -1630,7 +1630,7 @@ msgstr "Conectarse y registrarse"
 
 #: templates/homepage/base.html:120
 msgid "Sign In"
-msgstr "Regístrate"
+msgstr "Conectarse"
 
 #: templates/homepage/base.html:121
 msgid "Join Us"
