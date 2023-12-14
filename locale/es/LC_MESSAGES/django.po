@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-14 12:11-0500\n"
+"POT-Creation-Date: 2023-12-14 17:33-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,8 +94,8 @@ msgstr "Fotos"
 #: administration/models.py:72
 #: templates/administration/list/list_invoices.html:25
 #: templates/administration/list/list_invoices.html:115
-#: templates/administration/view/index.html:280
-#: templates/administration/view/index.html:361
+#: templates/administration/view/index.html:232
+#: templates/administration/view/index.html:313
 #: venv/lib/python3.9/site-packages/appointment/templates/administration/display_appointment.html:23
 msgid "Date"
 msgstr "Fecha"
@@ -528,7 +528,7 @@ msgstr "¡Gracias por su mensaje, pero no se envió!"
 msgid "Something went wrong. Please try again later."
 msgstr ""
 
-#: static_pages_and_forms/views.py:78 templates/homepage/base.html:123
+#: static_pages_and_forms/views.py:78 templates/homepage/base.html:106
 #: templates/legal/privacy_policy.html:17
 msgid "Privacy Policy"
 msgstr "Política de privacidad"
@@ -564,8 +564,8 @@ msgstr "Subir imagen"
 #: templates/administration/list/list_invoices.html:85
 #: templates/administration/list/list_requested_session.html:94
 #: templates/administration/list/list_requested_session.html:99
-#: templates/administration/view/index.html:335
-#: templates/administration/view/index.html:340
+#: templates/administration/view/index.html:287
+#: templates/administration/view/index.html:292
 msgid "Send"
 msgstr "Enviar"
 
@@ -615,7 +615,7 @@ msgstr "Tablero"
 msgid "Homepage"
 msgstr "Página de inicio"
 
-#: templates/administration/base.html:70 templates/homepage/base.html:115
+#: templates/administration/base.html:70
 msgid "Logout"
 msgstr "Cerrar sesión"
 
@@ -720,6 +720,7 @@ msgid "Downloads"
 msgstr "Descargas"
 
 #: templates/administration/download/downloadable_images.html:11
+#: templates/homepage/base.html:114
 msgid "Hi"
 msgstr "Hola"
 
@@ -869,8 +870,8 @@ msgstr "Lugar"
 #: templates/administration/list/list_invoices.html:121
 #: templates/administration/list/list_requested_session.html:47
 #: templates/administration/list/list_requested_session.html:124
-#: templates/administration/view/index.html:286
-#: templates/administration/view/index.html:367
+#: templates/administration/view/index.html:238
+#: templates/administration/view/index.html:319
 msgid "Status"
 msgstr "Estado"
 
@@ -899,7 +900,7 @@ msgid "please let us know"
 msgstr "por favor háganoslo saber"
 
 #: templates/administration/email_template/session_request_received.html:392
-#: templates/homepage/base.html:182
+#: templates/homepage/base.html:189
 #: venv/lib/python3.9/site-packages/appointment/templates/email_sender/thank_you_email.html:251
 #: venv/lib/python3.9/site-packages/payment/templates/email_sender/payment_email.html:67
 msgid "All rights reserved"
@@ -917,8 +918,8 @@ msgstr "Lista de fotos elegidas"
 #: templates/administration/list/list_album_client.html:67
 #: templates/administration/list/list_invoices.html:26
 #: templates/administration/list/list_invoices.html:116
-#: templates/administration/view/index.html:281
-#: templates/administration/view/index.html:362
+#: templates/administration/view/index.html:233
+#: templates/administration/view/index.html:314
 #: venv/lib/python3.9/site-packages/appointment/templates/administration/display_appointment.html:39
 msgid "Client"
 msgstr "Cliente"
@@ -971,37 +972,35 @@ msgstr "Borrar"
 
 #: templates/administration/list/list_invoices.html:27
 #: templates/administration/list/list_invoices.html:117
-#: templates/administration/view/index.html:282
-#: templates/administration/view/index.html:363
+#: templates/administration/view/index.html:234
+#: templates/administration/view/index.html:315
 #: templates/appointments/appointment_client_information.html:100
 #: templates/appointments/appointment_payment.html:64
 #: venv/lib/python3.9/site-packages/appointment/templates/appointment/appointment_client_information.html:105
 #: venv/lib/python3.9/site-packages/payment/templates/payment/payment.html:65
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #: templates/administration/list/list_invoices.html:28
 #: templates/administration/list/list_invoices.html:118
-#: templates/administration/view/index.html:198
-#: templates/administration/view/index.html:283
-#: templates/administration/view/index.html:364
+#: templates/administration/view/index.html:150
+#: templates/administration/view/index.html:235
+#: templates/administration/view/index.html:316
 msgid "Ping at"
-msgstr ""
+msgstr "Ping en"
 
 #: templates/administration/list/list_invoices.html:29
 #: templates/administration/list/list_invoices.html:119
-#: templates/administration/view/index.html:199
-#: templates/administration/view/index.html:284
-#: templates/administration/view/index.html:365
+#: templates/administration/view/index.html:151
+#: templates/administration/view/index.html:236
+#: templates/administration/view/index.html:317
 msgid "Buzz at"
-msgstr ""
+msgstr "Buzz en"
 
 #: templates/administration/list/list_invoices.html:30
 #: templates/administration/list/list_invoices.html:120
-#: templates/administration/view/index.html:285
-#: templates/administration/view/index.html:366
-#, fuzzy
-#| msgid "Email sent"
+#: templates/administration/view/index.html:237
+#: templates/administration/view/index.html:318
 msgid "Email Sent"
 msgstr "Correo electrónico enviado"
 
@@ -1009,18 +1008,16 @@ msgstr "Correo electrónico enviado"
 #: templates/administration/list/list_invoices.html:122
 #: templates/administration/list/list_requested_session.html:49
 #: templates/administration/list/list_requested_session.html:126
-#: templates/administration/view/index.html:202
-#: templates/administration/view/index.html:251
-#: templates/administration/view/index.html:287
-#: templates/administration/view/index.html:368
+#: templates/administration/view/index.html:154
+#: templates/administration/view/index.html:203
+#: templates/administration/view/index.html:239
+#: templates/administration/view/index.html:320
 msgid "Actions"
 msgstr "Acciones"
 
 #: templates/administration/list/list_invoices.html:106
-#, fuzzy
-#| msgid "No service found"
 msgid "No invoice found"
-msgstr "No se encontró ningún servicio"
+msgstr "No se encontró ninguna factura"
 
 #: templates/administration/list/list_requested_session.html:5
 #: templates/administration/list/list_requested_session.html:8
@@ -1116,7 +1113,6 @@ msgstr "Solicitar nueva contraseña"
 #: templates/client/login_registration/login.html:4
 #: templates/client/login_registration/login.html:51
 #: templates/client/login_registration/register.html:84
-#: templates/homepage/base.html:108
 msgid "Login"
 msgstr "Iniciar sesión"
 
@@ -1222,118 +1218,106 @@ msgstr "Fotos entregadas"
 msgid "Clients"
 msgstr "Clientes"
 
-#: templates/administration/view/index.html:186
-#, fuzzy
-#| msgid "Appointments"
+#: templates/administration/view/index.html:138
 msgid "Last 5 Appointments"
-msgstr "Citas"
+msgstr "Últimas 5 citas"
 
-#: templates/administration/view/index.html:193
-#: templates/administration/view/index.html:242
-msgid "On"
-msgstr ""
-
+#: templates/administration/view/index.html:145
 #: templates/administration/view/index.html:194
-#: templates/administration/view/index.html:243
-#, fuzzy
-#| msgid "Client"
+msgid "On"
+msgstr "En"
+
+#: templates/administration/view/index.html:146
+#: templates/administration/view/index.html:195
 msgid "Client, AKA"
 msgstr "Cliente"
 
-#: templates/administration/view/index.html:195
-#, fuzzy
-#| msgid "Book Now"
+#: templates/administration/view/index.html:147
 msgid "Booked for"
-msgstr "Reservar ahora"
+msgstr "Reservado para"
+
+#: templates/administration/view/index.html:148
+msgid "For only"
+msgstr "Por solo"
+
+#: templates/administration/view/index.html:149
+msgid "See them on"
+msgstr "Verlos en"
+
+#: templates/administration/view/index.html:152
+msgid "Found at"
+msgstr "Encontrado en"
+
+#: templates/administration/view/index.html:153
+msgid "Snapper"
+msgstr "Snapper"
 
 #: templates/administration/view/index.html:196
-msgid "For only"
-msgstr ""
+msgid "Booked For"
+msgstr "Reservado para"
 
 #: templates/administration/view/index.html:197
-#, fuzzy
-#| msgid "See you soon"
-msgid "See them on"
-msgstr "Hasta pronto"
+msgid "For Only"
+msgstr "Por solo"
+
+#: templates/administration/view/index.html:198
+msgid "See Them On"
+msgstr "Verlos en"
+
+#: templates/administration/view/index.html:199
+msgid "Ping At"
+msgstr "Ping en"
 
 #: templates/administration/view/index.html:200
-msgid "Found at"
-msgstr ""
+msgid "Buzz At"
+msgstr "Buzz en"
 
 #: templates/administration/view/index.html:201
-msgid "Snapper"
-msgstr ""
-
-#: templates/administration/view/index.html:244
-#, fuzzy
-#| msgid "Book Now"
-msgid "Booked For"
-msgstr "Reservar ahora"
-
-#: templates/administration/view/index.html:245
-msgid "For Only"
-msgstr ""
-
-#: templates/administration/view/index.html:246
-msgid "See Them On"
-msgstr ""
-
-#: templates/administration/view/index.html:247
-msgid "Ping At"
-msgstr ""
-
-#: templates/administration/view/index.html:248
-msgid "Buzz At"
-msgstr ""
-
-#: templates/administration/view/index.html:249
 msgid "Found At"
-msgstr ""
+msgstr "Encontrado en"
 
-#: templates/administration/view/index.html:250
+#: templates/administration/view/index.html:202
 msgid "Chosen Snap"
-msgstr ""
+msgstr "Snap elegido"
 
-#: templates/administration/view/index.html:273
+#: templates/administration/view/index.html:225
 msgid "Last 5 Invoices"
-msgstr ""
+msgstr "Últimas 5 facturas"
 
 #: templates/appointments/appointment_client_information.html:30
 #: venv/lib/python3.9/site-packages/appointment/templates/appointment/appointment_client_information.html:35
 msgid "Fill out your details"
-msgstr ""
+msgstr "Complete sus datos"
 
 #: templates/appointments/appointment_client_information.html:36
 #: venv/lib/python3.9/site-packages/appointment/templates/appointment/appointment_client_information.html:41
 msgid "Tell us a bit about yourself"
-msgstr ""
+msgstr "Cuéntanos un poco sobre ti"
 
 #: templates/appointments/appointment_client_information.html:39
 #: venv/lib/python3.9/site-packages/appointment/templates/appointment/appointment_client_information.html:44
-#, fuzzy
-#| msgid "Already have an account"
 msgid "Already have an account?"
 msgstr "¿Ya tienes una cuenta?"
 
 #: templates/appointments/appointment_client_information.html:40
 #: venv/lib/python3.9/site-packages/appointment/templates/appointment/appointment_client_information.html:45
 msgid "Log in"
-msgstr ""
+msgstr "Iniciar sesión"
 
 #: templates/appointments/appointment_client_information.html:40
 #: venv/lib/python3.9/site-packages/appointment/templates/appointment/appointment_client_information.html:45
 msgid "for faster booking."
-msgstr ""
+msgstr "para una reserva más rápida."
 
 #: templates/appointments/appointment_client_information.html:57
 #: venv/lib/python3.9/site-packages/appointment/templates/appointment/appointment_client_information.html:62
 msgid "I want to receive an EMAIL reminder 24 hours before this session starts"
 msgstr ""
+"Yo quiero recibir un recordatorio por CORREO ELECTRÓNICO 24 horas antes de "
+"que comience esta sesión"
 
 #: templates/appointments/appointment_client_information.html:61
 #: venv/lib/python3.9/site-packages/appointment/templates/appointment/appointment_client_information.html:67
-#, fuzzy
-#| msgid "Phone number"
 msgid "Phone Number"
 msgstr "Teléfono"
 
@@ -1347,59 +1331,54 @@ msgstr "Ciudad y estado"
 #: templates/appointments/appointments.html:50
 #: venv/lib/python3.9/site-packages/appointment/templates/appointment/appointment_client_information.html:87
 #: venv/lib/python3.9/site-packages/appointment/templates/appointment/appointments.html:66
-#, fuzzy
-#| msgid "Service"
 msgid "Service Details"
-msgstr "Servicio"
+msgstr "Detalles del servicio"
 
 #: templates/appointments/appointment_client_information.html:90
 #: venv/lib/python3.9/site-packages/appointment/templates/appointment/appointment_client_information.html:95
-#, fuzzy
-#| msgid "Date"
 msgid "at"
-msgstr "Fecha"
+msgstr "en"
 
 #: templates/appointments/appointment_client_information.html:98
 #: venv/lib/python3.9/site-packages/appointment/templates/appointment/appointment_client_information.html:103
 msgid "Payment Details"
-msgstr ""
+msgstr "Detalles de pago"
 
 #: templates/appointments/appointment_payment.html:40
 #: venv/lib/python3.9/site-packages/payment/templates/payment/payment.html:41
 msgid "Order summary"
-msgstr ""
+msgstr "Resumen del pedido"
 
 #: templates/appointments/appointment_payment.html:55
 #: venv/lib/python3.9/site-packages/payment/templates/payment/payment.html:56
 msgid "Subtotal"
-msgstr ""
+msgstr "Subtotal"
 
 #: templates/appointments/appointment_payment.html:59
 #: venv/lib/python3.9/site-packages/payment/templates/payment/payment.html:60
 msgid "Sales Tax"
-msgstr ""
+msgstr "Impuesto de venta"
 
 #: templates/appointments/appointments.html:18
 #: venv/lib/python3.9/site-packages/appointment/templates/appointment/appointments.html:19
 msgid ""
 "Check out our availability and book the date and time that works for you"
 msgstr ""
+"Consulte nuestra disponibilidad y reserve la fecha y hora que le convenga"
 
 #: templates/appointments/appointments.html:26
 #: venv/lib/python3.9/site-packages/appointment/templates/appointment/appointments.html:27
-#, fuzzy
-#| msgid "Select a package"
 msgid "Select a date and time"
-msgstr "Seleccione un paquete"
+msgstr "Seleccione una fecha y hora"
 
 #: templates/appointments/appointments.html:29
 #: venv/lib/python3.9/site-packages/appointment/templates/appointment/appointments.html:30
 msgid "Timezone"
-msgstr ""
+msgstr "Zona horaria"
 
 #: templates/appointments/appointments.html:29
 msgid "Eastern Daylight Time (EDT)"
-msgstr ""
+msgstr "Hora de verano del este (EDT)"
 
 #: templates/client/booking_and_promotions/bookme.html:4
 msgid "Book me"
@@ -1411,6 +1390,9 @@ msgid ""
 "difference. Professional,\n"
 "        personalized service and stunning results. Schedule now."
 msgstr ""
+"Reserve su sesión de fotografía con Tchiiz Studio y experimente la "
+"diferencia. Profesional,\n"
+"        servicio personalizado y resultados sorprendentes. Programe ahora."
 
 #: templates/client/booking_and_promotions/bookme.html:120
 msgid "Note"
@@ -1453,7 +1435,7 @@ msgstr "Solicitar"
 
 #: templates/client/booking_and_promotions/promotions.html:4
 msgid "Special Photography Promotions"
-msgstr ""
+msgstr "Promociones especiales de fotografía"
 
 #: templates/client/booking_and_promotions/promotions.html:7
 msgid ""
@@ -1463,6 +1445,11 @@ msgid ""
 "        events. Book your session today.\n"
 "    "
 msgstr ""
+"\n"
+"        ¡No te pierdas nuestras promociones de fotografía por tiempo "
+"limitado! Tarifas asequibles en retratos, paisajes y\n"
+"        eventos. Reserve su sesión hoy.\n"
+"    "
 
 #: templates/client/booking_and_promotions/promotions.html:17
 msgid "Promotion Plans"
@@ -1546,6 +1533,12 @@ msgid ""
 "        Login now to see your memories\n"
 "    "
 msgstr ""
+"\n"
+"        Acceda a su galería privada en línea y vea sus impresionantes "
+"fotografías de forma segura con nuestra función de inicio de sesión de "
+"cliente.\n"
+"        Inicie sesión ahora para ver sus recuerdos\n"
+"    "
 
 #: templates/client/login_registration/login.html:20
 msgid "LOGIN"
@@ -1577,6 +1570,11 @@ msgid ""
 "        experience our professional photography services.\n"
 "    "
 msgstr ""
+"\n"
+"        Crea una cuenta con nosotros y obtén acceso a promociones "
+"exclusivas, galería en línea y más. Regístrese ahora para\n"
+"        experimentar nuestros servicios profesionales de fotografía.\n"
+"    "
 
 #: templates/client/login_registration/register.html:22
 msgid "REGISTER ACCOUNT"
@@ -1614,43 +1612,55 @@ msgstr "Conócenos"
 msgid "Contact Us"
 msgstr "Contáctenos"
 
-#: templates/homepage/base.html:103
+#: templates/homepage/base.html:101
 msgid "Book Us Now"
 msgstr "Reservación"
 
-#: templates/homepage/base.html:106
-msgid "Login & Register"
-msgstr "Conectarse y registrarse"
-
-#: templates/homepage/base.html:109
-msgid "Registration"
-msgstr "Registro"
-
-#: templates/homepage/base.html:111 templates/homepage/base.html:114
-msgid "Admin"
-msgstr "Admin"
-
-#: templates/homepage/base.html:121
+#: templates/homepage/base.html:104
 msgid "Legal"
 msgstr "Legal"
 
-#: templates/homepage/base.html:124
+#: templates/homepage/base.html:107
 msgid "Terms & Conditions"
 msgstr "Términos y condiciones"
 
-#: templates/homepage/base.html:182
+#: templates/homepage/base.html:116
+msgid "Login & Register"
+msgstr "Conectarse y registrarse"
+
+#: templates/homepage/base.html:120
+msgid "Sign In"
+msgstr "Regístrate"
+
+#: templates/homepage/base.html:121
+msgid "Join Us"
+msgstr "Únete a nosotros"
+
+#: templates/homepage/base.html:122 templates/homepage/base.html:125
+msgid "Studio Admin"
+msgstr "Administrador"
+
+#: templates/homepage/base.html:127
+msgid "My Dashboard"
+msgstr "Mi tablero"
+
+#: templates/homepage/base.html:129
+msgid "Sign Out"
+msgstr "Desconectar"
+
+#: templates/homepage/base.html:189
 msgid "Made with"
 msgstr "Hecho con"
 
-#: templates/homepage/base.html:183
+#: templates/homepage/base.html:190
 msgid "Love"
 msgstr "Amor"
 
-#: templates/homepage/base.html:183
+#: templates/homepage/base.html:190
 msgid "by"
 msgstr "por"
 
-#: templates/homepage/base.html:197
+#: templates/homepage/base.html:204
 msgid "Search here"
 msgstr "Buscar aquí"
 
@@ -1672,13 +1682,25 @@ msgstr "Comprendido"
 msgid "Learn more"
 msgstr "Aprende más"
 
-#: templates/homepage/index.html:13 templates/homepage/index_about_me.html:45
+#: templates/homepage/index.html:14 templates/homepage/index_about_me.html:45
 msgid ""
 "Professional photography services for all occasions - portraits, landscapes, "
 "events. High-quality results and personalized attention."
 msgstr ""
 "Servicios profesionales de fotografía para todas las ocasiones: retratos, "
 "paisajes, eventos. Resultados de alta calidad y atención personalizada."
+
+#: templates/homepage/index.html:39
+msgid "Ready to capture beautiful moments?"
+msgstr "¿Listo para capturar hermosos momentos?"
+
+#: templates/homepage/index.html:40
+msgid "Book your photography session with us today!"
+msgstr "¡Reserve su sesión de fotografía con nosotros hoy!"
+
+#: templates/homepage/index.html:43
+msgid "Book Now"
+msgstr "Reserva ahora"
 
 #: templates/homepage/index_about_me.html:53
 msgid "About us"
@@ -7669,6 +7691,12 @@ msgstr ""
 #: venv/lib/python3.9/site-packages/payment/templates/payment/success.html:29
 msgid "CONTINUE"
 msgstr "CONTINÚE"
+
+#~ msgid "Registration"
+#~ msgstr "Registro"
+
+#~ msgid "Admin"
+#~ msgstr "Admin"
 
 #, fuzzy
 #~| msgid "--- Select a package ---"
