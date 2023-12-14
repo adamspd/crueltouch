@@ -14,9 +14,9 @@
     <div class="main-container">
         <h1 class="page-title">{% trans "Select and Schedule Your Appointment" %}</h1>
         <div class="page-menu">
-            <div class="category-button wedding-service" onclick="showService('wedding-service')">Wedding</div>
             <div class="category-button portrait-service" onclick="showService('portrait-service')">Portrait/Birthday
             </div>
+            <div class="category-button wedding-service" onclick="showService('wedding-service')">Wedding</div>
             <div class="category-button product-service" onclick="showService('product-service')">Product Photography
             </div>
             <div class="category-button event-service" onclick="showService('event-service')">Events</div>
@@ -130,5 +130,8 @@
                 }
             });
         }
+
+        // On load show portrait-service by default
+        showService('portrait-service');
     </script>
 {% endblock %}
