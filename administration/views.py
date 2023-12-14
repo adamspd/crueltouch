@@ -923,6 +923,7 @@ def update_invoice_status(request, invoice_number):
 @login_required(login_url="/administration/login/")
 @user_passes_test(email_check, login_url='/administration/login/')
 def generate_and_process_invoice(request, invoice_number):
+    os.makedirs("media/invoices", exist_ok=True)
     invoice = Invoice.objects.get(invoice_number=invoice_number)
 
     # Step 1: Generate Invoice PDF
@@ -1085,14 +1086,16 @@ def secure_pdf(input_pdf_path, output_pdf_path, owner_password, invoice):
     """
     with open(input_pdf_path, "rb") as input_stream:
         reader = PyPDF2.PdfReader(input_stream)
+        from PyPDF2 import PdfWriter
+        writer = PdfWriter()
 
-        writer = PyPDF2.PdfWriter()
+        # Add pages
         for page in reader.pages:
             writer.add_page(page)
 
         # Set up permissions
-        permissions = UserAccessPermissions.MODIFY | UserAccessPermissions.EXTRACT | UserAccessPermissions.ADD_OR_MODIFY | UserAccessPermissions.FILL_FORM_FIELDS | UserAccessPermissions.EXTRACT_TEXT_AND_GRAPHICS | UserAccessPermissions.ASSEMBLE_DOC | UserAccessPermissions.PRINT_TO_REPRESENTATION
-        permissions = ~permissions  # Invert permissions to restrict these actions
+        permissions = UserAccessPermissions.PRINT
+
         # Add metadata to the PDF like author, title, etc.
         metadata = {
             '/Author': 'tchiiz.com',
