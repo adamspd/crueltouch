@@ -280,17 +280,6 @@ def send_client_email(email_address, subject: str, header: str, message: str, fo
     It checks if there is a permission to send email, meaning that the number of emails sent today is less than 300.
     Before sending email, it checks if the email address is valid and exists.
     Use models `ContactForm` and `PermissionsEmails`.
-    :param email_address: client's email address
-    :param subject: subject of the email
-    :param header: header of the email
-    :param message: message of the email
-    :param footer: footer of the email
-    :param button_label: button label
-    :param button_text: button text
-    :param button_link: button link
-    :param is_contact_form: True if email is sent when client filled out the contact form
-    :param is_other: True if email is sent when admin wants to reply to client
-    :return: True if email is sent successfully
     """
     if get_permissions(is_booking=False, is_contact_form=is_contact_form, is_other=is_other):
         recipient_list = [
@@ -330,11 +319,6 @@ def send_email_admin(subject: str, message: str, is_contact_form: bool, is_other
     It sends email when client filled out the contact form to notify admin.
     It checks if there is a permission to send email, meaning that the number of emails sent today is less than 300.
     Use models `PermissionsEmails`.
-    :param subject: subject of the email
-    :param message: message of the email
-    :param is_contact_form: True if email is sent when client filled out the contact form
-    :param is_other: True if email is sent when admin wants to reply to client
-    :return: True if email is sent successfully
     """
     get_permissions(is_booking=False, is_contact_form=is_contact_form, is_other=is_other)
     html_message = loader.render_to_string(
@@ -416,9 +400,6 @@ def send_password_reset_email(first_name: str, email_address: str) -> bool:
     """
     This function sends email to client with his password, and returns True if email is sent successfully.
     Use models `PermissionsEmails`.
-    :param first_name: first name of the client
-    :param email_address: client's email address
-    :return: True if email is sent successfully
     """
     if get_permissions(is_booking=False, is_contact_form=False, is_other=True):
         recipient_list = [

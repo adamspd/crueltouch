@@ -71,12 +71,18 @@ urlpatterns = [
     path('link/', include(link_pattern)),
     # /administration/password-change/<int-pk>/
     path('password-change/<int:pk>/', must_change_password, name="must_change_password"),
-    # /administration/invoice-form/
-    path('invoice-form/', invoice_form, name="invoice_form"),
+    # /administration/invoices/
+    path('invoices/', list_invoices, name='list_invoices'),
+    # /administration/invoice/form/
+    path('invoices/form/', invoice_form, name='create_invoice'),
+    # /administration/invoice/form/<str:invoice_number>/
+    path('invoices/form/<str:invoice_number>/', invoice_form, name='edit_invoice'),
     # /administration/generate-invoice/
     path('invoices/<str:invoice_number>/', generate_and_process_invoice, name="generate_invoice"),
     # /administration/invoices/view/<str:invoice_number>/
     path('invoice/<str:invoice_number>/', view_invoice, name='view_invoice'),
+    # /administration/invoices/delete/<str:invoice_number>/
+    path('invoices/delete/<str:invoice_number>/', delete_invoice, name='delete_invoice'),
     # /administration/invoices/update/<str:invoice_number>/status/
     path('invoices/<str:invoice_number>/update_status/', update_invoice_status, name='update_invoice_status'),
     # /administration/administration/get-client-emails/

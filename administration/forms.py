@@ -2,7 +2,8 @@ from django import forms
 from django.forms import inlineformset_factory
 from django.utils.translation import gettext_lazy as _
 
-from administration.models import Invoice, InvoiceAttachment, InvoiceService
+from administration.models import InvoiceAttachment, InvoiceService
+from .models import Invoice
 
 
 class UserChangePasswordForm(forms.Form):
@@ -106,19 +107,21 @@ class InvoiceForm(forms.ModelForm):
             'status': forms.Select(attrs={'class': 'form-control'}),
         }
 
-        field_order = ['client_email', 'client_first_name', 'client_last_name', 'client_phone', 'client_address',
-                       'payment_method', 'discount', 'tax_rate', 'amount_paid', 'due_date', 'details', 'notes',
-                       'status']
-
     def __init__(self, *args, **kwargs):
+        instance = kwargs.get('instance', None)
         super().__init__(*args, **kwargs)
         self.fields['status'].choices = Invoice.INVOICE_STATUS_CHOICES
+
+        # Pre-populate client fields if editing an existing invoice
+        if instance and instance.client:
+            self.initial['client_email'] = instance.client.email
+            self.initial['client_first_name'] = instance.client.first_name
+            self.initial['client_last_name'] = instance.client.last_name
+            self.initial['client_phone'] = instance.client.phone_number
+            self.initial['client_address'] = instance.client.address
 
         # Rearranging field order
         new_order = ['client_email', 'client_first_name', 'client_last_name', 'client_phone', 'client_address',
                      'payment_method', 'discount', 'tax_rate', 'amount_paid', 'due_date', 'details', 'notes', 'status']
-        from collections import OrderedDict
-        new_fields = OrderedDict()
-        for key in new_order:
-            new_fields[key] = self.fields.pop(key)
+        new_fields = {k: self.fields[k] for k in new_order}
         self.fields = new_fields

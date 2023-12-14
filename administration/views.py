@@ -1,7 +1,7 @@
 import datetime
+import glob
 import os
 import zipfile
-from datetime import timedelta
 from io import BytesIO
 from sqlite3 import IntegrityError
 
@@ -26,7 +26,7 @@ from endesive import pdf as endesive_pdf
 from xhtml2pdf import pisa
 
 from administration.forms import InvoiceAttachmentFormset, InvoiceForm, InvoiceServiceFormset, UserChangePasswordForm
-from administration.models import Invoice, PhotoClient, PhotoDelivery
+from administration.models import Invoice, InvoiceAttachment, PhotoClient, PhotoDelivery
 from client.form import CreateAlbumForm, UpdateBook
 from client.models import Album as AlbumClient, BookMe, Photo, UserClient
 from crueltouch.productions import production_debug
@@ -51,7 +51,7 @@ def create_book_me():
             package="35",
             status="pending",
             # last week
-            time_book_taken=datetime.datetime.now() - timedelta(days=90) + timedelta(hours=i * 12),
+            time_book_taken=datetime.datetime.now() - datetime.timedelta(days=90) + datetime.timedelta(hours=i * 12),
         )
 
 
@@ -676,7 +676,7 @@ def link_callback(uri, rel):
     from django.contrib.staticfiles import finders
     import os
     from django.conf import settings
-
+    c_print(f"uri: {uri}", f"rel: {rel}")
     # Check if the URI is in static files
     result = finders.find(uri)
     if result:
@@ -711,9 +711,76 @@ def get_client_emails(request):
     return JsonResponse(client_list, safe=False)
 
 
+def invoice_form(request, invoice_number=None):
+    invoice_instance = None
+    title = "Create Invoice"  # Default title
+
+    if invoice_number:
+        invoice_instance = Invoice.objects.get(invoice_number=invoice_number)
+        title = "Edit Invoice"
+
+    if request.method == 'POST':
+        form = InvoiceForm(request.POST, request.FILES, instance=invoice_instance)
+        attachment_formset = InvoiceAttachmentFormset(request.POST, request.FILES, prefix='attachments',
+                                                      instance=invoice_instance)
+        service_formset = InvoiceServiceFormset(request.POST, prefix='services', instance=invoice_instance)
+
+        if form.is_valid() and attachment_formset.is_valid() and service_formset.is_valid():
+            client = handle_client_data(form.cleaned_data)
+            saved_invoice = save_invoice_and_formsets(form, attachment_formset, service_formset, client)
+            return redirect('administration:generate_invoice', invoice_number=saved_invoice.invoice_number)
+    else:
+        form = InvoiceForm(instance=invoice_instance)
+        attachment_formset = InvoiceAttachmentFormset(prefix='attachments', instance=invoice_instance)
+        service_formset = InvoiceServiceFormset(prefix='services', instance=invoice_instance)
+
+    context = {
+        'form': form,
+        'attachment_formset': attachment_formset,
+        'service_formset': service_formset,
+        'title': title
+    }
+    return render(request, 'administration/add/invoice_form.html', context)
+
+
+def handle_client_data(form_data):
+    client_email = form_data['client_email']
+    first_name = form_data['client_first_name']
+    last_name = form_data['client_last_name']
+    client_phone = form_data['client_phone']
+    client_address = form_data['client_address']
+
+    client, created = UserClient.objects.get_or_create(
+        email=client_email,
+        defaults={'first_name': first_name, 'last_name': last_name, 'phone_number': client_phone,
+                  'address': client_address}
+    )
+
+    if not created:
+        client.first_name = first_name
+        client.last_name = last_name
+        client.phone_number = client_phone
+        client.address = client_address
+        client.save()
+
+    return client
+
+
+def save_invoice_and_formsets(form, attachment_formset, service_formset, client):
+    invoice = form.save(commit=False)
+    invoice.client = client
+    invoice.save()
+
+    attachment_formset.instance = invoice
+    service_formset.instance = invoice
+    attachment_formset.save()
+    service_formset.save()
+    return invoice
+
+
 @login_required(login_url="/administration/login/")
 @user_passes_test(email_check, login_url='/administration/login/')
-def invoice_form(request):
+def invoice_form2(request):
     if request.method == 'POST':
         form = InvoiceForm(request.POST, request.FILES)
         attachment_formset = InvoiceAttachmentFormset(request.POST, request.FILES, prefix='attachments')
@@ -764,6 +831,49 @@ def invoice_form(request):
         'service_formset': service_formset
     }
     return render(request, 'administration/add/invoice_form.html', context)
+
+
+def archive_invoice_files(invoice):
+    # Define the directories
+    invoice_files_dir = "media/invoices/"
+    archive_dir = "media/archived_invoices/"
+
+    # Create the archive directory if it doesn't exist
+    os.makedirs(archive_dir, exist_ok=True)
+
+    # Generate the base name for the invoice files
+    invoice_base_name = invoice.get_name()
+
+    # Find all invoice files
+    invoice_files = glob.glob(f"{invoice_files_dir}{invoice_base_name}*")
+
+    # Retrieve attachment files using the InvoiceAttachment model
+    attachment_files = [attachment.file.path for attachment in InvoiceAttachment.objects.filter(invoice=invoice)]
+
+    # Timestamp for the archive name
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    archive_name = f"{archive_dir}{invoice_base_name}_{timestamp}.zip"
+
+    # Creating the archive
+    with zipfile.ZipFile(archive_name, 'w') as archive:
+        for file in invoice_files + attachment_files:
+            archive.write(file, os.path.basename(file))
+            os.remove(file)  # Remove the original file after adding to the archive
+
+    # Return the path of the created archive for further use (optional)
+    return archive_name
+
+
+def delete_invoice(request, invoice_number):
+    invoice = Invoice.objects.get(invoice_number=invoice_number)
+    archive_invoice_files(invoice)
+    invoice.delete()
+    return redirect('administration:index')
+
+
+def list_invoices(request):
+    invoices = Invoice.objects.all()
+    return render(request, 'administration/list/list_invoices.html', {'invoices': invoices})
 
 
 def view_invoice(request, invoice_number):
@@ -829,9 +939,9 @@ def generate_and_process_invoice(request, invoice_number):
     # Serve the final secured PDF
     with open(secure_pdf_path, 'rb') as f:
         pdf_content = f.read()
-    response = HttpResponse(pdf_content, content_type='application/pdf')
-    response['Content-Disposition'] = f'filename="{invoice.get_name()}.pdf"'
-    return response
+    # response = HttpResponse(pdf_content, content_type='application/pdf')
+    # response['Content-Disposition'] = f'filename="{invoice.get_name()}.pdf"'
+    return redirect('administration:index')
 
 
 def generate_invoice_pdf(request, invoice_number):
@@ -1011,7 +1121,7 @@ def send_invoice_to_client(request, invoice_number):
     # get default domain
     domain = request.get_host()
     if settings.DEBUG:
-        prefix = "http://"
+        prefix = "http" + "://"
     else:
         prefix = "https://"
     url = f"{prefix}{domain}{invoice.get_absolute_url()}"

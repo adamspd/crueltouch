@@ -48,6 +48,12 @@
 
         <!-- Main content -->
         <section class="content">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %} alert-dismissible"
+                         role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
             <div class="container-fluid">
                 <!-- Small boxes (Stat box) -->
                 <div class="row">
@@ -223,26 +229,6 @@
                                             </td>
                                             <td>{{ rs.get_staff_member_name }}</td>
                                             <td>
-                                                {#                                                {% if not rs.get_if_email_was_sent_boolean and not rs.status_changed %}#}
-                                                {#                                                    <a href="{% url 'administration:send_email' rs.id %}"#}
-                                                {#                                                       class="btn btn-primary btn-sm">#}
-                                                {#                                                        <i class="fas fa-envelope"></i>#}
-                                                {#                                                        {% translate "Send" %}#}
-                                                {#                                                    </a>#}
-                                                {#                                                {% else %}#}
-                                                {#                                                    <a href="" class="btn btn-primary btn-sm disabled">#}
-                                                {#                                                        <i class="fas fa-envelope"></i>#}
-                                                {#                                                        {% translate "Send" %}#}
-                                                {#                                                    </a>#}
-                                                {#                                                {% endif %}&nbsp;#}
-                                                {#                                                <a href="{% url 'appointment:de' rs.pk %}"#}
-                                                {#                                                   class="btn btn-success btn-sm">#}
-                                                {#                                                    <i class="fas fa-edit"></i>&nbsp;Edit#}
-                                                {#                                                </a>&nbsp;#}
-                                                {#                                                <a href="{% url 'administration:session_delete' rs.pk %}"#}
-                                                {#                                                   class="btn btn-danger btn-sm">#}
-                                                {#                                                    <i class="fas fa-trash"></i>&nbsp;Delete#}
-                                                {#                                                </a>#}
                                                 <a href="{% url 'appointment:display_appointment' rs.pk %}"
                                                    class="btn btn-info btn-sm">
                                                     <i class="fas fa-eye"></i>&nbsp;View
@@ -305,17 +291,17 @@
                                     {% for rs in invoices %}
                                         <tr>
                                             <td>{{ rs.created_at|date }}</td>
-                                            <td>{{ rs.client_name }}</td>
+                                            <td>{{ rs.client.get_short_name }}</td>
                                             <td>${{ rs.total_amount }}</td>
                                             <td>
-                                                <a href="mailto:{{ rs.client_email }}">
-                                                    {{ rs.client_email }}
+                                                <a href="mailto:{{ rs.client.email }}">
+                                                    {{ rs.client.email }}
                                                 </a>
                                             </td>
                                             <td>
-                                                {% if rs.client_phone %}
-                                                    <a href="tel:{{ rs.client_phone }}">
-                                                        {{ rs.client_phone }}
+                                                {% if rs.client.phone_number %}
+                                                    <a href="tel:{{ rs.client.phone_number }}">
+                                                        {{ rs.client.phone_number }}
                                                     </a>
                                                 {% else %}
                                                     N/A
@@ -341,8 +327,8 @@
                                                 </form>
                                             </td>
 
-                                            <td>
-                                                {% if not rs.email_sent and not rs.status_changed %}
+                                            <td style="display: flex; flex-direction: row; justify-content: space-between;">
+                                                {% if not rs.email_sent or not rs.status_changed %}
                                                     <a href="{% url 'administration:send_invoice' rs.invoice_number %}"
                                                        class="btn btn-primary btn-sm">
                                                         <i class="fas fa-envelope"></i>
@@ -353,19 +339,19 @@
                                                         <i class="fas fa-envelope"></i>
                                                         {% translate "Send" %}
                                                     </a>
-                                                {% endif %}&nbsp;
-                                                {#                                                <a href="{% url 'appointment:de' rs.pk %}"#}
-                                                {#                                                   class="btn btn-success btn-sm">#}
-                                                {#                                                    <i class="fas fa-edit"></i>&nbsp;Edit#}
-                                                {#                                                </a>&nbsp;#}
-                                                {#                                                <a href="{% url 'administration:session_delete' rs.pk %}"#}
-                                                {#                                                   class="btn btn-danger btn-sm">#}
-                                                {#                                                    <i class="fas fa-trash"></i>&nbsp;Delete#}
-                                                {#                                                </a>#}
+                                                {% endif %}
+                                                <a href="{% url 'administration:edit_invoice' rs.invoice_number %}"
+                                                   class="btn btn-success btn-sm">
+                                                    <i class="fas fa-edit"></i>Edit
+                                                </a>
+                                                <a href="{% url 'administration:delete_invoice' rs.invoice_number %}"
+                                                   class="btn btn-danger btn-sm">
+                                                    <i class="fas fa-trash"></i>Delete
+                                                </a>
                                                 <a href="{% url 'administration:view_invoice' rs.invoice_number %}"
                                                    class="btn btn-info btn-sm">
-                                                    <i class="fas fa-eye"></i>&nbsp;View
-                                                </a>&nbsp;
+                                                    <i class="fas fa-eye"></i>View
+                                                </a>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -397,6 +383,16 @@
     </div>
 {% endblock %}
 {% block customJS %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const messageElements = document.querySelectorAll('.alert-dismissible');
+            setTimeout(function () {
+                messageElements.forEach(function (element) {
+                    element.style.display = 'none';
+                });
+            }, 3000);
+        });
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"
             integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>

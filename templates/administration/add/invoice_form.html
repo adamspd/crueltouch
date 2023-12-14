@@ -1,7 +1,10 @@
 {% extends 'administration/base.html' %}
 {% load i18n %}
 {% load static %}
-{% block title %}TCHIIZ | {% translate "Generate Invoice" %}{% endblock %}
+
+{% block title %}
+    {{ title }} | TCHIIZ
+{% endblock %}
 {% block customCSS %}
     <style>
         .autocomplete-results {
@@ -28,7 +31,7 @@
     <section class="content content-wrapper">
         <div class="container-fluid">
             <div class="row" style="margin: 0 auto; padding-top: 20px; padding-bottom: 20px">
-                <h2>Create Invoice</h2>
+                <h2>{{ title }}</h2>
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form.as_p }}
