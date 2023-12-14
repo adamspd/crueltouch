@@ -98,6 +98,8 @@
             <a href="{% url 'pf:index_portfolio' %}">{% trans "Portfolio" %}</a>
         </li>
 
+        <li><a href="{% url 'homepage:services_offered' %}">{% trans "Book Us Now" %}</a></li>
+
         <li>
             <a href="#">{% trans "Legal" %}</a>
             <ul class="sub-menu">
@@ -107,8 +109,6 @@
         </li>
 
         {% block login %}
-            <li><a href="{% url 'homepage:services_offered' %}">{% trans "Book Us Now" %}</a></li>
-
             <li>
                 {% if request.user.is_authenticated %}
                     <a href="#">{% trans "Hi" %}, {{ request.user.get_short_name }}</a>
