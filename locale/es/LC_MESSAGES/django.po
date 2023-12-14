@@ -35,8 +35,6 @@ msgid "First name"
 msgstr "Nombre"
 
 #: administration/forms.py:80
-#, fuzzy
-#| msgid "Last Name"
 msgid "Last name"
 msgstr "Apellido"
 
@@ -129,37 +127,31 @@ msgstr "Correo del cliente"
 #, fuzzy
 #| msgid "pending"
 msgid "Pending"
-msgstr "pendiente"
+msgstr "Pendiente"
 
 #: administration/models.py:209
 msgid "Paid"
-msgstr ""
+msgstr "Pagado"
 
 #: administration/models.py:210
 msgid "Partially Paid"
-msgstr ""
+msgstr "Parcialmente pagado"
 
 #: administration/models.py:211
-#, fuzzy
-#| msgid "Cancel"
 msgid "Cancelled"
 msgstr "Cancelar"
 
 #: administration/models.py:212
 msgid "Overdue"
-msgstr ""
+msgstr "Vencido"
 
 #: administration/models.py:247
-#, fuzzy
-#| msgid "Duration must be greater than 0"
 msgid "Discount must be between 0 and 100"
-msgstr "La duración debe ser superior a 0"
+msgstr "El descuento debe estar entre 0 y 100"
 
 #: administration/models.py:249
-#, fuzzy
-#| msgid "Start date must be before end date"
 msgid "Tax rate must be between 0 and 100"
-msgstr "La fecha de inicio debe ser anterior a la fecha de finalización"
+msgstr "La tasa de impuestos debe estar entre 0 y 100"
 
 #: administration/views.py:212
 msgid "Email sent successfully"
@@ -361,10 +353,6 @@ msgid "Sorry, we only offer this package in Orlando"
 msgstr "Lo sentimos, solo ofrecemos este paquete en Orlando"
 
 #: client/models.py:35 client/models.py:172
-#, fuzzy
-#| msgid ""
-#| "Phone number must not contain spaces, letters, parentheses or dashes. It "
-#| "must contain 10 digits."
 msgid ""
 "Phone number must not contain spaces, letters, parentheses or dashes. It "
 "must contain 15 digits."
@@ -492,10 +480,8 @@ msgid "Your message has been received"
 msgstr "Su mensaje ha sido recibido"
 
 #: static_pages_and_forms/models.py:42
-#, fuzzy
-#| msgid "Thank you for your booking!"
 msgid "Thank you for reaching out to us"
-msgstr "¡Gracias por su reserva!"
+msgstr "Gracias por contactarnos"
 
 #: static_pages_and_forms/models.py:43
 #, python-brace-format
@@ -519,14 +505,12 @@ msgid "Ok"
 msgstr "Ok"
 
 #: static_pages_and_forms/views.py:42
-#, fuzzy
-#| msgid "Thank you for your message, but it didn't went through !"
 msgid "Thank you for your message, but it didn't went through!"
 msgstr "¡Gracias por su mensaje, pero no se envió!"
 
 #: static_pages_and_forms/views.py:49
 msgid "Something went wrong. Please try again later."
-msgstr ""
+msgstr "Algo salió mal. Por favor, inténtelo de nuevo más tarde."
 
 #: static_pages_and_forms/views.py:78 templates/homepage/base.html:106
 #: templates/legal/privacy_policy.html:17
@@ -595,14 +579,12 @@ msgid "Total pictures uploaded"
 msgstr "Total de fotos subidas"
 
 #: templates/administration/add/invoice_form.html:38
-#, fuzzy
-#| msgid "Service"
 msgid "Add Services"
-msgstr "Servicio"
+msgstr "Agregar servicios"
 
 #: templates/administration/add/invoice_form.html:49
 msgid "Add attachments"
-msgstr ""
+msgstr "Agregar archivos adjuntos"
 
 #: templates/administration/base.html:10 templates/administration/base.html:188
 #: templates/administration/list/data.html:43
@@ -628,10 +610,8 @@ msgid "Appointment"
 msgstr "Cita"
 
 #: templates/administration/base.html:218
-#, fuzzy
-#| msgid "View all links"
 msgid "View all"
-msgstr "Ver todos los enlaces"
+msgstr "Ver todos"
 
 #: templates/administration/base.html:226
 #: templates/administration/base.html:234
@@ -640,10 +620,8 @@ msgstr ""
 
 #: templates/administration/base.html:243
 #: venv/lib/python3.9/site-packages/appointment/views_admin.py:414
-#, fuzzy
-#| msgid "Service"
 msgid "Add Service"
-msgstr "Servicio"
+msgstr "Agregar servicio"
 
 #: templates/administration/base.html:264
 #: templates/administration/base.html:292
@@ -1178,12 +1156,6 @@ msgid "Index"
 msgstr "Índice"
 
 #: templates/administration/view/index.html:65
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                                    We use Session Cookies to operate our "
-#| "Service.\n"
-#| "                                "
 msgid ""
 "\n"
 "                                    Appointment\n"
@@ -1557,10 +1529,8 @@ msgid "Sign Up"
 msgstr "Regístrate"
 
 #: templates/client/login_registration/register.html:4
-#, fuzzy
-#| msgid "Registration"
 msgid "Client Registration"
-msgstr "Registro"
+msgstr "Registro de cliente"
 
 #: templates/client/login_registration/register.html:7
 msgid ""
@@ -2171,22 +2141,6 @@ msgid "Usage Data is collected automatically when using the Service."
 msgstr "Usage Data se recopila automáticamente al usar el Servicio."
 
 #: templates/legal/privacy_policy.html:161
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                                We may also collect information how the "
-#| "Service is accessed and used (\"Usage Data\").\n"
-#| "                                This\n"
-#| "                                Usage Data may include information such "
-#| "as your computer's Internet Protocol address\n"
-#| "                                (e.g.\n"
-#| "                                IP address), browser type, browser "
-#| "version, the pages of our Service that you visit, the\n"
-#| "                                time and date of your visit, the time "
-#| "spent on those pages, unique device identifiers\n"
-#| "                                and\n"
-#| "                                other diagnostic data.\n"
-#| "                            "
 msgid ""
 "\n"
 "                                We may also collect information how the "
@@ -2219,14 +2173,6 @@ msgid "Tracking & Cookies Data"
 msgstr "Datos de seguimiento y cookies"
 
 #: templates/legal/privacy_policy.html:171
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                                We use cookies and similar tracking "
-#| "technologies to track the activity on our Service\n"
-#| "                                and\n"
-#| "                                hold certain information.\n"
-#| "                            "
 msgid ""
 "\n"
 "                                We use cookies and similar tracking "
@@ -2242,19 +2188,6 @@ msgstr ""
 "                            "
 
 #: templates/legal/privacy_policy.html:177
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                                Cookies are files with small amount of "
-#| "data which may include an anonymous unique\n"
-#| "                                identifier.\n"
-#| "                                Cookies are sent to your browser from a "
-#| "website and stored on your device. Tracking\n"
-#| "                                technologies also used are beacons, tags, "
-#| "and scripts to collect and track information\n"
-#| "                                and\n"
-#| "                                to improve and analyze our Service.\n"
-#| "                            "
 msgid ""
 "\n"
 "                                Cookies are files with small amount of data "
@@ -2280,17 +2213,6 @@ msgstr ""
 "                            "
 
 #: templates/legal/privacy_policy.html:185
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                                You can instruct your browser to refuse "
-#| "all cookies or to indicate when a cookie is\n"
-#| "                                being\n"
-#| "                                sent. However, if you do not accept "
-#| "cookies, you may not be able to use some portions of\n"
-#| "                                our\n"
-#| "                                Service.\n"
-#| "                            "
 msgid ""
 "\n"
 "                                You can instruct your browser to refuse all "
@@ -2415,14 +2337,6 @@ msgid "To notify you about changes to our Service"
 msgstr "Para informarle sobre los cambios en nuestro Servicio"
 
 #: templates/legal/privacy_policy.html:232
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                                    To allow you to participate in "
-#| "interactive features of our Service when you choose\n"
-#| "                                    to do\n"
-#| "                                    so\n"
-#| "                                "
 msgid ""
 "\n"
 "                                    To allow you to participate in "
@@ -2484,15 +2398,6 @@ msgstr ""
 "                            "
 
 #: templates/legal/privacy_policy.html:254
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                                If you are located outside United States "
-#| "of America and choose to provide information to us, please note\n"
-#| "                                that we transfer the data, including "
-#| "Personal Data, to United States of America and process it\n"
-#| "                                there.\n"
-#| "                            "
 msgid ""
 "\n"
 "                                If you are located outside the United States "
@@ -2603,19 +2508,6 @@ msgid "Security Of Data"
 msgstr "Seguridad de los datos"
 
 #: templates/legal/privacy_policy.html:299
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                                The security of your data is important to "
-#| "us, but remember that no method of\n"
-#| "                                transmission\n"
-#| "                                over the Internet, or method of "
-#| "electronic storage is 100%% secure. While we strive to\n"
-#| "                                use\n"
-#| "                                commercially acceptable means to protect "
-#| "your Personal Data, we cannot guarantee its\n"
-#| "                                absolute security.\n"
-#| "                            "
 msgid ""
 "\n"
 "                                The security of your data is important to "
@@ -6521,15 +6413,13 @@ msgstr ""
 
 #: venv/lib/python3.9/site-packages/django/db/models/base.py:1423
 #: venv/lib/python3.9/site-packages/django/forms/models.py:893
-#, fuzzy
-#| msgid "Orlando"
 msgid "and"
-msgstr "Orlando"
+msgstr "y"
 
 #: venv/lib/python3.9/site-packages/django/db/models/base.py:1425
 #, python-format
 msgid "%(model_name)s with this %(field_labels)s already exists."
-msgstr ""
+msgstr "%(model_name)s con este %(field_labels)s ya existe."
 
 #: venv/lib/python3.9/site-packages/django/db/models/constraints.py:17
 #, python-format
@@ -7199,10 +7089,8 @@ msgid "sep"
 msgstr ""
 
 #: venv/lib/python3.9/site-packages/django/utils/dates.py:48
-#, fuzzy
-#| msgid "Contact"
 msgid "oct"
-msgstr "Contacta"
+msgstr "oct"
 
 #: venv/lib/python3.9/site-packages/django/utils/dates.py:49
 msgid "nov"
