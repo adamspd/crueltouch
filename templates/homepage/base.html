@@ -105,16 +105,20 @@
             <li>
                 <a href="#">{% trans "Login & Register" %}</a>
                 <ul class="sub-menu">
-                    <li><a href="{% url 'client:login' %}">{% trans "Login" %}</a></li>
-                    <li><a href="{% url 'client:register' %}">{% trans "Registration" %}</a></li>
                     {% if not request.user.is_authenticated %}
-                        <li><a href="{% url 'administration:login' %}">{% trans "Admin" %}</a></li>
+                        <li><a href="{% url 'client:login' %}">{% trans "Sign In" %}</a></li>
+                        <li><a href="{% url 'client:register' %}">{% trans "Join Us" %}</a></li>
+                        <li><a href="{% url 'administration:login' %}">{% trans "Studio Admin" %}</a></li>
+                    {% else %}
+                        {% if request.user.is_superuser %}
+                            <li><a href="{% url 'administration:index' %}">{% trans 'Studio Admin' %}</a></li>
+                        {% else %}
+                            <li><a href="{% url 'client:client_homepage' %}">{% trans 'My Dashboard' %}</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'client:logout' %}">{% trans "Sign Out" %}</a></li>
                     {% endif %}
-                    {% if request.user.is_authenticated %}
-                        <li><a href="{% url 'administration:index' %}">{% trans 'Admin' %}</a></li>
-                        <li><a href="{% url 'client:logout' %}">{% trans "Logout" %}</a></li>
-                    {% endif %}
-                </ul>
+                </ul>"
+
             </li>
         {% endblock %}
         <li>
