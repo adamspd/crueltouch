@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-14 17:33-0500\n"
+"POT-Creation-Date: 2023-12-14 17:58-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1698,7 +1698,10 @@ msgstr "¿Listo para capturar hermosos momentos?"
 msgid "Book your photography session with us today!"
 msgstr "¡Reserve su sesión de fotografía con nosotros hoy!"
 
-#: templates/homepage/index.html:43
+#: templates/homepage/index.html:43 templates/homepage/services_offered.html:45
+#: templates/homepage/services_offered.html:63
+#: templates/homepage/services_offered.html:81
+#: templates/homepage/services_offered.html:99
 msgid "Book Now"
 msgstr "Reserva ahora"
 
@@ -1749,6 +1752,22 @@ msgstr ""
 #: templates/homepage/services_offered.html:15
 msgid "Select and Schedule Your Appointment"
 msgstr "Seleccione y Programe su Cita"
+
+#: templates/homepage/services_offered.html:18
+msgid "Portrait/Birthday"
+msgstr "Retrato/Cumpleaños"
+
+#: templates/homepage/services_offered.html:21
+msgid "Wedding"
+msgstr "Boda"
+
+#: templates/homepage/services_offered.html:24
+msgid "Product Photography"
+msgstr "Fotografía de producto"
+
+#: templates/homepage/services_offered.html:27
+msgid "Events"
+msgstr "Evento"
 
 #: templates/legal/privacy_policy.html:18
 #: templates/legal/terms_and_conditions.html:16
@@ -2639,17 +2658,6 @@ msgid "Service Providers"
 msgstr "Proveedores de servicios"
 
 #: templates/legal/privacy_policy.html:308
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                                We may employ third party companies and "
-#| "individuals to facilitate our Service (\"Service\n"
-#| "                                Providers\"), to provide the Service on "
-#| "our behalf, to perform Service-related services\n"
-#| "                                or to\n"
-#| "                                assist us in analyzing how our Service is "
-#| "used.\n"
-#| "                            "
 msgid ""
 "\n"
 "                                We may employ third party companies and "
@@ -2691,18 +2699,6 @@ msgid "Links To Other Sites"
 msgstr "Enlaces a otros sitios"
 
 #: templates/legal/privacy_policy.html:322
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                                Our Service may contain links to other "
-#| "sites that are not operated by us. If you click\n"
-#| "                                on a\n"
-#| "                                third party link, you will be directed to "
-#| "that third party's site. We strongly advise\n"
-#| "                                you to\n"
-#| "                                review the Privacy Policy of every site "
-#| "you visit.\n"
-#| "                            "
 msgid ""
 "\n"
 "                                Our Service may contain links to other sites "
@@ -2725,15 +2721,6 @@ msgstr ""
 "                            "
 
 #: templates/legal/privacy_policy.html:329
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                                We have no control over and assume no "
-#| "responsibility for the content, privacy policies\n"
-#| "                                or\n"
-#| "                                practices of any third party sites or "
-#| "services.\n"
-#| "                            "
 msgid ""
 "\n"
 "                                We have no control over and assume no "
@@ -2767,23 +2754,6 @@ msgstr ""
 "                            "
 
 #: templates/legal/privacy_policy.html:341
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                                We do not knowingly collect personally "
-#| "identifiable information from anyone under the\n"
-#| "                                age of\n"
-#| "                                18. If you are a parent or guardian, and "
-#| "you are aware that your Children has provided\n"
-#| "                                us\n"
-#| "                                with Personal Data, please contact us. If "
-#| "we become aware that we have collected\n"
-#| "                                Personal\n"
-#| "                                Data from children without verification "
-#| "of parental consent, we take steps to remove\n"
-#| "                                that\n"
-#| "                                information from our servers.\n"
-#| "                            "
 msgid ""
 "\n"
 "                                We do not knowingly collect personally "
@@ -2834,15 +2804,6 @@ msgstr ""
 "                            "
 
 #: templates/legal/privacy_policy.html:357
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                                We will let you know via email and/or a "
-#| "prominent notice on our Service, prior to the\n"
-#| "                                change\n"
-#| "                                becoming effective and update the "
-#| "\"effective date\" at the top of this Privacy Policy.\n"
-#| "                            "
 msgid ""
 "\n"
 "                                We will let you know via email and/or a "
@@ -2861,15 +2822,6 @@ msgstr ""
 "                            "
 
 #: templates/legal/privacy_policy.html:364
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                                You are advised to review this Privacy "
-#| "Policy periodically for any changes. Changes to\n"
-#| "                                this\n"
-#| "                                Privacy Policy are effective when they "
-#| "are posted on this page.\n"
-#| "                            "
 msgid ""
 "\n"
 "                                You are advised to review this Privacy "
@@ -7784,9 +7736,6 @@ msgstr "CONTINÚE"
 
 #~ msgid "My Skills"
 #~ msgstr "Mis habilidades"
-
-#~ msgid "Photography"
-#~ msgstr "Fotografía"
 
 #~ msgid "Photoshop"
 #~ msgstr "Photoshop"

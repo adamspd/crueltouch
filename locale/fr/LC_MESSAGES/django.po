@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-14 17:33-0500\n"
+"POT-Creation-Date: 2023-12-14 17:55-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1686,7 +1686,10 @@ msgstr "Prêt à capturer de beaux moments?"
 msgid "Book your photography session with us today!"
 msgstr "Réservez votre session photo avec nous aujourd'hui!"
 
-#: templates/homepage/index.html:43
+#: templates/homepage/index.html:43 templates/homepage/services_offered.html:45
+#: templates/homepage/services_offered.html:63
+#: templates/homepage/services_offered.html:81
+#: templates/homepage/services_offered.html:99
 msgid "Book Now"
 msgstr "Réserver maintenant"
 
@@ -1737,6 +1740,24 @@ msgstr ""
 #: templates/homepage/services_offered.html:15
 msgid "Select and Schedule Your Appointment"
 msgstr "Choisissez et Planifiez votre Rendez-vous"
+
+#: templates/homepage/services_offered.html:18
+#, fuzzy
+#| msgid "Portrait"
+msgid "Portrait/Birthday"
+msgstr "Portrait"
+
+#: templates/homepage/services_offered.html:21
+msgid "Wedding"
+msgstr "Mariage"
+
+#: templates/homepage/services_offered.html:24
+msgid "Product Photography"
+msgstr "Photographie de produit"
+
+#: templates/homepage/services_offered.html:27
+msgid "Events"
+msgstr "Événements"
 
 #: templates/legal/privacy_policy.html:18
 #: templates/legal/terms_and_conditions.html:16
@@ -7775,9 +7796,6 @@ msgstr "CONTINUER"
 
 #~ msgid "My Skills"
 #~ msgstr "Mes compétences"
-
-#~ msgid "Photography"
-#~ msgstr "Photographie"
 
 #~ msgid "Photoshop"
 #~ msgstr "Photoshop"
