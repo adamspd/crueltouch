@@ -366,6 +366,9 @@ class Invoice(models.Model):
         self.email_sent = True
         self.save()
 
+    def status_changed(self):
+        return self.old_status != self.status
+
 
 class InvoiceService(models.Model):
     invoice = models.ForeignKey(Invoice, related_name='invoice_services', on_delete=models.CASCADE)
