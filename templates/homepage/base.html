@@ -111,7 +111,7 @@
 
             <li>
                 {% if request.user.is_authenticated %}
-                    <a href="#">{% trans "Hello" %}, {{ request.user.get_short_name }}</a>
+                    <a href="#">{% trans "Hi" %}, {{ request.user.get_short_name }}</a>
                 {% else %}
                     <a href="#">{% trans "Login & Register" %}</a>
                 {% endif %}
