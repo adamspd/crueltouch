@@ -1,0 +1,43 @@
+.booking-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 95vh;
+    background-color: #000; /* Black background */
+}
+
+.booking-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.btn-book-now {
+    padding: 15px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000; /* Dark text for contrast */
+    background-color: #f8f9fa; /* Light background for visibility */
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-book-now:hover, .btn-book-now:focus {
+    background-color: #e2e6ea; /* Slightly darker on hover */
+    color: #000;
+    text-decoration: none;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.btn-book-now:active {
+    background-color: #dae0e5; /* Even darker when active */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}

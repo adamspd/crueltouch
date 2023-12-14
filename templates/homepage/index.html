@@ -17,32 +17,36 @@
     <div class="hero-section">
         <div class="hero-slider owl-carousel">
             {% for photo in album1 %}
-                <div class="hero-item portfolio-item set-bg" data-setbg="{{ photo.file.url }}"></div>
+                <div class="hero-item portfolio-item set-bg"
+                     onclick="redirectToService('{% url 'homepage:services_offered' %}')"
+                     style="background-image: url('{{ photo.file.url }}');" data-setbg="{{ photo.file.url }}">
+                </div>
             {% endfor %}
         </div>
 
         <div class="hero-slider owl-carousel">
             {% for photo in album2 %}
-                <div class="hero-item portfolio-item set-bg" data-setbg="{{ photo.file.url }}"></div>
+                <div class="hero-item portfolio-item set-bg"
+                     onclick="redirectToService('{% url 'homepage:services_offered' %}')"
+                     style="background-image: url('{{ photo.file.url }}');" data-setbg="{{ photo.file.url }}">
+                </div>
             {% endfor %}
         </div>
     </div>
-    {#    <!-- Hero section end  -->#}
-    {##}
-    {#    <!-- Promotion Cards -->#}
-    {#    <section class="pricing-table">#}
+    <!-- Hero section end  -->
+
+    {#    <!-- Promotion Section -->#}
+    {#    <section class="booking-section">#}
     {#        <div class="container">#}
-    {#            <div class="block-heading">#}
-    {#                <h2>{% trans "" %}</h2>#}
-    {#                <p class="text-black important" style="color: black; font-weight: 600">#}
-    {#                    {% trans "Click here to book" %}#}
-    {#                </p>#}
-    {#                <a href="{% url 'homepage:services_offered' %}" class="btn btn-primary btn-xl js-scroll-trigger"#}
-    {#                   style="background-color: #6c757d;">{% trans "Book Now" %}</a>#}
+    {#            <div class="booking-btn">#}
+    {#                <a href="{% url 'homepage:services_offered' %}"#}
+    {#                   class="btn btn-primary btn-xl js-scroll-trigger btn-book-now">#}
+    {#                    {% trans "Book Us Now" %}#}
+    {#                </a>#}
     {#            </div>#}
     {#        </div>#}
     {#    </section>#}
-    {#    <!-- Promotion Cards finished-->#}
+    <!-- Promotion Section finished-->
     {##}
     {#    <!-- Intro section   -->#}
     {#    <section class="intro-section">#}
@@ -121,5 +125,10 @@
                 });
             }
         });
+
+        function redirectToService(url) {
+            window.location.href = url;
+        }
+
     </script>
 {% endblock %}

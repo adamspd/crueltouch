@@ -12,232 +12,236 @@
 
 'use strict';
 
-$(window).on('load', function() {
-	/*------------------
-		Preloder
-	--------------------*/
-	$(".loader").fadeOut();
-	$("#preloder").delay(400).fadeOut("slow");
+$(window).on('load', function () {
+    /*------------------
+        Preloder
+    --------------------*/
+    $(".loader").fadeOut();
+    $("#preloder").delay(400).fadeOut("slow");
 
-	/*---------------------
-		Instagram slider
-	----------------------*/
-	$('.instagram-slider').owlCarousel({
-		nav: false,
-		dots: false,
-		loop: true,
-		autoplay: true,
-		responsive : {
-			0 : {
-				items: 3,
-			},
-			480 : {
-				items: 4,
-				
-			},
-			768 : {
-				items: 5,
-			},
-			991 : {
-				items: 6,
-			},
-			1200 : {
-				items: 7,
-			}
-		}
-	});
+    /*---------------------
+        Instagram slider
+    ----------------------*/
+    $('.instagram-slider').owlCarousel({
+        nav: false,
+        dots: false,
+        loop: true,
+        autoplay: true,
+        responsive: {
+            0: {
+                items: 3,
+            },
+            480: {
+                items: 4,
 
-	/*---------------
-		Masonry
-	----------------*/
-	const masonryLayout = function () {
-		$('.portfolio-grid').masonry({
-			itemSelector: '.grid-item',
-			columnWidth: '.grid-sizer',
-			percentPosition: true
-		});
-	};
+            },
+            768: {
+                items: 5,
+            },
+            991: {
+                items: 6,
+            },
+            1200: {
+                items: 7,
+            }
+        }
+    });
 
-	/*---------------
-		Mixitup
-	----------------*/
-	masonryLayout();
-	if($('.portfolio-gallery').length > 0 ) {
-		const containerEl = document.querySelector('.portfolio-gallery');
-		const mixer = mixitup(containerEl, {
-			callbacks: {
-				onMixEnd: function () {
-					masonryLayout();
-				}
-			}
-		});
-	}
+    /*---------------
+        Masonry
+    ----------------*/
+    const masonryLayout = function () {
+        $('.portfolio-grid').masonry({
+            itemSelector: '.grid-item',
+            columnWidth: '.grid-sizer',
+            percentPosition: true
+        });
+    };
+
+    /*---------------
+        Mixitup
+    ----------------*/
+    masonryLayout();
+    if ($('.portfolio-gallery').length > 0) {
+        const containerEl = document.querySelector('.portfolio-gallery');
+        const mixer = mixitup(containerEl, {
+            callbacks: {
+                onMixEnd: function () {
+                    masonryLayout();
+                }
+            }
+        });
+    }
 });
 
-(function($) {
-	/*------------------
-		Navigation
-	--------------------*/
-	$('.main-menu').slicknav({
-		appendTo:'.header-section',
-		closedSymbol: '<i class="fa fa-angle-down"></i>',
-		openedSymbol: '<i class="fa fa-angle-up"></i>'
-	});
+(function ($) {
+    /*------------------
+        Navigation
+    --------------------*/
+    $(document).ready(function () {
+        // Initialize the slicknav menu
+        $('.main-menu').slicknav({
+            appendTo: '.header-section',
+            closedSymbol: '<i class="fa fa-angle-down"></i>',
+            openedSymbol: '<i class="fa fa-angle-up"></i>'
+        });
 
-	$('.nav-switch-btn').on('click', function() {
-		if(localStorage.getItem("navMenu") == null) {
-			localStorage.setItem("navMenu", "show");
-			$('.main-menu').slideDown(400);
-		} else if(localStorage.getItem("navMenu") === "show") {
-			localStorage.removeItem("navMenu");
-			$('.main-menu').slideUp(400);
-		}
-	});
+        // Toggle menu visibility on click
+        $('.nav-switch-btn').on('click', function () {
+            if (localStorage.getItem("navMenu") === "hide") {
+                localStorage.setItem("navMenu", "show");
+                $('.main-menu').slideDown(400);
+            } else {
+                localStorage.setItem("navMenu", "hide");
+                $('.main-menu').slideUp(400);
+            }
+        });
 
-	if(localStorage.getItem("navMenu") === "show") {
-		$('.main-menu').slideDown(400);
-	}
-
-
-	/*------------------
-		Search model
-	--------------------*/
-	$('.search-btn').on('click', function() {
-		$('.search-model').fadeIn(400);
-	});
-
-	$('.search-close-switch').on('click', function() {
-		$('.search-model').fadeOut(400,function(){
-			$('#search-input').val('');
-		});
-	});
+        // Check the localStorage when the page loads
+        if (localStorage.getItem("navMenu") !== "hide") {
+            $('.main-menu').slideDown(400);
+        }
+    });
 
 
-	/*------------------
-		Background Set
-	--------------------*/
-	$('.set-bg').each(function() {
-		const bg = $(this).data('setbg');
-		$(this).css('background-image', 'url(' + bg + ')');
-	});
+    /*------------------
+        Search model
+    --------------------*/
+    $('.search-btn').on('click', function () {
+        $('.search-model').fadeIn(400);
+    });
+
+    $('.search-close-switch').on('click', function () {
+        $('.search-model').fadeOut(400, function () {
+            $('#search-input').val('');
+        });
+    });
 
 
-	/*------------------
-		Hero Slider
-	--------------------*/
-	$('.hero-slider').owlCarousel({
-		nav: false,
-		dots: false,
-		loop: true,
-		autoplay: true,
-		smartSpeed: 1000,
-		responsive : {
-			0 : {
-				items: 1,
-			},
-			480 : {
-				items: 2,
-				
-			},
-			768 : {
-				items: 3,
-			},
-			991 : {
-				items: 4,
-			},
-			1200 : {
-				items: 5,
-			},
-			1400 : {
-				items: 7,
-			}
-		}
-	});
+    /*------------------
+        Background Set
+    --------------------*/
+    $('.set-bg').each(function () {
+        const bg = $(this).data('setbg');
+        $(this).css('background-image', 'url(' + bg + ')');
+    });
 
 
-	/*----------------------
-		Portfolio item size
-	------------------------*/
-	const PorfolioItemFix = function () {
-		$(".portfolio-item").each(function (index) {
-			const portfolioItem = $(this);
-			const PIheight = portfolioItem.width();
-			portfolioItem.css('height', PIheight);
-		});
-	};
-	PorfolioItemFix();
-	$(window).on('resize',function(){
-		PorfolioItemFix();
-	});
+    /*------------------
+        Hero Slider
+    --------------------*/
+    $('.hero-slider').owlCarousel({
+        nav: false,
+        dots: false,
+        loop: true,
+        autoplay: true,
+        smartSpeed: 1000,
+        responsive: {
+            0: {
+                items: 1,
+            },
+            480: {
+                items: 2,
+
+            },
+            768: {
+                items: 3,
+            },
+            991: {
+                items: 4,
+            },
+            1200: {
+                items: 5,
+            },
+            1400: {
+                items: 7,
+            }
+        }
+    });
 
 
-	/*------------------
-		Image Popup
-	--------------------*/
-	$('.img-popup').magnificPopup({
-		type: 'image',
-		mainClass: 'img-popup-warp',
-		removalDelay: 500,
-	});
-	
-
-	/*------------------
-		Progress Bar
-	--------------------*/
-	$('.progress-bar-style').each(function() {
-		const progress = $(this).data("progress");
-		const prog_width = progress + '%';
-		if (progress <= 100) {
-			$(this).append('<div class="bar-inner" style="width:' + prog_width + '"><span>' + prog_width + '</span></div>');
-		}
-		else {
-			$(this).append('<div class="bar-inner" style="width:100%"><span>' + prog_width + '</span></div>');
-		}
-	});
+    /*----------------------
+        Portfolio item size
+    ------------------------*/
+    const PorfolioItemFix = function () {
+        $(".portfolio-item").each(function (index) {
+            const portfolioItem = $(this);
+            const PIheight = portfolioItem.width();
+            portfolioItem.css('height', PIheight);
+        });
+    };
+    PorfolioItemFix();
+    $(window).on('resize', function () {
+        PorfolioItemFix();
+    });
 
 
-	/*------------------
-		Accordions
-	--------------------*/
-	$('.panel-link').on('click', function (e) {
-		$('.panel-link').parent('.panel-header').removeClass('active');
-		const $this = $(this).parent('.panel-header');
-		if (!$this.hasClass('active')) {
-			$this.addClass('active');
-		}
-		e.preventDefault();
-	});
+    /*------------------
+        Image Popup
+    --------------------*/
+    $('.img-popup').magnificPopup({
+        type: 'image',
+        mainClass: 'img-popup-warp',
+        removalDelay: 500,
+    });
 
 
-	/*------------------
-		Circle progress
-	--------------------*/
-	$('.circle-progress').each(function() {
-		const cpvalue = $(this).data("cpvalue");
-		const cpcolor = $(this).data("cpcolor");
-		const cptitle = $(this).data("cptitle");
-		const cpid 	= $(this).data("cpid");
+    /*------------------
+        Progress Bar
+    --------------------*/
+    $('.progress-bar-style').each(function () {
+        const progress = $(this).data("progress");
+        const prog_width = progress + '%';
+        if (progress <= 100) {
+            $(this).append('<div class="bar-inner" style="width:' + prog_width + '"><span>' + prog_width + '</span></div>');
+        } else {
+            $(this).append('<div class="bar-inner" style="width:100%"><span>' + prog_width + '</span></div>');
+        }
+    });
 
-		$(this).append('<div class="'+ cpid +'"></div><div class="progress-info"><h2>'+ cpvalue +'%</h2><p>'+ cptitle +'</p></div>');
 
-		if (cpvalue < 100) {
+    /*------------------
+        Accordions
+    --------------------*/
+    $('.panel-link').on('click', function (e) {
+        $('.panel-link').parent('.panel-header').removeClass('active');
+        const $this = $(this).parent('.panel-header');
+        if (!$this.hasClass('active')) {
+            $this.addClass('active');
+        }
+        e.preventDefault();
+    });
 
-			$('.' + cpid).circleProgress({
-				value: '0.' + cpvalue,
-				size: 190,
-				thickness: 3,
-				fill: cpcolor,
-				emptyFill: "rgba(0, 0, 0, 0)"
-			});
-		} else {
-			$('.' + cpid).circleProgress({
-				value: 1,
-				size: 190,
-				thickness: 3,
-				fill: cpcolor,
-				emptyFill: "rgba(0, 0, 0, 0)"
-			});
-		}
 
-	});
+    /*------------------
+        Circle progress
+    --------------------*/
+    $('.circle-progress').each(function () {
+        const cpvalue = $(this).data("cpvalue");
+        const cpcolor = $(this).data("cpcolor");
+        const cptitle = $(this).data("cptitle");
+        const cpid = $(this).data("cpid");
+
+        $(this).append('<div class="' + cpid + '"></div><div class="progress-info"><h2>' + cpvalue + '%</h2><p>' + cptitle + '</p></div>');
+
+        if (cpvalue < 100) {
+
+            $('.' + cpid).circleProgress({
+                value: '0.' + cpvalue,
+                size: 190,
+                thickness: 3,
+                fill: cpcolor,
+                emptyFill: "rgba(0, 0, 0, 0)"
+            });
+        } else {
+            $('.' + cpid).circleProgress({
+                value: 1,
+                size: 190,
+                thickness: 3,
+                fill: cpcolor,
+                emptyFill: "rgba(0, 0, 0, 0)"
+            });
+        }
+
+    });
 })(jQuery);
