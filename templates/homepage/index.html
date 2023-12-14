@@ -36,11 +36,11 @@
     </div>
     <div id="bookingPrompt" class="booking-prompt">
         <div class="content-booking">
-            <p>Ready to capture beautiful moments?</p>
-            <p>Book your photography session with us today!</p>
+            <p>{% translate 'Ready to capture beautiful moments?' %}</p>
+            <p>{% translate 'Book your photography session with us today!' %}</p>
         </div>
         <div class="actions">
-            <button type="button" onclick="location.href='{% url 'homepage:services_offered' %}'">Book Now</button>
+            <button type="button" onclick="location.href='{% url 'homepage:services_offered' %}'">{% translate 'Book Now' %}</button>
         </div>
     </div>
 {% endblock %}
