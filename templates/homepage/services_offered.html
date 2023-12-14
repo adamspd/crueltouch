@@ -14,12 +14,18 @@
     <div class="main-container">
         <h1 class="page-title">{% trans "Select and Schedule Your Appointment" %}</h1>
         <div class="page-menu">
-            <div class="category-button portrait-service" onclick="showService('portrait-service')">Portrait/Birthday
+            <div class="category-button portrait-service" onclick="showService('portrait-service')">
+                {% translate 'Portrait/Birthday' %}
             </div>
-            <div class="category-button wedding-service" onclick="showService('wedding-service')">Wedding</div>
-            <div class="category-button product-service" onclick="showService('product-service')">Product Photography
+            <div class="category-button wedding-service" onclick="showService('wedding-service')">
+                {% translate 'Wedding' %}
             </div>
-            <div class="category-button event-service" onclick="showService('event-service')">Events</div>
+            <div class="category-button product-service" onclick="showService('product-service')">
+                {% translate 'Product Photography' %}
+            </div>
+            <div class="category-button event-service" onclick="showService('event-service')">
+                {% translate 'Events' %}
+            </div>
         </div>
         <div class="page-body">
             <div class="category-container">
@@ -36,7 +42,7 @@
                                 <p>{{ service.get_duration }}</p>
                                 <p>{{ service.get_price_text }}</p>
                                 <a href="{% url 'appointment:appointment_request' service_id=service.id %}"
-                                   class="btn btn-dark">Book Now</a>
+                                   class="btn btn-dark">{% translate 'Book Now' %}</a>
                             </div>
                         </div>
                     {% endfor %}
@@ -54,7 +60,7 @@
                                 <p>{{ service.get_duration }}</p>
                                 <p>{{ service.get_price_text }}</p>
                                 <a href="{% url 'appointment:appointment_request' service_id=service.id %}"
-                                   class="btn btn-dark">Book Now</a>
+                                   class="btn btn-dark">{% translate 'Book Now' %}</a>
                             </div>
                         </div>
                     {% endfor %}
@@ -72,7 +78,7 @@
                                 <p>{{ service.get_duration }}</p>
                                 <p>{{ service.get_price_text }}</p>
                                 <a href="{% url 'appointment:appointment_request' service_id=service.id %}"
-                                   class="btn btn-dark">Book Now</a>
+                                   class="btn btn-dark">{% translate 'Book Now' %}</a>
                             </div>
                         </div>
                     {% endfor %}
@@ -90,7 +96,7 @@
                                 <p>{{ service.get_duration }}</p>
                                 <p>{{ service.get_price_text }}</p>
                                 <a href="{% url 'appointment:appointment_request' service_id=service.id %}"
-                                   class="btn btn-dark">Book Now</a>
+                                   class="btn btn-dark">{% translate 'Book Now' %}</a>
                             </div>
                         </div>
                     {% endfor %}
