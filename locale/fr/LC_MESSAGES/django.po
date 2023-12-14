@@ -35,10 +35,8 @@ msgid "First name"
 msgstr "Prénom"
 
 #: administration/forms.py:80
-#, fuzzy
-#| msgid "Last Name"
 msgid "Last name"
-msgstr "Nom"
+msgstr "Nom de famille"
 
 #: administration/forms.py:84
 #: templates/client/booking_and_promotions/bookme.html:151
@@ -126,40 +124,32 @@ msgid "Client email"
 msgstr "Email client"
 
 #: administration/models.py:208
-#, fuzzy
-#| msgid "pending"
 msgid "Pending"
-msgstr "en attente"
+msgstr "En attente"
 
 #: administration/models.py:209
 msgid "Paid"
-msgstr ""
+msgstr "Payé"
 
 #: administration/models.py:210
 msgid "Partially Paid"
-msgstr ""
+msgstr "Partiellement payé"
 
 #: administration/models.py:211
-#, fuzzy
-#| msgid "Cancel"
 msgid "Cancelled"
 msgstr "Annuler"
 
 #: administration/models.py:212
 msgid "Overdue"
-msgstr ""
+msgstr "En retard"
 
 #: administration/models.py:247
-#, fuzzy
-#| msgid "Duration must be greater than 0"
 msgid "Discount must be between 0 and 100"
-msgstr "Durée doit être supérieure à 0"
+msgstr "La remise doit être comprise entre 0 et 100"
 
 #: administration/models.py:249
-#, fuzzy
-#| msgid "Start date must be before end date"
 msgid "Tax rate must be between 0 and 100"
-msgstr "La date de début doit être avant la date de fin"
+msgstr "La TVA doit être compris entre 0 et 100"
 
 #: administration/views.py:212
 msgid "Email sent successfully"
@@ -980,7 +970,7 @@ msgstr "Total"
 #: templates/administration/view/index.html:235
 #: templates/administration/view/index.html:316
 msgid "Ping at"
-msgstr ""
+msgstr "Ping à"
 
 #: templates/administration/list/list_invoices.html:29
 #: templates/administration/list/list_invoices.html:119
@@ -988,16 +978,14 @@ msgstr ""
 #: templates/administration/view/index.html:236
 #: templates/administration/view/index.html:317
 msgid "Buzz at"
-msgstr ""
+msgstr "Sonner à"
 
 #: templates/administration/list/list_invoices.html:30
 #: templates/administration/list/list_invoices.html:120
 #: templates/administration/view/index.html:237
 #: templates/administration/view/index.html:318
-#, fuzzy
-#| msgid "Email sent"
 msgid "Email Sent"
-msgstr "Email envoyé"
+msgstr "Email Envoyé"
 
 #: templates/administration/list/list_invoices.html:32
 #: templates/administration/list/list_invoices.html:122
@@ -1011,10 +999,8 @@ msgid "Actions"
 msgstr "Actions"
 
 #: templates/administration/list/list_invoices.html:106
-#, fuzzy
-#| msgid "No service found"
 msgid "No invoice found"
-msgstr "Aucun service trouvé"
+msgstr "Aucune facture trouvée"
 
 #: templates/administration/list/list_requested_session.html:5
 #: templates/administration/list/list_requested_session.html:8
@@ -1227,74 +1213,64 @@ msgstr "Rendez-vous"
 #: templates/administration/view/index.html:145
 #: templates/administration/view/index.html:194
 msgid "On"
-msgstr ""
+msgstr "Le"
 
 #: templates/administration/view/index.html:146
 #: templates/administration/view/index.html:195
-#, fuzzy
-#| msgid "Client"
 msgid "Client, AKA"
 msgstr "Client"
 
 #: templates/administration/view/index.html:147
-#, fuzzy
-#| msgid "Book Now"
 msgid "Booked for"
-msgstr "Réserver maintenant"
+msgstr "Réserver pour"
 
 #: templates/administration/view/index.html:148
 msgid "For only"
-msgstr ""
+msgstr "Pour seulement"
 
 #: templates/administration/view/index.html:149
-#, fuzzy
-#| msgid "See you soon"
 msgid "See them on"
-msgstr "À bientôt"
+msgstr "Voir le"
 
 #: templates/administration/view/index.html:152
 msgid "Found at"
-msgstr ""
+msgstr "Trouvé à"
 
 #: templates/administration/view/index.html:153
 msgid "Snapper"
-msgstr ""
+msgstr "Snapper"
 
 #: templates/administration/view/index.html:196
-#, fuzzy
-#| msgid "Book Now"
 msgid "Booked For"
-msgstr "Réserver maintenant"
+msgstr "Réserver Pour"
 
 #: templates/administration/view/index.html:197
 msgid "For Only"
-msgstr ""
+msgstr "Pour Seulement"
 
 #: templates/administration/view/index.html:198
 msgid "See Them On"
-msgstr ""
+msgstr "Voir Le"
 
 #: templates/administration/view/index.html:199
 msgid "Ping At"
-msgstr ""
+msgstr "Ping À"
 
 #: templates/administration/view/index.html:200
 msgid "Buzz At"
-msgstr ""
+msgstr "Sonner À"
 
 #: templates/administration/view/index.html:201
 msgid "Found At"
-msgstr ""
+msgstr "Trouvé À"
 
 #: templates/administration/view/index.html:202
 msgid "Chosen Snap"
-msgstr ""
+msgstr "Snap Choisi"
 
 #: templates/administration/view/index.html:225
-#, fuzzy
-#| msgid "Generate Invoice"
 msgid "Last 5 Invoices"
-msgstr "Générer facture"
+msgstr "Dernières 5 Factures"
 
 #: templates/appointments/appointment_client_information.html:30
 #: venv/lib/python3.9/site-packages/appointment/templates/appointment/appointment_client_information.html:35
@@ -1641,30 +1617,22 @@ msgid "Login & Register"
 msgstr "Connexion & Inscription"
 
 #: templates/homepage/base.html:120
-#, fuzzy
-#| msgid "Sign Up"
 msgid "Sign In"
-msgstr "Créer un compte"
+msgstr "Se connecter"
 
 #: templates/homepage/base.html:121
 msgid "Join Us"
-msgstr ""
+msgstr "Rejoignez-nous"
 
 #: templates/homepage/base.html:122 templates/homepage/base.html:125
-#, fuzzy
-#| msgid "Studio"
 msgid "Studio Admin"
-msgstr "Studio"
+msgstr "Admin Studio"
 
 #: templates/homepage/base.html:127
-#, fuzzy
-#| msgid "Dashboard"
 msgid "My Dashboard"
-msgstr "Tableau de bord"
+msgstr "Mon Espace"
 
 #: templates/homepage/base.html:129
-#, fuzzy
-#| msgid "Sign out"
 msgid "Sign Out"
 msgstr "Déconnexion"
 
@@ -1712,17 +1680,15 @@ msgstr ""
 
 #: templates/homepage/index.html:39
 msgid "Ready to capture beautiful moments?"
-msgstr ""
+msgstr "Prêt à capturer de beaux moments?"
 
 #: templates/homepage/index.html:40
 msgid "Book your photography session with us today!"
-msgstr ""
+msgstr "Réservez votre session photo avec nous aujourd'hui!"
 
 #: templates/homepage/index.html:43
-#, fuzzy
-#| msgid "Book Us Now"
 msgid "Book Now"
-msgstr "Réservation"
+msgstr "Réserver maintenant"
 
 #: templates/homepage/index_about_me.html:53
 msgid "About us"
