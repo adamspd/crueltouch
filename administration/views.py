@@ -798,11 +798,14 @@ def invoice_form2(request):
                           'address': client_address}
             )
 
-            if client.phone_number is None or client.phone_number == "":
+            if client.phone_number is None or client.phone_number == "" or (
+                    client.phone_number != client_phone and client_phone != ""):
                 client.phone_number = client_phone
-            if client.address is None or client.address == "":
+            if client.address is None or client.address == "" or (
+                    client.address != client_address and client_address != ""):
                 client.address = client_address
-            if client.last_name is None or client.last_name == "":
+            if client.last_name is None or client.last_name == "" or (
+                    client.last_name != last_name and last_name != ""):
                 client.last_name = last_name
             client.save()
 
