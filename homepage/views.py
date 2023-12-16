@@ -69,6 +69,14 @@ def promotions(request):
     return render(request, 'client/booking_and_promotions/promotions.html')
 
 
+def get_robot_txt(request):
+    try:
+        with open(settings.BASE_DIR / 'static/homepage/robots.txt', 'rb') as f:
+            return HttpResponse(f.read(), content_type="text/plain")
+    except IOError:
+        raise Http404("File not found")
+
+
 def services_offered(request):
     page_title = _("Services | TCHIIZ")
     page_description = _("Services offered by Tchiiz studio Photography")

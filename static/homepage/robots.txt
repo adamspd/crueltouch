@@ -1,0 +1,11 @@
+# tchiiz.com/robots.txt
+# Tell Google not to crawl any URLs in the shopping cart or images in the icons folder,
+# because they won't be useful in Google Search results.
+User-agent: *
+Disallow: /media/
+Disallow: /logout/
+Disallow: /admin/
+Disallow: /administration/
+Disallow: /reset_password/
+Disallow: /set_password/
+Disallow: /appointment/request/
