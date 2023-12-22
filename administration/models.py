@@ -363,7 +363,7 @@ class Invoice(models.Model):
         send_invoice_email(email_address=self.client.email, full_name=self.client.get_full_name(),
                            invoice_number=self.invoice_number, url=url, status=self.status, total=self.total_amount(),
                            due_date=self.due_date, subject='Invoice from Tchiiz', invoice_file=self.get_path(),
-                           attachments=self.attachments.all(), test=False)
+                           attachments=self.attachments.all(), test=True)
         self.email_sent = True
         self.save()
 

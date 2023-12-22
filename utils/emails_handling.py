@@ -85,7 +85,7 @@ def send_invoice_email(email_address, full_name, invoice_number, url, status, to
     if not get_permissions(is_booking=True, is_contact_form=False, is_other=False):
         return False
 
-    recipient_list = [settings.ADMIN_EMAIL] if test else [email_address]
+    recipient_list = [settings.OTHER_ADMIN_EMAIL] if test else [email_address]
     email_template = 'administration/email_template/late_reply_session_request_received.html' if late else \
         'administration/email_template/notifications.html'
 
@@ -107,5 +107,5 @@ def send_invoice_email(email_address, full_name, invoice_number, url, status, to
 
     # Send a copy to admins
     admin_subject = f"Admin Copy: {subject}"
-    admin_recipient_list = [settings.ADMIN_EMAIL]
+    admin_recipient_list = [settings.ADMIN_EMAIL, settings.OTHER_ADMIN_EMAIL]
     return send_email_(admin_subject, html_message, admin_recipient_list, invoice_number, invoice_file, attachments)
