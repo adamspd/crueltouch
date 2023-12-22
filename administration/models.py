@@ -360,9 +360,10 @@ class Invoice(models.Model):
     def send_email(self, request, url):
         from utils.emails_handling import send_invoice_email
         self.generate_pdf_if_no_file(request)
-        send_invoice_email(self.client.email, self.client.get_short_name(), self.invoice_number, url,
-                           self.status, self.total_amount(), self.due_date, 'Invoice from Tchiiz',
-                           self.get_path(), self.attachments.all())
+        send_invoice_email(email_address=self.client.email, full_name=self.client.get_full_name(),
+                           invoice_number=self.invoice_number, url=url, status=self.status, total=self.total_amount(),
+                           due_date=self.due_date, subject='Invoice from Tchiiz', invoice_file=self.get_path(),
+                           attachments=self.attachments.all(), test=False)
         self.email_sent = True
         self.save()
 
