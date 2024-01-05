@@ -1,7 +1,7 @@
-from django.contrib.auth.signals import user_logged_in, user_login_failed, user_logged_out
+from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
 from django.dispatch import receiver
 
-from utils.crueltouch_utils import c_print, c_formatted_print
+from utils.crueltouch_utils import c_formatted_print, c_print
 
 
 @receiver(user_logged_in)

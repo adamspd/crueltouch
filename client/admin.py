@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 
-from client.models import UserClient, BookMe, Album, Photo, OwnerProfilePhoto
+from client.models import Album, BookMe, OwnerProfilePhoto, Photo, UserClient
 
 
 # class InlinePhoto(admin.TabularInline):
