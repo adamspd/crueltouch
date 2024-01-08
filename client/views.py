@@ -67,11 +67,11 @@ def login_page(request):
             messages.info(request, 'Username or Password is incorrect')
     else:
         if request.user.is_authenticated:
-            # Check if logged in user needs to change password
+            # Check if logged-in user needs to change password
             if request.user.has_to_change_password:
                 return redirect("administration:must_change_password", request.user.pk)
 
-            # Redirect based on user type
+            # Redirect based on the user type
             if request.user.is_admin:
                 return redirect('administration:index')
             else:
@@ -158,12 +158,10 @@ def context(request):
     all_photos = Photo.objects.all()
     all_clients = UserClient.objects.all()
     all_contacts = ContactForm.objects.all()
-    # roos_profile = RoosProfilePhoto.objects.all()
     contexts = {'all_photos': all_photos,
                 'all_clients': all_clients,
                 'all_book_me': all_booked,
                 'all_contacts': all_contacts,
-                # 'roos_profile': roos_profile,
                 }
     return contexts
 
