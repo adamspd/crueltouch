@@ -58,7 +58,6 @@ def success(request):
 
 
 def check_email(data):
-    c_print("this was called")
     # is_valid = validate_email(data)
     is_valid = True
     if data is not None:
