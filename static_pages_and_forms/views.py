@@ -10,9 +10,6 @@ from .form import Contact
 # from validate_email import validate_email
 
 
-# Create your views here.
-
-
 def contact(request):
     if request.method == 'POST':
         form = Contact(request.POST)
