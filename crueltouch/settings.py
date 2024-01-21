@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'administration',
     'appointment',
     'payment',
+    'captcha',
 ]
 
 SITE_ID = 1

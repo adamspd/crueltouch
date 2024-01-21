@@ -1,3 +1,4 @@
+from captcha.fields import CaptchaField
 from django.forms import ModelForm
 from django.utils.translation import gettext_lazy as _
 
@@ -5,6 +6,8 @@ from .models import ContactForm
 
 
 class Contact(ModelForm):
+    captcha = CaptchaField()
+
     class Meta:
         model = ContactForm
         fields = ['full_name', 'email', 'subject', 'message']
