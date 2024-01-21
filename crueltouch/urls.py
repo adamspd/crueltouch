@@ -47,6 +47,10 @@ urlpatterns = [
     path('', include('homepage.urls'), name='homepage'),
 ]
 
+urlpatterns += [
+    path('captcha/', include('captcha.urls')),
+]
+
 if settings.DEBUG:
     urlpatterns += static(
         settings.MEDIA_URL,

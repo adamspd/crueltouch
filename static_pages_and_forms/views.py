@@ -24,8 +24,9 @@ def contact(request):
 
             # Concatenate subject and message
             message_with_subject = f'subject: {subject}. {message_}'
-
+            human = True
             # Call the spam detection API
+            c_print(f"Captcha valid ? {human}, calling API")
             response = requests.post(
                 "https://spam-detection-api.adamspierredavid.com/v1/check-spam/",
                 json={'message': message_with_subject}  # Use json parameter instead of data
