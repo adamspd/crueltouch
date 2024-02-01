@@ -24,7 +24,7 @@ def register_page(request):
     if request.method == 'POST':
         form = CustomRegisterForm(request.POST)
         email = request.POST['email']
-        # check email
+        # Must check if email is valid.
         # c_print(f"email: {email}")
         # valid = validate_email(email)
         # c_print(f"client.views:230 | email is valid: {valid}")
