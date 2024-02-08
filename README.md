@@ -1,5 +1,5 @@
 # crueltouch
-Live website [here](https://crueltouch.com/)
+Live website [here](https://tchiiz.com/)
 ## Setup
 
 The first thing to do is to clone the repository:
