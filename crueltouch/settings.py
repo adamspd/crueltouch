@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'portfolio',
     'administration',
     'appointment',
+    'django_q',
     'payment',
     'captcha',
 ]
@@ -311,3 +312,13 @@ PAYMENT_FEES = 0.03 if not PAYMENT_APPLY_PAYPAL_FEES else 0.00
 PDF_CERTIFICATE_PATH = os.path.join(BASE_DIR, 'crueltouch', 'secrets', 'pdf_certificate.pfx')
 CERTIFICATE_PATH = os.path.join(BASE_DIR, 'crueltouch', 'secrets', 'pdf_certificate.crt')
 PRIVATE_KEY_PATH = os.path.join(BASE_DIR, 'crueltouch', 'secrets', 'pdfkey.key')
+
+Q_CLUSTER = {
+    'name': 'DjangORM',
+    'workers': 4,
+    'timeout': 90,
+    'retry': 120,
+    'queue_limit': 50,
+    'bulk': 10,
+    'orm': 'default',
+}
