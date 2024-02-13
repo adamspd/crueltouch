@@ -1,6 +1,6 @@
 Django==4.2.10
 django-js-asset==2.2.0
-dnspython==2.5.0
+dnspython==2.6.0rc1
 docutils==0.20.1
 markdown2==2.4.12
 Pillow==10.2.0
