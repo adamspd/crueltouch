@@ -46,3 +46,4 @@ crueltouch/secrets.py
 crueltouch/secrets
 database_backup/*
 .cache
+django_q.service
