@@ -9,7 +9,7 @@ requests==2.31.0
 django-appointment==3.3.1
 django-payment-manager==1.0.1
 python-dotenv==1.0.1
-django-simple-history~=3.4.0
+django-simple-history~=3.5.0
 xhtml2pdf==0.2.15
 pypdf2~=3.0.1
 endesive==2.17.0
