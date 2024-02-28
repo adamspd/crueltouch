@@ -37,7 +37,7 @@ def contact(request):
 
                 # If message is spam or if it contains specific strings, return an error message
                 if is_spam or check_email(email_) or check(full_name):
-                    messages.error(request, _("Thank you for your message, but it didn't went through!"))
+                    messages.success(request, _("Thank you for your message, it will be processed as soon as possible"))
                     return redirect("flatpages:contact")
                 # If everything is fine, save the form and redirect
                 form.save()
