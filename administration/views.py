@@ -150,6 +150,8 @@ def login_admin(request):
 @login_required(login_url='/administration/login/')
 @user_passes_test(email_check, login_url='/administration/login/')
 def admin_index(request):
+    if request.user.has_to_change_password:
+        return redirect('administration:must_change_password', pk=request.user.id)
     context = get_context(request)
     return render(request, 'administration/view/index.html', context)
 
