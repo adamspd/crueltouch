@@ -21,11 +21,29 @@ class ContactForm(models.Model):
     subject = models.CharField(default="", null=True, blank=True, max_length=255, verbose_name=_("Subject"))
     message = models.TextField(null=False, blank=False, verbose_name=_("Message"))
 
+    # meta
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.full_name
 
     def save(self, *args, **kwargs):
         return super().save(*args, **kwargs)
+
+
+class Quarantine(models.Model):
+    full_name = models.CharField(max_length=255)
+    email = models.EmailField()
+    message = models.TextField()
+    reason = models.TextField()
+
+    # meta
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Quarantined Message from {self.full_name}"
 
 
 @receiver(post_save, sender=ContactForm)
