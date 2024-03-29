@@ -5,6 +5,7 @@ from django.utils.translation import gettext as _
 
 from utils.crueltouch_utils import check, c_print
 from .form import Contact
+from .models import Quarantine
 
 
 # from validate_email import validate_email
@@ -38,11 +39,15 @@ def contact(request):
                 # If message is spam or if it contains specific strings, return an error message
                 if is_spam or check_email(email_) or check(full_name):
                     messages.success(request, _("Thank you for your message, it will be processed as soon as possible"))
+                    Quarantine.objects.create(full_name=full_name, email=email_, message=message_,
+                                              reason="Flagged as spam")
                     return redirect("flatpages:contact")
                 # If everything is fine, save the form and redirect
                 form.save()
                 return redirect('flatpages:success')
             else:
+                Quarantine.objects.create(full_name=full_name, email=email_, message=message_,
+                                          reason="Flagged as spam")
                 # If API request failed, log the error (you might want to handle this differently)
                 messages.error(request, _("Something went wrong. Please try again later."))
                 return redirect("flatpages:contact")
