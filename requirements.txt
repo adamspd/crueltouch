@@ -3,7 +3,7 @@ django-js-asset==2.2.0
 dnspython==2.6.1
 docutils==0.20.1
 markdown2==2.4.13
-Pillow==10.2.0
+Pillow==10.3.0
 py3-validate-email==1.0.5.post1
 requests==2.31.0
 django-appointment==3.4.1
