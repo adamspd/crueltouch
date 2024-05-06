@@ -13,5 +13,5 @@ django-simple-history==3.5.0
 xhtml2pdf==0.2.15
 pypdf2~=3.0.1
 endesive==2.17.2
-cryptography~=42.0.5
+cryptography~=42.0.6
 django-simple-captcha==0.6.0
