@@ -1,4 +1,4 @@
-Django==4.2.13
+Django==5.0.6
 django-js-asset==2.2.0
 dnspython==2.6.1
 docutils==0.21.2
