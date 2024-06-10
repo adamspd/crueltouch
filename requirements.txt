@@ -10,7 +10,7 @@ django-appointment==3.6.0
 django-payment-manager==1.0.1
 python-dotenv==1.0.1
 django-simple-history==3.7.0
-xhtml2pdf==0.2.15
+xhtml2pdf==0.2.16
 pypdf2~=3.0.1
 endesive==2.17.2
 cryptography==42.0.7
