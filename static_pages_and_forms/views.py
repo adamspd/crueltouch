@@ -1,14 +1,23 @@
 import requests
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.utils.translation import gettext as _
 
-from utils.crueltouch_utils import check, c_print
+from utils.crueltouch_utils import c_print, check
 from .form import Contact
 from .models import Quarantine
 
 
 # from validate_email import validate_email
+
+
+def get_client_ip(request):
+    ip = request.META.get('HTTP_X_FORWARDED_FOR')
+    if ip:
+        ip = ip.split(',')[-1].strip()
+    else:
+        ip = request.META.get('HTTP_X_REAL_IP') or request.META.get('REMOTE_ADDR')
+    return ip
 
 
 def contact(request):
@@ -19,15 +28,17 @@ def contact(request):
             message_ = form.cleaned_data['message']
             full_name = form.cleaned_data['full_name']
             subject = form.cleaned_data['subject']
+            user_agent = request.META.get('HTTP_USER_AGENT', '')  # Optional
+            ip = get_client_ip(request)  # Get the IP address of the sender
 
-            # Concatenate subject and message
-            message_with_subject = f'subject: {subject}. {message_}'
             human = True
             # Call the spam detection API
             c_print(f"Captcha valid ? {human}, calling API")
             response = requests.post(
-                "https://spam-detection-api.adamspierredavid.com/v1/check-spam/",
-                json={'message': message_with_subject}  # Use json parameter instead of data
+                    "https://spam-detection-api.adamspierredavid.com/v2/check-spam/",
+                    json={'text': message_, 'name': full_name, 'email': email_, 'subject': subject,
+                          'user_agent': user_agent, 'ip': ip},
+                    timeout=10  # Adding timeout to handle potential hanging requests
             )
 
             # Check if the API request was successful
