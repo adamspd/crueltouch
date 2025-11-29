@@ -15,12 +15,6 @@ urlpatterns = [
     # log out/
     path('logout/', logout_user, name='logout'),
 
-    # Book me with session
-    path('bookme/session/<int:click_id>/', book_me_session, name='book_me_session'),
-
-    # Book anyway
-    path('bookanyway/', book_anyway, name='book_anyway'),
-
     # client album details
     re_path(r'^(?P<pk>\d+)/$', user_album_details, name='album_details'),
 
