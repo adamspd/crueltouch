@@ -59,7 +59,7 @@ def login_page(request):
                 return redirect("administration:must_change_password", user.pk)
 
             # Redirect based on user type
-            if user.is_admin or user.is_staff:
+            if user.is_superuser or user.is_staff:
                 return redirect('administration:index')
             else:
                 return redirect('client:client_homepage')
@@ -73,7 +73,7 @@ def login_page(request):
                 return redirect("administration:must_change_password", request.user.pk)
 
             # Redirect based on the user type
-            if request.user.is_admin or request.user.is_staff:
+            if request.user.is_superuser or request.user.is_staff:
                 return redirect('administration:index')
             else:
                 return redirect('client:client_homepage')
