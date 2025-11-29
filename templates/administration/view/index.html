@@ -292,18 +292,18 @@
                                                         {% translate "Send" %}
                                                     </a>
                                                 {% endif %}
-                                                <a href="{% url 'administration:edit_invoice' rs.invoice_number %}"
-                                                   class="btn btn-success btn-sm">
-                                                    <i class="fas fa-edit"></i>Edit
-                                                </a>
-                                                <a href="{% url 'administration:delete_invoice' rs.invoice_number %}"
-                                                   class="btn btn-danger btn-sm">
-                                                    <i class="fas fa-trash"></i>Delete
-                                                </a>
-                                                <a href="{% url 'administration:view_invoice' rs.invoice_number %}"
-                                                   class="btn btn-info btn-sm">
-                                                    <i class="fas fa-eye"></i>View
-                                                </a>
+{#                                                <a href="{% url 'administration:edit_invoice' rs.invoice_number %}"#}
+{#                                                   class="btn btn-success btn-sm">#}
+{#                                                    <i class="fas fa-edit"></i>Edit#}
+{#                                                </a>#}
+{#                                                <a href="{% url 'administration:delete_invoice' rs.invoice_number %}"#}
+{#                                                   class="btn btn-danger btn-sm">#}
+{#                                                    <i class="fas fa-trash"></i>Delete#}
+{#                                                </a>#}
+{#                                                <a href="{% url 'administration:view_invoice' rs.invoice_number %}"#}
+{#                                                   class="btn btn-info btn-sm">#}
+{#                                                    <i class="fas fa-eye"></i>View#}
+{#                                                </a>#}
                                             </td>
                                         </tr>
                                     {% endfor %}

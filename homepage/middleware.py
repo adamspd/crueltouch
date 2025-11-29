@@ -1,4 +1,4 @@
-# middleware.py
+# homepage/middleware.py
 from django.conf import settings
 from django.utils.cache import add_never_cache_headers, patch_cache_control
 

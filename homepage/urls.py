@@ -1,3 +1,4 @@
+# homepage/urls.py
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import path

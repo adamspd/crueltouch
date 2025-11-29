@@ -1,3 +1,4 @@
+# utils/email_handling.py
 import smtplib
 from datetime import datetime
 

@@ -1,3 +1,5 @@
+# static_pages_and_forms/views.py
+
 import requests
 from django.contrib import messages
 from django.shortcuts import redirect, render

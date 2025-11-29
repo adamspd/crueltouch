@@ -1,3 +1,4 @@
+# static_pages_and_forms/models.py
 import os
 
 from django.db import models

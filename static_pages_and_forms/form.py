@@ -1,3 +1,4 @@
+# static_pages_and_forms/form.py
 from captcha.fields import CaptchaField
 from django.forms import ModelForm
 from django.utils.translation import gettext_lazy as _

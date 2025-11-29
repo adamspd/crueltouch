@@ -1,3 +1,4 @@
+# administration/views.py
 import datetime
 import glob
 import os
@@ -22,12 +23,12 @@ from django.template.loader import get_template
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
-from endesive import pdf as endesive_pdf
+# from endesive import pdf as endesive_pdf
 from xhtml2pdf import pisa
 
 from administration.forms import InvoiceAttachmentFormset, InvoiceForm, InvoiceServiceFormset, UserChangePasswordForm
 from administration.models import Invoice, InvoiceAttachment, PhotoClient, PhotoDelivery
-from client.form import CreateAlbumForm, UpdateBook
+from client.forms import CreateAlbumForm, UpdateBook
 from client.models import Album as AlbumClient, BookMe, Photo, UserClient
 from crueltouch.productions import production_debug
 from homepage.models import Album as AlbumHomepage, Photo as PhotoHomepage
@@ -713,36 +714,36 @@ def get_client_emails(request):
     return JsonResponse(client_list, safe=False)
 
 
-def invoice_form(request, invoice_number=None):
-    invoice_instance = None
-    title = "Create Invoice"  # Default title
-
-    if invoice_number:
-        invoice_instance = Invoice.objects.get(invoice_number=invoice_number)
-        title = "Edit Invoice"
-
-    if request.method == 'POST':
-        form = InvoiceForm(request.POST, request.FILES, instance=invoice_instance)
-        attachment_formset = InvoiceAttachmentFormset(request.POST, request.FILES, prefix='attachments',
-                                                      instance=invoice_instance)
-        service_formset = InvoiceServiceFormset(request.POST, prefix='services', instance=invoice_instance)
-
-        if form.is_valid() and attachment_formset.is_valid() and service_formset.is_valid():
-            client = handle_client_data(form.cleaned_data)
-            saved_invoice = save_invoice_and_formsets(form, attachment_formset, service_formset, client)
-            return redirect('administration:generate_invoice', invoice_number=saved_invoice.invoice_number)
-    else:
-        form = InvoiceForm(instance=invoice_instance)
-        attachment_formset = InvoiceAttachmentFormset(prefix='attachments', instance=invoice_instance)
-        service_formset = InvoiceServiceFormset(prefix='services', instance=invoice_instance)
-
-    context = {
-        'form': form,
-        'attachment_formset': attachment_formset,
-        'service_formset': service_formset,
-        'title': title
-    }
-    return render(request, 'administration/add/invoice_form.html', context)
+# def invoice_form(request, invoice_number=None):
+#     invoice_instance = None
+#     title = "Create Invoice"  # Default title
+#
+#     if invoice_number:
+#         invoice_instance = Invoice.objects.get(invoice_number=invoice_number)
+#         title = "Edit Invoice"
+#
+#     if request.method == 'POST':
+#         form = InvoiceForm(request.POST, request.FILES, instance=invoice_instance)
+#         attachment_formset = InvoiceAttachmentFormset(request.POST, request.FILES, prefix='attachments',
+#                                                       instance=invoice_instance)
+#         service_formset = InvoiceServiceFormset(request.POST, prefix='services', instance=invoice_instance)
+#
+#         if form.is_valid() and attachment_formset.is_valid() and service_formset.is_valid():
+#             client = handle_client_data(form.cleaned_data)
+#             saved_invoice = save_invoice_and_formsets(form, attachment_formset, service_formset, client)
+#             return redirect('administration:generate_invoice', invoice_number=saved_invoice.invoice_number)
+#     else:
+#         form = InvoiceForm(instance=invoice_instance)
+#         attachment_formset = InvoiceAttachmentFormset(prefix='attachments', instance=invoice_instance)
+#         service_formset = InvoiceServiceFormset(prefix='services', instance=invoice_instance)
+#
+#     context = {
+#         'form': form,
+#         'attachment_formset': attachment_formset,
+#         'service_formset': service_formset,
+#         'title': title
+#     }
+#     return render(request, 'administration/add/invoice_form.html', context)
 
 
 def handle_client_data(form_data):
@@ -768,143 +769,143 @@ def handle_client_data(form_data):
     return client
 
 
-def save_invoice_and_formsets(form, attachment_formset, service_formset, client):
-    invoice = form.save(commit=False)
-    invoice.client = client
-    invoice.save()
-
-    attachment_formset.instance = invoice
-    service_formset.instance = invoice
-    attachment_formset.save()
-    service_formset.save()
-    return invoice
-
-
-@login_required(login_url="/administration/login/")
-@user_passes_test(email_check, login_url='/administration/login/')
-def invoice_form2(request):
-    if request.method == 'POST':
-        form = InvoiceForm(request.POST, request.FILES)
-        attachment_formset = InvoiceAttachmentFormset(request.POST, request.FILES, prefix='attachments')
-        service_formset = InvoiceServiceFormset(request.POST, prefix='services')
-        if form.is_valid():
-            client_email = form.cleaned_data['client_email']
-            first_name = form.cleaned_data['client_first_name']
-            last_name = form.cleaned_data['client_last_name']
-            client_phone = form.cleaned_data['client_phone']
-            client_address = form.cleaned_data['client_address']
-
-            client, created = UserClient.objects.get_or_create(
-                email=client_email,
-                defaults={'first_name': first_name, 'last_name': last_name, 'phone_number': client_phone,
-                          'address': client_address}
-            )
-
-            if client.phone_number is None or client.phone_number == "" or (
-                    client.phone_number != client_phone and client_phone != ""):
-                client.phone_number = client_phone
-            if client.address is None or client.address == "" or (
-                    client.address != client_address and client_address != ""):
-                client.address = client_address
-            if client.last_name is None or client.last_name == "" or (
-                    client.last_name != last_name and last_name != ""):
-                client.last_name = last_name
-            client.save()
-
-            # Save Invoice instance to database
-            invoice = form.save(commit=False)
-            invoice.client = client
-            invoice.save()
-
-            # Now that the invoice instance is saved, assign it to the formsets
-            attachment_formset.instance = invoice
-            service_formset.instance = invoice
-
-            if attachment_formset.is_valid() and service_formset.is_valid():
-                attachment_formset.save()
-                service_formset.save()
-                invoice.save()
-            return redirect('administration:generate_invoice', invoice_number=invoice.invoice_number)
-    else:
-        form = InvoiceForm()
-        attachment_formset = InvoiceAttachmentFormset(prefix='attachments')
-        service_formset = InvoiceServiceFormset(prefix='services')
-
-    context = {
-        'form': form,
-        'attachment_formset': attachment_formset,
-        'service_formset': service_formset
-    }
-    return render(request, 'administration/add/invoice_form.html', context)
+# def save_invoice_and_formsets(form, attachment_formset, service_formset, client):
+#     invoice = form.save(commit=False)
+#     invoice.client = client
+#     invoice.save()
+#
+#     attachment_formset.instance = invoice
+#     service_formset.instance = invoice
+#     attachment_formset.save()
+#     service_formset.save()
+#     return invoice
 
 
-def archive_invoice_files(invoice):
-    # Define the directories
-    invoice_files_dir = "media/invoices/"
-    archive_dir = "media/archived_invoices/"
+# @login_required(login_url="/administration/login/")
+# @user_passes_test(email_check, login_url='/administration/login/')
+# def invoice_form2(request):
+#     if request.method == 'POST':
+#         form = InvoiceForm(request.POST, request.FILES)
+#         attachment_formset = InvoiceAttachmentFormset(request.POST, request.FILES, prefix='attachments')
+#         service_formset = InvoiceServiceFormset(request.POST, prefix='services')
+#         if form.is_valid():
+#             client_email = form.cleaned_data['client_email']
+#             first_name = form.cleaned_data['client_first_name']
+#             last_name = form.cleaned_data['client_last_name']
+#             client_phone = form.cleaned_data['client_phone']
+#             client_address = form.cleaned_data['client_address']
+#
+#             client, created = UserClient.objects.get_or_create(
+#                 email=client_email,
+#                 defaults={'first_name': first_name, 'last_name': last_name, 'phone_number': client_phone,
+#                           'address': client_address}
+#             )
+#
+#             if client.phone_number is None or client.phone_number == "" or (
+#                     client.phone_number != client_phone and client_phone != ""):
+#                 client.phone_number = client_phone
+#             if client.address is None or client.address == "" or (
+#                     client.address != client_address and client_address != ""):
+#                 client.address = client_address
+#             if client.last_name is None or client.last_name == "" or (
+#                     client.last_name != last_name and last_name != ""):
+#                 client.last_name = last_name
+#             client.save()
+#
+#             # Save Invoice instance to database
+#             invoice = form.save(commit=False)
+#             invoice.client = client
+#             invoice.save()
+#
+#             # Now that the invoice instance is saved, assign it to the formsets
+#             attachment_formset.instance = invoice
+#             service_formset.instance = invoice
+#
+#             if attachment_formset.is_valid() and service_formset.is_valid():
+#                 attachment_formset.save()
+#                 service_formset.save()
+#                 invoice.save()
+#             return redirect('administration:generate_invoice', invoice_number=invoice.invoice_number)
+#     else:
+#         form = InvoiceForm()
+#         attachment_formset = InvoiceAttachmentFormset(prefix='attachments')
+#         service_formset = InvoiceServiceFormset(prefix='services')
+#
+#     context = {
+#         'form': form,
+#         'attachment_formset': attachment_formset,
+#         'service_formset': service_formset
+#     }
+#     return render(request, 'administration/add/invoice_form.html', context)
+#
+#
+# def archive_invoice_files(invoice):
+#     # Define the directories
+#     invoice_files_dir = "media/invoices/"
+#     archive_dir = "media/archived_invoices/"
+#
+#     # Create the archive directory if it doesn't exist
+#     os.makedirs(archive_dir, exist_ok=True)
+#
+#     # Generate the base name for the invoice files
+#     invoice_base_name = invoice.get_name()
+#
+#     # Find all invoice files
+#     invoice_files = glob.glob(f"{invoice_files_dir}{invoice_base_name}*")
+#
+#     # Retrieve attachment files using the InvoiceAttachment model
+#     attachment_files = [attachment.file.path for attachment in InvoiceAttachment.objects.filter(invoice=invoice)]
+#
+#     # Timestamp for the archive name
+#     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+#     archive_name = f"{archive_dir}{invoice_base_name}_{timestamp}.zip"
+#
+#     # Creating the archive
+#     with zipfile.ZipFile(archive_name, 'w') as archive:
+#         for file in invoice_files + attachment_files:
+#             archive.write(file, os.path.basename(file))
+#             os.remove(file)  # Remove the original file after adding to the archive
+#
+#     # Return the path of the created archive for further use (optional)
+#     return archive_name
+#
+#
+# def delete_invoice(request, invoice_number):
+#     invoice = Invoice.objects.get(invoice_number=invoice_number)
+#     archive_invoice_files(invoice)
+#     invoice.delete()
+#     return redirect('administration:index')
+#
+#
+# def list_invoices(request):
+#     invoices = Invoice.objects.all()
+#     return render(request, 'administration/list/list_invoices.html', {'invoices': invoices})
 
-    # Create the archive directory if it doesn't exist
-    os.makedirs(archive_dir, exist_ok=True)
 
-    # Generate the base name for the invoice files
-    invoice_base_name = invoice.get_name()
-
-    # Find all invoice files
-    invoice_files = glob.glob(f"{invoice_files_dir}{invoice_base_name}*")
-
-    # Retrieve attachment files using the InvoiceAttachment model
-    attachment_files = [attachment.file.path for attachment in InvoiceAttachment.objects.filter(invoice=invoice)]
-
-    # Timestamp for the archive name
-    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    archive_name = f"{archive_dir}{invoice_base_name}_{timestamp}.zip"
-
-    # Creating the archive
-    with zipfile.ZipFile(archive_name, 'w') as archive:
-        for file in invoice_files + attachment_files:
-            archive.write(file, os.path.basename(file))
-            os.remove(file)  # Remove the original file after adding to the archive
-
-    # Return the path of the created archive for further use (optional)
-    return archive_name
-
-
-def delete_invoice(request, invoice_number):
-    invoice = Invoice.objects.get(invoice_number=invoice_number)
-    archive_invoice_files(invoice)
-    invoice.delete()
-    return redirect('administration:index')
-
-
-def list_invoices(request):
-    invoices = Invoice.objects.all()
-    return render(request, 'administration/list/list_invoices.html', {'invoices': invoices})
-
-
-def view_invoice(request, invoice_number):
-    invoice = Invoice.objects.get(invoice_number=invoice_number)
-    pdf_path = f'media/invoices/{invoice.get_name()}.pdf'
-
-    # Check if the PDF exists
-    if not os.path.exists(pdf_path):
-        generate_and_process_invoice(request, invoice.invoice_number)
-    else:
-        # Get the updated date info about the file (Linux/ macOS)
-        updated_date = datetime.datetime.fromtimestamp(os.path.getmtime(pdf_path))
-
-        # If the PDF updated date is not the same as the invoice updated date, regenerate the PDF
-        if updated_date.replace(microsecond=0) != invoice.updated_at.replace(tzinfo=None, microsecond=0):
-            # rename the old PDF by adding its updated date to the name
-            os.rename(pdf_path, f'media/invoices/{invoice.get_name()}_{invoice.updated_at}.pdf')
-            generate_and_process_invoice(request, invoice.invoice_number)
-
-    # After regeneration or if no regeneration was needed, open and return the PDF
-    with open(pdf_path, 'rb') as f:
-        pdf_content = f.read()
-
-    response = HttpResponse(pdf_content, content_type='application/pdf')
-    response['Content-Disposition'] = f'filename="{invoice.get_name()}.pdf"'
-    return response
+# def view_invoice(request, invoice_number):
+#     invoice = Invoice.objects.get(invoice_number=invoice_number)
+#     pdf_path = f'media/invoices/{invoice.get_name()}.pdf'
+#
+#     # Check if the PDF exists
+#     if not os.path.exists(pdf_path):
+#         generate_and_process_invoice(request, invoice.invoice_number)
+#     else:
+#         # Get the updated date info about the file (Linux/ macOS)
+#         updated_date = datetime.datetime.fromtimestamp(os.path.getmtime(pdf_path))
+#
+#         # If the PDF updated date is not the same as the invoice updated date, regenerate the PDF
+#         if updated_date.replace(microsecond=0) != invoice.updated_at.replace(tzinfo=None, microsecond=0):
+#             # rename the old PDF by adding its updated date to the name
+#             os.rename(pdf_path, f'media/invoices/{invoice.get_name()}_{invoice.updated_at}.pdf')
+#             generate_and_process_invoice(request, invoice.invoice_number)
+#
+#     # After regeneration or if no regeneration was needed, open and return the PDF
+#     with open(pdf_path, 'rb') as f:
+#         pdf_content = f.read()
+#
+#     response = HttpResponse(pdf_content, content_type='application/pdf')
+#     response['Content-Disposition'] = f'filename="{invoice.get_name()}.pdf"'
+#     return response
 
 
 @require_POST
@@ -925,29 +926,29 @@ def update_invoice_status(request, invoice_number):
     return redirect('administration:index')
 
 
-@login_required(login_url="/administration/login/")
-@user_passes_test(email_check, login_url='/administration/login/')
-def generate_and_process_invoice(request, invoice_number):
-    os.makedirs("media/invoices", exist_ok=True)
-    invoice = Invoice.objects.get(invoice_number=invoice_number)
-
-    # Step 1: Generate Invoice PDF
-    pdf_path = generate_invoice_pdf(request, invoice.invoice_number)
-    # Step 2: Sign the PDF
-    signed_pdf_path = sign_pdf(invoice_number)
-    # Step 3: Secure the PDF
-    secure_pdf_path = f'media/invoices/{invoice.get_name()}.pdf'
-    secure_pdf(signed_pdf_path, secure_pdf_path, "owner_password", invoice)
-    # Cleanup: Remove temporary PDFs and serve the final secured PDF
-    os.remove(pdf_path)
-    os.remove(signed_pdf_path)
-
-    # Serve the final secured PDF
-    with open(secure_pdf_path, 'rb') as f:
-        pdf_content = f.read()
-    # response = HttpResponse(pdf_content, content_type='application/pdf')
-    # response['Content-Disposition'] = f'filename="{invoice.get_name()}.pdf"'
-    return redirect('administration:index')
+# @login_required(login_url="/administration/login/")
+# @user_passes_test(email_check, login_url='/administration/login/')
+# def generate_and_process_invoice(request, invoice_number):
+#     os.makedirs("media/invoices", exist_ok=True)
+#     invoice = Invoice.objects.get(invoice_number=invoice_number)
+#
+#     # Step 1: Generate Invoice PDF
+#     pdf_path = generate_invoice_pdf(request, invoice.invoice_number)
+#     # Step 2: Sign the PDF
+#     signed_pdf_path = sign_pdf(invoice_number)
+#     # Step 3: Secure the PDF
+#     secure_pdf_path = f'media/invoices/{invoice.get_name()}.pdf'
+#     secure_pdf(signed_pdf_path, secure_pdf_path, "owner_password", invoice)
+#     # Cleanup: Remove temporary PDFs and serve the final secured PDF
+#     os.remove(pdf_path)
+#     os.remove(signed_pdf_path)
+#
+#     # Serve the final secured PDF
+#     with open(secure_pdf_path, 'rb') as f:
+#         pdf_content = f.read()
+#     # response = HttpResponse(pdf_content, content_type='application/pdf')
+#     # response['Content-Disposition'] = f'filename="{invoice.get_name()}.pdf"'
+#     return redirect('administration:index')
 
 
 def generate_invoice_pdf(request, invoice_number):
@@ -1018,66 +1019,66 @@ def generate_invoice_pdf(request, invoice_number):
     return pdf_path
 
 
-def sign_pdf(invoice_number):
-    pdf_obj = Invoice.objects.get(invoice_number=invoice_number)
-    pdf_path = f"media/invoices/{pdf_obj.get_name()}_generated.pdf"
-
-    # Read the contents of the private key and certificate files
-    with open(settings.PRIVATE_KEY_PATH, 'rb') as key_file:
-        private_key_data = key_file.read()
-    with open(settings.CERTIFICATE_PATH, 'rb') as cert_file:
-        certificate_data = cert_file.read()
-
-    # Load the private key and certificate
-    private_key = serialization.load_pem_private_key(
-        private_key_data,
-        password=None,  # Assuming the private key is not password protected
-        backend=default_backend()
-    )
-    certificate = x509.load_pem_x509_certificate(
-        certificate_data,
-        default_backend()
-    )
-
-    # Read the PDF
-    reader = PyPDF2.PdfReader(pdf_path)
-    writer = PyPDF2.PdfWriter()
-    for page in reader.pages:
-        writer.add_page(page)
-
-    # Save to a temporary file
-    tmp_pdf_path = f'media/invoices/{pdf_obj.get_name()}_tmp.pdf'
-    with open(tmp_pdf_path, 'wb') as f:
-        writer.write(f)
-
-    # Sign the PDF
-    dct = {
-        'sigflags': 3,
-        'contact': 'tchiiz.web.studio@gmail.com',
-        'location': 'Naples/Florida',
-        'signingdate': datetime.datetime.utcnow().strftime("D:%Y%m%d%H%M%S+00'00'"),
-        'reason': 'Signing the invoice',
-    }
-
-    with open(tmp_pdf_path, 'rb') as f:
-        datau = f.read()
-
-    # Pass the certificate object directly to the sign function
-    datas = endesive_pdf.cms.sign(
-        datau, dct,
-        private_key,  # Private key object
-        certificate,  # Certificate object
-        [],  # Additional certificates, if any, as a list
-        'sha256'
-    )
-
-    output_pdf_path = f'media/invoices/{pdf_obj.get_name()}_signed.pdf'
-    with open(output_pdf_path, 'wb') as fp:
-        fp.write(datau)
-        fp.write(datas)
-    # delete tmp file
-    os.remove(tmp_pdf_path)
-    return output_pdf_path
+# def sign_pdf(invoice_number):
+#     pdf_obj = Invoice.objects.get(invoice_number=invoice_number)
+#     pdf_path = f"media/invoices/{pdf_obj.get_name()}_generated.pdf"
+#
+#     # Read the contents of the private key and certificate files
+#     with open(settings.PRIVATE_KEY_PATH, 'rb') as key_file:
+#         private_key_data = key_file.read()
+#     with open(settings.CERTIFICATE_PATH, 'rb') as cert_file:
+#         certificate_data = cert_file.read()
+#
+#     # Load the private key and certificate
+#     private_key = serialization.load_pem_private_key(
+#         private_key_data,
+#         password=None,  # Assuming the private key is not password protected
+#         backend=default_backend()
+#     )
+#     certificate = x509.load_pem_x509_certificate(
+#         certificate_data,
+#         default_backend()
+#     )
+#
+#     # Read the PDF
+#     reader = PyPDF2.PdfReader(pdf_path)
+#     writer = PyPDF2.PdfWriter()
+#     for page in reader.pages:
+#         writer.add_page(page)
+#
+#     # Save to a temporary file
+#     tmp_pdf_path = f'media/invoices/{pdf_obj.get_name()}_tmp.pdf'
+#     with open(tmp_pdf_path, 'wb') as f:
+#         writer.write(f)
+#
+#     # Sign the PDF
+#     dct = {
+#         'sigflags': 3,
+#         'contact': 'tchiiz.web.studio@gmail.com',
+#         'location': 'Naples/Florida',
+#         'signingdate': datetime.datetime.utcnow().strftime("D:%Y%m%d%H%M%S+00'00'"),
+#         'reason': 'Signing the invoice',
+#     }
+#
+#     with open(tmp_pdf_path, 'rb') as f:
+#         datau = f.read()
+#
+#     # Pass the certificate object directly to the sign function
+#     datas = endesive_pdf.cms.sign(
+#         datau, dct,
+#         private_key,  # Private key object
+#         certificate,  # Certificate object
+#         [],  # Additional certificates, if any, as a list
+#         'sha256'
+#     )
+#
+#     output_pdf_path = f'media/invoices/{pdf_obj.get_name()}_signed.pdf'
+#     with open(output_pdf_path, 'wb') as fp:
+#         fp.write(datau)
+#         fp.write(datas)
+#     # delete tmp file
+#     os.remove(tmp_pdf_path)
+#     return output_pdf_path
 
 
 def secure_pdf(input_pdf_path, output_pdf_path, owner_password, invoice):

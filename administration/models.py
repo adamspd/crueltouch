@@ -1,3 +1,4 @@
+# administration/models.py
 import random
 import string
 import uuid

@@ -1,3 +1,4 @@
+# static_pages_and_forms/admin.py
 from django.contrib import admin
 
 from .models import *

@@ -1,3 +1,4 @@
+# homepage/views.py
 import random
 
 from appointment.models import Service
