@@ -34,8 +34,7 @@ from crueltouch.productions import production_debug
 from homepage.models import Album as AlbumHomepage, Photo as PhotoHomepage
 from portfolio.models import Album as AlbumPortfolio, Photo as PhotoPortfolio
 from static_pages_and_forms.models import ContactForm
-from utils.crueltouch_utils import c_print, check_user_login, email_check, is_ajax, send_client_email, \
-    work_with_file_photos
+from utils.crueltouch_utils import c_print, check_user_login, email_check, is_ajax, send_client_email
 
 def get_book_me_by_month():
     book_me_by_month = []

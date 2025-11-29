@@ -16,6 +16,7 @@ from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
+from core.models import BasePhoto
 from utils.crueltouch_utils import c_print, send_password_reset_email
 
 phone_regex = RegexValidator(
@@ -24,14 +25,17 @@ phone_regex = RegexValidator(
 )
 
 
-class Photo(models.Model):
+class Photo(BasePhoto):
+    """
+    Client photos - for client selection/favorites.
+    Different from homepage/portfolio - has favorite/download tracking.
+    """
     file = models.ImageField(upload_to='Client', null=True, blank=True)
+    thumbnail = models.ImageField(upload_to='Client/thumbnails', null=True, blank=True)
+
+    # Client-specific fields
     is_favorite = models.BooleanField(default=False)
     can_be_downloaded = models.BooleanField(default=False)
-    thumbnail = models.FileField(upload_to='Client/thumbnails', null=True, blank=True)
-
-    def __str__(self):
-        return self.file.name
 
     def set_favorite(self):
         self.is_favorite = True
@@ -49,78 +53,12 @@ class Photo(models.Model):
         self.can_be_downloaded = False
         self.save()
 
-    def create_thumbnail(self, base_height=300):
-        if not self.thumbnail:
-            img = Image.open(self.file)
-            # get image's name without path and extension
-            name = os.path.basename(self.file.name)
-            name, extension = os.path.splitext(name)[0], os.path.splitext(name)[1]
-            name = name + '_thumbnail' + extension
-            # extract orientation information from image's metadata
-            try:
-                for orientation in TAGS.keys():
-                    if TAGS[orientation] == 'Orientation':
-                        break
-                exif = dict(img._getexif().items())
-                if exif[orientation] == 3:
-                    img = img.rotate(180, expand=True)
-                elif exif[orientation] == 6:
-                    img = img.rotate(-90, expand=True)
-                elif exif[orientation] == 8:
-                    img = img.rotate(90, expand=True)
-            except (AttributeError, KeyError, IndexError):
-                # no EXIF information found
-                pass
-            # resize image
-            height_percent = (base_height / float(img.size[1]))
-            width_size = int((float(img.size[0]) * float(height_percent)))
-            img = img.resize((width_size, base_height), PIL.Image.Resampling.LANCZOS)
-            # convert RGBA image to RGB
-            if img.mode == 'RGBA':
-                img = img.convert('RGB')
-            # save thumbnail in self.thumbnail_url field
-            thumbnail_io = BytesIO()
-            img.save(thumbnail_io, format='JPEG')
-            thumbnail_file = ContentFile(thumbnail_io.getvalue())
-            self.thumbnail.save(name, thumbnail_file, save=False)
-            self.save()
-
-    def get_thumbnail_url(self):
-        if self.file:
-            if self.thumbnail:
-                return self.thumbnail.url
-            else:
-                self.create_thumbnail()
-                return self.thumbnail.url if self.thumbnail else ''
-        else:
-            return ''
-
-    def get_name(self):
-        name = os.path.basename(self.file.name)
-        return name
-
     def get_is_favorite(self):
-        if self.is_favorite:
-            return "like is-active"
-        else:
-            return ""
+        return "like is-active" if self.is_favorite else ""
 
-    def delete(self, *args, **kwargs):
-        # Delete the files from the file system.
-        if self.file:
-            default_storage.delete(self.file.name)
-        if self.thumbnail:
-            default_storage.delete(self.thumbnail.name)
-
-        # Call the superclass delete() method.
-        super(Photo, self).delete(*args, **kwargs)
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        self.create_thumbnail()
-
-    def get_url(self):
-        return self.file.url if self.file else ''
+    def _post_save_image_processing(self):
+        """Only create thumbnail, don't convert to WebP (client may want originals)"""
+        self.create_thumbnail_if_needed(base_height=300)
 
 
 class UserManager(BaseUserManager):
