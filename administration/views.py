@@ -5,6 +5,7 @@ import os
 import zipfile
 from io import BytesIO
 from sqlite3 import IntegrityError
+from typing import Any
 
 import PyPDF2
 from PyPDF2.constants import UserAccessPermissions
@@ -17,6 +18,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.hashers import make_password
+from django.db import models
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import get_template
@@ -36,51 +38,14 @@ from portfolio.models import Album as AlbumPortfolio, Photo as PhotoPortfolio
 from static_pages_and_forms.models import ContactForm
 from utils.crueltouch_utils import c_print, check_user_login, email_check, is_ajax, send_client_email
 
-def get_book_me_by_month():
-    book_me_by_month = []
-    for i in range(1, 13):
-        book_me_by_month.append(Appointment.objects.filter(created_at__month=i).count())
-    return book_me_by_month
+from django.db.models import Count, Func
+from django.db.models.functions import TruncMonth
 
 
-def get_context(request):
-    base_context = get_base_context(request)  # Get the base context
-
-    requested_session = Appointment.objects.all()
-    last_10_book_me = Appointment.objects.all().order_by("-created_at")[:5]
-    last_10_invoices = Invoice.objects.all().order_by("-created_at")[:5]
-    photo_delivered = Photo.objects.all()
-    all_clients = UserClient.objects.filter(admin=False)
-    contact_forms = ContactForm.objects.all()
-
-    this_month = Appointment.objects.filter(created_at__month=datetime.datetime.now().month)
-    last_month = Appointment.objects.filter(created_at__month=datetime.datetime.now().month - 1)
-
-    if len(this_month) == 0 and len(last_month) == 0:
-        percentage = 0
-    elif len(last_month) == 0:
-        percentage = 100
-    else:
-        percentage = ((len(this_month) - len(last_month)) / len(last_month)) * 100
-
-    book_me_by_month = get_book_me_by_month()
-
-    # Update the base context with additional information
-    base_context.update({
-        'photo_delivered': photo_delivered,
-        'clients': all_clients,
-        'request_session': last_10_book_me,
-        'contact_forms': contact_forms,
-        'total_photos_delivered': len(photo_delivered),
-        'total_clients': len(all_clients),
-        'total_request_session': len(requested_session),
-        'total_contact_forms': len(contact_forms),
-        'increase_percentage': percentage,
-        'book_me_by_month': book_me_by_month,
-        'invoices': last_10_invoices,
-    })
-
-    return base_context
+class Month(Func):
+    function = "STRFTIME"
+    template = "%(function)s('%%m', %(expressions)s)"
+    output_field = models.CharField()
 
 
 def get_base_context(request):
@@ -92,11 +57,70 @@ def get_base_context(request):
             profile_link = reverse('appointment:user_profile', args=[user.id])
     except StaffMember.DoesNotExist:
         pass
-
-    return {
+    base_context: dict[str, Any] = {
         'user': user,
         'profile_link': profile_link,
     }
+    return base_context
+
+
+def get_appointments_by_month():
+    monthly_counts = (
+        Appointment.objects
+        .annotate(month_str=Month("created_at"))
+        .values("month_str")
+        .annotate(count=Count("id"))
+    )
+    # convert '01', '02', ... to integers 1..12
+    monthly_counts_dict = {int(entry["month_str"]): entry["count"] for entry in monthly_counts}
+    book_me_by_month = [monthly_counts_dict.get(i, 0) for i in range(1, 13)]
+    return book_me_by_month
+
+
+def get_context(request):
+    base_context = get_base_context(request)  # Get the base context
+
+    requested_session = Appointment.objects.all()
+    last_10_book_me = Appointment.objects.all().order_by("-created_at")[:5]
+    last_10_invoices = Invoice.objects.all().order_by("-created_at")[:5]
+    photo_delivered = Photo.objects.all()
+    all_clients = UserClient.objects.filter(is_superuser=False)
+    contact_forms = ContactForm.objects.all()
+
+    current_month = datetime.datetime.now().month
+    appointments_by_month = Appointment.objects.annotate(month=TruncMonth('created_at')).filter(
+            created_at__month__in=[current_month, current_month - 1]
+    )
+    this_month = [a for a in appointments_by_month if a.created_at.month == current_month]
+    last_month = [a for a in appointments_by_month if a.created_at.month == current_month - 1]
+
+    this_month_count = len(this_month)
+    last_month_count = len(last_month)
+
+    if this_month_count == 0 and last_month_count == 0:
+        percentage = 0
+    elif last_month_count == 0:
+        percentage = 100
+    else:
+        percentage = ((this_month_count - last_month_count) / last_month_count) * 100
+
+    book_me_by_month = get_appointments_by_month()
+
+    # Update the base context with additional information
+    base_context.update({
+        'photo_delivered': photo_delivered,
+        'clients': all_clients,
+        'request_session': last_10_book_me,
+        'contact_forms': contact_forms,
+        'total_photos_delivered': photo_delivered.count(),
+        'total_clients': all_clients.count(),
+        'total_request_session': requested_session.count(),
+        'total_contact_forms': contact_forms.count(),
+        'increase_percentage': percentage,
+        'book_me_by_month': book_me_by_month,
+        'invoices': last_10_invoices,
+    })
+    return base_context
 
 
 def login_admin(request):
@@ -111,7 +135,7 @@ def login_admin(request):
         password = request.POST['password']
         user = authenticate(request, email=email, password=password)
         if user is not None:
-            if user.is_admin or user.is_staff:
+            if user.is_superuser or user.is_staff:
                 login(request, user)
                 print(f"User {user} with role admin/staff logged in")
                 return redirect('administration:index')
@@ -140,7 +164,7 @@ def admin_index(request):
 @login_required(login_url='/administration/login/')
 @user_passes_test(email_check, login_url='/administration/login/')
 def list_requested_user(request):
-    all_clients = UserClient.objects.filter(admin=False)
+    all_clients = UserClient.objects.filter(is_superuser=False)
     context = get_base_context(request)
     context.update({'clients': all_clients})
     return render(request, 'administration/list/list_user.html', context)
@@ -453,7 +477,7 @@ def send_photo_via_account(request, pk):
 @login_required(login_url='/administration/login/')
 @user_passes_test(email_check, login_url='/administration/login/')
 def send_photos_for_client_to_choose_from(request):
-    client_list = UserClient.objects.filter(staff=False).order_by('first_name')
+    client_list = UserClient.objects.filter(is_staff=False).order_by('first_name')
     c_print(f"client list: {client_list}")
     if request.method == 'POST':
         if is_ajax(request):

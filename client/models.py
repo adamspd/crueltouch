@@ -1,16 +1,9 @@
 # client/models.py
-import os
-from io import BytesIO
 
-import PIL
-from PIL import Image
-from PIL.ExifTags import TAGS
 from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import PermissionsMixin, User
-from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
 from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.timezone import now
@@ -62,117 +55,176 @@ class Photo(BasePhoto):
 
 
 class UserManager(BaseUserManager):
+    """
+    Custom user manager for UserClient model.
+    Uses email as the unique identifier instead of username.
+    """
 
-    def create_user(self, first_name, email, last_name=None, password=None, is_admin=False, is_staff=False,
-                    is_active=True):
+    def create_user(self, first_name, email, last_name=None, password=None,
+                    is_superuser=False, is_staff=False, is_active=True):
+        """
+        Creates and saves a regular User with the given email and password.
+        """
         if not email:
             raise ValueError(_('You must provide an email address'))
         if not first_name:
-            raise ValueError(_("User must have a firstname"))
-        user_obj = self.model(
-                email=self.normalize_email(email)
-        )
-        user_obj.last_name = last_name
-        user_obj.staff = is_staff
-        user_obj.admin = is_admin
-        user_obj.is_active = is_active
+            raise ValueError(_("User must have a first name"))
+
+        user_obj = self.model(email=self.normalize_email(email))
         user_obj.first_name = first_name
+        user_obj.last_name = last_name
+        user_obj.is_staff = is_staff
+        user_obj.is_superuser = is_superuser
+        user_obj.is_active = is_active
         user_obj.set_password(password)
         user_obj.save(using=self._db)
         return user_obj
 
     def create_staff_user(self, first_name, email, password, last_name=None):
-        user = self.create_user(first_name, email, last_name=last_name, password=password, is_staff=True)
+        """
+        Creates and saves a staff user.
+        """
+        user = self.create_user(
+                first_name=first_name,
+                email=email,
+                last_name=last_name,
+                password=password,
+                is_staff=True,
+                is_superuser=False
+        )
         return user
 
     def create_superuser(self, first_name, email, password, last_name=None):
-        user = self.create_user(first_name, email, last_name=last_name, password=password, is_staff=True, is_admin=True)
+        """
+        Creates and saves a superuser with full admin access.
+        """
+        user = self.create_user(
+                first_name=first_name,
+                email=email,
+                last_name=last_name,
+                password=password,
+                is_staff=True,
+                is_superuser=True
+        )
         return user
 
 
-class UserClient(AbstractBaseUser, PermissionsMixin, models.Model):
-    email = models.EmailField(max_length=255, unique=True, default="", help_text=_("A valid email address, please"))
-    first_name = models.CharField(max_length=255, default=None)
-    last_name = models.CharField(max_length=255, default=None, null=True, blank=True)
-    phone_number = models.CharField(max_length=18, blank=True, null=True, default="",
-                                    help_text=_("Phone number must not contain spaces, letters, parentheses or "
-                                                "dashes. It must contain 15 digits."))
-    address = models.CharField(max_length=255, blank=True, null=True, default="",
-                               help_text=_("Does not have to be specific, just the city and the state"))
+class UserClient(AbstractBaseUser, PermissionsMixin):
+    """
+    Custom user model for the crueltouch/tchiiz.
+    Uses email as the unique identifier instead of username.
 
-    is_active = models.BooleanField(default=True)  # can login
-    admin = models.BooleanField(default=False)  # superuser
-    staff = models.BooleanField(default=False)  # staff member
-    profile_photo = models.ForeignKey(Photo, on_delete=models.SET_NULL, null=True, blank=True,
-                                      related_name='user_clients')
+    Inherits from:
+    - AbstractBaseUser: Provides password hashing, last_login, is_active
+    - PermissionsMixin: Provides is_superuser, is_staff, groups, user_permissions
+    """
+    # Core user fields
+    email = models.EmailField(
+            max_length=255,
+            unique=True,
+            help_text=_("A valid email address")
+    )
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255, null=True, blank=True)
+
+    # Contact information
+    phone_number = models.CharField(
+            max_length=18,
+            blank=True,
+            null=True,
+            default="",
+            help_text=_("Phone number must not contain spaces, letters, parentheses or dashes. "
+                        "It must contain 15 digits.")
+    )
+    address = models.CharField(
+            max_length=255,
+            blank=True,
+            null=True,
+            default="",
+            help_text=_("Does not have to be specific, just the city and the state")
+    )
+
+    # App-specific fields
+    profile_photo = models.ForeignKey(
+            Photo,
+            on_delete=models.SET_NULL,
+            null=True,
+            blank=True,
+            related_name='user_clients'
+    )
     start_date = models.DateTimeField(default=now)
-    first_login = models.BooleanField(default=False)
+    first_login = models.BooleanField(
+            default=False,
+            help_text=_("If True, user must change password on next login")
+    )
 
+    # Required for a custom user model
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', ]
+    REQUIRED_FIELDS = ['first_name']
     objects = UserManager()
 
+    class Meta:
+        verbose_name = _('User')
+        verbose_name_plural = _('Users')
+
     def __str__(self):
-        return self.first_name
+        return self.get_full_name() or self.email
 
     def get_full_name(self):
-        # The user is identified by their Username ;)
-        return self.first_name if self.last_name is None else self.first_name + " " + self.last_name
+        """Returns the user's full name if possible, otherwise first name, last name, or email."""
+        if self.first_name and self.last_name:
+            return f'{self.first_name} {self.last_name}'
+        if self.first_name:
+            return self.first_name
+        if self.last_name:
+            return self.last_name
+        return self.email
 
     def get_short_name(self):
-        # The user is identified by their Username address
+        """Returns the user's first name."""
         return self.first_name
 
     def has_perm(self, perm, obj=None):
-        """Does the user have a specific permission?"""
-        # Simplest possible answer: Yes, always
-        return True
+        """
+        Does the user have a specific permission?
+        Superusers automatically have all permissions.
+        """
+        if self.is_superuser:
+            return True
+        return super().has_perm(perm, obj)
 
     def has_module_perms(self, app_label):
-        """Does the user have permissions to view the app `app_label`?"""
-        # Simplest possible answer: Yes, always
-        return True
+        """
+        Does the user have permissions to view the app `app_label`?
+        Superusers can view all apps.
+        """
+        if self.is_superuser:
+            return True
+        return super().has_module_perms(app_label)
 
+    # Password management
     def set_first_login(self):
+        """Mark that the user needs to change password on next login."""
         self.first_login = True
-        self.save()
+        self.save(update_fields=['first_login'])
 
     def set_not_first_login(self):
+        """Mark that the user has completed his first login password change."""
         self.first_login = False
-        self.save()
+        self.save(update_fields=['first_login'])
 
     @property
     def has_to_change_password(self):
+        """Returns True if user must change password before accessing the site."""
         return self.first_login
 
     def password_is_same(self, password):
-        # check if password is same as the one set
-        if self.password == make_password(password):
-            return True
-        return False
+        """Check if the provided password matches the user's current password."""
+        return self.password == make_password(password)
 
     def send_password_email(self):
+        """Send a password-reset email to the user."""
         send_password_reset_email(self.first_name, self.email)
-
-    @property
-    def is_staff(self):
-        """Is the user a member of staff?"""
-        return self.staff
-
-    @property
-    def is_admin(self):
-        """Is the user an admin member?"""
-        return self.admin
-
-    @property
-    def is_superuser(self):
-        """Is the user a superuser?"""
-        return self.admin
-
-    @property
-    def user_active(self):
-        """Is the user active / can he log in?"""
-        return self.is_active
 
 
 class Album(models.Model):

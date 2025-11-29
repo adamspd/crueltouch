@@ -50,7 +50,7 @@ class UserClientAdmin(admin.ModelAdmin):
     search_fields = ('first_name', 'last_name', 'email')
     list_filter = ('first_name', 'last_name', 'email')
     ordering = ('first_name',)
-    list_display = ('first_name', 'last_name', 'email', 'phone_number', 'is_active', 'is_staff', 'is_superuser')
+    list_display = ('first_name', 'last_name', 'email', 'phone_number', 'is_superuser')
 
 
 User = get_user_model()
