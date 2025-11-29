@@ -28,33 +28,14 @@ from xhtml2pdf import pisa
 
 from administration.forms import InvoiceAttachmentFormset, InvoiceForm, InvoiceServiceFormset, UserChangePasswordForm
 from administration.models import Invoice, InvoiceAttachment, PhotoClient, PhotoDelivery
-from client.forms import CreateAlbumForm, UpdateBook
-from client.models import Album as AlbumClient, BookMe, Photo, UserClient
+from client.forms import CreateAlbumForm
+from client.models import Album as AlbumClient, Photo, UserClient
 from crueltouch.productions import production_debug
 from homepage.models import Album as AlbumHomepage, Photo as PhotoHomepage
 from portfolio.models import Album as AlbumPortfolio, Photo as PhotoPortfolio
 from static_pages_and_forms.models import ContactForm
 from utils.crueltouch_utils import c_print, check_user_login, email_check, is_ajax, send_client_email, \
     work_with_file_photos
-
-
-def delete_all_book_me():
-    BookMe.objects.all().delete()
-
-
-def create_book_me():
-    for i in range(0, 120):
-        BookMe.objects.create(
-            full_name="roos",
-            email="adamspd.developer@gmail.com",
-            session_type="portrait",
-            place="studio",
-            package="35",
-            status="pending",
-            # last week
-            time_book_taken=datetime.datetime.now() - datetime.timedelta(days=90) + datetime.timedelta(hours=i * 12),
-        )
-
 
 def get_book_me_by_month():
     book_me_by_month = []
@@ -159,67 +140,11 @@ def admin_index(request):
 
 @login_required(login_url='/administration/login/')
 @user_passes_test(email_check, login_url='/administration/login/')
-def list_requested_session(request):
-    requested_session = BookMe.objects.all().order_by("-time_book_taken")
-    context = get_base_context(request)
-    context.update({'request_session': requested_session})
-    return render(request, 'administration/list/list_requested_session.html', context)
-
-
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
-def update_requested_session(request, pk):
-    book = BookMe.objects.get(id=pk)
-    form = UpdateBook(instance=book)
-    if request.method == 'POST':
-        form = UpdateBook(request.POST, instance=book)
-        if form.is_valid():
-            form.save()
-            next_ = request.POST.get('next', '/')
-            c_print("previous url is: ", next_)
-            return HttpResponseRedirect(next_)
-    context = get_base_context(request)
-    context.update({'form': form})
-    return render(request, 'administration/edit/update_requested_session.html', context)
-
-
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
-def delete_requested_session(request, pk):
-    try:
-        book = BookMe.objects.get(id=pk)
-        book.delete()
-        messages.success(request, "BookMe deleted successfully")
-    except BookMe.DoesNotExist:
-        messages.warning(request, "BookMe does not exist")
-    return redirect('administration:session_list')
-
-
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
 def list_requested_user(request):
     all_clients = UserClient.objects.filter(admin=False)
     context = get_base_context(request)
     context.update({'clients': all_clients})
     return render(request, 'administration/list/list_user.html', context)
-
-
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
-def send_late_booking_confirmation_email_to_users(request, pk):
-    try:
-        user = BookMe.objects.get(pk=pk)
-        if not user.get_if_email_was_sent_boolean():
-            sent = user.send_late_booking_confirmation_email()
-            if sent:
-                messages.success(request, _("Email sent successfully"))
-            else:
-                messages.warning(request, _("Email not sent"))
-        else:
-            messages.warning(request, _("Email already sent"))
-    except BookMe.DoesNotExist:
-        messages.warning(request, _("Session request does not exist"))
-    return redirect('administration:session_list')
 
 
 @login_required(login_url='/administration/login/')

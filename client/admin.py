@@ -2,7 +2,7 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 
-from client.models import Album, BookMe, OwnerProfilePhoto, Photo, UserClient
+from client.models import Album, OwnerProfilePhoto, Photo, UserClient
 
 
 # class InlinePhoto(admin.TabularInline):
@@ -44,13 +44,6 @@ from client.models import Album, BookMe, OwnerProfilePhoto, Photo, UserClient
 #
 #
 
-class BookMeConfig(admin.ModelAdmin):
-    model = BookMe
-    search_fields = ('full_name', 'email', 'time_book_taken')
-    list_filter = ('time_book_taken', 'full_name', 'status', 'package')
-    ordering = ('-time_book_taken',)
-    list_display = ('full_name', 'time_book_taken', 'package', 'session_type', 'place')
-
 
 @admin.register(UserClient)
 class UserClientAdmin(admin.ModelAdmin):
@@ -61,7 +54,6 @@ class UserClientAdmin(admin.ModelAdmin):
 
 
 User = get_user_model()
-admin.site.register(BookMe, BookMeConfig)
 admin.site.register(Album)
 admin.site.register(Photo)
 admin.site.register(OwnerProfilePhoto)
