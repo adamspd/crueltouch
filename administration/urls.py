@@ -5,12 +5,6 @@ from .views import *
 
 app_name = 'administration'
 
-session_patterns = [
-    path('list/', list_requested_session, name='session_list'),
-    path('update/<int:pk>/', update_requested_session, name='session_update'),
-    path('delete/<int:pk>/', delete_requested_session, name='session_delete'),
-]
-
 user_patterns = [
     path('list/', list_requested_user, name='user_list'),
     # /administration/users/creation/
@@ -26,7 +20,6 @@ user_patterns = [
 message_patterns = [
     path('list/', list_contact_form, name='message_list'),
     path('delete/<int:pk>/', delete_contact_form, name='message_delete'),
-    path('send-reply/<int:pk>/', send_late_booking_confirmation_email_to_users, name='send_email'),
     path('send-invoice/<str:invoice_number>/', send_invoice_to_client, name='send_invoice'),
 ]
 
@@ -48,8 +41,6 @@ urlpatterns = [
     path('login/', login_admin, name='login'),
     # /administration/
     path('', admin_index, name='index'),
-    # /administration/session/
-    path('session/', include(session_patterns)),
     # /administration/users/
     path('users/', include(user_patterns)),
     # /administration/messages/

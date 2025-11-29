@@ -1,20 +1,20 @@
 # client/views.py
+from appointment.models import Appointment
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth import get_user_model
+from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView
-# from validate_email import validate_email
 
-from client.models import UserClient, BookMe, Album, Photo
+from client.models import Album, Photo, UserClient
 from static_pages_and_forms.models import ContactForm
-from utils.crueltouch_utils import c_print, check_user_login, check, is_ajax
-from .form import CustomRegisterForm, BookME
+from utils.crueltouch_utils import c_print, check, check_user_login, is_ajax
+from .forms import RegistrationForm
+
+# from validate_email import validate_email
 
 User = get_user_model()
 
@@ -23,7 +23,7 @@ User = get_user_model()
 # Registering and login
 def register_page(request):
     if request.method == 'POST':
-        form = CustomRegisterForm(request.POST)
+        form = RegistrationForm(request.POST)
         email = request.POST['email']
         # Must check if email is valid.
         # c_print(f"email: {email}")
@@ -41,7 +41,7 @@ def register_page(request):
             messages.success(request, 'Account was created for ' + user)
             return redirect('client:login')
     else:
-        form = CustomRegisterForm()
+        form = RegistrationForm()
     contexts = {'form': form}
     return render(request, 'client/login_registration/register.html', contexts)
 
@@ -59,7 +59,7 @@ def login_page(request):
                 return redirect("administration:must_change_password", user.pk)
 
             # Redirect based on user type
-            if user.is_admin or user.is_staff:
+            if user.is_superuser or user.is_staff:
                 return redirect('administration:index')
             else:
                 return redirect('client:client_homepage')
@@ -73,7 +73,7 @@ def login_page(request):
                 return redirect("administration:must_change_password", request.user.pk)
 
             # Redirect based on the user type
-            if request.user.is_admin or request.user.is_staff:
+            if request.user.is_superuser or request.user.is_staff:
                 return redirect('administration:index')
             else:
                 return redirect('client:client_homepage')
@@ -155,7 +155,7 @@ def email_check(user):
 
 
 def context(request):
-    all_booked = BookMe.objects.all()
+    all_booked = Appointment.objects.all()
     all_photos = Photo.objects.all()
     all_clients = UserClient.objects.all()
     all_contacts = ContactForm.objects.all()
@@ -196,102 +196,6 @@ def logout_user(request):
             logout(request)
             return redirect('client:login')
     return redirect('client:register')
-
-
-# ----------- Booking ----------- #d
-def book_me(request):
-    return form_book_me(request)
-
-
-def book_me_session(request, click_id):
-    if click_id == 1:
-        request.session['click_id'] = click_id
-        request.session['location'] = "orlando"
-        request.session['package'] = "3"
-    elif click_id == 2:
-        request.session['click_id'] = click_id
-        request.session['package'] = "7"
-    elif click_id == 3:
-        request.session['click_id'] = click_id
-        request.session['package'] = "15"
-    elif click_id == 4:
-        request.session['click_id'] = click_id
-        request.session['package'] = "30"
-    return form_book_me(request)
-
-
-def form_book_me(request_client):
-    if request_client.method == 'POST':
-        form = BookME(request_client.POST)
-        c_print(f"form is valid: {form.is_valid()}")
-        c_print(f"form errors: {form.errors}")
-        if form.is_valid():
-            c_print(f"client.views:222 | data from form: {form.cleaned_data}")
-            full_name = form.cleaned_data['full_name']
-            email = form.cleaned_data['email']
-            session_type = form.cleaned_data['session_type']
-            place = form.cleaned_data['place']
-            package = form.cleaned_data['package']
-            desired_date = form.cleaned_data['desired_date']
-            address = form.cleaned_data['address']
-            phone_number = form.cleaned_data['phone_number']
-            c_print(
-                f"client.views:232 | data from form: {full_name}, {email}, {session_type}, {place}, {package}, "
-                f"{desired_date}, {address}, {phone_number}")
-            if check(full_name):
-                messages.error(request_client, "Form not valid, try again !")
-                return redirect('client:book_me')
-            # validate email exists in real world
-            valid = True
-            # valid = validate_email(email)
-            # valid = True
-            c_print(f"client.views:230 | email is valid: {valid}")
-            if not valid:
-                messages.error(request_client, 'Email is not valid')
-                return redirect('client:book_me')
-            obj = BookMe.objects.create(
-                full_name=full_name,
-                email=email,
-                session_type=session_type,
-                place=place,
-                package=package,
-                desired_date=desired_date,
-                address=address,
-                phone_number=phone_number,
-            )
-            obj.save()
-            c_print(f"client.views:263 | object saved: {obj}")
-            messages.success(request_client,
-                             _('Thank you, your booking has been registered successfully, you will receive an email '
-                               'shortly!'))
-            return redirect('client:book_me')
-    else:
-        if request_client.session.get('click_id') == 1:
-            form = BookME(initial={'place': request_client.session.get('location'),
-                                   'package': request_client.session.get('package')})
-            clear_session(request_client)
-        elif request_client.session.get('click_id') == 2:
-            form = BookME(initial={'package': request_client.session.get('package')})
-            clear_session(request_client)
-        elif request_client.session.get('click_id') == 3:
-            form = BookME(initial={'package': request_client.session.get('package')})
-            clear_session(request_client)
-        elif request_client.session.get('click_id') == 4:
-            form = BookME(initial={'package': request_client.session.get('package')})
-            clear_session(request_client)
-            # clear session
-        else:
-            form = BookME()
-    contexts = {'form': form}
-    return render(request_client, 'client/booking_and_promotions/bookme.html', contexts)
-
-
-def clear_session(request):
-    request.session.clear()
-
-
-def book_anyway(request):
-    return form_book_me(request)
 
 
 # ----------- Payment ----------- #

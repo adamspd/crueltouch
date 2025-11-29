@@ -21,8 +21,6 @@ def index(request):
         album2 = []
 
     if album1 != [] or album2 != []:
-        change_file_format(album1)
-        change_file_format(album2)
         list_of_album1 = list(album1)
         list_of_album2 = list(album2)
         random.shuffle(list_of_album1)
@@ -36,11 +34,6 @@ def index(request):
         'album2': list_of_album2
     }
     return render(request, 'homepage/index.html', context)
-
-
-def change_file_format(list_of_photo: list[Photo]):
-    for photo in list_of_photo:
-        photo.change_file_format()
 
 
 class AboutView(generic.ListView):
