@@ -1,3 +1,4 @@
+# portfolio/views.py
 import random
 
 from django.shortcuts import render
