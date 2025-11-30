@@ -1,17 +1,100 @@
-{% extends 'client/client_view/base.html' %}
+{% extends 'client/client_view/base_dashboard.html' %}
 {% load static %}
-{% block title %}TCHIIZ | Dashboard{% endblock %}
 
 {% block body %}
-    {% if album %}
-        <h2 class="alert-info" id="info" style="text-align: center; margin-top: auto">
-            Hi, {{ user.first_name }}. You have {{ album.get_photos_count }} new photos.</h2>
-        <div class="alert-warning" style="text-align: center; font-size: medium">
-            Click  <a href="{% url 'client:album_details' album.id %}">here</a> </div>
-    {% else %}
-        <h2 class="alert-info" id="info" style="text-align: center; margin-top: auto">
-            Hi, {{ user.first_name }}. You don't have any photos uploaded yet.</h2>
-        <div class="alert-warning" style="text-align: center; font-size: medium">
-            Wanna book me ? Click <a href="{% url 'homepage:services_offered' %}">here</a> </div>
-    {% endif %}
-{% endblock body %}
+    <div class="page-header">
+        <div class="welcome-text">
+            <h1>Hello, {{ user.first_name }}</h1>
+            <p>Here is what's happening with your sessions.</p>
+        </div>
+        <a href="{% url 'homepage:services_offered' %}" class="btn btn-primary">
+            <i class="fas fa-plus" style="margin-right: 8px;"></i> New Booking
+        </a>
+    </div>
+
+    <div class="card-grid">
+        <div class="card">
+            <div class="card-title">
+                Gallery Status
+                <i class="fas fa-camera" style="color: var(--accent);"></i>
+            </div>
+
+            {% if album %}
+                <div class="stat-row">
+                    <div class="stat-item">
+                        <span class="val">{{ total_photos }}</span>
+                        <span class="label">Total Photos</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="val" style="color: var(--danger);">{{ favorite_photos }}</span>
+                        <span class="label">Favorites</span>
+                    </div>
+                </div>
+                <div style="margin-top: 1.5rem;">
+                    <a href="{% url 'client:album_details' album.id %}" class="btn btn-outline" style="width: 100%;">
+                        View Gallery
+                    </a>
+                </div>
+            {% else %}
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">No photos available yet.</p>
+                <div style="background: #fffbeb; color: #92400e; padding: 0.5rem; font-size: 0.9rem; border-radius: 4px;">
+                    Book a session to get started.
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <div class="card-title">
+                My Profile
+                <a href="{% url 'client:edit_profile' %}" style="font-size: 0.8rem; color: var(--accent);">Edit</a>
+            </div>
+            <ul style="font-size: 0.95rem; line-height: 2;">
+                <li><i class="fas fa-user" style="width: 20px; color: #ccc;"></i> {{ user.get_full_name }}</li>
+                <li><i class="fas fa-envelope" style="width: 20px; color: #ccc;"></i> {{ user.email }}</li>
+                <li><i class="fas fa-phone"
+                       style="width: 20px; color: #ccc;"></i> {{ user.phone_number|default:"No phone" }}</li>
+                <li><i class="fas fa-map-marker-alt"
+                       style="width: 20px; color: #ccc;"></i> {{ user.address|default:"No address" }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Recent Bookings</div>
+        {% if bookings %}
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Service</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for booking in bookings %}
+                        <tr>
+                            <td>{{ booking.created_at|date:"M d, Y" }}</td>
+                            <td>{{ booking.service|default:"Photo Session" }}</td>
+                            <td>
+                                <span style="padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; background: #eee;">
+                                    {{ booking.status|default:"Pending" }}
+                                </span>
+                            </td>
+                            <td>
+                                <a href="#" style="color: var(--text-muted); font-size: 0.9rem;">Details</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                <i class="far fa-calendar-alt" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                <p>No past bookings found.</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,39 +1,29 @@
 # client/urls.py
-from django.urls import path, re_path
-
-from .views import *
+from django.urls import path
+from . import views
 
 app_name = 'client'
 
 urlpatterns = [
-    # client/
-    path('login/', login_page, name='login'),
+    # --- Dashboard & Core ---
+    path('', views.index, name='client_homepage'),
 
-    # client/register/
-    path('register/', register_page, name='register'),
+    # --- Authentication ---
+    path('register/', views.register_page, name='register'),
+    path('login/', views.login_page, name='login'),
+    path('logout/', views.logout_user, name='logout'),
 
-    # log out/
-    path('logout/', logout_user, name='logout'),
+    # --- Profile Management ---
+    path('profile/edit/', views.edit_profile, name='edit_profile'),
+    path('profile/change-password/', views.change_password, name='change_password'),
 
-    # client album details
-    re_path(r'^(?P<pk>\d+)/$', user_album_details, name='album_details'),
+    # --- Album & Photos ---
+    # Moved to bottom to prevent ID collision with other text-based paths
+    # Replaced re_path regex with modern <int:pk> converter
+    path('<int:pk>/', views.user_album_details, name='album_details'),
+    path('toggle-favorite/', views.toggle_favorite, name='toggle_favorite'),
 
-    # favorite
-    re_path(r'^favorite/$', favorite, name='favorite'),
-    re_path(r'^dislike/$', dislike, name='dislike'),
-
-    # # client details
-    # re_path(r'^(?P<pk>\d+)/$', user_details, name='user_details'),
-    #
-    # # Add photo for clients
-    # path('addphotos/<str:pk>/', add_photos, name="add_photos"),
-
-    # Schedule time with me
-    path('paynow/', paynow, name="paynow"),
-
-    # Success page
-    path('success/', success_payment, name="success_payment"),
-
-    # client/clientID/
-    path('', index, name='client_homepage'),
+    # --- Commerce/Booking ---
+    path('paynow/', views.paynow, name="paynow"),
+    path('success/', views.success_payment, name="success_payment"),
 ]

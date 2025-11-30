@@ -48,29 +48,6 @@ def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 
-def check_user_login(request):
-    """
-    :author: Adams Pierre David
-    :version: 1.0
-    :param request: request
-    :return: Check request's meta to determine if it's ajax
-    """
-    if request.user.is_authenticated:
-        user = request.user
-        if user.is_superuser or user.is_staff:
-            return 'admin'
-        elif user.is_active:
-            return 'active'
-    return 'anonymous'
-
-
-def email_check(user):
-    if user.is_superuser or user.is_staff:
-        return True
-    else:
-        return False
-
-
 def send_session_request_received_email(email_address, full_name: str, session_type: str, place: str, package: str,
                                         status: str, total: str, estimated_response_time: str, subject: str,
                                         late: bool) -> bool:
@@ -83,7 +60,7 @@ def send_session_request_received_email(email_address, full_name: str, session_t
     :param package: session package
     :param status: session status
     :param total: session total estimated cost
-    :param estimated_response_time: estimated response time
+    :param estimated_response_time: estimated response timecheck_user_login
     :param subject: email subject
     :param late: bool, if the request is late
     :return: bool

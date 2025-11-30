@@ -9,7 +9,8 @@
     <li>
         <a href="{% url 'client:client_homepage' %}" style="color:green">Hello, {{ user.first_name }}</a>
         <ul class="sub-menu">
-            <li><a href="{% url 'reset_password' %}">{% trans "Change password" %}</a></li>
+            <li><a href="{% url 'client:edit_profile' %}">{% trans "Edit Profile" %}</a></li>
+            <li><a href="{% url 'client:change_password' %}">{% trans "Change Password" %}</a></li>
             <li><a href="{% url 'client:logout' %}" style="color:darkred">LOGOUT</a></li>
         </ul>
     </li>

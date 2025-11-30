@@ -1,6 +1,5 @@
 # administration/views.py
 import datetime
-import glob
 import os
 import zipfile
 from io import BytesIO
@@ -10,15 +9,15 @@ from typing import Any
 import PyPDF2
 from PyPDF2.constants import UserAccessPermissions
 from appointment.models import Appointment, StaffMember
-from cryptography import x509
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import serialization
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.db import models
+from django.db.models import Count, Func
+from django.db.models.functions import TruncMonth
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import get_template
@@ -28,18 +27,15 @@ from django.views.decorators.http import require_POST
 # from endesive import pdf as endesive_pdf
 from xhtml2pdf import pisa
 
-from administration.forms import InvoiceAttachmentFormset, InvoiceForm, InvoiceServiceFormset, UserChangePasswordForm
-from administration.models import Invoice, InvoiceAttachment, PhotoClient, PhotoDelivery
+from administration.forms import UserChangePasswordForm
+from administration.models import Invoice, PhotoClient, PhotoDelivery
 from client.forms import CreateAlbumForm
 from client.models import Album as AlbumClient, Photo, UserClient
 from crueltouch.productions import production_debug
 from homepage.models import Album as AlbumHomepage, Photo as PhotoHomepage
 from portfolio.models import Album as AlbumPortfolio, Photo as PhotoPortfolio
 from static_pages_and_forms.models import ContactForm
-from utils.crueltouch_utils import c_print, check_user_login, email_check, is_ajax, send_client_email
-
-from django.db.models import Count, Func
-from django.db.models.functions import TruncMonth
+from utils.crueltouch_utils import c_print, is_ajax, send_client_email
 
 
 class Month(Func):
@@ -124,36 +120,46 @@ def get_context(request):
 
 
 def login_admin(request):
+    """
+    Admin/staff login view.
+    Regular clients should use the client login page.
+    """
+    # If already authenticated, route them correctly
     if request.user.is_authenticated:
-        resp = check_user_login(request)
-        if resp == "admin" or resp == "staff":
+        if request.user.is_superuser or request.user.is_staff:
             return redirect('administration:index')
-        elif resp == "active":
-            return redirect('client:client_homepage')
+        # Regular client trying to access admin? Kick them out
+        return redirect('client:client_homepage')
+
+    # Handle login POST
     if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        if not email or not password:
+            messages.error(request, "Email and password are required")
+            return render(request, 'client/login_registration/log_as_owner.html')
+
         user = authenticate(request, email=email, password=password)
-        if user is not None:
-            if user.is_superuser or user.is_staff:
-                login(request, user)
-                print(f"User {user} with role admin/staff logged in")
-                return redirect('administration:index')
-        else:
-            # Return an 'invalid login' error message.
-            messages.info(request, "")
-    else:
-        if request.user.is_authenticated:
-            c_print(f"user is authenticated {request.user}, {request.user.is_staff}")
-            if request.user.is_staff:
-                c_print(f"user is superuser {request.user}")
-                return redirect('administration:index')
-    contexts = {}
-    return render(request, 'client/login_registration/log_as_owner.html', contexts)
+
+        if user is None:
+            messages.error(request, "Invalid credentials")
+            return render(request, 'client/login_registration/log_as_owner.html')
+
+        # User exists but not admin/staff
+        if not (user.is_superuser or user.is_staff):
+            messages.error(request, "Access denied. Admin/staff only.")
+            return render(request, 'client/login_registration/log_as_owner.html')
+
+        # Valid admin/staff login
+        login(request, user)
+        return redirect('administration:index')
+
+    # GET request - show login form
+    return render(request, 'client/login_registration/log_as_owner.html')
 
 
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
+@staff_member_required(login_url='/administration/login/')
 def admin_index(request):
     if request.user.has_to_change_password:
         return redirect('administration:must_change_password', pk=request.user.id)
@@ -161,8 +167,7 @@ def admin_index(request):
     return render(request, 'administration/view/index.html', context)
 
 
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
+@staff_member_required(login_url='/administration/login/')
 def list_requested_user(request):
     all_clients = UserClient.objects.filter(is_superuser=False)
     context = get_base_context(request)
@@ -170,8 +175,7 @@ def list_requested_user(request):
     return render(request, 'administration/list/list_user.html', context)
 
 
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
+@staff_member_required(login_url='/administration/login/')
 def list_contact_form(request):
     contact_forms = ContactForm.objects.all()
     context = get_base_context(request)
@@ -179,8 +183,7 @@ def list_contact_form(request):
     return render(request, 'administration/list/list_contact_forms.html', context)
 
 
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
+@staff_member_required(login_url='/administration/login/')
 def delete_contact_form(request, pk):
     try:
         contact_form = ContactForm.objects.get(id=pk)
@@ -192,15 +195,13 @@ def delete_contact_form(request, pk):
         return redirect('administration:message_list')
 
 
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
+@staff_member_required(login_url='/administration/login/')
 def help_view(request):
     context = get_base_context(request)
     return render(request, 'administration/view/help.html', context)
 
 
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
+@staff_member_required(login_url='/administration/login/')
 def add_photos_homepage(request):
     if request.user.is_authenticated:
         albums = AlbumHomepage.objects.all()
@@ -209,8 +210,8 @@ def add_photos_homepage(request):
             images = request.FILES.getlist("images_homepage")
             for image in images:
                 PhotoHomepage.objects.create(
-                    album_id=data['row'],
-                    file=image
+                        album_id=data['row'],
+                        file=image
                 )
 
             redirect('administration:index')
@@ -227,8 +228,7 @@ def add_photos_homepage(request):
         return redirect('administration:login')
 
 
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
+@staff_member_required(login_url='/administration/login/')
 def add_photos_portfolio(request):
     if request.user.is_authenticated:
         albums = AlbumPortfolio.objects.all()
@@ -239,8 +239,8 @@ def add_photos_portfolio(request):
             c_print(f"images: {images}")
             for image in images:
                 pc = PhotoPortfolio.objects.create(
-                    album_id=data['row'],
-                    file=image
+                        album_id=data['row'],
+                        file=image
                 )
                 c_print(f"photo created: {pc}")
 
@@ -258,8 +258,7 @@ def add_photos_portfolio(request):
         return redirect('administration:login')
 
 
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
+@staff_member_required(login_url='/administration/login/')
 def add_album_portfolio(request):
     if request.method == 'POST':
         form = CreateAlbumForm(request.POST)
@@ -275,8 +274,7 @@ def add_album_portfolio(request):
     return render(request, 'administration/add/add_album.html', context)
 
 
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
+@staff_member_required(login_url='/administration/login/')
 def list_photos_portfolio(request):
     photos = PhotoPortfolio.objects.all()
     context = get_base_context(request)
@@ -289,8 +287,7 @@ def list_photos_portfolio(request):
     return render(request, 'administration/list/list_photos_portfolio.html', context)
 
 
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
+@staff_member_required(login_url='/administration/login/')
 def list_photos_homepage(request):
     photos = PhotoHomepage.objects.all()
     context = get_base_context(request)
@@ -303,8 +300,7 @@ def list_photos_homepage(request):
     return render(request, 'administration/list/list_photos_portfolio.html', context)
 
 
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
+@staff_member_required(login_url='/administration/login/')
 def delete_photo_portfolio(request, pk):
     try:
         photo = PhotoPortfolio.objects.get(id=pk)
@@ -316,8 +312,7 @@ def delete_photo_portfolio(request, pk):
         return redirect('administration:list_photos_portfolio')
 
 
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
+@staff_member_required(login_url='/administration/login/')
 def delete_photo_homepage(request, pk):
     try:
         photo = PhotoHomepage.objects.get(id=pk)
@@ -329,8 +324,7 @@ def delete_photo_homepage(request, pk):
         return redirect('administration:list_photos_homepage')
 
 
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
+@staff_member_required(login_url='/administration/login/')
 def create_downloadable_file(request):
     if request.method == 'POST':
         if is_ajax(request):
@@ -371,8 +365,7 @@ def create_downloadable_file(request):
     return render(request, 'administration/add/add_downloadable_file.html', context)
 
 
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
+@staff_member_required(login_url='/administration/login/')
 def list_downloadable_files_link(request):
     deliveries = PhotoDelivery.objects.all()
     context = get_base_context(request)
@@ -423,8 +416,7 @@ def download_zip(request, id_delivery):
     return resp
 
 
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
+@staff_member_required(login_url='/administration/login/')
 def delete_delivery(request, pk):
     try:
         delivery = PhotoDelivery.objects.get(pk=pk)
@@ -436,8 +428,7 @@ def delete_delivery(request, pk):
         return redirect('administration:show_all_links_created')
 
 
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
+@staff_member_required(login_url='/administration/login/')
 def send_photo_via_account(request, pk):
     # try:
     #     photo = PhotoClient.objects.get(id=pk)
@@ -474,63 +465,83 @@ def send_photo_via_account(request, pk):
     return render(request, 'administration/add/add_downloadable_file.html', context)
 
 
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
+@staff_member_required(login_url='/administration/login/')
 def send_photos_for_client_to_choose_from(request):
-    client_list = UserClient.objects.filter(is_staff=False).order_by('first_name')
-    c_print(f"client list: {client_list}")
-    if request.method == 'POST':
-        if is_ajax(request):
-            client = request.POST.get("client")
-            files = request.FILES.getlist("id_photo")
-            next_ = request.POST.get('next', '/')
-            # get client name
-            user_client = UserClient.objects.get(id=client)
-            # get client album if exists
-            try:
-                client_album = AlbumClient.objects.get(owner=client)
-            except AlbumClient.DoesNotExist:
-                client_album = AlbumClient.objects.create(owner=user_client)
-                # create a set of PhotoClient objects
-            photos = []
-            for file in files:
-                f = work_with_file_photos(file)
-                photo = Photo.objects.create(file=f)
-                photos.append(photo)
-            client_album.save()
-            # if client album already has photos, add new photos to it
-            if client_album.photos.all():
-                client_album.photos.add(*photos)
-            else:
-                client_album.photos.set(photos)
-            client_album.save()
-            if production_debug:
-                button_link = f"http://localhost:8000/client/{client_album.id}"
-            else:
-                button_link = f"https://tchiiz.com/client/{client_album.id}"
-            # notify client
-            send_client_email(
-                email_address=user_client.email, subject="New images were uploaded for you to choose from",
-                header="New images were uploaded for you to choose from",
-                message=f"Hello {user_client.first_name}, we uploaded new photos for you to choose from! If this will "
-                        f"be your first login, your password is 'Crueltouch2022' without the quote.",
-                footer="Thank you for using our service ! The Tchiiz Team",
-                is_contact_form=False, is_other=True, button_label="Click on the button below to do so",
-                button_text="Choose photos", button_link=button_link
-            )
+    """
+    Upload photos for a client to review and select favorites.
+    Creates an album for the client if they don't have one.
+    """
+    client_list = UserClient.objects.filter(is_staff=False, is_superuser=False).order_by('first_name')
 
-            c_print(f"client: {user_client}", f"photos: {files}", f"next: {next_}", f"client album: {client_album}")
+    if request.method == 'POST':
+        client_id = request.POST.get("client")
+        files = request.FILES.getlist("id_photo")
+
+        if not client_id:
+            messages.error(request, "Please select a client")
+            return redirect('administration:send_photos_for_client_to_choose_from')
+
+        if not files:
+            messages.error(request, "Please select at least one photo")
+            return redirect('administration:send_photos_for_client_to_choose_from')
+
+        try:
+            user_client = UserClient.objects.get(id=client_id)
+        except UserClient.DoesNotExist:
+            messages.error(request, "Client not found")
+            return redirect('administration:send_photos_for_client_to_choose_from')
+
+        # Get or create client album
+        client_album, created = AlbumClient.objects.get_or_create(
+                owner=user_client,
+                defaults={'is_active': True}
+        )
+
+        # Create photos and add to album
+        photos = []
+        for file in files:
+            photo = Photo.objects.create(file=file)
+            photos.append(photo)
+
+        # Add photos to album
+        client_album.photos.add(*photos)
+
+        # Build the link to the album
+        album_url = request.build_absolute_uri(
+                reverse('client:album_details', args=[client_album.id])
+        )
+
+        # Send notification email
+        send_client_email(
+                email_address=user_client.email,
+                subject="New photos available for review",
+                header="New Photos Available",
+                message=f"Hello {user_client.first_name},\n\n"
+                        f"We've uploaded {len(photos)} new photo{'s' if len(photos) > 1 else ''} for you to review!\n\n"
+                        f"Log in to view and select your favorites.",
+                footer="Thank you! - The Tchiiz Team",
+                is_contact_form=False,
+                is_other=True,
+                button_label="View Your Photos",
+                button_text="View Photos",
+                button_link=album_url
+        )
+
+        messages.success(
+                request,
+                f"Successfully uploaded {len(photos)} photos for {user_client.get_full_name()}"
+        )
+        return redirect('administration:index')
 
     context = get_base_context(request)
     context.update({
-        'title': _("Send photos to client"),
+        'title': "Send Photos to Client",
         'client_list': client_list,
     })
     return render(request, 'administration/add/add_client_photos.html', context)
 
 
-@login_required(login_url='/administration/login/')
-@user_passes_test(email_check, login_url='/administration/login/')
+@staff_member_required(login_url='/administration/login/')
 def create_new_client(request):
     previous = request.META.get('HTTP_REFERER')
     if request.method == 'POST':
@@ -589,7 +600,7 @@ def must_change_password(request, pk):
 
 
 @login_required(login_url="/administration/login/")
-@user_passes_test(email_check, login_url='/administration/login/')
+@staff_member_required(login_url='/administration/login/')
 def view_client_album_created(request):
     album = AlbumClient.objects.all()
     context = get_base_context(request)
@@ -601,7 +612,7 @@ def view_client_album_created(request):
 
 
 @login_required(login_url="/administration/login/")
-@user_passes_test(email_check, login_url='/administration/login/')
+@staff_member_required(login_url='/administration/login/')
 def view_all_liked_photos(request, pk):
     album = AlbumClient.objects.get(pk=pk)
     context = get_base_context(request)
@@ -616,7 +627,7 @@ def view_all_liked_photos(request, pk):
 
 
 @login_required(login_url="/administration/login/")
-@user_passes_test(email_check, login_url='/administration/login/')
+@staff_member_required(login_url='/administration/login/')
 def delete_client_album(request, pk):
     album = AlbumClient.objects.get(pk=pk)
     album.delete_files()
@@ -657,7 +668,7 @@ def get_client_emails(request):
     query = request.GET.get('query', '')
     clients = UserClient.objects.filter(email__icontains=query).values('email', 'first_name', 'last_name',
                                                                        'phone_number', 'address')[
-              :5]  # Limit to 5 results for example
+        :5]  # Limit to 5 results for example
     client_list = list(clients)
     return JsonResponse(client_list, safe=False)
 
@@ -702,9 +713,9 @@ def handle_client_data(form_data):
     client_address = form_data['client_address']
 
     client, created = UserClient.objects.get_or_create(
-        email=client_email,
-        defaults={'first_name': first_name, 'last_name': last_name, 'phone_number': client_phone,
-                  'address': client_address}
+            email=client_email,
+            defaults={'first_name': first_name, 'last_name': last_name, 'phone_number': client_phone,
+                      'address': client_address}
     )
 
     if not created:
@@ -730,7 +741,7 @@ def handle_client_data(form_data):
 
 
 # @login_required(login_url="/administration/login/")
-# @user_passes_test(email_check, login_url='/administration/login/')
+# @staff_member_required(login_url='/administration/login/')
 # def invoice_form2(request):
 #     if request.method == 'POST':
 #         form = InvoiceForm(request.POST, request.FILES)
@@ -875,7 +886,7 @@ def update_invoice_status(request, invoice_number):
 
 
 # @login_required(login_url="/administration/login/")
-# @user_passes_test(email_check, login_url='/administration/login/')
+# @staff_member_required(login_url='/administration/login/')
 # def generate_and_process_invoice(request, invoice_number):
 #     os.makedirs("media/invoices", exist_ok=True)
 #     invoice = Invoice.objects.get(invoice_number=invoice_number)

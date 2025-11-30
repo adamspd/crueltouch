@@ -1,0 +1,357 @@
+:root {
+    --primary: #111;
+    --accent: #2563eb;
+    --success: #16a34a;
+    --danger: #dc2626;
+    --bg-light: #f3f4f6;
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+    --sidebar-width: 260px;
+    --header-height: 60px;
+}
+
+/* --- Reset & Base --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg-light);
+    color: var(--text-main);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+/* --- Layout Grid --- */
+.dashboard-layout {
+    display: grid;
+    grid-template-columns: var(--sidebar-width) 1fr;
+    min-height: 100vh;
+}
+
+.mobile-header {
+    display: none; /* Default hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    z-index: 1000;
+}
+
+.mobile-toggle {
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    background: none;
+    border: none;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    background: white;
+    border-right: 1px solid #e5e7eb;
+    padding: 2rem;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    z-index: 999;
+    transition: transform 0.3s ease;
+}
+
+.brand {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    display: block;
+    letter-spacing: -1px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 6px;
+    color: var(--text-muted);
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.nav-link:hover, .nav-link.active {
+    background: var(--bg-light);
+    color: var(--primary);
+}
+
+.nav-link i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+/* --- Main Content --- */
+.main-content {
+    padding: 2rem;
+    max-width: 1400px;
+    width: 100%;
+}
+
+.page-header {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping */
+    gap: 1rem;
+}
+
+/* Fluid Typography: minimal 1.2rem, preferred 4vw, max 1.8rem */
+.welcome-text h1 {
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.welcome-text p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* --- Cards --- */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e5e7eb;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* --- Stats --- */
+.stat-row {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.stat-item .val {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.stat-item .label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* --- Tables --- */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+th {
+    text-align: left;
+    padding: 1rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    border-bottom: 2px solid var(--bg-light);
+}
+
+td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--bg-light);
+}
+
+/* --- Buttons --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.25rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+    font-size: 0.9rem;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-outline {
+    border: 1px solid #d1d5db;
+    background: transparent;
+    color: var(--text-main);
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* --- Overlay for Mobile Sidebar --- */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 900;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* --- Forms --- */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border 0.2s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* --- Alerts --- */
+.alert {
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.alert-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.alert-success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+/* --- Mobile --- */
+
+@media (max-width: 768px) {
+    .dashboard-layout {
+        grid-template-columns: 1fr; /* Sidebar is gone from grid */
+        padding-top: var(--header-height); /* Push content down */
+    }
+
+    .mobile-header {
+        display: flex;
+    }
+
+    /* Show header */
+    /* Slide-out sidebar */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 80%;
+        max-width: 300px;
+        transform: translateX(-100%); /* Hide off-screen */
+        border-right: 1px solid #eee;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        /* Add padding top 3rem, then rest 2rem */
+        padding-top: 3.5rem;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    /* Slide in */
+    .sidebar .brand {
+        margin-top: 1rem;
+    }
+
+    /* Adjust spacing inside sidebar */
+    .main-content {
+        padding: 1.5rem 1rem;
+    }
+
+    /* Header Stacking: At <500px, stack text and button */
+    @media (max-width: 500px) {
+        .page-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .btn-primary {
+            width: 100%;
+        }
+
+        /* Make button full width on tiny screens */
+    }
+}
