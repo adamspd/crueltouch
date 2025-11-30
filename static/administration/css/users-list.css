@@ -1,0 +1,388 @@
+/* Users/Clients List Styling */
+
+.client-count-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    padding: 0.25rem 0.65rem;
+    background: #0891b2;
+    color: white;
+    border-radius: 16px;
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+.clients-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.client-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.client-card:hover {
+    background: #fafafa;
+    border-color: #0891b2;
+    box-shadow: 0 2px 8px rgba(8, 145, 178, 0.15);
+}
+
+/* Client Avatar */
+.client-avatar {
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+}
+
+.client-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 2px solid #e5e7eb;
+}
+
+.avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #0891b2, #06b6d4);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.4rem;
+    border: 2px solid #e5e7eb;
+}
+
+/* Client Info */
+.client-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+}
+
+.client-name span {
+    font-weight: 700;
+    color: #1f2937;
+    font-size: 0.95rem;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.client-email,
+.client-date {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.client-email i,
+.client-date i {
+    color: #6b7280;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+.client-email a {
+    color: #0891b2;
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: color 0.25s ease;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.client-email a:hover {
+    color: #0e7490;
+    text-decoration: underline;
+}
+
+.client-date span {
+    color: #6b7280;
+    font-size: 0.75rem;
+}
+
+/* Client Actions */
+.client-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.btn-action i {
+    font-size: 0.75rem;
+}
+
+.btn-action-edit {
+    background: #0891b2;
+    color: white;
+}
+
+.btn-action-edit:hover {
+    background: #0e7490;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(8, 145, 178, 0.3);
+}
+
+.btn-action-view {
+    background: #f3f4f6;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.btn-action-view:hover {
+    background: #e5e7eb;
+    color: #1f2937;
+    border-color: #9ca3af;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #9ca3af;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    opacity: 0.3;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: #6b7280;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: #0891b2;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #0e7490;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(8, 145, 178, 0.3);
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+    .clients-list {
+        grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    }
+}
+
+@media (max-width: 992px) {
+    .clients-list {
+        gap: 0.85rem;
+    }
+
+    .client-card {
+        padding: 0.85rem 1rem;
+        gap: 0.85rem;
+    }
+
+    .client-avatar {
+        width: 52px;
+        height: 52px;
+    }
+
+    .avatar-placeholder {
+        font-size: 1.3rem;
+    }
+
+    .client-name span {
+        font-size: 0.9rem;
+    }
+
+    .client-email a,
+    .client-date span {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .clients-list {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .client-card {
+        padding: 0.85rem;
+        gap: 0.85rem;
+    }
+
+    .client-avatar {
+        width: 50px;
+        height: 50px;
+    }
+
+    .avatar-placeholder {
+        font-size: 1.25rem;
+    }
+
+    .client-info {
+        gap: 0.3rem;
+    }
+
+    .client-name span {
+        font-size: 0.88rem;
+    }
+
+    .client-email i,
+    .client-date i {
+        font-size: 0.7rem;
+    }
+
+    .client-email a,
+    .client-date span {
+        font-size: 0.72rem;
+    }
+
+    .btn-action {
+        padding: 0.45rem 0.75rem;
+        font-size: 0.75rem;
+        gap: 0.35rem;
+    }
+
+    .btn-action i {
+        font-size: 0.7rem;
+    }
+
+    .empty-state {
+        padding: 3rem 1.5rem;
+    }
+
+    .empty-state i {
+        font-size: 3rem;
+    }
+
+    .empty-state p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .client-card {
+        flex-wrap: wrap;
+        padding: 0.75rem;
+        gap: 0.75rem;
+    }
+
+    .client-avatar {
+        width: 48px;
+        height: 48px;
+    }
+
+    .avatar-placeholder {
+        font-size: 1.2rem;
+    }
+
+    .client-info {
+        flex: 1;
+        min-width: 0;
+        gap: 0.25rem;
+    }
+
+    .client-name span {
+        font-size: 0.85rem;
+    }
+
+    .client-email a,
+    .client-date span {
+        font-size: 0.7rem;
+    }
+
+    .client-actions {
+        width: 100%;
+        justify-content: flex-end;
+        gap: 0.4rem;
+    }
+
+    .btn-action {
+        padding: 0.4rem 0.7rem;
+        font-size: 0.72rem;
+    }
+
+    .btn-action span {
+        display: none;
+    }
+
+    .btn-action i {
+        font-size: 0.85rem;
+        margin: 0;
+    }
+
+    .client-count-badge {
+        font-size: 0.8rem;
+        min-width: 28px;
+        padding: 0.2rem 0.55rem;
+    }
+
+    .empty-state {
+        padding: 2.5rem 1rem;
+    }
+
+    .empty-state i {
+        font-size: 2.5rem;
+    }
+
+    .empty-state p {
+        font-size: 0.95rem;
+    }
+}

@@ -1,0 +1,238 @@
+{% extends 'administration/base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}TCHIIZ | {{ title }}{% endblock %}
+{% block header_title %}{{ title }}{% endblock %}
+
+{% block customCSS %}
+    <link rel="stylesheet" href="{% static 'administration/css/client-details.css' %}">
+{% endblock %}
+
+{% block body %}
+    <!-- Client Header -->
+    <div class="client-header">
+        <div class="client-avatar-large">
+            {% if client.profile_photo and client.profile_photo.file %}
+                <img src="{{ client.profile_photo.file.url }}" alt="{{ client.first_name }}">
+            {% else %}
+                <div class="avatar-placeholder-large">
+                    {{ client.first_name|slice:":1"|default:"U" }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="client-header-info">
+            <h1 class="client-name-header">{{ client.get_full_name|default:client.email }}</h1>
+
+            <div class="client-contact-grid">
+                <div class="contact-detail">
+                    <i class="far fa-envelope"></i>
+                    <div class="contact-detail-content">
+                        <span class="contact-label">{% translate "Email" %}</span>
+                        <span class="contact-value">
+                        <a href="mailto:{{ client.email }}">{{ client.email }}</a>
+                    </span>
+                    </div>
+                </div>
+
+                {% if client.phone_number %}
+                    <div class="contact-detail">
+                        <i class="fas fa-phone"></i>
+                        <div class="contact-detail-content">
+                            <span class="contact-label">{% translate "Phone" %}</span>
+                            <span class="contact-value">
+                            <a href="tel:{{ client.phone_number }}">{{ client.phone_number }}</a>
+                        </span>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if client.address %}
+                    <div class="contact-detail">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="contact-detail-content">
+                            <span class="contact-label">{% translate "Address" %}</span>
+                            <span class="contact-value">{{ client.address }}</span>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="contact-detail">
+                    <i class="far fa-calendar"></i>
+                    <div class="contact-detail-content">
+                        <span class="contact-label">{% translate "Joined" %}</span>
+                        <span class="contact-value">{{ client.start_date|date:"M d, Y" }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="stats-grid">
+        <div class="stat-box stat-photos">
+            <div class="stat-header">
+                <span class="stat-label">{% translate "Total Photos" %}</span>
+                <i class="fas fa-images stat-icon"></i>
+            </div>
+            <div class="stat-value">{{ total_photos }}</div>
+        </div>
+
+        <div class="stat-box stat-photos">
+            <div class="stat-header">
+                <span class="stat-label">{% translate "Photos Liked" %}</span>
+                <i class="fas fa-heart stat-icon"></i>
+            </div>
+            <div class="stat-value">{{ total_liked }}</div>
+        </div>
+
+        <div class="stat-box stat-invoiced">
+            <div class="stat-header">
+                <span class="stat-label">{% translate "Total Invoiced" %}</span>
+                <i class="fas fa-file-invoice-dollar stat-icon"></i>
+            </div>
+            <div class="stat-value">${{ total_invoiced }}</div>
+        </div>
+
+        <div class="stat-box stat-balance">
+            <div class="stat-header">
+                <span class="stat-label">{% translate "Balance Due" %}</span>
+                <i class="fas fa-dollar-sign stat-icon"></i>
+            </div>
+            <div class="stat-value">${{ balance_due }}</div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="tchiiz-card">
+        <div class="client-actions">
+            <a href="{% url 'administration:update_client' client.pk %}" class="btn btn-primary">
+                <i class="fas fa-edit"></i> {% translate "Edit Client" %}
+            </a>
+            <a href="{% url 'administration:send_photos_for_client_to_choose_from' %}" class="btn btn-secondary">
+                <i class="fas fa-paper-plane"></i> {% translate "Send Photos" %}
+            </a>
+            <a href="{% url 'administration:create_invoice' %}" class="btn btn-secondary">
+                <i class="fas fa-file-invoice"></i> {% translate "Create Invoice" %}
+            </a>
+            <a href="{% url 'administration:user_list' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> {% translate "Back to List" %}
+            </a>
+        </div>
+    </div>
+
+    <!-- Albums Section -->
+    <div class="tchiiz-card detail-section">
+        <h2 class="section-title">
+            <i class="fas fa-folder"></i>
+            {% translate "Photo Albums" %}
+            <span class="section-count">{{ albums|length }}</span>
+        </h2>
+
+        {% if albums %}
+            <div class="simple-list">
+                {% for album in albums %}
+                    <div class="simple-item">
+                        <div class="simple-item-content">
+                            <div class="simple-item-icon">
+                                <i class="fas fa-images"></i>
+                            </div>
+                            <div class="simple-item-details">
+                                <div class="simple-item-title">
+                                    {% translate "Album" %} #{{ album.id }}
+                                </div>
+                                <div class="simple-item-meta">
+                                    {{ album.get_photos_count }} {% translate "photos" %} |
+                                    {{ album.get_photos_liked_count }} {% translate "liked" %} |
+                                    {{ album.created_at|date:"M d, Y" }}
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{% url 'administration:view_all_liked_photos' album.pk %}"
+                           class="btn btn-sm btn-secondary">
+                            <i class="fas fa-eye"></i> {% translate "View" %}
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-section">
+                <i class="far fa-folder-open"></i>
+                <p>{% translate "No albums for this client yet." %}</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Invoices Section -->
+    <div class="tchiiz-card detail-section">
+        <h2 class="section-title">
+            <i class="fas fa-file-invoice-dollar"></i>
+            {% translate "Recent Invoices" %}
+            <span class="section-count">{{ invoices|length }}</span>
+        </h2>
+
+        {% if invoices %}
+            <div class="simple-list">
+                {% for invoice in invoices %}
+                    <div class="simple-item">
+                        <div class="simple-item-content">
+                            <div class="simple-item-icon">
+                                <i class="fas fa-file-invoice"></i>
+                            </div>
+                            <div class="simple-item-details">
+                                <div class="simple-item-title">
+                                    {{ invoice.invoice_number }}
+                                </div>
+                                <div class="simple-item-meta">
+                                    ${{ invoice.total_amount }} | {{ invoice.get_status_display }}
+                                    | {{ invoice.created_at|date:"M d, Y" }}
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{% url 'administration:view_invoice' invoice.invoice_number %}"
+                           class="btn btn-sm btn-secondary" target="_blank">
+                            <i class="fas fa-eye"></i> {% translate "View" %}
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-section">
+                <i class="far fa-file-invoice"></i>
+                <p>{% translate "No invoices for this client yet." %}</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Bookings Section -->
+    {% if bookings %}
+        <div class="tchiiz-card detail-section">
+            <h2 class="section-title">
+                <i class="fas fa-calendar-check"></i>
+                {% translate "Recent Bookings" %}
+                <span class="section-count">{{ bookings|length }}</span>
+            </h2>
+
+            <div class="simple-list">
+                {% for booking in bookings %}
+                    <div class="simple-item">
+                        <div class="simple-item-content">
+                            <div class="simple-item-icon">
+                                <i class="fas fa-calendar"></i>
+                            </div>
+                            <div class="simple-item-details">
+                                <div class="simple-item-title">
+                                    {{ booking.get_session_type_display }}
+                                </div>
+                                <div class="simple-item-meta">
+                                    {{ booking.get_desired_date }} | {{ booking.status }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

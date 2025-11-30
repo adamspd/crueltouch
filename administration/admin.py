@@ -2,16 +2,7 @@
 from django.contrib import admin
 from simple_history.admin import SimpleHistoryAdmin
 
-from .models import Invoice, InvoiceAttachment, InvoiceService, PermissionsEmails, PhotoClient, PhotoDelivery
-
-
-@admin.register(PermissionsEmails)
-class PermissionsEmailsAdmin(admin.ModelAdmin):
-    list_display = ('date', 'booking_request', 'contact_form', 'other', 'total')
-    list_display_links = ('date', 'booking_request', 'contact_form', 'other', 'total')
-    list_filter = ('date', 'booking_request', 'contact_form', 'other', 'total')
-    search_fields = ('date', 'booking_request', 'contact_form', 'other', 'total')
-    list_per_page = 25
+from .models import Invoice, InvoiceAttachment, InvoiceService, PhotoClient, PhotoDelivery
 
 
 @admin.register(PhotoClient)
@@ -27,8 +18,8 @@ class PhotoClientAdmin(admin.ModelAdmin):
 class PhotoDeliveryAdmin(admin.ModelAdmin):
     list_display = ('date', 'is_active', 'expiration_date', 'was_downloaded', 'link_to_download', 'id_delivery')
     list_display_links = ('date', 'is_active', 'expiration_date', 'was_downloaded', 'link_to_download', 'id_delivery')
-    list_filter = ('date', 'is_active', 'expiration_date', 'was_downloaded', 'link_to_download', 'id_delivery')
-    search_fields = ('date', 'is_active', 'expiration_date', 'was_downloaded', 'link_to_download', 'id_delivery')
+    list_filter = ('date', 'is_active', 'expiration_date', 'was_downloaded', 'id_delivery')
+    search_fields = ('date', 'is_active', 'expiration_date', 'was_downloaded', 'id_delivery')
     list_per_page = 25
 
 

@@ -1,0 +1,897 @@
+/* Enhanced Stat Cards */
+.tchiiz-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.tchiiz-stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--tz-border);
+    overflow: hidden;
+    position: relative;
+    transition: var(--tz-transition);
+}
+
+.tchiiz-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.stat-content {
+    padding: 1.5rem;
+}
+
+.stat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.stat-icon {
+    font-size: 2rem;
+    opacity: 0.25;
+}
+
+.stat-value {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin: 0 0 0.75rem 0;
+    line-height: 1;
+    color: #ffffff;
+}
+
+.stat-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--tz-transition);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.stat-link:hover {
+    color: #ffffff;
+}
+
+.stat-link i {
+    font-size: 0.75rem;
+    transition: var(--tz-transition);
+}
+
+.stat-link:hover i {
+    transform: translateX(3px);
+}
+
+/* Stat Card Variants - Meaningful Colors */
+.stat-appointments {
+    background: linear-gradient(135deg, var(--color-appointments) 0%, #b45309 100%);
+    border: none;
+}
+
+.stat-appointments .stat-icon {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.stat-messages {
+    background: linear-gradient(135deg, var(--color-messages) 0%, #0e7490 100%);
+    border: none;
+}
+
+.stat-messages .stat-icon {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.stat-photos {
+    background: linear-gradient(135deg, var(--color-photos) 0%, #6d28d9 100%);
+    border: none;
+}
+
+.stat-photos .stat-icon {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.stat-clients {
+    background: linear-gradient(135deg, var(--color-clients) 0%, #991b1b 100%);
+    border: none;
+}
+
+.stat-clients .stat-icon {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+/* Appointment & Invoice Card Lists */
+.appointment-list,
+.invoice-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.appointment-card,
+.invoice-card {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1rem;
+    background: #fafafa;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    transition: var(--tz-transition);
+}
+
+.appointment-card:hover,
+.invoice-card:hover {
+    background: #f5f5f5;
+    border-color: #d1d5db;
+}
+
+/* Appointment Card Layout */
+.appointment-date {
+    flex-shrink: 0;
+}
+
+.appointment-details {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    align-items: start;
+}
+
+.appointment-client,
+.appointment-session,
+.appointment-location {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.appointment-action {
+    flex-shrink: 0;
+}
+
+/* Invoice Card Layout */
+.invoice-date {
+    flex-shrink: 0;
+}
+
+.invoice-details {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr;
+    gap: 1rem;
+    align-items: center;
+}
+
+.invoice-client {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.invoice-amount-display {
+    display: flex;
+    align-items: center;
+}
+
+.invoice-status {
+    display: flex;
+    align-items: center;
+}
+
+.invoice-actions {
+    flex-shrink: 0;
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Reusable Components */
+.tchiiz-table-container {
+    overflow-x: auto;
+    margin: -1.5rem;
+    margin-top: 0;
+}
+
+.tchiiz-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tchiiz-table thead th {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6b7280;
+    font-weight: 700;
+    padding: 1rem 1.5rem;
+    background-color: #f9fafb;
+    border-bottom: 2px solid #e5e7eb;
+    border-top: none;
+    text-align: left;
+}
+
+.tchiiz-table tbody td {
+    padding: 1.25rem 1.5rem;
+    vertical-align: middle;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.tchiiz-table-row {
+    transition: var(--tz-transition);
+}
+
+.tchiiz-table-row:hover {
+    background-color: #f9fafb;
+}
+
+.tchiiz-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Date Badge - Appointment color (scheduling) */
+.date-badge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, var(--color-appointments), #b45309);
+    color: white;
+    border-radius: 8px;
+    padding: 0.5rem 0.65rem;
+    min-width: 55px;
+}
+
+.date-badge-small {
+    min-width: 48px;
+    padding: 0.4rem 0.55rem;
+}
+
+.date-day {
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.date-month {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-top: 2px;
+}
+
+.date-year {
+    font-size: 0.6rem;
+    font-weight: 500;
+    opacity: 0.75;
+    margin-top: 1px;
+}
+
+/* Client Info */
+.client-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.client-name {
+    font-weight: 700;
+    color: #1f2937;
+    font-size: 0.95rem;
+}
+
+/* Client Contact - Turquoise (communication) */
+.client-phone,
+.client-email {
+    font-size: 0.8rem;
+    color: var(--color-messages);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: var(--tz-transition);
+}
+
+.client-phone:hover,
+.client-email:hover {
+    color: #0e7490;
+}
+
+.client-phone i,
+.client-email i {
+    font-size: 0.75rem;
+}
+
+/* Session Info */
+.session-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+/* Session Type - Purple (creative/service) */
+.session-type {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--color-photos), #6d28d9);
+    color: white;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    width: fit-content;
+}
+
+.session-time {
+    font-size: 0.8rem;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.session-time i {
+    font-size: 0.75rem;
+}
+
+/* Location Info - Blood red (important) */
+.location-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #374151;
+    font-size: 0.85rem;
+}
+
+.location-info i {
+    color: var(--color-clients);
+    font-size: 0.9rem;
+}
+
+.location-text {
+    line-height: 1.4;
+}
+
+/* Action Buttons - Neutral */
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: #f3f4f6;
+    color: #374151;
+    text-decoration: none;
+    transition: var(--tz-transition);
+    border: 1px solid #e5e7eb;
+}
+
+.btn-action:hover {
+    background: #e5e7eb;
+    color: #1f2937;
+    transform: translateY(-1px);
+}
+
+/* Primary action - Turquoise (communication action) */
+.btn-action-primary {
+    background: var(--color-messages);
+    color: white;
+    border-color: var(--color-messages);
+}
+
+.btn-action-primary:hover {
+    background: #0e7490;
+    color: white;
+    border-color: #0e7490;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+/* Invoice Amount */
+.invoice-amount {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1f2937;
+}
+
+/* Invoice Status Form */
+.invoice-status-form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.status-select {
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: var(--tz-transition);
+}
+
+.status-select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.15);
+}
+
+/* Status colors - Meaningful */
+.status-paid {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.status-pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-overdue {
+    background: #fee2e2;
+    color: var(--color-clients);
+}
+
+.email-sent-badge {
+    color: var(--color-messages);
+    font-size: 0.9rem;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem !important;
+    color: #9ca3af;
+}
+
+.empty-state i {
+    font-size: 3rem;
+    opacity: 0.3;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.empty-state p {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* Chart Stats */
+.chart-stats {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.stat-trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.stat-trend-up {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.stat-trend-down {
+    background: #fee2e2;
+    color: var(--color-clients);
+}
+
+.stat-trend-neutral {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+.stat-trend i {
+    font-size: 0.75rem;
+}
+
+.stat-trend-label {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+/* Chart Container */
+.tchiiz-chart-container {
+    height: 320px;
+    position: relative;
+    padding: 1rem 0;
+}
+
+/* Mobile Responsive - MUCH MORE COMPACT */
+@media (max-width: 992px) {
+    .tchiiz-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.85rem;
+    }
+
+    .stat-content {
+        padding: 1rem;
+    }
+
+    .stat-header {
+        margin-bottom: 0.65rem;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.65rem;
+    }
+
+    .stat-link {
+        font-size: 0.75rem;
+    }
+
+    .stat-icon {
+        font-size: 1.5rem;
+    }
+
+    .tchiiz-card {
+        padding: 1.25rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .tchiiz-card-header {
+        margin-bottom: 1.25rem;
+    }
+
+    .tchiiz-card-title {
+        font-size: 0.95rem;
+    }
+
+    .tchiiz-card-subtitle {
+        font-size: 0.72rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .tchiiz-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .stat-content {
+        padding: 0.85rem;
+    }
+
+    .stat-header {
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+        font-size: 1.35rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .stat-label {
+        font-size: 0.6rem;
+    }
+
+    .stat-link {
+        font-size: 0.7rem;
+    }
+
+    .stat-icon {
+        font-size: 1.35rem;
+    }
+
+    .tchiiz-card {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .tchiiz-card-header {
+        margin-bottom: 1rem;
+    }
+
+    /* Card-based lists on mobile */
+    .appointment-card,
+    .invoice-card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.85rem;
+        padding: 0.85rem;
+    }
+
+    .appointment-date,
+    .invoice-date {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .appointment-details {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .appointment-action {
+        align-self: flex-end;
+    }
+
+    .invoice-details {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .invoice-actions {
+        justify-content: flex-end;
+    }
+
+    .date-badge {
+        min-width: 45px;
+        padding: 0.35rem 0.5rem;
+    }
+
+    .date-badge-small {
+        min-width: 40px;
+        padding: 0.3rem 0.45rem;
+    }
+
+    .date-day {
+        font-size: 0.9rem;
+    }
+
+    .date-month {
+        font-size: 0.58rem;
+    }
+
+    .date-year {
+        font-size: 0.52rem;
+    }
+
+    .client-name {
+        font-size: 0.82rem;
+    }
+
+    .client-phone,
+    .client-email {
+        font-size: 0.72rem;
+    }
+
+    .session-type {
+        font-size: 0.72rem;
+        padding: 0.28rem 0.6rem;
+    }
+
+    .session-time {
+        font-size: 0.72rem;
+    }
+
+    .location-info {
+        font-size: 0.78rem;
+    }
+
+    .invoice-amount {
+        font-size: 0.95rem;
+    }
+
+    .status-select {
+        font-size: 0.72rem;
+        padding: 0.32rem 0.6rem;
+    }
+
+    .btn-action {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+    }
+
+    .tchiiz-card-title {
+        font-size: 0.88rem;
+    }
+
+    .tchiiz-card-subtitle {
+        font-size: 0.68rem;
+    }
+
+    .chart-stats {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .stat-trend {
+        font-size: 0.75rem;
+        padding: 0.28rem 0.6rem;
+    }
+
+    .stat-trend-label {
+        font-size: 0.72rem;
+    }
+
+    .tchiiz-chart-container {
+        height: 240px;
+        padding: 0.75rem 0;
+    }
+
+    .empty-state {
+        padding: 2rem 1rem !important;
+    }
+
+    .empty-state i {
+        font-size: 2.5rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .empty-state p {
+        font-size: 0.82rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .tchiiz-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.65rem;
+    }
+
+    .stat-content {
+        padding: 0.75rem;
+    }
+
+    .stat-header {
+        margin-bottom: 0.4rem;
+    }
+
+    .stat-value {
+        font-size: 1.25rem;
+        margin-bottom: 0.35rem;
+    }
+
+    .stat-label {
+        font-size: 0.58rem;
+    }
+
+    .stat-link {
+        font-size: 0.68rem;
+    }
+
+    .stat-icon {
+        font-size: 1.25rem;
+    }
+
+    .tchiiz-card {
+        padding: 0.85rem;
+        margin-bottom: 0.85rem;
+    }
+
+    .tchiiz-card-header {
+        margin-bottom: 0.85rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .date-badge {
+        min-width: 42px;
+        padding: 0.32rem 0.45rem;
+    }
+
+    .date-badge-small {
+        min-width: 38px;
+        padding: 0.28rem 0.4rem;
+    }
+
+    .date-day {
+        font-size: 0.85rem;
+    }
+
+    .date-month {
+        font-size: 0.54rem;
+    }
+
+    .date-year {
+        font-size: 0.5rem;
+    }
+
+    .client-name {
+        font-size: 0.78rem;
+    }
+
+    .client-phone,
+    .client-email {
+        font-size: 0.68rem;
+    }
+
+    .session-type {
+        font-size: 0.68rem;
+        padding: 0.25rem 0.55rem;
+    }
+
+    .session-time {
+        font-size: 0.68rem;
+    }
+
+    .location-info {
+        font-size: 0.72rem;
+    }
+
+    .location-info i {
+        font-size: 0.78rem;
+    }
+
+    .invoice-amount {
+        font-size: 0.88rem;
+    }
+
+    .status-select {
+        font-size: 0.68rem;
+        padding: 0.28rem 0.55rem;
+    }
+
+    .btn-action {
+        width: 28px;
+        height: 28px;
+        font-size: 0.75rem;
+    }
+
+    .tchiiz-card-title {
+        font-size: 0.82rem;
+    }
+
+    .tchiiz-card-subtitle {
+        font-size: 0.65rem;
+    }
+
+    .chart-stats {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+    }
+
+    .stat-trend {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.55rem;
+    }
+
+    .stat-trend-label {
+        font-size: 0.68rem;
+    }
+
+    .tchiiz-chart-container {
+        height: 200px;
+        padding: 0.5rem 0;
+    }
+
+    .empty-state {
+        padding: 1.5rem 0.75rem !important;
+    }
+
+    .empty-state i {
+        font-size: 2.25rem;
+        margin-bottom: 0.65rem;
+    }
+
+    .empty-state p {
+        font-size: 0.78rem;
+    }
+}

@@ -1,64 +1,113 @@
 {% extends 'homepage/base.html' %}
 {% load i18n %}
 {% load static %}
+
 {% block title %}TCHIIZ | {% trans "Downloads" %}{% endblock %}
 
+{% block customCSS %}
+    <link rel="stylesheet" href="{% static 'administration/css/guest-download.css' %}">
+{% endblock %}
+
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h3 class="text-center">{% trans "Downloads" %}</h3>
-                <small class="text-center align-center align-content-center offset-md-2">{% trans 'Hi' %}, {{ client_name }},
+    <div class="download-container">
+        <!-- Header -->
+        <div class="download-header">
+            <h1 class="download-title">{% trans "Your Photos Are Ready" %}</h1>
+            <p class="download-greeting">
+                {% trans "Hi" %} <strong>{{ client_name }}</strong>,
+                {% blocktranslate %}
+                    you can download your edited photos either as a complete ZIP file or individually.
+                    This link is valid for 72 hours.
+                {% endblocktranslate %}
+            </p>
+        </div>
+
+        <!-- Warning Notice -->
+        <div class="download-warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div class="download-warning-content">
+                <div class="download-warning-title">{% trans "Important Information" %}</div>
+                <p class="download-warning-text">
                     {% blocktranslate %}
-                        you can download the following files either in zip format or file by file.
+                        This is a one-time download link that expires in 72 hours.
+                        If you need to re-download your photos after this period, please contact us directly.
                     {% endblocktranslate %}
-                </small>
-                <div class="container" style="display: block; margin-left: auto; margin-right: auto;">
-                    <div class="row">
-                        <div class="col-md-8 offset-md-2">
-                            <div class="card" style="margin: 5px">
-                                <div class="card-body">
-                                    <h5 class="card-title">{% trans "Zipped version" %}</h5>
-                                    <p class="card-text">
-                                        {% blocktranslate %}
-                                            You can download your copy of your edited photos here. This link expires in
-                                            72 hours. This is a one time download. If you need to download the photos
-                                            again, please contact us. Zip format.
-                                        {% endblocktranslate %}
-                                    </p>
-                                    <a href="{% url 'homepage:download_zip' id_delivery %}"
-                                       class="btn btn-primary">{% trans "Download zip" %}</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Download Options -->
+        <div class="download-options">
+            <!-- ZIP Download Card -->
+            <div class="download-card">
+                <div class="download-card-header">
+                    <div class="download-icon">
+                        <i class="fas fa-file-archive"></i>
+                    </div>
+                    <h2 class="download-card-title">{% trans "Download All (ZIP)" %}</h2>
+                </div>
+
+                <p class="download-card-description">
+                    {% blocktranslate %}
+                        Download all your photos in a single compressed ZIP file.
+                        This is the fastest way to get all your images at once.
+                    {% endblocktranslate %}
+                </p>
+
+                <div class="download-card-footer">
+                    <div class="download-info">
+                        <span class="download-info-label">{% trans "Total Photos" %}</span>
+                        <span class="download-info-value">{{ photos|length }} {% trans "images" %}</span>
+                    </div>
+                    <a href="{% url 'homepage:download_zip' id_delivery %}" class="btn-download">
+                        <i class="fas fa-download"></i>
+                        {% trans "Download ZIP" %}
+                    </a>
+                </div>
+            </div>
+
+            <!-- Individual Photos Card -->
+            <div class="download-card">
+                <div class="download-card-header">
+                    <div class="download-icon">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <h2 class="download-card-title">{% trans "Download Individual Photos" %}</h2>
+                </div>
+
+                <p class="download-card-description">
+                    {% blocktranslate %}
+                        Browse and download photos one by one.
+                        Click on any photo to download it individually.
+                    {% endblocktranslate %}
+                </p>
+
+                <div class="photos-gallery">
+                    {% for photo in photos %}
+                        <div class="photo-item">
+                            <div class="photo-wrapper">
+                                {% if photo.thumbnail %}
+                                    <img src="{{ photo.thumbnail.url }}" alt="{{ photo.get_name_without_extension }}"
+                                         class="photo-thumbnail">
+                                {% else %}
+                                    <img src="{{ photo.file.url }}" alt="{{ photo.get_name_without_extension }}"
+                                         class="photo-thumbnail">
+                                {% endif %}
+                                <div class="photo-overlay">
+                                    <a href="{{ photo.file.url }}"
+                                       download="{{ photo.get_name_with_extension }}"
+                                       class="btn-download-photo {% if photo.was_downloaded %}downloaded{% endif %}">
+                                        <i class="fas fa-{% if photo.was_downloaded %}check{% else %}download{% endif %}"></i>
+                                        <span>{% if photo.was_downloaded %}{% trans "Downloaded" %}{% else %}
+                                            {% trans "Download" %}{% endif %}</span>
+                                    </a>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-8 offset-md-2">
-                            <div class="card" style="margin: 5px">
-                                <div class="card-body">
-                                    <h5 class="card-title">{% trans "Individual photos" %}</h5>
-                                    <p class="card-text">
-                                        {% blocktranslate %}
-                                            You can download your copy of your edited photos here. This link expires in
-                                            72 hours. This is a one time download. If you need to download the photos
-                                            again, please contact us. Individual photos.
-                                        {% endblocktranslate %}
-                                    </p>
-                                    {% for photo in photos %}
-                                        <a href="{{ photo.get_absolute_url }}"
-                                           download="{{ photo.get_name_with_extension }}"
-                                           class="btn btn-sm {% if photo.was_downloaded_ %}btn-secondary{% else %}btn-primary{% endif %}"
-                                           onclick="{{ photo.set_was_downloaded_to_true }}"
-                                           style="margin: 2px; overflow: hidden !important;">
-                                        <span style="overflow: hidden; white-space: normal; display: block; text-overflow: ellipsis;">
-                                            {% trans "Download" %} "{{ photo.get_name_without_extension|truncatechars:20 }}"
-                                        </span>
-                                        </a>
-                                    {% endfor %}
-                                </div>
+                            <div class="photo-name">
+                                {{ photo.get_name_without_extension|truncatechars:18 }}
                             </div>
                         </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

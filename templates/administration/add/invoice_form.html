@@ -1,18 +1,25 @@
 {% extends 'administration/base.html' %}
-{% load i18n %}
 {% load static %}
 
-{% block title %}
-    {{ title }} | TCHIIZ
-{% endblock %}
+{% block title %}{{ title }}{% endblock %}
+
 {% block customCSS %}
     <style>
+        /* Autocomplete Dropdown */
+        .autocomplete-wrapper {
+            position: relative;
+        }
+
         .autocomplete-results {
-            border: 1px solid #ccc;
             position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             z-index: 1000;
-            background-color: white;
-            width: calc(100% - 2px);
             max-height: 200px;
             overflow-y: auto;
         }
@@ -20,125 +27,208 @@
         .autocomplete-item {
             padding: 10px;
             cursor: pointer;
+            border-bottom: 1px solid #eee;
         }
 
         .autocomplete-item:hover {
-            background-color: #f0f0f0;
+            background: #f3f4f6;
+        }
+
+        /* Formset Styling */
+        .formset-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 40px;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+            background: white;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+
+        .delete-check {
+            transform: scale(1.5);
         }
     </style>
 {% endblock %}
+
 {% block body %}
-    <section class="content content-wrapper">
-        <div class="container-fluid">
-            <div class="row" style="margin: 0 auto; padding-top: 20px; padding-bottom: 20px">
-                <h2>{{ title }}</h2>
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <h3>{% translate 'Add Services' %}</h3>
-                    <div id="services">
-                        {{ service_formset.management_form }}
-                        {% for form in service_formset %}
-                            <div class="service-form">
-                                {{ form.as_p }}
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <button type="button" id="add-service" class="btn btn-info">Add more service</button>
-                    <br><br>
-                    <h3>{% translate 'Add attachments' %}</h3>
-                    <div id="attachments">
-                        {{ attachment_formset.management_form }}
-                        {% for form in attachment_formset %}
-                            <div class="attachment-form">
-                                {{ form.as_p }}
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <button type="button" id="add-attachment" class="btn btn-warning">Add more attachment</button>
-                    <br><br>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-
-                <script>
-                    function addFormToContainer(containerId, formClass, buttonId) {
-                        document.getElementById(buttonId).addEventListener('click', function () {
-                            const container = document.getElementById(containerId);
-                            const totalFormsInput = container.querySelector("input[name$='-TOTAL_FORMS']");
-                            let formIndex = parseInt(totalFormsInput.value);
-
-                            const newForm = container.querySelector(`.${formClass}:last-of-type`).cloneNode(true);
-                            newForm.querySelectorAll('input, select, textarea').forEach(function (inputElement) {
-                                const name = inputElement.name.replace('-' + (formIndex - 1) + '-', '-' + formIndex + '-');
-                                const id = 'id_' + name;
-                                inputElement.name = name;
-                                inputElement.id = id;
-                                inputElement.value = '';
-                                if (inputElement.type === 'checkbox' || inputElement.type === 'radio') {
-                                    inputElement.checked = false;
-                                }
-                            });
-
-                            container.appendChild(newForm);
-                            totalFormsInput.value = formIndex + 1;
-                        });
-                    }
-
-                    addFormToContainer('services', 'service-form', 'add-service');
-                    addFormToContainer('attachments', 'attachment-form', 'add-attachment');
-
-                    document.addEventListener('DOMContentLoaded', function () {
-                        const emailInput = document.getElementById('id_client_email');
-                        const autocompleteResults = document.createElement('div');
-                        autocompleteResults.setAttribute('class', 'autocomplete-results');
-                        emailInput.parentNode.appendChild(autocompleteResults);
-
-                        emailInput.addEventListener('input', function () {
-                            const ajaxUrl = emailInput.getAttribute('data-ajax-url');
-                            const query = emailInput.value;
-
-                            fetch(`${ajaxUrl}?query=${query}`)
-                                .then(response => response.json())
-                                .then(data => {
-                                    autocompleteResults.innerHTML = '';  // Clear previous results
-
-                                    data.forEach(client => {
-                                        const div = document.createElement('div');
-                                        div.innerHTML = client.email;
-                                        div.setAttribute('class', 'autocomplete-item');
-                                        div.addEventListener('click', function () {
-                                            emailInput.value = client.email;
-                                            console.log("client name: " + client.first_name + " " + client.last_name)
-                                            console.log("client phone: " + client.phone_number)
-                                            console.log("client address: " + client.address)
-                                            if (client.first_name) {
-                                                document.getElementById('id_client_first_name').value = client.first_name;
-                                            }
-                                            if (client.last_name) {
-                                                document.getElementById('id_client_last_name').value = client.last_name;
-                                            }
-                                            if (client.phone_number) {
-                                                document.getElementById('id_client_phone').value = client.phone_number;
-                                            }
-                                            if (client.address) {
-                                                document.getElementById('id_client_address').value = client.address;
-                                            }
-                                            autocompleteResults.innerHTML = ''; // Clear results after selection
-                                        });
-                                        autocompleteResults.appendChild(div);
-                                    });
-                                })
-                                .catch(error => console.error('Error:', error));
-                        });
-                        // Hide results when clicking outside
-                        document.addEventListener('click', function (event) {
-                            if (event.target !== emailInput) {
-                                autocompleteResults.innerHTML = '';
-                            }
-                        });
-                    });
-                </script>
-            </div>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ title }}</h3>
         </div>
-    </section>
+
+        <div class="card-body" style="padding: 2rem;">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <h4 style="margin-bottom: 1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">Client
+                    Details</h4>
+                <div class="form-grid">
+                    <div class="form-row">
+                        <div class="form-group autocomplete-wrapper">
+                            <label>Email *</label>
+                            {{ form.client_email }}
+                            <div id="autocomplete-results" class="autocomplete-results" style="display: none;"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone</label>
+                            {{ form.client_phone }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            {{ form.client_first_name }}
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            {{ form.client_last_name }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        {{ form.client_address }}
+                    </div>
+                </div>
+
+                <h4 style="margin: 2rem 0 1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">Invoice
+                    Details</h4>
+                <div class="form-row">
+                    <div class="form-group"><label>Status</label>{{ form.status }}</div>
+                    <div class="form-group"><label>Due Date</label>{{ form.due_date }}</div>
+                    <div class="form-group"><label>Payment Method</label>{{ form.payment_method }}</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Discount %</label>{{ form.discount }}</div>
+                    <div class="form-group"><label>Tax Rate %</label>{{ form.tax_rate }}</div>
+                    <div class="form-group"><label>Amount Paid</label>{{ form.amount_paid }}</div>
+                </div>
+
+                <h4 style="margin: 2rem 0 1rem;">Services</h4>
+                {{ service_formset.management_form }}
+                <div id="services-container">
+                    {% for form in service_formset %}
+                        <div class="formset-row service-row">
+                            {{ form.id }}
+                            <div>{{ form.service_name }}</div>
+                            <div>{{ form.service_price }}</div>
+                            <div>{{ form.service_quantity }}</div>
+                            <div title="Delete?">{{ form.DELETE }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button type="button" class="btn btn-secondary btn-sm" id="add-service">
+                    <i class="fas fa-plus"></i> Add Service
+                </button>
+
+                <h4 style="margin: 2rem 0 1rem;">Attachments</h4>
+                {{ attachment_formset.management_form }}
+                <div id="attachments-container">
+                    {% for form in attachment_formset %}
+                        <div class="formset-row attachment-row" style="grid-template-columns: 1fr 40px;">
+                            {{ form.id }}
+                            <div>{{ form.file }}</div>
+                            <div>{{ form.DELETE }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button type="button" class="btn btn-secondary btn-sm" id="add-attachment">
+                    <i class="fas fa-paperclip"></i> Add File
+                </button>
+
+                <div style="margin-top: 3rem; display: flex; gap: 10px;">
+                    <button type="submit" class="btn btn-primary">Save Invoice</button>
+                    <a href="{% url 'administration:list_invoices' %}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block customJS %}
+    <script>
+        // --- 1. Autocomplete Logic ---
+        const emailInput = document.getElementById('id_client_email');
+        const resultsBox = document.getElementById('autocomplete-results');
+
+        emailInput.addEventListener('input', async function () {
+            const query = this.value;
+            const url = this.dataset.ajaxUrl; // Pulled from data attribute
+
+            if (query.length < 2) {
+                resultsBox.style.display = 'none';
+                return;
+            }
+
+            try {
+                const res = await fetch(`${url}?term=${query}`);
+                const data = await res.json();
+
+                resultsBox.innerHTML = '';
+                if (data.length > 0) {
+                    resultsBox.style.display = 'block';
+                    data.forEach(client => {
+                        const div = document.createElement('div');
+                        div.className = 'autocomplete-item';
+                        div.textContent = `${client.email} (${client.first_name})`;
+                        div.onclick = () => {
+                            // Populate Fields
+                            emailInput.value = client.email;
+                            document.getElementById('id_client_first_name').value = client.first_name || '';
+                            document.getElementById('id_client_last_name').value = client.last_name || '';
+                            document.getElementById('id_client_phone').value = client.phone || '';
+                            document.getElementById('id_client_address').value = client.address || '';
+                            resultsBox.style.display = 'none';
+                        };
+                        resultsBox.appendChild(div);
+                    });
+                } else {
+                    resultsBox.style.display = 'none';
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        });
+
+        // Close on click outside
+        document.addEventListener('click', (e) => {
+            if (!emailInput.contains(e.target) && !resultsBox.contains(e.target)) {
+                resultsBox.style.display = 'none';
+            }
+        });
+
+        // --- 2. Dynamic Formset Logic ---
+        function setupFormset(btnId, containerId, prefix) {
+            const btn = document.getElementById(btnId);
+            const container = document.getElementById(containerId);
+            const totalForms = document.getElementById(`id_${prefix}-TOTAL_FORMS`);
+
+            btn.addEventListener('click', () => {
+                const count = parseInt(totalForms.value);
+                const forms = container.querySelectorAll('.formset-row');
+                const lastForm = forms[forms.length - 1];
+
+                // Clone the last form
+                const newForm = lastForm.cloneNode(true);
+
+                // Regex to update IDs/Names: name="services-0-service_name" -> "services-1-service_name"
+                const regex = new RegExp(`(${prefix}-(\\d+)-)`, 'g');
+                newForm.innerHTML = newForm.innerHTML.replace(regex, `${prefix}-${count}-`);
+
+                // Clear values
+                newForm.querySelectorAll('input').forEach(input => {
+                    if (input.type !== 'hidden' && input.type !== 'checkbox') input.value = '';
+                    if (input.type === 'checkbox') input.checked = false;
+                });
+
+                container.appendChild(newForm);
+                totalForms.value = count + 1;
+            });
+        }
+
+        setupFormset('add-service', 'services-container', 'services');
+        setupFormset('add-attachment', 'attachments-container', 'attachments');
+    </script>
 {% endblock %}

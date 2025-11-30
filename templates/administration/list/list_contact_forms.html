@@ -1,77 +1,115 @@
-{% extends 'administration/list/data.html' %}
+{% extends 'administration/base.html' %}
 {% load i18n %}
 {% load static %}
+
 {% block title %}TCHIIZ | {% translate "Contact Forms" %}{% endblock %}
+{% block header_title %}{% translate "Contact Messages" %}{% endblock %}
 
-{% block pageTitle %}
-    {% translate "Contact Forms" %}
-{% endblock %}
-{% block pageLink %}
-    {% translate "Contact Forms" %}
+{% block customCSS %}
+    <link rel="stylesheet" href="{% static 'administration/css/messages-list.css' %}">
 {% endblock %}
 
-
-{% block table %}
-    <!-- Main content -->
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">{% translate "Contact Forms" %}</h3>
+{% block body %}
+    <div class="tchiiz-card">
+        <div class="tchiiz-card-header">
+            <div>
+                <h3 class="tchiiz-card-title">{% translate "Contact Messages" %}</h3>
+                <p class="tchiiz-card-subtitle">
+                    <span class="message-count-badge">{{ contact_forms|length }}</span>
+                    {% translate "messages received" %}
+                </p>
+            </div>
         </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th>{% translate "Full name" %}</th>
-                    <th>{% translate "Email" %}</th>
-                    <th>{% translate "Subject" %}</th>
-                    <th>{% translate "Message" %}</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if contact_forms %}
+            <div class="messages-list">
                 {% for rs in contact_forms %}
-                    <tr>
-                        <td>
-                            &nbsp;&nbsp;&nbsp;{{ rs.full_name }}
-                        </td>
-                        <td>
-                            <a href="mailto:{{ rs.email }}">
-                                &nbsp;&nbsp;&nbsp;{{ rs.email }}
-                            </a>
-                        </td>
-                        <td>
-                            {{ rs.subject }}
-                        </td>
-                        <td>
-                            {{ rs.message }}
-                        <td>
-                            <a href="{% url 'administration:message_delete' rs.pk %}" class="btn btn-danger"
-                               onClick="return confirm('Are you sure you want to delete this item?');">
-                                <i class="fas fa-trash"></i>&nbsp;Delete
-                            </a>
-                        </td>
-                    </tr>
+                    <div class="message-card">
+                        <div class="message-header">
+                            <div class="sender-info">
+                                <div class="sender-name">
+                                    <i class="fas fa-user-circle"></i>
+                                    <span>{{ rs.full_name }}</span>
+                                </div>
+                                <div class="sender-email">
+                                    <i class="far fa-envelope"></i>
+                                    <a href="mailto:{{ rs.email }}">{{ rs.email }}</a>
+                                </div>
+                            </div>
+
+                            <div class="message-subject">
+                                <i class="fas fa-tag"></i>
+                                <span>{{ rs.subject }}</span>
+                            </div>
+
+                            <div class="message-actions-header">
+                                <button class="btn-expand" onclick="toggleMessage(this)">
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <a href="{% url 'administration:message_delete' rs.pk %}"
+                                   class="btn-action-delete"
+                                   onclick="return confirm('{% translate "Are you sure you want to delete this message?" %}')">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="message-body">
+                            <div class="message-content">
+                                <i class="fas fa-comment-dots"></i>
+                                <p>{{ rs.message }}</p>
+                            </div>
+                            <div class="message-actions-expanded">
+                                <a href="mailto:{{ rs.email }}?subject=Re: {{ rs.subject }}"
+                                   class="btn-action btn-action-reply">
+                                    <i class="fas fa-reply"></i>
+                                    <span>{% translate "Reply" %}</span>
+                                </a>
+                                <a href="{% url 'administration:message_delete' rs.pk %}"
+                                   class="btn-action btn-action-danger"
+                                   onclick="return confirm('{% translate "Are you sure you want to delete this message?" %}')">
+                                    <i class="fas fa-trash"></i>
+                                    <span>{% translate "Delete" %}</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 {% endfor %}
-                </tbody>
-                <tfoot>
-                <tr>
-                    <th>{% translate "Full name" %}</th>
-                    <th>{% translate "Email" %}</th>
-                    <th>{% translate "Subject" %}</th>
-                    <th>{% translate "Message" %}</th>
-                    <th></th>
-                </tr>
-                </tfoot>
-            </table>
-        </div>
-        <!-- /.table-responsive -->
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <i class="far fa-envelope-open"></i>
+                <p>{% translate "No messages received yet." %}</p>
+            </div>
+        {% endif %}
     </div>
-    <!-- /.card-body -->
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}"
-                 role="alert">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
+{% endblock %}
+
+{% block customJS %}
+    <script>
+        function toggleMessage(button) {
+            const card = button.closest('.message-card');
+            const body = card.querySelector('.message-body');
+            const icon = button.querySelector('i');
+
+            if (body.style.display === 'block') {
+                body.style.display = 'none';
+                icon.style.transform = 'rotate(0deg)';
+                card.classList.remove('expanded');
+            } else {
+                body.style.display = 'block';
+                icon.style.transform = 'rotate(180deg)';
+                card.classList.add('expanded');
+            }
+        }
+    </script>
 {% endblock %}

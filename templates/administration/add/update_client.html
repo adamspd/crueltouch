@@ -1,0 +1,141 @@
+{% extends 'administration/base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}TCHIIZ | {{ title }}{% endblock %}
+{% block header_title %}{{ title }}{% endblock %}
+
+{% block customCSS %}
+    <link rel="stylesheet" href="{% static 'administration/css/forms.css' %}">
+{% endblock %}
+
+{% block body %}
+    <div class="form-container">
+        <div class="tchiiz-card form-card">
+            <div class="tchiiz-card-header">
+                <div>
+                    <h3 class="tchiiz-card-title">{{ title }}</h3>
+                    <p class="tchiiz-card-subtitle">{% translate "Update client information" %}</p>
+                </div>
+            </div>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        <i class="fas fa-{% if message.tags == 'error' %}exclamation-circle{% elif message.tags == 'success' %}check-circle{% else %}info-circle{% endif %}"></i>
+                        <p class="mb-0">{{ message }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="POST" id="updateClientForm">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="first_name" class="form-label">{% translate "First Name" %} *</label>
+                    <input type="text"
+                           name="first_name"
+                           id="first_name"
+                           class="form-control"
+                           value="{{ client.first_name }}"
+                           onkeyup="return forceTitle(this);"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="last_name" class="form-label">{% translate "Last Name" %}</label>
+                    <input type="text"
+                           name="last_name"
+                           id="last_name"
+                           class="form-control"
+                           value="{{ client.last_name|default:'' }}"
+                           onkeyup="return forceTitle(this);">
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">{% translate "Email" %} *</label>
+                    <input type="email"
+                           name="email"
+                           id="email"
+                           class="form-control"
+                           value="{{ client.email }}"
+                           onkeyup="return forceLower(this);"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone_number" class="form-label">{% translate "Phone Number" %}</label>
+                    <input type="text"
+                           name="phone_number"
+                           id="phone_number"
+                           class="form-control"
+                           value="{{ client.phone_number|default:'' }}"
+                           placeholder="15 digits, no spaces">
+                    <small class="text-muted">{% translate "Format: 15 digits only, no spaces or dashes" %}</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="address" class="form-label">{% translate "Address" %}</label>
+                    <textarea name="address"
+                              id="address"
+                              class="form-control"
+                              rows="2">{{ client.address|default:'' }}</textarea>
+                    <small class="text-muted">{% translate "City and State is sufficient" %}</small>
+                </div>
+
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    <p class="mb-0">
+                        <strong>{% translate "Account Info:" %}</strong><br>
+                        {% translate "Joined" %}: {{ client.start_date|date:"M d, Y" }}<br>
+                        {% translate "Last Login" %}: {{ client.last_login|date:"M d, Y H:i"|default:"Never" }}<br>
+                        {% translate "Status" %}:
+                        {% if client.is_active %}
+                            <span style="color: #065f46;">{% translate "Active" %}</span>
+                        {% else %}
+                            <span style="color: #b91c1c;">{% translate "Inactive" %}</span>
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div class="form-actions">
+                    <a href="{% url 'administration:user_list' %}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> {% translate "Cancel" %}
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> {% translate "Update Client" %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block customJS %}
+    <script>
+        // Force title case for names
+        function forceTitle(input) {
+            const words = input.value.toLowerCase().split(' ');
+            for (let i = 0; i < words.length; i++) {
+                words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+            }
+            input.value = words.join(' ');
+        }
+
+        // Force lowercase for email
+        function forceLower(input) {
+            input.value = input.value.toLowerCase();
+        }
+
+        // Form validation
+        document.getElementById('updateClientForm').addEventListener('submit', function (e) {
+            const firstName = document.getElementById('first_name').value.trim();
+            const email = document.getElementById('email').value.trim();
+
+            if (!firstName || !email) {
+                e.preventDefault();
+                alert('{% translate "First name and email are required" %}');
+            }
+        });
+    </script>
+{% endblock %}

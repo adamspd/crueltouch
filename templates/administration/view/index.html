@@ -1,456 +1,334 @@
 {% extends 'administration/base.html' %}
 {% load i18n %}
 {% load static %}
+
+{% block header_title %}{% translate "Dashboard Overview" %}{% endblock %}
+
 {% block customCSS %}
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-bs4/3.2.2/dataTables.bootstrap4.min.css"
-          integrity="sha512-ybdqRiNuVPQYM0P7Oa6eO34/xPCBgfL9xndV+d13ARArKsejpRSNycb31xn8yxGrGQISC0VlagTBhS3SWLBVJw=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-responsive-bs4/2.3.0/responsive.bootstrap4.min.css"
-          integrity="sha512-Kep8UHrRwnogj5OXG/g6ZXsfOtdFwJBhcEkEKIKZfiiedZmjwVH3JAyPM3Ag4x6xG1DYf+U/Uu/MFCMkQh+eWQ=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-buttons-bs4/2.2.3/buttons.bootstrap4.min.css"
-          integrity="sha512-qjgDB3iTYTDAAZDtyv6xdGedzfFon3y1yjE/yI2R7HuxKEsY50aXysYFrb2hP3UZbHKiNWKj8tEIhXXFyCi0cA=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="{% static 'administration/css/dashboard.css' %}">
 {% endblock %}
 
 {% block body %}
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0"><a href="" style="color: black">
-                            {% translate "Dashboard" %}
-                        </a>
-                        </h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item">
-                                <a href="{% url 'administration:index' %}">
-                                    {% translate "Dashboard" %}
-                                </a>
-                            </li>
-                            <li class="breadcrumb-item active">{% translate "Index" %}</li>
-                        </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+
+    <!-- Enhanced Stats Grid -->
+    <div class="tchiiz-stats-grid">
+        <div class="tchiiz-stat-card stat-appointments">
+            <div class="stat-content">
+                <div class="stat-header">
+                    <span class="stat-label">{% translate "Appointments" %}</span>
+                    <i class="fas fa-calendar-check stat-icon"></i>
+                </div>
+                <h3 class="stat-value">{{ total_request_session }}</h3>
+                <a href="{% url 'appointment:get_user_appointments' %}" class="stat-link">
+                    {% translate "View Details" %} <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
         </div>
-        <!-- /.content-header -->
 
-        <!-- Main content -->
-        <section class="content">
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %} alert-dismissible"
-                         role="alert">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-            <div class="container-fluid">
-                <!-- Small boxes (Stat box) -->
-                <div class="row">
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-warning">
-                            <div class="inner">
-                                <h3>{{ total_request_session }}</h3>
-                                <p>{% blocktrans count counter=total_request_session %}
-                                    Appointment
-                                {% plural %}
-                                    Appointments
-                                {% endblocktrans %}</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-ios-albums"></i>
-                            </div>
-                            <a href="{% url 'appointment:get_user_appointments' %}" class="small-box-footer">
-                                {% translate "More info" %}&nbsp;
-                                <i class="fas fa-arrow-circle-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-success">
-                            <div class="inner">
-                                <h3>{{ total_contact_forms }}</h3>
-                                <p>{% translate "Contact Forms" %}</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-document"></i>
-                            </div>
-                            <a href="{% url 'administration:message_list' %}" class="small-box-footer">
-                                {% translate "More info" %}&nbsp;
-                                <i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-info">
-                            <div class="inner">
-                                <h3>{{ total_photos_delivered }}</h3>
-                                <p>{% translate "Photos Delivered" %}</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-images"></i>
-                            </div>
-                            <a href="#" class="small-box-footer">
-                                {% translate "More info" %}&nbsp;
-                                <i class="fas fa-arrow-circle-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-danger">
-                            <div class="inner">
-                                <h3>{{ total_clients }}</h3>
-                                <p>{% translate "Clients" %}</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-person-stalker"></i>
-                            </div>
-                            <a href="{% url 'administration:user_list' %}" class="small-box-footer">
-                                {% translate "More info" %}&nbsp;
-                                <i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
+        <div class="tchiiz-stat-card stat-messages">
+            <div class="stat-content">
+                <div class="stat-header">
+                    <span class="stat-label">{% translate "Messages" %}</span>
+                    <i class="fas fa-envelope stat-icon"></i>
                 </div>
-
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header" id="requested_session">
-                                <h3 class="card-title"
-                                    style="text-transform: uppercase; font-size: 20px !important; font-weight: bold !important;">{% translate "Last 5 Appointments" %}</h3>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <table id="example2" class="table table-bordered table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th>{% translate "On" %}</th>
-                                        <th>{% translate "Client, AKA" %}</th>
-                                        <th>{% translate "Booked for" %}</th>
-                                        <th>{% translate "For only" %}</th>
-                                        <th>{% translate "See them on" %}</th>
-                                        <th>{% translate "Ping at" %}</th>
-                                        <th>{% translate "Buzz at" %}</th>
-                                        <th>{% translate "Found at" %}</th>
-                                        <th>{% translate "Snapper" %}</th>
-                                        <th>{% translate "Actions" %}</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for rs in request_session %}
-                                        <tr>
-                                            <td>{{ rs.created_at|date }}</td>
-                                            <td>{{ rs.client.first_name }} {{ rs.client.last_name }}</td>
-                                            <td>{{ rs.get_service_name }}</td>
-                                            <td>{{ rs.get_appointment_amount_to_pay_str }}</td>
-                                            <td>{{ rs.get_start_time }}</td>
-                                            <td>
-                                                <a href="mailto:{{ rs.client.email }}">
-                                                    {{ rs.client.email }}
-                                                </a>
-                                            </td>
-                                            <td>
-                                                {% if rs.phone %}
-                                                    <a href="tel:{{ rs.phone }}">
-                                                        {{ rs.phone }}
-                                                    </a>
-                                                {% else %}
-                                                    {{ rs.phone }}
-                                                {% endif %}
-                                            </td>
-                                            <td>
-                                                {{ rs.address }}
-                                            </td>
-                                            <td>{{ rs.get_staff_member_name }}</td>
-                                            <td>
-                                                <a href="{% url 'appointment:display_appointment' rs.pk %}"
-                                                   class="btn btn-info btn-sm">
-                                                    <i class="fas fa-eye"></i>&nbsp;View
-                                                </a>&nbsp;
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                    <tfoot>
-                                    <tr>
-                                        <th>{% translate "On" %}</th>
-                                        <th>{% translate "Client, AKA" %}</th>
-                                        <th>{% translate "Booked For" %}</th>
-                                        <th>{% translate "For Only" %}</th>
-                                        <th>{% translate "See Them On" %}</th>
-                                        <th>{% translate "Ping At" %}</th>
-                                        <th>{% translate "Buzz At" %}</th>
-                                        <th>{% translate "Found At" %}</th>
-                                        <th>{% translate "Chosen Snap" %}</th>
-                                        <th>{% translate "Actions" %}</th>
-                                    </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.card -->
-                    </div>
-                    <!-- /.col -->
-                </div>
-                <!-- /.row -->
+                <h3 class="stat-value">{{ total_contact_forms }}</h3>
+                <a href="{% url 'administration:message_list' %}" class="stat-link">
+                    {% translate "Inbox" %} <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
-            <!-- /.container-fluid -->
-        </section>
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header" id="invoices">
-                                <h3 class="card-title"
-                                    style="text-transform: uppercase; font-size: 20px !important; font-weight: bold !important;">{% translate "Last 5 Invoices" %}</h3>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th>{% translate "Date" %}</th>
-                                        <th>{% translate "Client" %}</th>
-                                        <th>{% translate "Total" %}</th>
-                                        <th>{% translate "Ping at" %}</th>
-                                        <th>{% translate "Buzz at" %}</th>
-                                        <th>{% translate "Email Sent" %}</th>
-                                        <th>{% translate "Status" %}</th>
-                                        <th>{% translate "Actions" %}</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for rs in invoices %}
-                                        <tr>
-                                            <td>{{ rs.created_at|date }}</td>
-                                            <td>{{ rs.client.get_short_name }}</td>
-                                            <td>${{ rs.total_amount }}</td>
-                                            <td>
-                                                <a href="mailto:{{ rs.client.email }}">
-                                                    {{ rs.client.email }}
-                                                </a>
-                                            </td>
-                                            <td>
-                                                {% if rs.client.phone_number %}
-                                                    <a href="tel:{{ rs.client.phone_number }}">
-                                                        {{ rs.client.phone_number }}
-                                                    </a>
-                                                {% else %}
-                                                    N/A
-                                                {% endif %}
-                                            </td>
-                                            <td>
-                                                {{ rs.get_if_email_sent }}
-                                            </td>
-                                            <td>
-                                                <form action="{% url 'administration:update_invoice_status' rs.invoice_number %}"
-                                                      method="post">
-                                                    {% csrf_token %}
-                                                    <label>
-                                                        <select name="status" onchange="this.form.submit()">
-                                                            {% for status, status_display in rs.INVOICE_STATUS_CHOICES %}
-                                                                <option value="{{ status }}"
-                                                                        {% if rs.status == status %}selected{% endif %}>
-                                                                    {{ status_display }}
-                                                                </option>
-                                                            {% endfor %}
-                                                        </select>
-                                                    </label>
-                                                </form>
-                                            </td>
+        </div>
 
-                                            <td style="display: flex; flex-direction: row; justify-content: space-between;">
-                                                {% if not rs.email_sent or not rs.status_changed %}
-                                                    <a href="{% url 'administration:send_invoice' rs.invoice_number %}"
-                                                       class="btn btn-primary btn-sm">
-                                                        <i class="fas fa-envelope"></i>
-                                                        {% translate "Send" %}
-                                                    </a>
-                                                {% else %}
-                                                    <a href="" class="btn btn-primary btn-sm disabled">
-                                                        <i class="fas fa-envelope"></i>
-                                                        {% translate "Send" %}
-                                                    </a>
-                                                {% endif %}
-{#                                                <a href="{% url 'administration:edit_invoice' rs.invoice_number %}"#}
-{#                                                   class="btn btn-success btn-sm">#}
-{#                                                    <i class="fas fa-edit"></i>Edit#}
-{#                                                </a>#}
-{#                                                <a href="{% url 'administration:delete_invoice' rs.invoice_number %}"#}
-{#                                                   class="btn btn-danger btn-sm">#}
-{#                                                    <i class="fas fa-trash"></i>Delete#}
-{#                                                </a>#}
-{#                                                <a href="{% url 'administration:view_invoice' rs.invoice_number %}"#}
-{#                                                   class="btn btn-info btn-sm">#}
-{#                                                    <i class="fas fa-eye"></i>View#}
-{#                                                </a>#}
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                    <tfoot>
-                                    <tr>
-                                        <th>{% translate "Date" %}</th>
-                                        <th>{% translate "Client" %}</th>
-                                        <th>{% translate "Total" %}</th>
-                                        <th>{% translate "Ping at" %}</th>
-                                        <th>{% translate "Buzz at" %}</th>
-                                        <th>{% translate "Email Sent" %}</th>
-                                        <th>{% translate "Status" %}</th>
-                                        <th>{% translate "Actions" %}</th>
-                                    </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.card -->
-                    </div>
-                    <!-- /.col -->
+        <div class="tchiiz-stat-card stat-photos">
+            <div class="stat-content">
+                <div class="stat-header">
+                    <span class="stat-label">{% translate "Photos" %}</span>
+                    <i class="fas fa-images stat-icon"></i>
                 </div>
-                <!-- /.row -->
+                <h3 class="stat-value">{{ total_photos_delivered }}</h3>
+                <a href="#" class="stat-link">
+                    {% translate "Analytics" %} <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
-            <!-- /.container-fluid -->
-        </section>
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header border-0">
-                                <div class="d-flex justify-content-between">
-                                    <h3 class="card-title">Photoshoot Sessions</h3>
-                                    <a href="javascript:void(0);">View Report</a>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex">
-                                    <p class="d-flex flex-column">
-                                        <span class="text-bold text-lg">{{ total_request_session }}</span>
-                                        <span>Requested Sessions Over Time</span>
-                                    </p>
-                                    <p class="ml-auto d-flex flex-column text-right">
-                                        {% if increase_percentage > 0 %}
-                                            <span class="text-success">
-                                          <i class="fas fa-arrow-up"></i> {{ increase_percentage }}%
-                                        </span>
-                                        {% else %}
-                                            <span class="text-danger">
-                                          <i class="fas fa-arrow-down"></i> {{ increase_percentage }}%
-                                        </span>
-                                        {% endif %}
-                                        <span class="text-muted">Since last month</span>
-                                    </p>
-                                </div>
-                                <!-- /.d-flex -->
+        </div>
 
-                                <div class="position-relative mb-4">
-                                    <canvas id="requested-sessions" height="200"></canvas>
-                                </div>
-
-                                <div class="d-flex flex-row justify-content-end">
-                                      <span class="mr-2">
-                                        <i class="fas fa-square text-primary"></i> Photoshoot Sessions each month
-                                      </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <div class="tchiiz-stat-card stat-clients">
+            <div class="stat-content">
+                <div class="stat-header">
+                    <span class="stat-label">{% translate "Clients" %}</span>
+                    <i class="fas fa-users stat-icon"></i>
                 </div>
+                <h3 class="stat-value">{{ total_clients }}</h3>
+                <a href="{% url 'administration:user_list' %}" class="stat-link">
+                    {% translate "Manage Users" %} <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
         </div>
     </div>
+
+    <!-- Recent Appointments Cards -->
+    <div class="tchiiz-card">
+        <div class="tchiiz-card-header">
+            <div>
+                <h3 class="tchiiz-card-title">{% translate "Recent Appointments" %}</h3>
+                <p class="tchiiz-card-subtitle">{% translate "Latest booking requests from clients" %}</p>
+            </div>
+            <a href="{% url 'appointment:get_user_appointments' %}" class="btn btn-primary btn-sm">
+                <i class="fas fa-calendar-alt"></i> {% translate "View All" %}
+            </a>
+        </div>
+
+        <div class="appointment-list">
+            {% for rs in request_session %}
+                <div class="appointment-card">
+                    <div class="appointment-date">
+                        <div class="date-badge">
+                            <span class="date-day">{{ rs.created_at|date:"d" }}</span>
+                            <span class="date-month">{{ rs.created_at|date:"M" }}</span>
+                            <span class="date-year">{{ rs.created_at|date:"Y" }}</span>
+                        </div>
+                    </div>
+
+                    <div class="appointment-details">
+                        <div class="appointment-client">
+                            <span class="client-name">{{ rs.client.get_full_name }}</span>
+                            {% if rs.phone %}
+                                <a href="tel:{{ rs.phone }}" class="client-phone">
+                                    <i class="fas fa-phone"></i> {{ rs.phone }}
+                                </a>
+                            {% else %}
+                                <span class="client-phone text-muted">{% translate "No phone" %}</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="appointment-session">
+                            <span class="session-type">{{ rs.get_service_name }}</span>
+                            <span class="session-time">
+                            <i class="far fa-clock"></i> {{ rs.get_start_time }}
+                        </span>
+                        </div>
+
+                        <div class="appointment-location">
+                            {% if rs.address %}
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span class="location-text">{{ rs.address|truncatechars:50 }}</span>
+                            {% else %}
+                                <span class="text-muted">{% translate "No location provided" %}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="appointment-action">
+                        <a href="{% url 'appointment:display_appointment' rs.pk %}"
+                           class="btn-action"
+                           title="View Details">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="empty-state">
+                    <i class="far fa-calendar-times"></i>
+                    <p>{% translate "No appointments found." %}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Recent Invoices Cards -->
+    <div class="tchiiz-card">
+        <div class="tchiiz-card-header">
+            <div>
+                <h3 class="tchiiz-card-title">{% translate "Recent Invoices" %}</h3>
+                <p class="tchiiz-card-subtitle">{% translate "Track payments and invoice status" %}</p>
+            </div>
+            <a href="{% url 'administration:list_invoices' %}" class="btn btn-primary btn-sm">
+                <i class="fas fa-file-invoice"></i> {% translate "View All" %}
+            </a>
+        </div>
+
+        <div class="invoice-list">
+            {% for rs in invoices %}
+                <div class="invoice-card">
+                    <div class="invoice-date">
+                        <div class="date-badge date-badge-small">
+                            <span class="date-day">{{ rs.created_at|date:"d" }}</span>
+                            <span class="date-month">{{ rs.created_at|date:"M" }}</span>
+                            <span class="date-year">{{ rs.created_at|date:"y" }}</span>
+                        </div>
+                    </div>
+
+                    <div class="invoice-details">
+                        <div class="invoice-client">
+                            <span class="client-name">{{ rs.client.get_short_name }}</span>
+                            <a href="mailto:{{ rs.client.email }}" class="client-email">
+                                <i class="far fa-envelope"></i> {{ rs.client.email|truncatechars:30 }}
+                            </a>
+                        </div>
+
+                        <div class="invoice-amount-display">
+                            <span class="invoice-amount">${{ rs.total_amount }}</span>
+                        </div>
+
+                        <div class="invoice-status">
+                            <form action="{% url 'administration:update_invoice_status' rs.invoice_number %}"
+                                  method="post" class="invoice-status-form">
+                                {% csrf_token %}
+                                <select name="status"
+                                        onchange="this.form.submit()"
+                                        class="status-select status-{{ rs.status }}">
+                                    {% for status, status_display in rs.INVOICE_STATUS_CHOICES %}
+                                        <option value="{{ status }}"
+                                                {% if rs.status == status %}selected{% endif %}>
+                                            {{ status_display }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                {% if rs.email_sent %}
+                                    <span class="email-sent-badge" title="Email Sent">
+                                    <i class="fas fa-check-circle"></i>
+                                </span>
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="invoice-actions">
+                        {% if not rs.email_sent %}
+                            <a href="{% url 'administration:send_invoice' rs.invoice_number %}"
+                               class="btn-action btn-action-primary"
+                               title="Send Invoice">
+                                <i class="fas fa-paper-plane"></i>
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'administration:view_invoice' rs.invoice_number %}"
+                           class="btn-action"
+                           title="View PDF"
+                           target="_blank">
+                            <i class="fas fa-file-pdf"></i>
+                        </a>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="empty-state">
+                    <i class="far fa-file-invoice"></i>
+                    <p>{% translate "No invoices found." %}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Monthly Overview Chart -->
+    <div class="tchiiz-card">
+        <div class="tchiiz-card-header">
+            <div>
+                <h3 class="tchiiz-card-title">{% translate "Monthly Overview" %}</h3>
+                <p class="tchiiz-card-subtitle">{% translate "Last 12 months appointment trends" %}</p>
+            </div>
+            <div class="chart-stats">
+                {% if increase_percentage > 0 %}
+                    <span class="stat-trend stat-trend-up">
+                    <i class="fas fa-arrow-up"></i> {{ increase_percentage|floatformat:1 }}%
+                </span>
+                {% elif increase_percentage < 0 %}
+                    <span class="stat-trend stat-trend-down">
+                    <i class="fas fa-arrow-down"></i> {{ increase_percentage|floatformat:1|cut:"-" }}%
+                </span>
+                {% else %}
+                    <span class="stat-trend stat-trend-neutral">
+                    <i class="fas fa-minus"></i> 0%
+                </span>
+                {% endif %}
+                <span class="stat-trend-label">{% translate "vs last month" %}</span>
+            </div>
+        </div>
+
+        <div class="tchiiz-chart-container">
+            <canvas id="requested-sessions"></canvas>
+        </div>
+    </div>
+
 {% endblock %}
+
 {% block customJS %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const messageElements = document.querySelectorAll('.alert-dismissible');
-            setTimeout(function () {
-                messageElements.forEach(function (element) {
-                    element.style.display = 'none';
-                });
-            }, 3000);
-        });
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"
-            integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/dataTables.bootstrap4.min.js"
-            integrity="sha512-OQlawZneA7zzfI6B1n1tjUuo3C5mtYuAWpQdg+iI9mkDoo7iFzTqnQHf+K5ThOWNJ9AbXL4+ZDwH7ykySPQc+A=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-responsive/2.3.0/dataTables.responsive.min.js"
-            integrity="sha512-jHZCTFSeSUkjMMzALVJ5aztNk1+qw1EOhBu6AZIIJo0j4YsCyG4S/feS27WkEAV7C6htBoE4GCqPOjAOodu2Jw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-responsive-bs4/2.3.0/responsive.bootstrap4.min.js"
-            integrity="sha512-Isz8YdCq0qR8rvj22HWFFfj9vi+ambuHruMv9ctDBb2BDiSfOcY76BcoH5uSVj1nHDbCUb9qeG2CDSTYkaf8QQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-buttons/2.2.3/js/dataTables.buttons.min.js"
-            integrity="sha512-QT3oEXamRhx0x+SRDcgisygyWze0UicgNLFM9Dj5QfJuu2TVyw7xRQfmB0g7Z5/TgCdYKNW15QumLBGWoPefYg=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-buttons-bs4/2.2.3/buttons.bootstrap4.min.js"
-            integrity="sha512-DfTGKO1w5pcl0/oFlkn7icaopS8zAeOKoIfk2MZRIaxX6NlZ7PFSLX83BU5UILhfolXFKN40lk2ftpRbftw+Kw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"
-            integrity="sha512-XMVd28F1oH/O71fzwBnV7HucLxVwtxf26XV8P4wPk26EDxuGZ91N8bsOttmnomcCD3CS5ZMRL50H0GgOHvegtg=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.5/pdfmake.min.js"
-            integrity="sha512-rDbVu5s98lzXZsmJoMa0DjHNE+RwPJACogUCLyq3Xxm2kJO6qsQwjbE5NDk2DqmlKcxDirCnU1wAzVLe12IM3w=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.5/vfs_fonts.js"
-            integrity="sha512-cktKDgjEiIkPVHYbn8bh/FEyYxmt4JDJJjOCu5/FQAkW4bc911XtKYValiyzBiJigjVEvrIAyQFEbRJZyDA1wQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        // Real data from Django backend
+        const monthLabels = {{ month_labels|safe }};
+        const appointmentData = {{ appointment_counts|safe }};
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-buttons/2.2.3/js/buttons.html5.min.js"
-            integrity="sha512-BdN+kHA7QfWIcQE3WMwSj5QAvVUrSGxJLv7/yuEEypMOZBSJ1VKGr9BSpOew+6va9yfGUACw/8Yt7LKNn3RKRA=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-buttons/2.2.3/js/buttons.print.min.js"
-            integrity="sha512-UthH9WkvNUixebk8yKEFm3Sy+Rm8GbuvxiIMCDs9Cepl+YxhY+LUijPFZshcW7+PHa/HcSFLfSX3fGq1AcglWg=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-buttons/2.2.3/js/buttons.colVis.min.js"
-            integrity="sha512-TDM0Ek51cJSpP8Btld1ahY8LpMImyQ1k+Ve81qGMdjBLKhADu99JQrUWDuRnT8M0qfkJb+Mt+ZwMaMi46UXA8g=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-        $(function () {
-            $("#example1").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            $('#example2').DataTable({
-                paging: false,
-                lengthChange: false,
-                searching: true,
-                ordering: false,
-                info: true,
-                autoWidth: false,
+        const ctx = document.getElementById('requested-sessions').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: monthLabels,
+                datasets: [{
+                    label: 'Appointments',
+                    data: appointmentData,
+                    borderColor: '#d97706',
+                    backgroundColor: 'rgba(217, 119, 6, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#d97706',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                    pointHoverRadius: 7,
+                    pointHoverBackgroundColor: '#b45309',
+                    pointHoverBorderWidth: 3
+                }]
+            },
+            options: {
                 responsive: true,
-                buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
-            }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: '#1f2937',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        borderColor: '#374151',
+                        borderWidth: 1,
+                        padding: 12,
+                        displayColors: false,
+                        callbacks: {
+                            label: function (context) {
+                                return context.parsed.y + ' appointments';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#f3f4f6',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            color: '#6b7280',
+                            font: {
+                                size: 12
+                            },
+                            precision: 0
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            color: '#6b7280',
+                            font: {
+                                size: 11
+                            }
+                        }
+                    }
+                }
+            }
         });
     </script>
-    <script>
-        var my_chart = {{ book_me_by_month|safe }};
-    </script>
-
-    <script src="{% static 'administration/dist/js/pages/dashboard.js' %}"></script>
-    <script src="{% static 'administration/dist/js/pages/dashboard3.js' %}"></script>
 {% endblock %}

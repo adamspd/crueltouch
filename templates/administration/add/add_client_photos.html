@@ -1,184 +1,134 @@
 {% extends 'administration/base.html' %}
 {% load i18n %}
 {% load static %}
-{% block title %}TCHIIZ | {{ title }}{% endblock %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block header_title %}{{ title }}{% endblock %}
+
 {% block customCSS %}
-    <style>
-        .not-visible {
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'administration/css/forms.css' %}">
 {% endblock %}
+
 {% block body %}
-    <section class="content content-wrapper">
-        <div class="container-fluid">
-            <div class="row" style="margin: 0 auto; padding-top: 20px">
-                <!-- left column -->
-                <div class="col-md-12">
-                    <!-- general form elements -->
-                    <div class="card card-info">
-                        <div class="card-header">
-                            <h3 class="card-title">{{ title }} </h3>
-                            <small class="float-right"></small>
+    <div class="form-container">
+        <div class="tchiiz-card form-card">
+            <div class="tchiiz-card-header">
+                <div>
+                    <h3 class="tchiiz-card-title">{{ title }}</h3>
+                    <p class="tchiiz-card-subtitle">{% translate "Upload photos for a specific client" %}</p>
+                </div>
+            </div>
+
+            <form id="upload-form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label class="form-label">{% translate "Select Client" %}</label>
+                    {% if client_list %}
+                        <select name="client" class="form-control" required>
+                            <option value="">{% translate "-- Choose Client --" %}</option>
+                            {% for client in client_list %}
+                                <option value="{{ client.id }}">{{ client.get_full_name }} ({{ client.email }})</option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                        <div class="alert alert-danger">
+                            {% translate "No clients found." %}
+                            <a href="{% url 'administration:create_new_client' %}"
+                               class="alert-link">{% translate "Create one first." %}</a>
                         </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
-                        <form method="POST" enctype="multipart/form-data" id="upload-form">
-                            {% csrf_token %}
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="exampleInputFile">{% translate "Upload image" %}</label>
-                                    <div class="form-group col-md-12">
-                                        <label>{% trans "Client name" %} *</label><br>
-                                        <div class="clientName name">
-                                            <select name="client" id="client_name" class="form-control">
-                                                {% for client in client_list %}
-                                                    <option value="{{ client.id }}">{{ client.first_name }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                        <div class="not-in-the-list">
-                                            <p>Client not in the list ?
-                                                <a href="{% url 'administration:create_new_client' %}">
-                                                    Add <i class="fa-solid fa-plus-circle"></i></a>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="id_photo"
-                                                   multiple="multiple">
-                                            <label class="custom-file-label" for="id_photo">Choose file</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.card-body -->
+                    {% endif %}
+                </div>
 
-                            <div class="card-footer">
-                                <button type="submit" id="formSubmitBTN"
-                                        class="btn btn-info">{% translate "Send" %}</button>
-                                <button type="reset" class="btn btn-default float-right">
-                                    <a href="{% url 'administration:index' %}">{% translate "Cancel" %}</a>
-                                </button>
-                            </div>
-
-                            <br>
-                            {% if messages %}
-                                {% for message in messages %}
-                                    <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}"
-                                         role="alert">{{ message }}</div>
-                                {% endfor %}
-                            {% endif %}
-                            {% if form.errors %}
-                                {% for field, errors in form.errors.items %}
-                                    {% for error in errors %}
-                                        <p style="color: darkred">{{ error }}</p>
-                                    {% endfor %}
-                                {% endfor %}
-                            {% endif %}
-                        </form>
-
+                <div class="form-group">
+                    <label class="form-label">{% translate "Upload Photos" %}</label>
+                    <div class="file-upload-area">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p class="file-upload-text">{% translate "Click to select files or drag and drop" %}</p>
+                        <input type="file" name="id_photo" id="id_photo" multiple required class="file-input"
+                               onchange="updateFileCount(this)">
+                        <p class="file-count" id="file-count">{% translate "No files selected" %}</p>
                     </div>
                 </div>
-                <div class="not-visible" id="progress-box"></div>
-                <div class="not-visible" id="alert-box"></div>
-            </div>
-        </div>
-    </section>
 
+                <div id="progress-container" class="progress-container">
+                    <div class="progress-bar-wrapper">
+                        <div id="progress-bar" class="progress-bar"></div>
+                    </div>
+                    <p id="progress-text" class="progress-text">0%</p>
+                </div>
+
+                <div class="form-actions">
+                    <a href="{% url 'administration:index' %}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> {% translate "Cancel" %}
+                    </a>
+                    <button type="submit" id="submit-btn" class="btn btn-primary">
+                        <i class="fas fa-upload"></i> {% translate "Upload Photos" %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}
 
 {% block customJS %}
-    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
     <script>
-
-        $('input#id_photo').change(function () {
-            const files = $(this)[0].files;
-
-            // calculate total size of all files
-            let totalSize = 0;
-            for (let i = 0; i < files.length; i++) {
-                totalSize += files[i].size;
+        function updateFileCount(input) {
+            const count = input.files.length;
+            const fileCount = document.getElementById('file-count');
+            if (count > 0) {
+                fileCount.textContent = count + (count === 1 ? ' file selected' : ' files selected');
+                fileCount.style.color = '#0891b2';
+                fileCount.style.fontWeight = '600';
+            } else {
+                fileCount.textContent = 'No files selected';
             }
-            // convert total size to MB
-            totalSize = totalSize / 1024 / 1024;
-            // round to 2 decimal places
-            totalSize = totalSize.toFixed(2);
-            // display total size
-            $(this).next('.custom-file-label').html(files.length + ' files selected' + ' (' + totalSize + ' MB)');
-        });
+        }
 
-        const uploadForm = document.getElementById('upload-form');
-        const imagesClientLink = document.getElementById('id_photo');
-        const progressBox = document.getElementById('progress-box');
-        const csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
-        const formSubmitBTN = document.getElementById('formSubmitBTN');
-        const alertBox = document.getElementById('alert-box');
+        const form = document.getElementById('upload-form');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const container = document.getElementById('progress-container');
+        const btn = document.getElementById('submit-btn');
 
-        document.getElementById("id_photo").addEventListener("change", function () {
-            console.log(this.files.length);
-        });
-
-        formSubmitBTN.addEventListener('click', (e) => {
+        form.addEventListener('submit', (e) => {
             e.preventDefault();
-            progressBox.classList.remove('not-visible');
 
-            // upload multiple files
-            const files = imagesClientLink.files;
-            const formData = new FormData();
-            for (let i = 0; i < files.length; i++) {
-                let file = files[i];
-                formData.append('id_photo', file, file.name);
+            const files = document.getElementById('id_photo').files;
+            if (files.length === 0) {
+                alert("Please select photos first.");
+                return;
             }
-            formData.append('csrfmiddlewaretoken', csrfToken);
-            formData.append('client', document.getElementsByName('client')[0].value);
 
-            $.ajax({
-                type: 'POST',
-                url: '{% url 'administration:send_photos_for_client_to_choose_from' %}',
-                enctype: 'multipart/form-data',
-                data: formData,
-                beforeSend: function () {
+            container.style.display = 'block';
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
 
-                },
-                xhr: function () {
-                    const xhr = new window.XMLHttpRequest();
-                    xhr.upload.addEventListener('progress', function (e) {
-                        if (e.lengthComputable) {
-                            const percent = Math.round((e.loaded / e.total) * 100);
-                            progressBox.innerHTML = `<div class="progress">
-                            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: ${percent}%;" aria-valuenow="${percent}" aria-valuemin="0" aria-valuemax="100">${percent}%</div>
-                            </div>`;
-                        }
-                    });
-                    return xhr;
-                },
-                success: function (data) {
-                    progressBox.innerHTML = `<div class="progress">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
-                    </div>`;
-                    alertBox.classList.remove('not-visible');
-                    alertBox.innerHTML = `<br><div class="alert alert-success" role="alert">
-                                            Photos successfully sent to client for choosing.
-                                            </div>`;
-                    setTimeout(() => {
-                        progressBox.classList.add('not-visible');
-                    }, 3000);
-                    uploadForm.reset();
-                    // change label input#id_photo to Choose file
-                    imagesClientLink.nextElementSibling.innerHTML = 'Choose file';
-                },
-                error: function (data) {
-                    console.log(data.error);
-                    progressBox.innerHTML = `<div class="alert alert-danger" role="alert">
-                                            Something wrong happened, please try again !
-                                            </div>`;
-                },
-                cache: false,
-                contentType: false,
-                processData: false
-            })
-        })
+            const formData = new FormData(form);
+            const xhr = new XMLHttpRequest();
+
+            xhr.open('POST', form.action, true);
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+            xhr.upload.onprogress = function (e) {
+                if (e.lengthComputable) {
+                    const percent = Math.round((e.loaded / e.total) * 100);
+                    progressBar.style.width = percent + '%';
+                    progressText.innerText = percent + '%';
+                }
+            };
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    window.location.href = "{% url 'administration:index' %}";
+                } else {
+                    alert("Upload failed. Please check file sizes.");
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-upload"></i> Try Again';
+                }
+            };
+
+            xhr.send(formData);
+        });
     </script>
 {% endblock %}

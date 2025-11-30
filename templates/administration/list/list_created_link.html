@@ -1,83 +1,90 @@
-{% extends 'administration/list/data.html' %}
+{% extends 'administration/base.html' %}
 {% load i18n %}
 {% load static %}
+
 {% block title %}TCHIIZ | {{ title }}{% endblock %}
+{% block header_title %}{{ title }}{% endblock %}
 
-{% block pageTitle %}
-    {{ title }}
-{% endblock %}
-{% block pageLink %}
-    {% translate "Created links" %}
+{% block customCSS %}
+    <link rel="stylesheet" href="{% static 'administration/css/links-list.css' %}">
 {% endblock %}
 
-
-{% block table %}
-    <!-- Main content -->
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">{{ title }}</h3>
+{% block body %}
+    <div class="tchiiz-card">
+        <div class="tchiiz-card-header">
+            <div>
+                <h3 class="tchiiz-card-title">{{ title }}</h3>
+                <p class="tchiiz-card-subtitle">{% translate "Downloadable links created for clients" %}</p>
+            </div>
+            <a href="{% url 'administration:create_downloadable_file' %}" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus"></i> {% translate "Create New Link" %}
+            </a>
         </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th>{% translate "Client name" %}</th>
-                    <th>{% translate "Email" %}</th>
-                    <th>{% translate "Link" %}</th>
-                    <th>{% translate "Downloaded" %}</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
+
+        {% if deliveries %}
+            <div class="links-list">
                 {% for rs in deliveries %}
-                    <tr>
-                        <td>
-                            &nbsp;&nbsp;&nbsp;{{ rs.client_name }}
-                        </td>
-                        <td>
-                            <a href="mailto:{{ rs.client_email }}">
-                                &nbsp;&nbsp;&nbsp;{{ rs.client_email }}
+                    <div class="link-card">
+                        <div class="link-info">
+                            <div class="client-details">
+                                <div class="client-name">
+                                    <i class="fas fa-user"></i>
+                                    <span>{{ rs.client_name }}</span>
+                                </div>
+                                <div class="client-email">
+                                    <i class="far fa-envelope"></i>
+                                    <a href="mailto:{{ rs.client_email }}">{{ rs.client_email }}</a>
+                                </div>
+                            </div>
+
+                            <div class="link-details">
+                                <div class="download-link">
+                                    <i class="fas fa-link"></i>
+                                    <a href="{{ rs.link_to_download }}" target="_blank" class="link-url">
+                                        {{ rs.link_to_download|truncatechars:50 }}
+                                    </a>
+                                </div>
+                                <div class="download-status">
+                                    {% if rs.was_downloaded %}
+                                        <span class="status-badge downloaded">
+                                        <i class="fas fa-check-circle"></i>
+                                        {% translate "Downloaded" %}
+                                    </span>
+                                    {% else %}
+                                        <span class="status-badge pending">
+                                        <i class="fas fa-clock"></i>
+                                        {% translate "Pending" %}
+                                    </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="link-actions">
+                            <a href="{{ rs.link_to_download }}" target="_blank" class="btn-action btn-action-view">
+                                <i class="fas fa-external-link-alt"></i>
+                                <span>{% translate "Open" %}</span>
                             </a>
-                        </td>
-                        <td>
-                            <a href="{{ rs.link_to_download }}" target="_blank">
-                                {{ rs.link_to_download }}
-                            </a>
-                        </td>
-                        <td>
-                            {{ rs.was_downloaded }}
-                        </td>
-                        <td>
-                            {% if user.is_admin %}
-                                <a href="{% url 'administration:delete_delivery' rs.id %}" class="btn btn-danger btn-sm"
-                                   onClick="return confirm('Are you sure you want to delete this item?');">
+                            {% if user.is_superuser %}
+                                <a href="{% url 'administration:delete_delivery' rs.id %}"
+                                   class="btn-action btn-action-delete"
+                                   onclick="return confirm('{% translate "Are you sure you want to delete this link?" %}')">
                                     <i class="fas fa-trash"></i>
-                                    {% translate "Delete" %}
+                                    <span>{% translate "Delete" %}</span>
                                 </a>
                             {% endif %}
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
                 {% endfor %}
-                </tbody>
-                <tfoot>
-                <tr>
-                    <th>{% translate "Client name" %}</th>
-                    <th>{% translate "Email" %}</th>
-                    <th>{% translate "Link" %}</th>
-                    <th>{% translate "Downloaded" %}</th>
-                    <th></th>
-                </tr>
-                </tfoot>
-            </table>
-        </div>
-        <!-- /.table-responsive -->
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <i class="fas fa-link"></i>
+                <p>{% translate "No download links created yet." %}</p>
+                <a href="{% url 'administration:create_downloadable_file' %}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> {% translate "Create Your First Link" %}
+                </a>
+            </div>
+        {% endif %}
     </div>
-    <!-- /.card-body -->
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}"
-                 role="alert">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
 {% endblock %}

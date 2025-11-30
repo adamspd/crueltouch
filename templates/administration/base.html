@@ -1,507 +1,401 @@
-{% load i18n %}
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% block customMetaTag %}{% endblock %}
-    <link rel="icon" type="image/x-icon" href="{% static 'homepage/img/icon/favicon.ico' %}">
-    <title>{% block title %}TCHIIZ | {% translate "Dashboard" %}{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TCHIIZ | Admin{% endblock %}</title>
 
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="{% static "administration/dist/css/lang.css" %}">
-    <!-- Font Awesome -->
-    {% block css %}
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
-              integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA=="
-              crossorigin="anonymous" referrerpolicy="no-referrer"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-              integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-              crossorigin="anonymous" referrerpolicy="no-referrer"/>
-        <!-- Ionicons -->
-        {#        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">#}
-        <!-- Tempusdominus Bootstrap 4 -->
-        <!-- iCheck -->
-        <link rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/icheck-bootstrap/3.0.1/icheck-bootstrap.min.css"
-              integrity="sha512-8vq2g5nHE062j3xor4XxPeZiPjmRDh6wlufQlfC6pdQ/9urJkU07NM0tEREeymP++NczacJ/Q59ul+/K2eYvcg=="
-              crossorigin="anonymous" referrerpolicy="no-referrer"/>
-        <!-- JQVMap -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jqvmap.min.css"
-              integrity="sha512-RPxGl20NcAUAq1+Tfj8VjurpvkZaep2DeCgOfQ6afXSEgcvrLE6XxDG2aacvwjdyheM/bkwaLVc7kk82+mafkQ=="
-              crossorigin="anonymous" referrerpolicy="no-referrer"/>
-        <!-- Theme style -->
-        <link rel="stylesheet" href="{% static 'administration/dist/css/adminlte.min.css' %}">
-        <!-- overlayScrollbars -->
-        <link rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.3/css/OverlayScrollbars.min.css"
-              integrity="sha512-Xd88BFhCPQY5aAt2W3F5FmTVKkubVsAZDJBo7aXPRc5mwIPTEJvNeqbvBWfNKd4IEu3v9ots+nTdsTzVynlaOw=="
-              crossorigin="anonymous" referrerpolicy="no-referrer"/>
-        <!-- Daterange picker -->
-        <link rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.1/daterangepicker.css"
-              integrity="sha512-gp+RQIipEa1X7Sq1vYXnuOW96C4704yI1n0YB9T/KqdvqaEgL6nAuTSrKufUX3VBONq/TPuKiXGLVgBKicZ0KA=="
-              crossorigin="anonymous" referrerpolicy="no-referrer"/>
-        <!-- summernote -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.css"
-              integrity="sha512-ngQ4IGzHQ3s/Hh8kMyG4FC74wzitukRMIcTOoKT3EyzFZCILOPF0twiXOQn75eDINUfKBYmzYn2AA8DkAk8veQ=="
-              crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    {% endblock %}
+    <link rel="stylesheet" href="{% static 'administration/css/admin.css' %}">
+
     {% block customCSS %}{% endblock %}
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
-<div class="wrapper">
+<body>
 
-    <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        <!-- Left navbar links -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="{% url 'administration:index' %}" class="nav-link">{% translate "Homepage" %}</a>
-            </li>
-            <li class="nav-item d-sm-inline-block">
-                <a href="{% url 'client:logout' %}" class="nav-link">{% translate "Logout" %}</a>
-            </li>
-            <li class="nav-item d-sm-inline-block">
-                <div class="language_fr ml-auto">
-                    {% get_current_language as LANGUAGE_CODE %}
-                    <form action="{% url 'set_language' %}" method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="next" value="{{ redirect_to }}">
-                        <select name="language" id="language_selection" onchange="this.form.submit()"
-                                class="custom-sel">
-                            {% get_available_languages as LANGUAGES %}
-                            {% get_language_info_list for LANGUAGES as languages %}
-                            {% for language in languages %}
-                                <option value="{{ language.code }}"
-                                        {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
-                                    {{ language.name_local.title }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </form>
-                </div>
-            </li>
-        </ul>
+<div class="tchiiz-layout">
 
-        <!-- Right navbar links -->
-        <ul class="navbar-nav ml-auto">
-            <!-- Navbar Search -->
-            <li class="nav-item">
-                <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                    <i class="fas fa-search"></i>
-                </a>
-                <div class="navbar-search-block">
-                    <form class="form-inline">
-                        <div class="input-group input-group-sm">
-                            <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                                   aria-label="Search">
-                            <div class="input-group-append">
-                                <button class="btn btn-navbar" type="submit">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </li>
-
-            <!-- Notifications Dropdown Menu -->
-            <li class="nav-item dropdown">
-                <a class="nav-link" data-toggle="dropdown" href="#">
-                    <i class="far fa-bell"></i>
-                    <span class="badge badge-warning navbar-badge">0</span>
-                </a>
-            </li>
-            <li class="nav-item d-none">
-                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                    <i class="fas fa-expand-arrows-alt"></i>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <!-- /.navbar -->
-
-    <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <!-- Brand Logo -->
-        <a href="{% url 'homepage:index' %}" class="brand-link">
-            <img src="{% static 'homepage/img/icon/android-icon-48x48.png' %}" alt=""
-                 class="brand-image img-circle elevation-3"
-                 style="opacity: .8">
-            <span class="brand-text font-weight-light">TCHIIZ Studio</span>
+    <aside class="tchiiz-sidebar" id="sidebar">
+        <!-- Brand -->
+        <a href="{% url 'homepage:index' %}" class="tchiiz-brand">
+            <div class="tchiiz-brand-logo">
+                <img src="{% static 'homepage/img/icon/android-icon-48x48.png' %}" alt="Logo">
+            </div>
+            <div class="tchiiz-brand-text">
+                <span class="tchiiz-brand-name">TCHIIZ</span>
+                <span class="tchiiz-brand-tagline">Studio</span>
+            </div>
         </a>
 
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <!-- Sidebar user panel (optional) -->
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="image">
-                    {% if user.profile_photo %}
-                        <img src="{{ user.profile_photo.get_url }}" class="img-circle elevation-2" alt="User Image">
-                    {% else %}
-                        <img src="{% static 'client/img/default_profile.jpg' %}"
-                             class="img-circle elevation-2" alt="User Image">
+        <!-- User Profile Power Center -->
+        <div class="tchiiz-user-profile" onclick="toggleUserProfile(this)">
+            <div class="tchiiz-user-avatar">
+                {% if user.profile_photo and user.profile_photo.file %}
+                    <img src="{{ user.profile_photo.file.url }}" alt="Profile">
+                {% else %}
+                    <div class="tchiiz-avatar-placeholder">
+                        {{ user.first_name|slice:":1"|default:"U" }}
+                    </div>
+                {% endif %}
+                <div class="tchiiz-user-status"></div>
+            </div>
+            <div class="tchiiz-user-info">
+                <div class="tchiiz-user-name">
+                    {% if user.first_name %}{{ user.get_full_name }}{% else %}{{ user.email }}{% endif %}
+                </div>
+                <div class="tchiiz-user-role">Administrator</div>
+            </div>
+            <i class="fas fa-chevron-down tchiiz-profile-toggle"></i>
+        </div>
+
+        <!-- Expandable User Quick Stats -->
+        <div class="tchiiz-user-stats">
+            <div class="tchiiz-stat-item">
+                <span class="value">{{ total_request_session|default:"0" }}</span>
+                <span class="label">Appointments</span>
+            </div>
+            <div class="tchiiz-stat-item">
+                <span class="value">{{ total_contact_forms|default:"0" }}</span>
+                <span class="label">Messages</span>
+            </div>
+            <div class="tchiiz-stat-item">
+                <span class="value">{{ total_clients|default:"0" }}</span>
+                <span class="label">Clients</span>
+            </div>
+        </div>
+
+        <!-- Quick Action Button -->
+        <div class="tchiiz-quick-action">
+            <a href="{% url 'appointment:get_user_appointments' %}" class="tchiiz-btn-primary">
+                <i class="fas fa-plus"></i> New Appointment
+            </a>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="tchiiz-nav">
+            <!-- Dashboard - Always prominent -->
+            <a href="{% url 'administration:index' %}"
+               class="tchiiz-nav-item {% if request.resolver_match.url_name == 'index' %}active{% endif %}">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>{% translate "Dashboard" %}</span>
+            </a>
+
+            {% if user.email == "adamspierredavid@gmail.com" %}
+                <a href="/admin" class="tchiiz-nav-item tchiiz-nav-danger" target="_blank">
+                    <i class="fas fa-lock"></i>
+                    <span>{% translate "Django Admin" %}</span>
+                </a>
+            {% endif %}
+
+            <div class="tchiiz-nav-divider"></div>
+
+            <!-- Core Functions -->
+            <div class="tchiiz-nav-section">
+                <div class="tchiiz-nav-item has-treeview" onclick="toggleSubmenu(this)">
+                    <i class="fas fa-calendar"></i>
+                    <span>{% translate "Appointment" %}</span>
+                    <i class="fas fa-chevron-right tchiiz-submenu-arrow"></i>
+                </div>
+                <div class="tchiiz-nav-treeview">
+                    <a href="{% url 'appointment:get_user_appointments' %}"
+                       class="tchiiz-nav-item {% if request.resolver_match.url_name == 'get_user_appointments' %}active{% endif %}">
+                        <i class="far fa-eye"></i>
+                        <span>{% translate "View all" %}</span>
+                    </a>
+                    <a href="{% url 'appointment:user_profile' user.id %}"
+                       class="tchiiz-nav-item {% if request.resolver_match.url_name == 'user_profile' %}active{% endif %}">
+                        <i class="far fa-user-circle"></i>
+                        <span>{% translate "User Profile" %}</span>
+                    </a>
+                    {% if user.is_superuser %}
+                        <a href="{% url 'appointment:add_service' %}"
+                           class="tchiiz-nav-item {% if request.resolver_match.url_name == 'add_service' %}active{% endif %}">
+                            <i class="far fa-plus-square"></i>
+                            <span>{% translate "Add Service" %}</span>
+                        </a>
                     {% endif %}
                 </div>
-                <div class="info">
-                    <a href="{{ profile_link }}" class="d-block">
-                        {{ user.get_full_name }}
+            </div>
+
+            <div class="tchiiz-nav-section">
+                <div class="tchiiz-nav-item has-treeview" onclick="toggleSubmenu(this)">
+                    <i class="fas fa-home"></i>
+                    <span>{% translate "Homepage" %}</span>
+                    <i class="fas fa-chevron-right tchiiz-submenu-arrow"></i>
+                </div>
+                <div class="tchiiz-nav-treeview">
+                    {% if user.is_superuser %}
+                        <a href="{% url 'administration:add_photos_homepage' %}"
+                           class="tchiiz-nav-item {% if request.resolver_match.url_name == 'add_photos_homepage' %}active{% endif %}">
+                            <i class="far fa-plus-square"></i>
+                            <span>{% translate "Add photos" %}</span>
+                        </a>
+                    {% endif %}
+                    <a href="{% url 'administration:list_photos_homepage' %}"
+                       class="tchiiz-nav-item {% if request.resolver_match.url_name == 'list_photos_homepage' %}active{% endif %}">
+                        <i class="far fa-copy"></i>
+                        <span>{% translate "View all photos" %}</span>
                     </a>
                 </div>
             </div>
 
-            <!-- SidebarSearch Form -->
-            <div class="form-inline">
-                <div class="input-group" data-widget="sidebar-search">
-                    <input class="form-control form-control-sidebar" type="search" placeholder="Search"
-                           aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-sidebar">
-                            <i class="fas fa-search fa-fw"></i>
-                        </button>
-                    </div>
+            <div class="tchiiz-nav-section">
+                <div class="tchiiz-nav-item has-treeview" onclick="toggleSubmenu(this)">
+                    <i class="fas fa-image"></i>
+                    <span>{% translate "Portfolio" %}</span>
+                    <i class="fas fa-chevron-right tchiiz-submenu-arrow"></i>
+                </div>
+                <div class="tchiiz-nav-treeview">
+                    {% if user.is_superuser %}
+                        <a href="{% url 'administration:add_photos_portfolio' %}"
+                           class="tchiiz-nav-item {% if request.resolver_match.url_name == 'add_photos_portfolio' %}active{% endif %}">
+                            <i class="far fa-plus-square"></i>
+                            <span>{% translate "Add photos" %}</span>
+                        </a>
+                    {% endif %}
+                    <a href="{% url 'administration:list_photos_portfolio' %}"
+                       class="tchiiz-nav-item {% if request.resolver_match.url_name == 'list_photos_portfolio' %}active{% endif %}">
+                        <i class="far fa-file"></i>
+                        <span>{% translate "View all photos" %}</span>
+                    </a>
+                    {% if user.is_superuser %}
+                        <a href="{% url 'administration:add_album' %}"
+                           class="tchiiz-nav-item {% if request.resolver_match.url_name == 'add_album' %}active{% endif %}">
+                            <i class="far fa-edit"></i>
+                            <span>{% translate "Create new album" %}</span>
+                        </a>
+                    {% endif %}
                 </div>
             </div>
 
-            <!-- Sidebar Menu -->
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                    data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class
-                         with font-awesome or any other icon font library -->
+            <div class="tchiiz-nav-section">
+                <div class="tchiiz-nav-item has-treeview" onclick="toggleSubmenu(this)">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>{% translate "Send photo" %}</span>
+                    <i class="fas fa-chevron-right tchiiz-submenu-arrow"></i>
+                </div>
+                <div class="tchiiz-nav-treeview">
+                    <a href="{% url 'administration:send_photos_for_client_to_choose_from' %}"
+                       class="tchiiz-nav-item {% if request.resolver_match.url_name == 'send_photos_for_client_to_choose_from' %}active{% endif %}">
+                        <i class="fa fa-check-circle"></i>
+                        <span>{% translate "To choose from" %}</span>
+                    </a>
+                    <a href="{% url 'administration:view_client_album_created' %}"
+                       class="tchiiz-nav-item {% if request.resolver_match.url_name == 'view_client_album_created' %}active{% endif %}">
+                        <i class="fa fa-heart"></i>
+                        <span>{% translate "View all chosen" %}</span>
+                    </a>
+                    <a href="{% url 'administration:create_downloadable_file' %}"
+                       class="tchiiz-nav-item {% if request.resolver_match.url_name == 'create_downloadable_file' %}active{% endif %}">
+                        <i class="fa fa-chain"></i>
+                        <span>{% translate "Final via link" %}</span>
+                    </a>
+                    <a href="{% url 'administration:show_all_links_created' %}"
+                       class="tchiiz-nav-item {% if request.resolver_match.url_name == 'show_all_links_created' %}active{% endif %}">
+                        <i class="far fa-eye"></i>
+                        <span>{% translate "View all links" %}</span>
+                    </a>
+                    <a href="{% url 'administration:via_account' %}"
+                       class="tchiiz-nav-item {% if request.resolver_match.url_name == 'via_account' %}active{% endif %}">
+                        <i class="fa fa-user-plus"></i>
+                        <span>{% translate "Final via account" %}</span>
+                    </a>
+                </div>
+            </div>
 
-                    <li class="nav-item">
-                        <a href="{% url 'administration:index' %}" class="nav-link active">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                {% translate "Dashboard" %}
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                    </li>
-                    {# Only Adams here #}
-                    {% if user.email == "adamspierredavid@gmail.com" %}
-                        <li class="nav-item">
-                            <a href="/admin" class="nav-link">
-                                <i class="nav-icon fas fa-lock"></i>
-                                <p>
-                                    {% translate "Django Admin" %}
-                                </p>
-                            </a>
-                        </li>
+            <div class="tchiiz-nav-divider"></div>
+
+            <!-- Management Section -->
+            <div class="tchiiz-nav-header">{% translate "Management" %}</div>
+
+            <a href="{% url 'administration:user_list' %}"
+               class="tchiiz-nav-item {% if request.resolver_match.url_name == 'user_list' %}active{% endif %}">
+                <i class="fas fa-users"></i>
+                <span>{% translate "Client management" %}</span>
+            </a>
+
+            <a href="{% url 'administration:message_list' %}"
+               class="tchiiz-nav-item {% if request.resolver_match.url_name == 'message_list' %}active{% endif %}">
+                <i class="fas fa-comment"></i>
+                <span>{% translate "Message list" %}</span>
+            </a>
+
+            <a href="{% url 'administration:list_invoices' %}"
+               class="tchiiz-nav-item {% if request.resolver_match.url_name == 'list_invoices' %}active{% endif %}">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <span>{% translate "Invoices" %}</span>
+            </a>
+
+            <div class="tchiiz-nav-divider"></div>
+
+            <!-- System Section -->
+            <div class="tchiiz-nav-header">{% translate "System" %}</div>
+
+            <a href="{% url 'administration:help' %}"
+               class="tchiiz-nav-item {% if request.resolver_match.url_name == 'help' %}active{% endif %}">
+                <i class="fas fa-question-circle"></i>
+                <span>{% translate "Help" %}</span>
+            </a>
+
+            <a href="{% url 'administration:must_change_password' user.id %}"
+               class="tchiiz-nav-item {% if request.resolver_match.url_name == 'must_change_password' %}active{% endif %}">
+                <i class="fas fa-key"></i>
+                <span>{% translate "Change password" %}</span>
+            </a>
+        </nav>
+
+        <!-- Footer -->
+        <div class="tchiiz-sidebar-footer">
+            <a href="{% url 'client:logout' %}" class="tchiiz-nav-item tchiiz-logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>{% translate "Sign out" %}</span>
+            </a>
+            <div class="tchiiz-footer-info">
+                <span>v1.0.0</span> • <a href="{% url 'administration:help' %}">Support</a>
+            </div>
+        </div>
+    </aside>
+
+    <div class="tchiiz-main">
+        <header class="tchiiz-header">
+            <div class="tchiiz-header-left">
+                <button class="tchiiz-mobile-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="tchiiz-breadcrumb">
+                    <a href="{% url 'administration:index' %}" class="breadcrumb-home" title="Dashboard">
+                        <i class="fas fa-home"></i>
+                    </a>
+                    <span class="separator">/</span>
+                    <span class="current">{% block header_title %}Dashboard{% endblock %}</span>
+                </div>
+            </div>
+
+            <div class="tchiiz-header-right">
+                <!-- Notification Bell -->
+                <div class="tchiiz-header-icon" title="Notifications">
+                    <i class="far fa-bell"></i>
+                    {% if total_contact_forms > 0 %}
+                        <span class="tchiiz-notification-dot"></span>
                     {% endif %}
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-calendar"></i>
-                            <p>
-                                {% translate "Appointment" %}
-                                <i class="fas fa-angle-left right"></i>
-                                <span class="badge badge-info right">3</span>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{% url 'appointment:get_user_appointments' %}" class="nav-link">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="far fa-solid fa-eye fa-sm nav-icon"></i>
-                                    <p>{% translate "View all" %}</p>
-                                </a>
-                            </li>
-                            {% if user.is_admin %}
-                                <li class="nav-item">
-                                    <a href="{% url 'appointment:user_profile' %}" class="nav-link">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="far fa-user-circle nav-icon"></i>
-                                        <p>{% translate "User Profile" %}</p>
-                                    </a>
-                                </li>
-                            {% else %}
-                                <li class="nav-item">
-                                    <a href="{% url 'appointment:user_profile' user.id %}" class="nav-link">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="far fa-user-circle nav-icon"></i>
-                                        <p>{% translate "User Profile" %}</p>
-                                    </a>
-                                </li>
-                            {% endif %}
-                            {% if user.is_admin %}
-                                <li class="nav-item">
-                                    <a href="{% url 'appointment:add_service' %}" class="nav-link">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="far fa-plus-square nav-icon"></i>
-                                        <p>{% translate "Add Service" %}</p>
-                                    </a>
-                                </li>
-                            {% endif %}
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-home"></i>
-                            <p>
-                                {% translate "Homepage" %}
-                                <i class="fas fa-angle-left right"></i>
-                                <span class="badge badge-info right">2</span>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            {% if user.is_admin %}
-                                <li class="nav-item">
-                                    <a href="{% url 'administration:add_photos_homepage' %}" class="nav-link">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="far fa-plus-square nav-icon"></i>
-                                        <p>{% translate "Add photos" %}</p>
-                                    </a>
-                                </li>
-                            {% endif %}
-                            <li class="nav-item">
-                                <a href="{% url 'administration:list_photos_homepage' %}" class="nav-link">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="far fa-copy nav-icon"></i>
-                                    <p>{% translate "View all photos" %}</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-image"></i>
-                            <p>
-                                {% translate "Portfolio" %}
-                                <i class="fas fa-angle-left right"></i>
-                                <span class="badge badge-info right">3</span>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            {% if user.is_admin %}
-                                <li class="nav-item">
-                                    <a href="{% url 'administration:add_photos_portfolio' %}" class="nav-link">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="far fa-plus-square nav-icon"></i>
-                                        <p>{% translate "Add photos" %}</p>
-                                    </a>
-                                </li>
-                            {% endif %}
-                            <li class="nav-item">
-                                <a href="{% url 'administration:list_photos_portfolio' %}" class="nav-link">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="far fa-file nav-icon"></i>
-                                    <p>{% translate "View all photos" %}</p>
-                                </a>
-                            </li>
-                            {% if user.is_admin %}
-                                <li class="nav-item">
-                                    <a href="{% url 'administration:add_album' %}" class="nav-link">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="far fa-edit nav-icon"></i>
-                                        <p>{% translate "Create new album" %}</p>
-                                    </a>
-                                </li>
-                            {% endif %}
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fa-solid fa-paper-plane"></i>
-                            <p>
-                                {% translate "Send photo" %}
-                                <i class="fas fa-angle-left right"></i>
-                                <span class="badge badge-info right">5</span>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{% url 'administration:send_photos_for_client_to_choose_from' %}"
-                                   class="nav-link">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="fa fa-check-circle nav-icon"></i>
-                                    <p>{% translate "To choose from" %}</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{% url 'administration:view_client_album_created' %}" class="nav-link">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="fa fa-heart nav-icon"></i>
-                                    <p>{% translate "View all chosen" %}</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{% url 'administration:create_downloadable_file' %}" class="nav-link">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="fa fa-chain nav-icon"></i>
-                                    <p>{% translate "Final via link" %}</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{% url 'administration:show_all_links_created' %}" class="nav-link">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="far fa-eye nav-icon"></i>
-                                    <p>{% translate "View all links" %}</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{% url 'administration:create_downloadable_file' %}"
-                                   class="nav-link disabled">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="fa fa-user-plus nav-icon"></i>
-                                    <p>{% translate "Final via account" %}</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{% url 'administration:user_list' %}" class="nav-link">
-                            &nbsp;&nbsp;<i class="fa-solid fa-users"></i>
-                            <p>
-                                &nbsp;&nbsp;{% translate "Client management" %}
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{% url 'administration:message_list' %}" class="nav-link">
-                            &nbsp;&nbsp;<i class="fa-solid fa-comment"></i>
-                            <p>
-                                &nbsp;&nbsp;{% translate "Message list" %}
-                            </p>
-                        </a>
-                    </li>
-{#                    <li class="nav-item">#}
-{#                        <a href="{% url 'administration:create_invoice' %}" class="nav-link">#}
-{#                            &nbsp;&nbsp;<i class="fa-solid fa-file-invoice"></i>#}
-{#                            <p>#}
-{#                                &nbsp;&nbsp;{% translate "Generate Invoice" %}#}
-{#                            </p>#}
-{#                        </a>#}
-{#                    </li>#}
-                    <li class="nav-item">
-                        <a href="{% url 'administration:help' %}" class="nav-link">
-                            &nbsp;&nbsp;<i class="fa-solid fa-hand"></i>
-                            <p>
-                                &nbsp;&nbsp;{% translate "Help" %}
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/admin" class="nav-link disabled">
-                            &nbsp;&nbsp;<i class="fa-solid fa-gears"></i>
-                            <p>
-                                &nbsp;&nbsp;{% translate "Settings" %}
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{% url 'reset_password' %}" class="nav-link">
-                            &nbsp;&nbsp;<i class="fa-solid fa-user-secret"></i>
-                            <p>
-                                &nbsp;&nbsp;{% translate "Change password" %}
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{% url 'client:logout' %}" class="nav-link">
-                            &nbsp;&nbsp;<i class="fa-solid fa-sign-out"></i>
-                            <p>
-                                &nbsp;&nbsp;{% translate "Sign out" %}
-                            </p>
-                        </a>
-                    </li>
+                </div>
 
-                </ul>
-            </nav>
-            <!-- /.sidebar-menu -->
-            {# TODO: add possibility here for the admin to change account authorization #}
+                <!-- Language Switcher -->
+                {% get_current_language as LANGUAGE_CODE %}
+                <form action="{% url 'set_language' %}" method="post" class="tchiiz-lang-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ redirect_to }}">
+                    <select name="language" onchange="this.form.submit()" class="tchiiz-lang-select">
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                            <option value="{{ language.code }}"
+                                    {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
+                                {{ language.code|upper }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+        </header>
+
+        <div class="tchiiz-content">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% block body %}{% endblock %}
         </div>
-        <!-- /.sidebar -->
-    </aside>
+    </div>
 
-    {% block body %}{% endblock %}
-
-
-    <!-- /.content-wrapper -->
-    <footer class="main-footer">
-        <div class="copyright" id="copyright">
-            Copyright &copy; 2021 - {% now "Y" %}
-            All rights reserved | TCHIIZ Studio | <a href="https://adamspierredavid.com" target="_blank">APD</a>
-        </div>
-    </footer>
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
+    <div class="tchiiz-overlay" onclick="toggleSidebar()"></div>
 </div>
-<!-- ./wrapper -->
 
-<!-- jQuery -->
-{% block js %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js"
-            integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- jQuery UI 1.13.2 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
-            integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-    <script>
-        $.widget.bridge('uibutton', $.ui.button)
-    </script>
-    <!-- Bootstrap 4 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"
-            integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- ChartJS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
-            integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- Sparkline -->
-    {#<script src="plugins/sparklines/sparkline.js"></script>#}
-    <!-- JQVMap -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jquery.vmap.min.js"
-            integrity="sha512-Zk7h8Wpn6b9LpplWXq1qXpnzJl8gHPfZFf8+aR4aO/4bcOD5+/Si4iNu9qE38/t/j1qFKJ08KWX34d2xmG0jrA=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    {#<script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script>#}
-    <!-- jQuery Knob Chart -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Knob/1.2.13/jquery.knob.min.js"
-            integrity="sha512-NhRZzPdzMOMf005Xmd4JonwPftz4Pe99mRVcFeRDcdCtfjv46zPIi/7ZKScbpHD/V0HB1Eb+ZWigMqw94VUVaw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- daterangepicker -->
-    {#    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"#}
-    {#            integrity="sha512-CryKbMe7sjSCDPl18jtJI5DR5jtkUWxPXWaLCst6QjH8wxDexfRJic2WRmRXmstr2Y8SxDDWuBO6CQC6IE4KTA=="#}
-    {#            crossorigin="anonymous" referrerpolicy="no-referrer"></script>#}
-    {#    <!-- Tempusdominus Bootstrap 4 -->#}
-    {#    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js"#}
-    {#            integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA=="#}
-    {#            crossorigin="anonymous" referrerpolicy="no-referrer"></script>#}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js"
-            integrity="sha512-mh+AjlD3nxImTUGisMpHXW03gE6F4WdQyvuFRkjecwuWLwD2yCijw4tKA3NsEFpA1C3neiKhGXPSIGSfCYPMlQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- Summernote -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.js"
-            integrity="sha512-ZESy0bnJYbtgTNGlAD+C2hIZCt4jKGF41T5jZnIXy4oP8CQqcrBGWyxNP16z70z/5Xy6TS/nUZ026WmvOcjNIQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- overlayScrollbars -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.3/js/OverlayScrollbars.min.js"
-            integrity="sha512-Ae2SccSxoNp/Cn7PIlowLk8cmVyyW5aSCbrB/k08h/yYeK3zrNJ/oAJf8RK/ZD95G8KjkzPIXxKbeYPn43KC0w=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    {#    <script src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js"></script>#}
-    <!-- AdminLTE App -->
-    <script src="{% static 'administration/dist/js/adminlte.js' %}"></script>
-    <!-- AdminLTE for demo purposes -->
-    {#<script src="{% static 'administration/dist/js/demo.js' %}"></script>#}
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Toggle Mobile Sidebar
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const body = document.body;
+        sidebar.classList.toggle('open');
+        body.classList.toggle('sidebar-open');
+    }
+
+    // Toggle Submenus - DON'T close others on desktop
+    function toggleSubmenu(element) {
+        const isOpen = element.classList.contains('menu-open');
+        const isMobile = window.innerWidth <= 992;
+
+        // Only close other submenus on mobile
+        if (isMobile) {
+            document.querySelectorAll('.tchiiz-nav-item.has-treeview').forEach(item => {
+                if (item !== element) {
+                    item.classList.remove('menu-open');
+                    const submenu = item.nextElementSibling;
+                    if (submenu) submenu.style.display = 'none';
+                }
+            });
+        }
+
+        // Toggle current submenu
+        element.classList.toggle('menu-open');
+        const submenu = element.nextElementSibling;
+        if (submenu) {
+            submenu.style.display = isOpen ? 'none' : 'block';
+        }
+    }
+
+    // Toggle User Profile Stats
+    function toggleUserProfile(element) {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('profile-expanded');
+    }
+
+    // Auto-open active menu on load - IMPROVED VERSION
+    document.addEventListener('DOMContentLoaded', function () {
+        // Look for ANY active nav item (not just in treeview)
+        const activeItem = document.querySelector('.tchiiz-nav-item.active');
+
+        if (activeItem) {
+            // Check if this active item is inside a treeview (submenu)
+            const parentTreeview = activeItem.closest('.tchiiz-nav-treeview');
+
+            if (parentTreeview) {
+                // Find the parent section containing this treeview
+                const parentSection = parentTreeview.closest('.tchiiz-nav-section');
+
+                if (parentSection) {
+                    // Find the trigger button for this section
+                    const trigger = parentSection.querySelector('.has-treeview');
+
+                    if (trigger) {
+                        // Open the submenu
+                        trigger.classList.add('menu-open');
+                        parentTreeview.style.display = 'block';
+
+                        console.log('Auto-opened submenu for:', trigger.textContent.trim());
+                    }
+                }
+            }
+        }
+
+        // Fallback: if no active item found, log it for debugging
+        if (!activeItem) {
+            console.warn('No active nav item found. Check if url_name matches in template.');
+        }
+    });
+</script>
+
 {% block customJS %}{% endblock %}
 </body>
 </html>

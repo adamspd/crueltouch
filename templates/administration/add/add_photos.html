@@ -1,83 +1,100 @@
 {% extends 'administration/base.html' %}
 {% load i18n %}
 {% load static %}
+
 {% block title %}TCHIIZ | {{ title }}{% endblock %}
+{% block header_title %}{{ title }}{% endblock %}
+
+{% block customCSS %}
+    <link rel="stylesheet" href="{% static 'administration/css/forms.css' %}">
+{% endblock %}
 
 {% block body %}
-    <section class="content content-wrapper">
-        <div class="container-fluid">
-            <div class="row" style="max-width: 600px; margin: 0 auto; padding-top: 20px">
-                <!-- left column -->
-                <div class="col-md-12">
-                    <!-- general form elements -->
-                    <div class="card card-info">
-                        <div class="card-header">
-                            <h3 class="card-title">{{ title }} </h3>
-                            <small class="float-right">{% translate "Total pictures uploaded" %}: {{ number_of_photos }}</small>
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
-                        <form method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <div class="card-body">
-                                <div class="form-group">
-                                    {% if not homepage %}
-                                        <button type="reset" class="btn btn-outline-info btn-sm float-right">
-                                            <a href="{% url 'administration:add_album' %}">{% translate "Create new album" %}</a>
-                                        </button>
-                                    {% endif %}
-                                    <label>{{ select }}</label><br>
-                                    <select name="row" class="form-control">
-                                        <option value='none'>{{ select }}...</option>
+    <div class="form-container">
+        <div class="tchiiz-card form-card">
+            <div class="tchiiz-card-header">
+                <div>
+                    <h3 class="tchiiz-card-title">{{ title }}</h3>
+                    <p class="tchiiz-card-subtitle">{% translate "Total pictures uploaded" %}:
+                        <strong>{{ number_of_photos }}</strong></p>
+                </div>
+                {% if not homepage %}
+                    <a href="{% url 'administration:add_album' %}" class="btn btn-secondary btn-sm">
+                        <i class="fas fa-folder-plus"></i> {% translate "Create Album" %}
+                    </a>
+                {% endif %}
+            </div>
 
-                                        {% for album in albums %}
-                                            <option value='{{ album.id }}'>{{ album.album_title }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputFile">{% translate "Upload image" %}</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input required name="images_homepage" type="file" multiple
-                                                   class="form-control-file"
-                                                   id="uploadFileHome">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.card-body -->
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
 
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-info">{% translate "Send" %}</button>
-                                <button type="reset" class="btn btn-default float-right">
-                                    <a href="{% url 'administration:index' %}">{% translate "Cancel" %}</a>
-                                </button>
-                            </div>
+                <div class="form-group">
+                    <label class="form-label">{{ select }}</label>
+                    <select name="row" class="form-control" required>
+                        <option value="">{{ select }}...</option>
+                        {% for album in albums %}
+                            <option value="{{ album.id }}">{{ album.album_title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-                            <br>
-                            {% if messages %}
-                                {% for message in messages %}
-                                    <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}"
-                                         role="alert">{{ message }}</div>
-                                {% endfor %}
-                            {% endif %}
-                            {% if form.errors %}
-                                {% for field, errors in form.errors.items %}
-                                    {% for error in errors %}
-                                        <p style="color: darkred">{{ error }}</p>
-                                    {% endfor %}
-                                {% endfor %}
-                            {% endif %}
-                        </form>
+                <div class="form-group">
+                    <label class="form-label">{% translate "Upload Images" %}</label>
+                    <div class="file-upload-area">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p class="file-upload-text">{% translate "Click to select files or drag and drop" %}</p>
+                        <input type="file" name="images_homepage" id="uploadFileHome" multiple required
+                               class="file-input" onchange="updateFileList(this)">
+                        <p class="file-count" id="fileCount">{% translate "No files selected" %}</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <p class="mb-0">{{ error }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="form-actions">
+                    <a href="{% url 'administration:index' %}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> {% translate "Cancel" %}
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-upload"></i> {% translate "Upload Photos" %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}
 
 {% block customJS %}
-    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+    <script>
+        function updateFileList(input) {
+            const count = input.files.length;
+            const fileCount = document.getElementById('fileCount');
+            if (count > 0) {
+                fileCount.textContent = count + (count === 1 ? ' file selected' : ' files selected');
+                fileCount.style.color = '#0891b2';
+                fileCount.style.fontWeight = '600';
+            } else {
+                fileCount.textContent = 'No files selected';
+                fileCount.style.color = '';
+                fileCount.style.fontWeight = '';
+            }
+        }
+    </script>
 {% endblock %}
