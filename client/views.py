@@ -8,6 +8,7 @@ from django.contrib.auth.hashers import make_password
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
+from validate_email import validate_email
 
 from utils.crueltouch_utils import check
 from .forms import RegistrationForm
@@ -26,21 +27,18 @@ def register_page(request: HttpRequest):
         form = RegistrationForm(request.POST)
         email = request.POST.get('email', '')
 
-        # 1. Email Validation (Kept your library check)
-        try:
-            from validate_email import validate_email
-            is_valid = validate_email(
-                    email_address=email,
-                    check_format=True,
-                    check_blacklist=True,
-                    check_dns=False,
-                    check_smtp=False
-            )
-            if not is_valid:
-                messages.error(request, 'Invalid email address')
-                return redirect('client:register')
-        except ImportError:
-            pass  # Graceful fallback if lib missing
+        # 1. Email Validation
+        is_valid = validate_email(
+                email_address=email,
+                check_format=True,
+                check_blacklist=True,
+                check_dns=False,
+                check_smtp=False
+        )
+
+        if not is_valid:
+            messages.error(request, 'Invalid email address')
+            return redirect('client:register')
 
         # 2. Name Validation (Kept your custom utility)
         if check(data=request.POST.get('first_name', '')):
