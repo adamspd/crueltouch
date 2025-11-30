@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TCHIIZ | Dashboard{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'client/css/dashboard.css' %}">
+
+    {% block customCSS %}{% endblock %}
+</head>
+<body>
+
+<header class="mobile-header">
+    <button class="mobile-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+    <div style="width: 24px;"></div>
+</header>
+
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="dashboard-layout">
+    <aside class="sidebar" id="sidebar">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <a href="{% url 'homepage:index' %}" class="brand" style="margin-bottom: 0;">TCHIIZ.</a>
+            <button class="mobile-toggle" onclick="toggleSidebar()" style="display: none;">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <nav>
+            <a href="{% url 'client:client_homepage' %}"
+               class="nav-link {% if request.resolver_match.url_name == 'client_homepage' %}active{% endif %}">
+                <i class="fas fa-home"></i> Overview
+            </a>
+
+            {% if user.albums.exists %}
+                <a href="{% url 'client:album_details' user.albums.first.id %}" class="nav-link">
+                    <i class="fas fa-images"></i> My Photos
+                </a>
+            {% endif %}
+
+            <a href="{% url 'client:edit_profile' %}"
+               class="nav-link {% if 'profile' in request.path %}active{% endif %}">
+                <i class="fas fa-user-cog"></i> Profile & Settings
+            </a>
+
+            <a href="{% url 'flatpages:contact' %}" class="nav-link">
+                <i class="fas fa-envelope"></i> Contact Support
+            </a>
+        </nav>
+
+        <div style="margin-top: auto; border-top: 1px solid #eee; padding-top: 1rem;">
+            <a href="{% url 'client:logout' %}" class="nav-link" style="color: var(--danger);">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block body %}{% endblock %}
+    </main>
+</div>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        // Toggle Active Classes
+        sidebar.classList.toggle('active');
+
+        // Handle Overlay Display + Opacity for transition
+        if (sidebar.classList.contains('active')) {
+            overlay.style.display = 'block';
+            setTimeout(() => overlay.style.opacity = '1', 10);
+        } else {
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.style.display = 'none', 300);
+        }
+    }
+
+    // Close sidebar on window resize if moving to desktop view
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 900) {
+            document.getElementById('sidebar').classList.remove('active');
+            document.getElementById('overlay').style.display = 'none';
+        }
+    });
+</script>
+
+{% block customJS %}{% endblock %}
+</body>
+</html>

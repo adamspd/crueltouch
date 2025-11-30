@@ -1,133 +1,229 @@
-{% extends 'client/client_view/base.html' %}
+{% extends 'client/client_view/base_dashboard.html' %}
 {% load static %}
-{% block title %}Client | Photos{% endblock %}
-{% block customCSS %}
-    <link rel="stylesheet" type="text/css" href="{% static 'client/css/index.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'client/css/gallery.css' %}">
-    <link rel="stylesheet" href="{% static 'client/css/modifying_photos_albums.css' %}">
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
-          integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+{% block title %}Gallery | {{ album.owner.first_name }}{% endblock %}
+
+{% block customCSS %}
+    <style>
+        /* Gallery Specific Styles */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .photo-item {
+            position: relative;
+            padding-bottom: 100%; /* Square Aspect Ratio */
+            background: #eee;
+            overflow: hidden;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .photo-item img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+            padding: 15px;
+            display: flex;
+            justify-content: flex-end;
+            opacity: 0; /* Hidden by default */
+            transition: opacity 0.2s;
+        }
+
+        /* Show overlay on hover OR if it is already liked */
+        .photo-item:hover .photo-overlay, .photo-item.is-favorite .photo-overlay {
+            opacity: 1;
+        }
+
+        .btn-heart {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+            backdrop-filter: blur(2px);
+        }
+
+        .btn-heart:hover {
+            background: white;
+            color: var(--danger);
+        }
+
+        /* Active State (Liked) */
+        .photo-item.is-favorite .btn-heart {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* Simple Lightbox Modal */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
-    {% if album %}
-        <div class="containers">
-            <div class="row">
-                <div class="md-12">
-                    <div class="content">
-                        <hr>
-                        <div class="cardHeader">
-                            <h1 style="font-size: 20px">Click on the heart to like/dislike</h1>
-                            <h2 style="font-size: 12px">Click on the photo itself to enlarge</h2>
-                        </div>
-                        <br><br>
-                        <div style="display: flex; flex-flow: row wrap; justify-items: flex-start; padding: 5px;">
-                            {% for photo in album.get_photos %}
-                                <div style="margin: 5px">
-                                    <div>
-                                        <a href="{{ photo.file.url }}" class="portfolio-item img-popup set-bg"
-                                           data-setbg="{{ photo.file.url }}" target="_blank">
-                                            <img src="{{ photo.get_thumbnail_url }}" alt="" style="height: 150px">
-                                        </a>
-                                    </div>
-                                    <div class="overlay">
-                                        <span class="img-id-text">{{ photo.get_name|truncatechars:10 }}</span> &nbsp;
-                                        <button class="button like rounded">
-                                            <i class="fa fa-heart {{ photo.get_is_favorite }}"
-                                               onClick="setFavorite({{ photo.id }})"
-                                               id="{{ photo.id }}"></i>
-                                        </button>
-                                    </div>
-                                    <br><br>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
+    <div class="page-header">
+        <div class="welcome-text">
+            <h1>Select Favorites</h1>
+            <p>{{ album.get_photos_count }} Photos • Click heart to select</p>
+        </div>
+        <div>
+        </div>
+    </div>
+
+    <div class="gallery-grid">
+        {% for photo in album.get_photos %}
+            <div class="photo-item {% if photo.is_favorite %}is-favorite{% endif %}" id="photo-{{ photo.id }}">
+                <img src="{{ photo.file.url }}"
+                     alt="Photo {{ photo.id }}"
+                     loading="lazy"
+                     onclick="openLightbox('{{ photo.file.url }}')">
+
+                <div class="photo-overlay">
+                    <button class="btn-heart"
+                            onclick="toggleFavorite(this, {{ photo.id }}, event)"
+                            title="Toggle Favorite">
+                        <i class="{% if photo.is_favorite %}fas{% else %}far{% endif %} fa-heart"></i>
+                    </button>
                 </div>
             </div>
-        </div>
-    {% else %}
-        <h2 class="alert-info" id="info" style="text-align: center; margin-top: auto">
-            Hi, {{ user.first_name }}. You don't have any photos uploaded yet.</h2>
-        <div class="alert-warning" style="text-align: center; font-size: medium">
-            Wanna book me ? Click <a href="{% url 'client:book_me' %}">here</a></div>
-    {% endif %}
-{% endblock body %}
+        {% endfor %}
+    </div>
+
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="">
+    </div>
+
+{% endblock %}
 
 {% block customJS %}
     <script>
-        document.addEventListener("keydown", function (event) {
-            if (event.key === "PrintScreen") {
-                event.preventDefault();
-                alert("Taking screenshots is not allowed on this webpage.");
-            }
+        // --- Context Menu Block (Requested Feature) ---
+        document.addEventListener("contextmenu", e => {
+            e.preventDefault();
         });
 
-        document.addEventListener("contextmenu", function (event) {
-            event.preventDefault();
-            alert("The right-click context menu has been disabled on this page.");
-        });
+        // --- Lightbox Logic ---
+        function openLightbox(url) {
+            const lb = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            img.src = url;
+            lb.classList.add('active');
+        }
 
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
 
-        document.querySelectorAll('.watermarked').forEach(function (el) {
-            el.dataset.watermark = (el.dataset.watermark + ' ').repeat(600);
-        });
+        // --- Favorite Logic ---
+        async function toggleFavorite(btn, photoId, event) {
+            // Stop the click from triggering the lightbox
+            event.stopPropagation();
 
-        function setFavorite(photo_id) {
-            const button = document.getElementById(photo_id);
-            const formData = new FormData();
-            formData.append('photo_id', photo_id)
-            console.log("photo_id ", photo_id)
-            // Button Off
-            if (button.classList.contains('is-active')) {
-                button.classList.remove('is-active');
-                button.classList.remove('like')
-                $.ajax({
-                    url: "{% url 'client:dislike' %}",
-                    type: "POST",
-                    data: formData,
-                    beforeSend: function () {
+            const container = document.getElementById(`photo-${photoId}`);
+            const icon = btn.querySelector('i');
 
-                    },
-                    success: function (response) {
-                        console.log(response)
-                    },
-                    error: function (response) {
-                        console.log("error response ", response)
-                    },
-                    cache: false,
-                    contentType: false,
-                    processData: false
-                });
-                return;
+            // Optimistic UI update
+            const isCurrentlyFav = container.classList.contains('is-favorite');
+
+            // Toggle visual state immediately
+            if (isCurrentlyFav) {
+                container.classList.remove('is-favorite');
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+            } else {
+                container.classList.add('is-favorite');
+                icon.classList.remove('far');
+                icon.classList.add('fas');
             }
 
-            // Button On (with a loader)
-            button.classList.add('is-loading');
-            setTimeout(function () {
-                button.classList.remove('is-loading');
-                button.classList.add('is-active');
-                button.classList.add('like')
-                $.ajax({
-                    url: "{% url 'client:favorite' %}",
-                    type: "POST",
-                    data: formData,
-                    beforeSend: function () {
+            try {
+                // Get CSRF token from cookie
+                const csrfToken = document.cookie.split('; ')
+                    .find(row => row.startsWith('csrftoken='))
+                    ?.split('=')[1];
 
+                const response = await fetch("{% url 'client:toggle_favorite' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
                     },
-                    success: function (response) {
-                        console.log(response)
-                    },
-                    error: function (response) {
-                        console.log("error response ", response)
-                    },
-                    cache: false,
-                    contentType: false,
-                    processData: false
+                    body: JSON.stringify({photo_id: photoId})
                 });
-            }, 500);
+
+                if (!response.ok) throw new Error("Server error");
+
+                // Optional: verify server state matches UI
+                // const data = await response.json();
+
+            } catch (error) {
+                console.error(error);
+                // Revert on failure
+                alert("Could not save selection. Check connection.");
+
+                if (isCurrentlyFav) {
+                    container.classList.add('is-favorite');
+                    icon.classList.add('fas');
+                } else {
+                    container.classList.remove('is-favorite');
+                    icon.classList.remove('fas');
+                }
+            }
         }
     </script>
 {% endblock %}
