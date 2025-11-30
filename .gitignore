@@ -28,7 +28,7 @@ appointments/.DS_Store
 
 # IDE & Environments
 .idea
-.env
+.env*
 .venv
 env/
 venv/
