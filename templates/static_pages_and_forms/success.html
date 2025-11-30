@@ -1,85 +1,276 @@
 {% extends 'homepage/base.html' %}
 {% load i18n %}
 {% block title %}{% trans "Success" %}{% endblock %}
+
 {% block body %}
     <div class="clearfix"></div>
 
     <style>
-        input[type=text], input[type=email], textarea {
-            width: 100%;
-            display: inline-block;
-            font-size: 14px;
-            font-weight: 500;
-            color: #7d7d7d;
-            border: none;
-            border-bottom: 1px solid #b2b2b2;
-            padding-bottom: 14px;
-            margin-bottom: 20px;
-            background: transparent;
+        .success-section {
+            padding: 60px 0;
+            background: #fafafa;
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
         }
 
-        textarea {
-            height: 165px;
-            min-height: 165px;
-            margin-bottom: 38px;
+        .success-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .success-card {
+            background: #fff;
+            padding: 50px 60px;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            position: relative;
+        }
+
+        .success-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #d4af37, #f4d03f);
+            border-radius: 8px 8px 0 0;
+        }
+
+        .success-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 25px;
+            background: #0a0a0a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .success-icon::before {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border: 3px solid #d4af37;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.08);
+                opacity: 0.8;
+            }
+        }
+
+        .success-icon::after {
+            content: '✓';
+            color: #d4af37;
+            font-size: 2.2rem;
+            font-weight: bold;
+        }
+
+        .success-card h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0 0 15px 0;
+            color: #0a0a0a;
+        }
+
+        .success-message {
+            font-size: 1.05rem;
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 35px;
+            font-weight: 500;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .btn-action {
+            background: #0a0a0a;
+            color: #fff;
+            padding: 14px 35px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .btn-action:hover {
+            background: #d4af37;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            text-decoration: none;
+        }
+
+        .btn-action.secondary {
+            background: transparent;
+            color: #0a0a0a;
+            border: 2px solid #0a0a0a;
+        }
+
+        .btn-action.secondary:hover {
+            background: #0a0a0a;
+            color: #fff;
+        }
+
+        .contact-info {
+            padding: 25px 30px;
+            background: #fafafa;
+            border-radius: 6px;
+            border-top: 3px solid #d4af37;
+        }
+
+        .contact-info h3 {
+            font-size: 0.9rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+            color: #0a0a0a;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-links a {
+            color: #666;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.3s;
+        }
+
+        .contact-links a:hover {
+            color: #d4af37;
+        }
+
+        .contact-links img {
+            height: 18px;
+            filter: grayscale(1);
+            transition: filter 0.3s;
+        }
+
+        .contact-links a:hover img {
+            filter: grayscale(0);
+        }
+
+        @media (max-width: 768px) {
+            .success-section {
+                padding: 40px 20px;
+            }
+
+            .success-card {
+                padding: 40px 30px;
+            }
+
+            .success-card h1 {
+                font-size: 2rem;
+            }
+
+            .success-message {
+                font-size: 1rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn-action {
+                width: 100%;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .success-card {
+                padding: 35px 25px;
+            }
+
+            .success-card h1 {
+                font-size: 1.8rem;
+            }
         }
     </style>
 
-    <!-- Contact section  -->
-    <section class="contact-section">
+    <section class="success-section">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="contact-text">
-                        <h3>{% trans "GET IN TOUCH" %}</h3>
-                        <p>
-                            {% blocktranslate %}
-                                They say a picture is worth a thousand words.
-                                But I wonder what else do “they” say?
-                                In photography there is a reality so subtle that it becomes more real than reality.
-                                Taking an image reveals how rich reality truly is.
-                                Photography is a way of feeling, of loving.
-                                What you have caught on film is captured forever…
-                                It remembers little things, long after you have forgotten everything.
-                            {% endblocktranslate %}
-                        </p>
-                        <ul>
-                            <li>Florida, USA</li>
-                            <li>
-                                <a href="https://www.instagram.com/crueltouch_/" style="text-decoration: none">
-                                    <img src="https://img.icons8.com/office/30/000000/instagram-new.png" height="20px"/>
-                                    @crueltouch
-                                </a>
-                            </li>
-                            <li>
-                                <a href="tel:+17543007808" style="text-decoration: none">
-                                    <img src="https://img.icons8.com/ios-filled/30/000000/phone.png" height="20px"/>
-                                    +1&nbsp;754&nbsp;300&nbsp;7808
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-8">
-                    <h2 class="alert-info" id="info" style="text-align: center; margin-top: auto">
-                        {% trans "Thank you for your inquiry" %} </h2>
-                    <h2 style="background: rgba(190, 222, 238, 0.5);">
+            <div class="success-content">
+                <div class="success-card">
+                    <div class="success-icon"></div>
+
+                    <h1>{% trans "Message Sent" %}</h1>
+
+                    <p class="success-message">
                         {% trans "Your contact information and message was successfully submitted." %}
-                    </h2>
-                    <div class="alert-warning" style="text-align: center; font-size: medium">
-                        {% trans 'Wanna book me' %} ? {% trans 'Click' %} <a href="{% url 'homepage:services_offered' %}">
-                        {% trans "here" %}
-                    </a>
+                        <br>
+                        {% trans "We'll get back to you as soon as possible." %}
+                    </p>
+
+                    <div class="action-buttons">
+                        <a href="{% url 'homepage:index' %}" class="btn-action">
+                            {% trans "Back to Home" %}
+                        </a>
+                        <a href="{% url 'homepage:services_offered' %}" class="btn-action secondary">
+                            {% trans "Book a Session" %}
+                        </a>
+                    </div>
+
+                    <div class="contact-info">
+                        <h3>{% trans "Stay Connected" %}</h3>
+                        <div class="contact-links">
+                            <a href="https://www.instagram.com/crueltouch_/" target="_blank">
+                                <img src="https://img.icons8.com/office/30/000000/instagram-new.png"/>
+                                @crueltouch
+                            </a>
+                            <a href="tel:+17543007808">
+                                <img src="https://img.icons8.com/ios-filled/30/000000/phone.png"/>
+                                +1 754 300 7808
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- Contact section end  -->
 
-    <!-- Instagram section -->
     <div class="instagram-section">
-        <h6>Instagram Feed</h6>
+        <h6></h6>
         <div id="instafeed" class="instagram-slider owl-carousel"></div>
     </div>
 
