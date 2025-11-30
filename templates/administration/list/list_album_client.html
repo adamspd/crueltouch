@@ -1,78 +1,73 @@
-{% extends 'administration/list/data.html' %}
+{% extends 'administration/base.html' %}
 {% load i18n %}
 {% load static %}
 
 {% block title %}TCHIIZ | {% translate "View chosen photos" %}{% endblock %}
+{% block header_title %}{% translate "View Chosen Photos" %}{% endblock %}
 
-{% block pageTitle %}
-    {% translate "View chosen photos" %}
-{% endblock %}
-{% block pageLink %}
-    {% translate "View chosen photos" %}
+{% block customCSS %}
+    <link rel="stylesheet" href="{% static 'administration/css/client-albums.css' %}">
 {% endblock %}
 
-
-{% block table %}
-    <!-- Main content -->
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">{% translate "List of chosen photos" %}</h3>
+{% block body %}
+    <div class="tchiiz-card">
+        <div class="tchiiz-card-header">
+            <div>
+                <h3 class="tchiiz-card-title">{% translate "Client Photo Albums" %}</h3>
+                <p class="tchiiz-card-subtitle">{% translate "View photos chosen by your clients" %}</p>
+            </div>
         </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th>{% translate "Client" %}</th>
-                    <th>#{% translate "photos" %}</th>
-                    <th>#{% translate "liked" %}</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
+
+        {% if album_list %}
+            <div class="album-list">
                 {% for album in album_list %}
-                    <tr>
-                        <td>
-                            &nbsp;&nbsp;&nbsp;
-                            <a href="{% url 'administration:view_all_liked_photos' album.pk %}">
-                                {{ album.owner }}
+                    <div class="album-card">
+                        <div class="album-info">
+                            <div class="album-client">
+                                <i class="fas fa-user-circle"></i>
+                                <span class="client-name">{{ album.owner }}</span>
+                            </div>
+
+                            <div class="album-stats">
+                                <div class="stat-item">
+                                    <i class="fas fa-images"></i>
+                                    <span class="stat-value">{{ album.get_photos_count }}</span>
+                                    <span class="stat-label">{% translate "photos" %}</span>
+                                </div>
+                                <div class="stat-item stat-liked">
+                                    <i class="fas fa-heart"></i>
+                                    <span class="stat-value">{{ album.get_photos_liked_count }}</span>
+                                    <span class="stat-label">{% translate "liked" %}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="album-actions">
+                            <a href="{% url 'administration:view_all_liked_photos' album.pk %}"
+                               class="btn-action btn-action-primary">
+                                <i class="fas fa-eye"></i>
+                                <span>{% translate "View" %}</span>
                             </a>
-                        </td>
-                        <td>
-                            &nbsp;&nbsp;&nbsp;{{ album.get_photos_count }}
-                        </td>
-                        <td>
-                            {{ album.get_photos_liked_count }}
-                        </td>
-                        <td>
-                            <a href="{% url 'administration:view_all_liked_photos' album.pk %}">
-                                <button class="btn btn-primary">
-                                    <i class="fas fa-eye"></i>&nbsp;Show
-                                </button>
-                            </a>
-                            {% if user.is_admin %}
-                            <a href="{% url 'administration:delete_client_album' album.pk %}"
-                               onClick="return confirm('Are you sure you want to delete this item?');">
-                                <button class="btn btn-danger">
-                                    <i class="fas fa-trash"></i>&nbsp;Delete
-                                </button>
-                            </a>
+                            {% if user.is_superuser %}
+                                <a href="{% url 'administration:delete_client_album' album.pk %}"
+                                   class="btn-action btn-action-danger"
+                                   onclick="return confirm('{% translate "Are you sure you want to delete this album?" %}')">
+                                    <i class="fas fa-trash"></i>
+                                    <span>{% translate "Delete" %}</span>
+                                </a>
                             {% endif %}
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
                 {% endfor %}
-                </tbody>
-                <tfoot>
-                <tr>
-                    <th>{% translate "Client" %}</th>
-                    <th>#{% translate "photos" %}</th>
-                    <th>#{% translate "liked" %}</th>
-                    <th></th>
-                </tr>
-                </tfoot>
-            </table>
-        </div>
-        <!-- /.table-responsive -->
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <i class="far fa-folder-open"></i>
+                <p>{% translate "No client albums found." %}</p>
+                <a href="{% url 'administration:send_photos_for_client_to_choose_from' %}" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i> {% translate "Send Photos to Client" %}
+                </a>
+            </div>
+        {% endif %}
     </div>
-    <!-- /.card-body -->
 {% endblock %}

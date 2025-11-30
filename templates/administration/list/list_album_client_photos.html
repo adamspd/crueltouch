@@ -1,81 +1,132 @@
-{% extends 'administration/list/data.html' %}
+{% extends 'administration/base.html' %}
 {% load i18n %}
 {% load static %}
-{% block customCSS %}
-    <link rel="stylesheet" href="{% static 'client/css/modifying_photos_albums.css' %}">
-{% endblock %}
 
 {% block title %}TCHIIZ | {{ title }}{% endblock %}
+{% block header_title %}{{ title }}{% endblock %}
 
-{% block pageTitle %}
-
-{% endblock %}
-{% block pageLink %}
-    {{ title }}
+{% block customCSS %}
+    <link rel="stylesheet" href="{% static 'administration/css/liked-photos.css' %}">
 {% endblock %}
 
-
-{% block table %}
-    <!-- Main content -->
-    <div>
-        <div class="cardHeader">
-            <h2>{{ total_photos_label }}</h2> <span
-                class="badge badge-pill badge-primary">{{ album.get_photos_count }}</span>
-            <small class="text-muted">{% if messages %}
-                {% for message in messages %}
-                    <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}"
-                         role="alert">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-            </small>
+{% block body %}
+    <div class="tchiiz-card">
+        <div class="tchiiz-card-header">
+            <div>
+                <h3 class="tchiiz-card-title">{{ total_photos_label }}</h3>
+                <p class="tchiiz-card-subtitle">
+                    <span class="photo-count-badge">{{ album.get_photos_count }}</span>
+                    {% translate "total photos" %}
+                </p>
+            </div>
+            <a href="{% url 'administration:view_client_album_created' %}" class="btn btn-secondary btn-sm">
+                <i class="fas fa-arrow-left"></i> {% translate "Back to Albums" %}
+            </a>
         </div>
-        <br>
-        <div class="" style="padding: 5px;">
-            {% if photos_liked %}
-                <div class="cardHeader">
-                    <h3 style="font-size: 20px">Photos liked</h3>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
-                <br><br>
-                <div style="display: flex; flex-flow: row wrap; justify-items: flex-start; padding: 5px;">
+            {% endfor %}
+        {% endif %}
+
+        {% if photos_liked %}
+            <div class="photo-section">
+                <div class="section-header liked">
+                    <i class="fas fa-heart"></i>
+                    <h4 class="section-title">{% translate "Photos Liked" %}</h4>
+                    <span class="section-count">{{ photos_liked|length }}</span>
+                </div>
+
+                <div class="photo-gallery">
                     {% for photo in photos_liked %}
-                        <div style="margin: 5px">
-                            <div>
-                                <a href="{{ photo.file.url }}" class="portfolio-item img-popup set-bg"
-                                   data-setbg="{{ photo.file.url }}" target="_blank">
-                                    <img src="{{ photo.get_thumbnail_url }}" alt="" style="height: 150px">
-                                </a>
+                        <div class="photo-item">
+                            <div class="photo-wrapper">
+                                <img src="{{ photo.thumbnail.url }}" alt="{{ photo.get_name }}" class="photo-image">
+                                <div class="photo-overlay">
+                                    <button class="btn-view" onclick="viewPhoto('{{ photo.file.url }}')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <a href="{{ photo.file.url }}" target="_blank" class="btn-download">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                </div>
+                                <div class="photo-badge liked-badge">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                            </div>
+                            {% if photo.get_name %}
+                                <p class="photo-name">{{ photo.get_name }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
 
-                                <p style="max-width: 200px">{{ photo.get_name }}</p>
-                            </div>
-                            <br><br>
-                        </div>
-                    {% endfor %}
+        {% if photos_not_liked %}
+            <div class="photo-section">
+                <div class="section-header not-liked">
+                    <i class="far fa-heart"></i>
+                    <h4 class="section-title">{% translate "Photos Not Liked" %}</h4>
+                    <span class="section-count">{{ photos_not_liked|length }}</span>
                 </div>
-            {% endif %}
-            {% if photos_not_liked %}
-                <hr>
-                <div class="cardHeader">
-                    <h3 style="font-size: 20px">Photos not liked</h3>
-                </div>
-                <br><br>
-                <div style="display: flex; flex-flow: row wrap; justify-items: flex-start; padding: 5px;">
+
+                <div class="photo-gallery">
                     {% for photo in photos_not_liked %}
-                        <div style="margin: 5px">
-                            <div>
-                                <a href="{{ photo.file.url }}" class="portfolio-item img-popup set-bg"
-                                   data-setbg="{{ photo.file.url }}" target="_blank">
-                                    <img src="{{ photo.get_thumbnail_url }}" alt="" style="height: 150px">
-                                </a>
+                        <div class="photo-item">
+                            <div class="photo-wrapper">
+                                <img src="{{ photo.thumbnail.url }}" alt="" class="photo-image">
+                                <div class="photo-overlay">
+                                    <button class="btn-view" onclick="viewPhoto('{{ photo.file.url }}')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <a href="{{ photo.file.url }}" target="_blank" class="btn-download">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                </div>
                             </div>
-                            <br><br>
                         </div>
                     {% endfor %}
                 </div>
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
+
+        {% if not photos_liked and not photos_not_liked %}
+            <div class="empty-state">
+                <i class="far fa-images"></i>
+                <p>{% translate "No photos in this album." %}</p>
+            </div>
+        {% endif %}
     </div>
-    <!-- /.card-body -->
+
+    <!-- Photo Viewer Modal -->
+    <div id="photoModal" class="photo-modal" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
 {% endblock %}
 
-{% block dataTableJs %}
+{% block customJS %}
+    <script>
+        function viewPhoto(url) {
+            const modal = document.getElementById('photoModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = 'flex';
+            modalImg.src = url;
+        }
+
+        function closeModal() {
+            document.getElementById('photoModal').style.display = 'none';
+        }
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
 {% endblock %}

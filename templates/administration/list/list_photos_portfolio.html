@@ -1,67 +1,118 @@
-{% extends 'administration/list/data.html' %}
+{% extends 'administration/base.html' %}
 {% load i18n %}
 {% load static %}
-{% block customCSS %}
-    <link rel="stylesheet" href="{% static 'client/css/modifying_photos_albums.css' %}">
-{% endblock %}
 
 {% block title %}TCHIIZ | {{ title }}{% endblock %}
+{% block header_title %}{{ title }}{% endblock %}
 
-{% block pageTitle %}
-
-{% endblock %}
-{% block pageLink %}
-    {{ title }}
+{% block customCSS %}
+    <link rel="stylesheet" href="{% static 'administration/css/photo-gallery.css' %}">
 {% endblock %}
 
-
-{% block table %}
-    <!-- Main content -->
-    <div>
-        <div class="cardHeader">
-            <h2>{{ total_photos_label }}</h2> <span class="badge badge-pill badge-primary">{{ photos|length }}</span>
-            <small class="text-muted">{% if messages %}
-                {% for message in messages %}
-                    <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}"
-                         role="alert">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-            </small>
+{% block body %}
+    <div class="tchiiz-card">
+        <div class="tchiiz-card-header">
+            <div>
+                <h3 class="tchiiz-card-title">{{ total_photos_label }}</h3>
+                <p class="tchiiz-card-subtitle">
+                    <span class="photo-count-badge">{{ photos|length }}</span>
+                    {% translate "photos in this collection" %}
+                </p>
+            </div>
+            <div class="gallery-actions">
+                {% if portfolio %}
+                    <a href="{% url 'administration:add_photos_portfolio' %}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-plus"></i> {% translate "Add Photos" %}
+                    </a>
+                {% else %}
+                    <a href="{% url 'administration:add_photos_homepage' %}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-plus"></i> {% translate "Add Photos" %}
+                    </a>
+                {% endif %}
+            </div>
         </div>
-        <br>
-        <div class="" style="padding: 5px;">
-            {% if photos %}
-                <div style="display: flex; flex-flow: row wrap; justify-items: flex-start; padding: 5px;">
-                    {% for photo in photos %}
-                        <div style="margin: 5px">
-                            <div>
-                                <img src="{{ photo.file.url }}" alt="" style="height: 150px">
-                            </div>
-                            <br>
-                            {% if user.is_admin %}
-                                <div>
-                                    {% if portfolio == True %}
-                                        <a class="btn btn-danger" style="background-color: red"
-                                           href="{% url 'administration:delete_photo_portfolio' photo.pk %}">Remove</a>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if photos %}
+            <div class="photo-gallery">
+                {% for photo in photos %}
+                    <div class="photo-item">
+                        <div class="photo-wrapper">
+                            <img src="{{ photo.file.url }}" alt="Photo" class="photo-image">
+                            <div class="photo-overlay">
+                                <button class="btn-view" onclick="viewPhoto('{{ photo.file.url }}')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                {% if user.is_superuser %}
+                                    {% if portfolio %}
+                                        <a href="{% url 'administration:delete_photo_portfolio' photo.pk %}"
+                                           class="btn-delete"
+                                           onclick="return confirm('{% translate "Are you sure you want to delete this photo?" %}')">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
                                     {% else %}
-                                        <a class="btn btn-danger" style="background-color: red"
-                                           href="{% url 'administration:delete_photo_homepage' photo.pk %}">Remove</a>
+                                        <a href="{% url 'administration:delete_photo_homepage' photo.pk %}"
+                                           class="btn-delete"
+                                           onclick="return confirm('{% translate "Are you sure you want to delete this photo?" %}')">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
                                     {% endif %}
-                                </div>
-                            {% endif %}
-                            <br><br>
+                                {% endif %}
+                            </div>
                         </div>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <div class="alert-info" id="info" style="text-align: center; margin-top: auto">
-                    <p>No photos to portfolio.</p>
-                </div>
-            {% endif %}
-        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <i class="far fa-images"></i>
+                <p>{% translate "No photos in this collection yet." %}</p>
+                {% if portfolio %}
+                    <a href="{% url 'administration:add_photos_portfolio' %}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> {% translate "Add Your First Photo" %}
+                    </a>
+                {% else %}
+                    <a href="{% url 'administration:add_photos_homepage' %}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> {% translate "Add Your First Photo" %}
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
     </div>
-    <!-- /.card-body -->
+
+    <!-- Photo Viewer Modal -->
+    <div id="photoModal" class="photo-modal" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
 {% endblock %}
 
-{% block dataTableJs %}
+{% block customJS %}
+    <script>
+        function viewPhoto(url) {
+            const modal = document.getElementById('photoModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = 'flex';
+            modalImg.src = url;
+        }
+
+        function closeModal() {
+            document.getElementById('photoModal').style.display = 'none';
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
 {% endblock %}

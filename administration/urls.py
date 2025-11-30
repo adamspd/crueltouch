@@ -1,82 +1,80 @@
 # administration/urls.py
 from django.urls import include, path
 
-from .views import *
+from . import views
 
 app_name = 'administration'
 
 user_patterns = [
-    path('list/', list_requested_user, name='user_list'),
-    # /administration/users/creation/
-    path('creation/', create_new_client, name='create_new_client'),
-    # /administration/users/album/liked/
-    path('album/liked/', view_client_album_created, name='view_client_album_created'),
-    # /administration/users/album/<int:pk>/liked/
-    path('album/<int:pk>/liked/', view_all_liked_photos, name='view_all_liked_photos'),
-    # /administration/users/album/<int:pk>/delete/
-    path('album/<int:pk>/delete/', delete_client_album, name='delete_client_album'),
+    path('list/', views.list_requested_user, name='user_list'),
+    path('creation/', views.create_new_client, name='create_new_client'),
+    path('<int:pk>/edit/', views.update_client, name='update_client'),
+    path('<int:pk>/details/', views.view_client_details, name='view_client_details'),
+
+    # Client Album (Likes)
+    path('album/liked/', views.view_client_album_created, name='view_client_album_created'),
+    path('album/<int:pk>/liked/', views.view_all_liked_photos, name='view_all_liked_photos'),
+    path('album/<int:pk>/delete/', views.delete_client_album, name='delete_client_album'),
 ]
 
 message_patterns = [
-    path('list/', list_contact_form, name='message_list'),
-    path('delete/<int:pk>/', delete_contact_form, name='message_delete'),
-    path('send-invoice/<str:invoice_number>/', send_invoice_to_client, name='send_invoice'),
+    path('list/', views.list_contact_form, name='message_list'),
+    path('delete/<int:pk>/', views.delete_contact_form, name='message_delete'),
+    # Fixed: mapped to views.send_invoice_to_client
+    path('send-invoice/<str:invoice_number>/', views.send_invoice_to_client, name='send_invoice'),
 ]
 
 add_photos_patterns = [
-    path('homepage/', add_photos_homepage, name='add_photos_homepage'),
-    path('portfolio/', add_photos_portfolio, name='add_photos_portfolio'),
-    path('clients/', send_photos_for_client_to_choose_from, name='send_photos_for_client_to_choose_from'),
+    path('homepage/', views.add_photos_homepage, name='add_photos_homepage'),
+    path('portfolio/', views.add_photos_portfolio, name='add_photos_portfolio'),
+    # Proofing
+    path('clients/', views.send_photos_for_client_to_choose_from, name='send_photos_for_client_to_choose_from'),
 ]
 
 link_pattern = [
-    path('creation/', create_downloadable_file, name='create_downloadable_file'),
-    path('show-all/', list_downloadable_files_link, name='show_all_links_created'),
-    path('via-account/', send_photo_via_account, name='via_account'),
-    path('delete/<int:pk>/', delete_delivery, name='delete_delivery'),
+    # Guest Links
+    path('creation/', views.create_downloadable_file, name='create_downloadable_file'),
+    path('show-all/', views.list_downloadable_files_link, name='show_all_links_created'),
+    # Account Delivery
+    path('via-account/', views.send_photo_via_account, name='via_account'),
+    path('delete/<int:pk>/', views.delete_delivery, name='delete_delivery'),
 ]
 
 urlpatterns = [
-    # /administration/login
-    path('login/', login_admin, name='login'),
-    # /administration/
-    path('', admin_index, name='index'),
-    # /administration/users/
+    # Auth
+    path('login/', views.login_admin, name='login'),
+    path('', views.admin_index, name='index'),
+
+    # Groups
     path('users/', include(user_patterns)),
-    # /administration/messages/
     path('messages/', include(message_patterns)),
-    # /administration/add-photos/
     path('add-photos/', include(add_photos_patterns)),
-    # /administration/help/
-    path('help/', help_view, name='help'),
-    # /administration/add-album/
-    path('add-album/', add_album_portfolio, name='add_album'),
-    # /administration/portfolio/list-photos/
-    path('portfolio/list-photos/', list_photos_portfolio, name='list_photos_portfolio'),
-    # /administration/homepage/list-photos/
-    path('homepage/list-photos/', list_photos_homepage, name='list_photos_homepage'),
-    # /administration/portfolio/delete-photo/<int:pk>/
-    path('portfolio/delete-photo/<int:pk>/', delete_photo_portfolio, name='delete_photo_portfolio'),
-    # /administration/homepage/delete-photo/<int:pk>/
-    path('homepage/delete-photo/<int:pk>/', delete_photo_homepage, name='delete_photo_homepage'),
-    # /administration/link/
     path('link/', include(link_pattern)),
-    # /administration/password-change/<int-pk>/
-    path('password-change/<int:pk>/', must_change_password, name="must_change_password"),
-    # /administration/invoices/
-    # path('invoices/', list_invoices, name='list_invoices'),
-    # # /administration/invoice/form/
-    # path('invoices/form/', invoice_form, name='create_invoice'),
-    # # /administration/invoice/form/<str:invoice_number>/
-    # path('invoices/form/<str:invoice_number>/', invoice_form, name='edit_invoice'),
-    # /administration/generate-invoice/
-    # path('invoices/<str:invoice_number>/', generate_and_process_invoice, name="generate_invoice"),
-    # # /administration/invoices/view/<str:invoice_number>/
-    # path('invoice/<str:invoice_number>/', view_invoice, name='view_invoice'),
-    # /administration/invoices/delete/<str:invoice_number>/
-    # path('invoices/delete/<str:invoice_number>/', delete_invoice, name='delete_invoice'),
-    # /administration/invoices/update/<str:invoice_number>/status/
-    path('invoices/<str:invoice_number>/update_status/', update_invoice_status, name='update_invoice_status'),
-    # /administration/administration/get-client-emails/
-    path('get-client-emails/', get_client_emails, name='get_client_emails'),
+
+    # Misc
+    path('help/', views.help_view, name='help'),
+    path('password-change/<int:pk>/', views.must_change_password, name="must_change_password"),
+
+    # Website Content
+    path('add-album/', views.add_album_portfolio, name='add_album'),
+    path('portfolio/list-photos/', views.list_photos_portfolio, name='list_photos_portfolio'),
+    path('homepage/list-photos/', views.list_photos_homepage, name='list_photos_homepage'),
+    path('portfolio/delete-photo/<int:pk>/', views.delete_photo_portfolio, name='delete_photo_portfolio'),
+    path('homepage/delete-photo/<int:pk>/', views.delete_photo_homepage, name='delete_photo_homepage'),
+
+    # --- INVOICES (RESTORED & UNCOMMENTED) ---
+    path('invoices/', views.list_invoices, name='list_invoices'),
+    path('invoices/form/', views.invoice_form, name='create_invoice'),
+    path('invoices/form/<str:invoice_number>/', views.invoice_form, name='edit_invoice'),
+
+    # PDF Generation / Viewing
+    path('invoices/<str:invoice_number>/', views.generate_and_process_invoice, name="generate_invoice"),
+    path('invoice/<str:invoice_number>/', views.view_invoice, name='view_invoice'),
+
+    # Actions
+    path('invoices/delete/<str:invoice_number>/', views.delete_invoice, name='delete_invoice'),
+    path('invoices/<str:invoice_number>/update_status/', views.update_invoice_status, name='update_invoice_status'),
+
+    # Helpers
+    path('get-client-emails/', views.get_client_emails, name='get_client_emails'),
 ]

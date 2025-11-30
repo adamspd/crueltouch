@@ -1,0 +1,470 @@
+/* Liked Photos Gallery Styling */
+
+.photo-count-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    padding: 0.25rem 0.65rem;
+    background: #0891b2;
+    color: white;
+    border-radius: 16px;
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+/* Photo Sections */
+.photo-section {
+    margin-bottom: 3rem;
+}
+
+.photo-section:last-child {
+    margin-bottom: 0;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    background: #fafafa;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid;
+}
+
+.section-header.liked {
+    border-left-color: #b91c1c;
+    background: linear-gradient(90deg, #fee2e2 0%, #fafafa 100%);
+}
+
+.section-header.liked i {
+    color: #b91c1c;
+    font-size: 1.5rem;
+}
+
+.section-header.not-liked {
+    border-left-color: #9ca3af;
+    background: #fafafa;
+}
+
+.section-header.not-liked i {
+    color: #9ca3af;
+    font-size: 1.5rem;
+}
+
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0;
+    flex: 1;
+}
+
+.section-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    padding: 0.35rem 0.75rem;
+    background: white;
+    color: #1f2937;
+    border-radius: 18px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border: 1px solid #e5e7eb;
+}
+
+/* Photo Gallery Grid */
+.photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.25rem;
+}
+
+.photo-item {
+    position: relative;
+}
+
+.photo-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    overflow: hidden;
+    background: #e5e7eb;
+    border-radius: 8px;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.photo-item:hover .photo-wrapper {
+    transform: translateY(-4px);
+}
+
+.photo-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.photo-item:hover .photo-image {
+    transform: scale(1.05);
+}
+
+/* Photo Badge */
+.photo-badge {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 2;
+}
+
+.liked-badge {
+    background: #b91c1c;
+    color: white;
+}
+
+.liked-badge i {
+    font-size: 0.95rem;
+}
+
+/* Photo Overlay */
+.photo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.photo-item:hover .photo-overlay {
+    opacity: 1;
+}
+
+.btn-view,
+.btn-download {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.btn-view {
+    background: rgba(255, 255, 255, 0.9);
+    color: #374151;
+}
+
+.btn-view:hover {
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-download {
+    background: rgba(8, 145, 178, 0.9);
+    color: white;
+}
+
+.btn-download:hover {
+    background: #0891b2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(8, 145, 178, 0.4);
+}
+
+/* Photo Name */
+.photo-name {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #6b7280;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #9ca3af;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    opacity: 0.3;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+    color: #6b7280;
+}
+
+/* Photo Modal */
+.photo-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    cursor: pointer;
+}
+
+.modal-content {
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    cursor: default;
+}
+
+.modal-close {
+    position: absolute;
+    top: 2rem;
+    right: 3rem;
+    color: white;
+    font-size: 3rem;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    z-index: 10000;
+}
+
+.modal-close:hover {
+    color: #0891b2;
+    transform: scale(1.1);
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+}
+
+.btn-secondary {
+    background: #f3f4f6;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.btn-secondary:hover {
+    background: #e5e7eb;
+    color: #1f2937;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .photo-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 1rem;
+    }
+
+    .section-header {
+        padding: 0.85rem 1.25rem;
+    }
+
+    .photo-section {
+        margin-bottom: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .photo-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 0.85rem;
+    }
+
+    .section-header {
+        padding: 0.75rem 1rem;
+        gap: 0.5rem;
+    }
+
+    .section-header.liked i,
+    .section-header.not-liked i {
+        font-size: 1.25rem;
+    }
+
+    .section-title {
+        font-size: 1rem;
+    }
+
+    .section-count {
+        min-width: 32px;
+        padding: 0.3rem 0.65rem;
+        font-size: 0.85rem;
+    }
+
+    .photo-badge {
+        width: 32px;
+        height: 32px;
+        top: 0.5rem;
+        right: 0.5rem;
+    }
+
+    .liked-badge i {
+        font-size: 0.85rem;
+    }
+
+    .btn-view,
+    .btn-download {
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
+    }
+
+    .photo-overlay {
+        gap: 0.5rem;
+        padding: 0.75rem;
+    }
+
+    .photo-name {
+        font-size: 0.8rem;
+    }
+
+    .photo-section {
+        margin-bottom: 2rem;
+    }
+
+    .empty-state {
+        padding: 3rem 1.5rem;
+    }
+
+    .empty-state i {
+        font-size: 3rem;
+    }
+
+    .empty-state p {
+        font-size: 1rem;
+    }
+
+    .modal-close {
+        top: 1rem;
+        right: 1.5rem;
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .photo-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 0.65rem;
+    }
+
+    .section-header {
+        padding: 0.65rem 0.85rem;
+        gap: 0.4rem;
+    }
+
+    .section-header.liked i,
+    .section-header.not-liked i {
+        font-size: 1.15rem;
+    }
+
+    .section-title {
+        font-size: 0.9rem;
+    }
+
+    .section-count {
+        min-width: 28px;
+        padding: 0.25rem 0.55rem;
+        font-size: 0.8rem;
+    }
+
+    .photo-badge {
+        width: 28px;
+        height: 28px;
+        top: 0.4rem;
+        right: 0.4rem;
+    }
+
+    .liked-badge i {
+        font-size: 0.75rem;
+    }
+
+    .btn-view,
+    .btn-download {
+        width: 32px;
+        height: 32px;
+        font-size: 0.85rem;
+    }
+
+    .photo-name {
+        font-size: 0.75rem;
+        margin-top: 0.4rem;
+    }
+
+    .photo-section {
+        margin-bottom: 1.75rem;
+    }
+
+    .photo-count-badge {
+        font-size: 0.8rem;
+        min-width: 28px;
+        padding: 0.2rem 0.55rem;
+    }
+
+    .empty-state {
+        padding: 2.5rem 1rem;
+    }
+
+    .empty-state i {
+        font-size: 2.5rem;
+    }
+
+    .empty-state p {
+        font-size: 0.95rem;
+    }
+
+    .modal-content {
+        max-width: 95%;
+        max-height: 85vh;
+    }
+
+    .modal-close {
+        top: 0.75rem;
+        right: 1rem;
+        font-size: 2rem;
+    }
+}

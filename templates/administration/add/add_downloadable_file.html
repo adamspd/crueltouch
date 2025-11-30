@@ -1,114 +1,130 @@
 {% extends 'administration/base.html' %}
 {% load i18n %}
 {% load static %}
+
 {% block title %}TCHIIZ | {{ title }}{% endblock %}
+{% block header_title %}{{ title }}{% endblock %}
+
 {% block customCSS %}
-    <style>
-        .not-visible {
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'administration/css/forms.css' %}">
 {% endblock %}
+
 {% block body %}
-    <section class="content content-wrapper">
-        <div class="container-fluid">
-            <div class="row" style="margin: 0 auto; padding-top: 20px">
-                <!-- left column -->
-                <div class="col-md-12">
-                    <!-- general form elements -->
-                    <div class="card card-info">
-                        <div class="card-header">
-                            <h3 class="card-title">{{ title }} </h3>
-                            <small class="float-right"></small>
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
-                        <form method="POST" enctype="multipart/form-data" id="upload-form">
-                            {% csrf_token %}
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="exampleInputFile">{% translate "Upload image" %}</label>
-                                    <div class="form-group col-md-12">
-                                        <label>{{ nota_bene }}</label><br>
-                                        <div class="clientEmail">
-                                            <input type="email" name="client_email" class="form-control"
-                                                   placeholder="{% trans 'Client email' %}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label>{% trans "Client name" %} *</label><br>
-                                        <div class="clientName name">
-                                            <input type="text" name="client_name" class="form-control"
-                                                   placeholder="{% trans 'Put the client name for reference' %}"
-                                                   required>
-                                        </div>
-                                    </div>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input required name="images_client_link" type="file" multiple
-                                                   class="form-control-file"
-                                                   id="images_client_link">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.card-body -->
+    <div class="form-container">
+        <div class="tchiiz-card form-card">
+            <div class="tchiiz-card-header">
+                <div>
+                    <h3 class="tchiiz-card-title">{{ title }}</h3>
+                    <p class="tchiiz-card-subtitle">{% translate "Create a downloadable link for client photos" %}</p>
+                </div>
+            </div>
 
-                            <div class="card-footer">
-                                <button type="submit" id="formSubmitBTN"
-                                        class="btn btn-info">{% translate "Send" %}</button>
-                                <button type="reset" class="btn btn-default float-right">
-                                    <a href="{% url 'administration:index' %}">{% translate "Cancel" %}</a>
-                                </button>
-                            </div>
+            <form method="POST" enctype="multipart/form-data" id="upload-form">
+                {% csrf_token %}
 
-                            <br>
-                            {% if messages %}
-                                {% for message in messages %}
-                                    <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}"
-                                         role="alert">{{ message }}</div>
-                                {% endfor %}
-                            {% endif %}
-                            {% if form.errors %}
-                                {% for field, errors in form.errors.items %}
-                                    {% for error in errors %}
-                                        <p style="color: darkred">{{ error }}</p>
-                                    {% endfor %}
-                                {% endfor %}
-                            {% endif %}
-                        </form>
+                <div class="form-group">
+                    <label class="form-label" for="client_email">{{ nota_bene }}</label>
+                    <input type="email" name="client_email" id="client_email" class="form-control"
+                           placeholder="{% trans 'client@example.com' %}">
+                </div>
 
+                <div class="form-group">
+                    <label class="form-label" for="client_name">{% trans "Client Name" %} *</label>
+                    <input type="text" name="client_name" id="client_name" class="form-control"
+                           placeholder="{% trans 'Enter client name for reference' %}" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">{% translate "Upload Images" %}</label>
+                    <div class="file-upload-area">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p class="file-upload-text">{% translate "Click to select files or drag and drop" %}</p>
+                        <input type="file" name="images_client_link" id="images_client_link" multiple required
+                               class="file-input" onchange="updateFileCount(this)">
+                        <p class="file-count" id="file-count">{% translate "No files selected" %}</p>
                     </div>
                 </div>
-                <div class="not-visible" id="progress-box"></div>
-                <div class="not-visible" id="alert-box"></div>
-            </div>
-        </div>
-    </section>
 
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <p class="mb-0">{{ error }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div id="progress-box" class="progress-container">
+                    <div class="progress-bar-wrapper">
+                        <div id="progress-bar" class="progress-bar"></div>
+                    </div>
+                    <p id="progress-text" class="progress-text">0%</p>
+                </div>
+
+                <div id="alert-box" class="alert-box"></div>
+
+                <div class="form-actions">
+                    <a href="{% url 'administration:index' %}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> {% translate "Cancel" %}
+                    </a>
+                    <button type="submit" id="formSubmitBTN" class="btn btn-primary">
+                        <i class="fas fa-link"></i> {% translate "Create Link" %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}
 
 {% block customJS %}
-    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
     <script>
+        function updateFileCount(input) {
+            const count = input.files.length;
+            const fileCount = document.getElementById('file-count');
+            if (count > 0) {
+                fileCount.textContent = count + (count === 1 ? ' file selected' : ' files selected');
+                fileCount.style.color = '#0891b2';
+                fileCount.style.fontWeight = '600';
+            } else {
+                fileCount.textContent = 'No files selected';
+            }
+        }
+
         const uploadForm = document.getElementById('upload-form');
         const imagesClientLink = document.getElementById('images_client_link');
         const progressBox = document.getElementById('progress-box');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
         const csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
         const formSubmitBTN = document.getElementById('formSubmitBTN');
         const alertBox = document.getElementById('alert-box');
 
         formSubmitBTN.addEventListener('click', (e) => {
-            console.log("Clicked")
             e.preventDefault();
-            progressBox.classList.remove('not-visible');
 
-            // upload multiple files
             const files = imagesClientLink.files;
+            if (files.length === 0) {
+                alert("Please select files first.");
+                return;
+            }
+
+            progressBox.style.display = 'block';
+            formSubmitBTN.disabled = true;
+            formSubmitBTN.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Link...';
+
             const formData = new FormData();
             for (let i = 0; i < files.length; i++) {
-                let file = files[i];
-                formData.append('images_client_link', file, file.name);
+                formData.append('images_client_link', files[i], files[i].name);
             }
             formData.append('csrfmiddlewaretoken', csrfToken);
             formData.append('client_email', document.getElementsByName('client_email')[0].value);
@@ -119,44 +135,47 @@
                 url: '{% url 'administration:create_downloadable_file' %}',
                 enctype: 'multipart/form-data',
                 data: formData,
-                beforeSend: function () {
-
-                },
                 xhr: function () {
                     const xhr = new window.XMLHttpRequest();
                     xhr.upload.addEventListener('progress', function (e) {
                         if (e.lengthComputable) {
                             const percent = Math.round((e.loaded / e.total) * 100);
-                            progressBox.innerHTML = `<div class="progress">
-                            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: ${percent}%;" aria-valuenow="${percent}" aria-valuemin="0" aria-valuemax="100">${percent}%</div>
-                            </div>`;
+                            progressBar.style.width = percent + '%';
+                            progressText.innerText = percent + '%';
                         }
                     });
                     return xhr;
                 },
                 success: function (data) {
-                    progressBox.innerHTML = `<div class="progress">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
-                    </div>`;
-                    alertBox.classList.remove('not-visible');
-                    alertBox.innerHTML = `<br><div class="alert alert-success" role="alert">
-                                            Link successfully created, <a href="${data.link}" class="alert-link" target="_blank">check it now</a>
-                                            </div>`;
+                    progressBar.style.width = '100%';
+                    progressBar.style.background = '#0891b2';
+                    progressText.innerText = '100%';
+
+                    alertBox.innerHTML = `<div class="alert alert-success">
+                <i class="fas fa-check-circle"></i> Link successfully created!
+                <a href="${data.link}" class="alert-link" target="_blank">View it here</a>
+            </div>`;
+
                     setTimeout(() => {
-                        progressBox.classList.add('not-visible');
-                    }, 3000);
+                        progressBox.style.display = 'none';
+                    }, 2000);
+
                     uploadForm.reset();
+                    formSubmitBTN.disabled = false;
+                    formSubmitBTN.innerHTML = '<i class="fas fa-link"></i> Create Another Link';
                 },
                 error: function (data) {
-                    console.log(data);
-                    progressBox.innerHTML = `<div class="alert alert-danger" role="alert">
-                                            Something wrong happened, please try again !
-                                            </div>`;
+                    progressBox.style.display = 'none';
+                    alertBox.innerHTML = `<div class="alert alert-danger">
+                <i class="fas fa-exclamation-circle"></i> Something went wrong, please try again!
+            </div>`;
+                    formSubmitBTN.disabled = false;
+                    formSubmitBTN.innerHTML = '<i class="fas fa-link"></i> Try Again';
                 },
                 cache: false,
                 contentType: false,
                 processData: false
-            })
-        })
+            });
+        });
     </script>
 {% endblock %}

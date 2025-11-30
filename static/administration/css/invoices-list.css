@@ -1,0 +1,520 @@
+/* Invoices List Styling */
+
+.invoice-count-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    padding: 0.25rem 0.65rem;
+    background: #0891b2;
+    color: white;
+    border-radius: 16px;
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+.invoices-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.invoice-card {
+    background: #fafafa;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.invoice-card:hover {
+    background: #f5f5f5;
+    border-color: #d1d5db;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Invoice Header */
+.invoice-header {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1.2fr;
+    gap: 1.5rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.invoice-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.invoice-date,
+.invoice-client {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.invoice-date i {
+    color: #d97706;
+    font-size: 0.9rem;
+}
+
+.invoice-date span {
+    font-size: 0.85rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.invoice-client i {
+    color: #0891b2;
+    font-size: 0.95rem;
+}
+
+.invoice-client span {
+    font-weight: 700;
+    color: #1f2937;
+    font-size: 0.95rem;
+}
+
+/* Invoice Amount */
+.invoice-amount {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.amount-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #9ca3af;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.amount-value {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #1f2937;
+    line-height: 1;
+}
+
+/* Invoice Status */
+.invoice-status-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.status-form {
+    flex: 1;
+}
+
+.status-select {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.status-select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1);
+}
+
+.status-paid {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.status-pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-overdue {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.email-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.email-badge i {
+    font-size: 0.9rem;
+}
+
+/* Invoice Contact */
+.invoice-contact {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.contact-item i {
+    color: #6b7280;
+    font-size: 0.85rem;
+}
+
+.contact-item a {
+    color: #0891b2;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.25s ease;
+}
+
+.contact-item a:hover {
+    color: #0e7490;
+}
+
+.contact-item.text-muted span {
+    color: #9ca3af;
+    font-size: 0.85rem;
+}
+
+/* Invoice Actions */
+.invoice-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+}
+
+.btn-action:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-action i {
+    font-size: 0.8rem;
+}
+
+.btn-action-send {
+    background: #0891b2;
+    color: white;
+}
+
+.btn-action-send:hover {
+    background: #0e7490;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(8, 145, 178, 0.3);
+}
+
+.btn-action-view {
+    background: #7c3aed;
+    color: white;
+}
+
+.btn-action-view:hover {
+    background: #6d28d9;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(124, 58, 237, 0.3);
+}
+
+.btn-action-edit {
+    background: #f3f4f6;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.btn-action-edit:hover {
+    background: #e5e7eb;
+    color: #1f2937;
+}
+
+.btn-action-delete {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.btn-action-delete:hover {
+    background: #b91c1c;
+    color: white;
+    border-color: #b91c1c;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(185, 28, 28, 0.3);
+}
+
+.btn-action-disabled {
+    background: #f3f4f6;
+    color: #9ca3af;
+    border: 1px solid #e5e7eb;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #9ca3af;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    opacity: 0.3;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: #6b7280;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: #0891b2;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #0e7490;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(8, 145, 178, 0.3);
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .invoice-header {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .invoice-meta {
+        gap: 0.4rem;
+    }
+
+    .invoice-amount {
+        align-items: flex-start;
+    }
+
+    .invoice-contact {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .invoice-actions {
+        gap: 0.65rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .invoices-list {
+        gap: 0.85rem;
+    }
+
+    .invoice-card {
+        padding: 1rem;
+    }
+
+    .invoice-header {
+        margin-bottom: 0.85rem;
+        padding-bottom: 0.85rem;
+        gap: 0.85rem;
+    }
+
+    .invoice-date span,
+    .invoice-client span {
+        font-size: 0.85rem;
+    }
+
+    .invoice-date i,
+    .invoice-client i {
+        font-size: 0.85rem;
+    }
+
+    .amount-label {
+        font-size: 0.7rem;
+    }
+
+    .amount-value {
+        font-size: 1.5rem;
+    }
+
+    .status-select {
+        padding: 0.45rem 0.65rem;
+        font-size: 0.8rem;
+    }
+
+    .email-badge {
+        width: 28px;
+        height: 28px;
+    }
+
+    .email-badge i {
+        font-size: 0.8rem;
+    }
+
+    .invoice-contact {
+        margin-bottom: 0.85rem;
+        padding-bottom: 0.85rem;
+        gap: 0.4rem;
+    }
+
+    .contact-item i {
+        font-size: 0.8rem;
+    }
+
+    .contact-item a,
+    .contact-item span {
+        font-size: 0.8rem;
+    }
+
+    .btn-action {
+        padding: 0.5rem 0.9rem;
+        font-size: 0.8rem;
+    }
+
+    .empty-state {
+        padding: 3rem 1.5rem;
+    }
+
+    .empty-state i {
+        font-size: 3rem;
+    }
+
+    .empty-state p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .invoice-card {
+        padding: 0.85rem;
+    }
+
+    .invoice-header {
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.75rem;
+        gap: 0.75rem;
+    }
+
+    .invoice-meta {
+        gap: 0.35rem;
+    }
+
+    .invoice-date span,
+    .invoice-client span {
+        font-size: 0.8rem;
+    }
+
+    .amount-value {
+        font-size: 1.35rem;
+    }
+
+    .status-select {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.75rem;
+    }
+
+    .email-badge {
+        width: 26px;
+        height: 26px;
+    }
+
+    .email-badge i {
+        font-size: 0.75rem;
+    }
+
+    .invoice-contact {
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.75rem;
+    }
+
+    .invoice-actions {
+        gap: 0.5rem;
+    }
+
+    .btn-action {
+        flex: 1;
+        min-width: calc(50% - 0.25rem);
+        justify-content: center;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    .btn-action span {
+        display: none;
+    }
+
+    .btn-action i {
+        font-size: 0.9rem;
+        margin: 0;
+    }
+
+    .invoice-count-badge {
+        font-size: 0.8rem;
+        min-width: 28px;
+        padding: 0.2rem 0.55rem;
+    }
+
+    .empty-state {
+        padding: 2.5rem 1rem;
+    }
+
+    .empty-state i {
+        font-size: 2.5rem;
+    }
+
+    .empty-state p {
+        font-size: 0.95rem;
+    }
+}

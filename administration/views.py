@@ -2,13 +2,10 @@
 import datetime
 import os
 import zipfile
-from io import BytesIO
-from sqlite3 import IntegrityError
 from typing import Any
 
-import PyPDF2
-from PyPDF2.constants import UserAccessPermissions
 from appointment.models import Appointment, StaffMember
+from dateutil.relativedelta import relativedelta
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
@@ -18,33 +15,40 @@ from django.contrib.auth.hashers import make_password
 from django.db import models
 from django.db.models import Count, Func
 from django.db.models.functions import TruncMonth
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, JsonResponse
+from django.http import FileResponse, HttpResponse, HttpResponseNotFound, HttpResponseServerError, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.template.loader import get_template
 from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
 from django.views.decorators.http import require_POST
-# from endesive import pdf as endesive_pdf
-from xhtml2pdf import pisa
 
-from administration.forms import UserChangePasswordForm
+from administration.forms import (InvoiceAttachmentFormset, InvoiceForm, InvoiceServiceFormset, UserChangePasswordForm)
 from administration.models import Invoice, PhotoClient, PhotoDelivery
+from administration.pdf_utils import perform_invoice_generation
 from client.forms import CreateAlbumForm
 from client.models import Album as AlbumClient, Photo, UserClient
-from crueltouch.productions import production_debug
 from homepage.models import Album as AlbumHomepage, Photo as PhotoHomepage
 from portfolio.models import Album as AlbumPortfolio, Photo as PhotoPortfolio
 from static_pages_and_forms.models import ContactForm
-from utils.crueltouch_utils import c_print, is_ajax, send_client_email
+from utils.crueltouch_utils import c_print, check, send_client_email
 
+
+# ==============================================================================
+# DASHBOARD HELPERS (RESTORED)
+# ==============================================================================
 
 class Month(Func):
+    """
+    Custom DB function to extract month for SQLite/Chart data.
+    """
     function = "STRFTIME"
     template = "%(function)s('%%m', %(expressions)s)"
     output_field = models.CharField()
 
 
 def get_base_context(request):
+    """
+    Base context with user and optional StaffMember profile link.
+    """
     user = request.user
     profile_link = None
     try:
@@ -53,6 +57,7 @@ def get_base_context(request):
             profile_link = reverse('appointment:user_profile', args=[user.id])
     except StaffMember.DoesNotExist:
         pass
+
     base_context: dict[str, Any] = {
         'user': user,
         'profile_link': profile_link,
@@ -61,20 +66,50 @@ def get_base_context(request):
 
 
 def get_appointments_by_month():
+    """
+    Returns appointment counts for the last 12 months (rolling window).
+    Returns tuple: (month_labels, appointment_counts)
+    """
+    today = datetime.date.today()
+    # Start from 11 months ago
+    start_date = today - relativedelta(months=11)
+    start_date = start_date.replace(day=1)
+
+    # Get appointments grouped by month for the last 12 months
     monthly_counts = (
         Appointment.objects
-        .annotate(month_str=Month("created_at"))
-        .values("month_str")
+        .filter(created_at__gte=start_date)
+        .annotate(month=TruncMonth("created_at"))
+        .values("month")
         .annotate(count=Count("id"))
+        .order_by("month")
     )
-    # convert '01', '02', ... to integers 1..12
-    monthly_counts_dict = {int(entry["month_str"]): entry["count"] for entry in monthly_counts}
-    book_me_by_month = [monthly_counts_dict.get(i, 0) for i in range(1, 13)]
-    return book_me_by_month
+
+    # Build dictionary of results
+    monthly_dict = {entry["month"].strftime("%Y-%m"): entry["count"] for entry in monthly_counts}
+
+    # Generate all 12 months and their labels
+    month_labels = []
+    appointment_counts = []
+
+    current = start_date
+    for i in range(12):
+        month_key = current.strftime("%Y-%m")
+        month_label = current.strftime("%b %Y")  # e.g. "Jan 2024"
+
+        month_labels.append(month_label)
+        appointment_counts.append(monthly_dict.get(month_key, 0))
+
+        current += relativedelta(months=1)
+
+    return month_labels, appointment_counts
 
 
 def get_context(request):
-    base_context = get_base_context(request)  # Get the base context
+    """
+    Aggregates all stats for the Admin Dashboard.
+    """
+    base_context = get_base_context(request)
 
     requested_session = Appointment.objects.all()
     last_10_book_me = Appointment.objects.all().order_by("-created_at")[:5]
@@ -83,6 +118,7 @@ def get_context(request):
     all_clients = UserClient.objects.filter(is_superuser=False)
     contact_forms = ContactForm.objects.all()
 
+    # Calculate Month-over-Month percentage increase
     current_month = datetime.datetime.now().month
     appointments_by_month = Appointment.objects.annotate(month=TruncMonth('created_at')).filter(
             created_at__month__in=[current_month, current_month - 1]
@@ -100,7 +136,8 @@ def get_context(request):
     else:
         percentage = ((this_month_count - last_month_count) / last_month_count) * 100
 
-    book_me_by_month = get_appointments_by_month()
+    # Get last 12 months data
+    month_labels, appointment_counts = get_appointments_by_month()
 
     # Update the base context with additional information
     base_context.update({
@@ -113,992 +150,629 @@ def get_context(request):
         'total_request_session': requested_session.count(),
         'total_contact_forms': contact_forms.count(),
         'increase_percentage': percentage,
-        'book_me_by_month': book_me_by_month,
+        'month_labels': month_labels,
+        'appointment_counts': appointment_counts,
         'invoices': last_10_invoices,
     })
     return base_context
 
 
-def login_admin(request):
-    """
-    Admin/staff login view.
-    Regular clients should use the client login page.
-    """
-    # If already authenticated, route them correctly
-    if request.user.is_authenticated:
-        if request.user.is_superuser or request.user.is_staff:
-            return redirect('administration:index')
-        # Regular client trying to access admin? Kick them out
-        return redirect('client:client_homepage')
+# ==============================================================================
+# AUTH & DASHBOARD VIEW
+# ==============================================================================
 
-    # Handle login POST
+def login_admin(request):
+    if request.user.is_authenticated and (request.user.is_staff or request.user.is_superuser):
+        return redirect('administration:index')
+
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
-
-        if not email or not password:
-            messages.error(request, "Email and password are required")
-            return render(request, 'client/login_registration/log_as_owner.html')
-
         user = authenticate(request, email=email, password=password)
 
-        if user is None:
-            messages.error(request, "Invalid credentials")
-            return render(request, 'client/login_registration/log_as_owner.html')
+        if user and (user.is_staff or user.is_superuser):
+            login(request, user)
+            return redirect('administration:index')
+        else:
+            messages.error(request, "Access Denied. Staff only.")
 
-        # User exists but not admin/staff
-        if not (user.is_superuser or user.is_staff):
-            messages.error(request, "Access denied. Admin/staff only.")
-            return render(request, 'client/login_registration/log_as_owner.html')
-
-        # Valid admin/staff login
-        login(request, user)
-        return redirect('administration:index')
-
-    # GET request - show login form
     return render(request, 'client/login_registration/log_as_owner.html')
 
 
-@staff_member_required(login_url='/administration/login/')
+@staff_member_required(login_url='administration:login')
 def admin_index(request):
     if request.user.has_to_change_password:
         return redirect('administration:must_change_password', pk=request.user.id)
+
+    # Restored: Use the full context generator
     context = get_context(request)
     return render(request, 'administration/view/index.html', context)
 
 
-@staff_member_required(login_url='/administration/login/')
-def list_requested_user(request):
-    all_clients = UserClient.objects.filter(is_superuser=False)
-    context = get_base_context(request)
-    context.update({'clients': all_clients})
-    return render(request, 'administration/list/list_user.html', context)
-
-
-@staff_member_required(login_url='/administration/login/')
-def list_contact_form(request):
-    contact_forms = ContactForm.objects.all()
-    context = get_base_context(request)
-    context.update({'contact_forms': contact_forms})
-    return render(request, 'administration/list/list_contact_forms.html', context)
-
-
-@staff_member_required(login_url='/administration/login/')
-def delete_contact_form(request, pk):
-    try:
-        contact_form = ContactForm.objects.get(id=pk)
-        contact_form.delete()
-        messages.success(request, "Contact form deleted successfully")
-        return redirect('administration:message_list')
-    except ContactForm.DoesNotExist:
-        messages.error(request, "Contact form does not exist")
-        return redirect('administration:message_list')
-
-
-@staff_member_required(login_url='/administration/login/')
+@staff_member_required(login_url='administration:login')
 def help_view(request):
-    context = get_base_context(request)
-    return render(request, 'administration/view/help.html', context)
+    return render(request, 'administration/view/help.html', get_base_context(request))
 
 
-@staff_member_required(login_url='/administration/login/')
-def add_photos_homepage(request):
-    if request.user.is_authenticated:
-        albums = AlbumHomepage.objects.all()
-        if request.method == "POST":
-            data = request.POST
-            images = request.FILES.getlist("images_homepage")
-            for image in images:
-                PhotoHomepage.objects.create(
-                        album_id=data['row'],
-                        file=image
-                )
+# ==============================================================================
+# INVOICE MANAGEMENT
+# ==============================================================================
 
-            redirect('administration:index')
-        context = get_base_context(request)
-        context.update({
-            'albums': albums,
-            'number_of_photos': len(PhotoHomepage.objects.all()),
-            'homepage': True,
-            'select': "Select a row",
-            'title': "Add photo to homepage",
-        })
-        return render(request, 'administration/add/add_photos.html', context)
-    else:
-        return redirect('administration:login')
+@staff_member_required(login_url='administration:login')
+def list_invoices(request):
+    invoices = Invoice.objects.all().order_by('-created_at')
+    return render(request, 'administration/list/list_invoices.html', {'invoices': invoices})
 
 
-@staff_member_required(login_url='/administration/login/')
-def add_photos_portfolio(request):
-    if request.user.is_authenticated:
-        albums = AlbumPortfolio.objects.all()
-        if request.method == "POST":
-            data = request.POST
-            images = request.FILES.getlist("images_homepage")
-            c_print(f"method post {data}")
-            c_print(f"images: {images}")
-            for image in images:
-                pc = PhotoPortfolio.objects.create(
-                        album_id=data['row'],
-                        file=image
-                )
-                c_print(f"photo created: {pc}")
+@staff_member_required(login_url='administration:login')
+def invoice_form(request, invoice_number=None):
+    invoice = None
+    title = "Create Invoice"
 
-            redirect('administration:index')
-        context = get_base_context(request)
-        context.update({
-            'albums': albums,
-            'homepage': False,
-            'number_of_photos': len(PhotoPortfolio.objects.all()),
-            'select': "Select album",
-            'title': "Add photo to portfolio",
-        })
-        return render(request, 'administration/add/add_photos.html', context)
-    else:
-        return redirect('administration:login')
-
-
-@staff_member_required(login_url='/administration/login/')
-def add_album_portfolio(request):
-    if request.method == 'POST':
-        form = CreateAlbumForm(request.POST)
-        if form.is_valid():
-            form.save()
-            next_ = request.POST.get('next', '/')
-            c_print("previous url is: ", next_)
-            return HttpResponseRedirect(next_)
-    else:
-        form = CreateAlbumForm()
-    context = get_base_context(request)
-    context.update({'form': form})
-    return render(request, 'administration/add/add_album.html', context)
-
-
-@staff_member_required(login_url='/administration/login/')
-def list_photos_portfolio(request):
-    photos = PhotoPortfolio.objects.all()
-    context = get_base_context(request)
-    context.update({
-        'photos': photos,
-        'title': "List of photos in portfolio",
-        'total_photos_label': "Total photos in portfolio",
-        'portfolio': True,
-    })
-    return render(request, 'administration/list/list_photos_portfolio.html', context)
-
-
-@staff_member_required(login_url='/administration/login/')
-def list_photos_homepage(request):
-    photos = PhotoHomepage.objects.all()
-    context = get_base_context(request)
-    context.update({
-        'photos': photos,
-        'title': "List of photos in homepage",
-        'total_photos_label': "Total photos in homepage",
-        'portfolio': False,
-    })
-    return render(request, 'administration/list/list_photos_portfolio.html', context)
-
-
-@staff_member_required(login_url='/administration/login/')
-def delete_photo_portfolio(request, pk):
-    try:
-        photo = PhotoPortfolio.objects.get(id=pk)
-        photo.delete()
-        messages.success(request, "Photo deleted successfully")
-        return redirect('administration:list_photos_portfolio')
-    except PhotoPortfolio.DoesNotExist:
-        messages.error(request, "Photo does not exist")
-        return redirect('administration:list_photos_portfolio')
-
-
-@staff_member_required(login_url='/administration/login/')
-def delete_photo_homepage(request, pk):
-    try:
-        photo = PhotoHomepage.objects.get(id=pk)
-        photo.delete()
-        messages.success(request, "Photo deleted successfully")
-        return redirect('administration:list_photos_homepage')
-    except PhotoHomepage.DoesNotExist:
-        messages.error(request, "Photo does not exist")
-        return redirect('administration:list_photos_homepage')
-
-
-@staff_member_required(login_url='/administration/login/')
-def create_downloadable_file(request):
-    if request.method == 'POST':
-        if is_ajax(request):
-            files = request.FILES.getlist("images_client_link")
-            client_name = request.POST.get("client_name")
-            client_email = request.POST.get("client_email")
-            next_ = request.POST.get('next', '/')
-            c_print(f"email: {client_email}", f"client name: {client_name}", f"next: {next_}")
-            # create a set of PhotoClient objects
-            photos = []
-            for file in files:
-                photo = PhotoClient.objects.create(file=file)
-                photos.append(photo)
-            delivery = PhotoDelivery(client_name=client_name, client_email=client_email)
-            delivery.save()
-            delivery.photos.set(photos)
-            delivery.save()
-            if client_email != "":
-                send_client_email(email_address=client_email, subject="New images were uploaded for you",
-                                  header="New images were uploaded for you",
-                                  message=f"Hello {client_name}, you can download your photos now !",
-                                  footer="Thank you for using our service ! The Tchiiz Team",
-                                  is_contact_form=False, is_other=True, button_label="Download my photos now",
-                                  button_text="Download", button_link=delivery.link_to_download)
-            else:
-                # return HttpResponseRedirect(next_)
-                pass
-            return JsonResponse({'link': delivery.link_to_download})
-    nota_bene = _(f"If you want the website to send the link automatically to the client, please, put the client "
-                  f"email in the field below. If you don't want to send the link automatically, leave the field "
-                  f"empty.")
-    context = get_base_context(request)
-    context.update({
-        'title': _("Create downloadable file"),
-        'nota_bene': nota_bene,
-    })
-
-    return render(request, 'administration/add/add_downloadable_file.html', context)
-
-
-@staff_member_required(login_url='/administration/login/')
-def list_downloadable_files_link(request):
-    deliveries = PhotoDelivery.objects.all()
-    context = get_base_context(request)
-    context.update({
-        'deliveries': deliveries,
-        'title': _("List of link to download images"),
-    })
-    return render(request, 'administration/list/list_created_link.html', context)
-
-
-def get_downloadable_client_images(request, id_delivery):
-    try:
-        photos = PhotoDelivery.objects.get(id_delivery=id_delivery)
-    except PhotoDelivery.DoesNotExist:
-        return HttpResponseNotFound("Not found")
-    context = get_base_context(request)
-    context.update({
-        'client_name': photos.get_client_name,
-        'photos': photos.get_photos(),
-        'id_delivery': id_delivery,
-    })
-    return render(request, 'administration/download/downloadable_images.html', context)
-
-
-def download_zip(request, id_delivery):
-    # -> zipfile.ZipFile:
-    try:
-        photos = PhotoDelivery.objects.get(id_delivery=id_delivery)
-    except PhotoDelivery.DoesNotExist:
-        return HttpResponseNotFound("Not found")
-
-    zip_subdir = "photos"
-    zip_filename = "%s.zip" % zip_subdir
-    s = BytesIO()
-    zf = zipfile.ZipFile(s, "w")
-    photos.set_downloaded_status()
-    photos = photos.get_photos()
-    for photo in photos:
-        print(f"file path: {photo.file.path}")
-        # get file name
-        filename = os.path.basename(photo.file.path)
-        print(f"file name: {filename}")
-        zip_path = os.path.join(zip_subdir, filename)
-        zf.write(photo.file.path, zip_path)
-    zf.close()
-    resp = HttpResponse(s.getvalue(), content_type="application/x-zip-compressed")
-    resp['Content-Disposition'] = 'attachment; filename=%s' % zip_filename
-    return resp
-
-
-@staff_member_required(login_url='/administration/login/')
-def delete_delivery(request, pk):
-    try:
-        delivery = PhotoDelivery.objects.get(pk=pk)
-        delivery.delete_files()
-        messages.success(request, "Delivery deleted successfully")
-        return redirect('administration:show_all_links_created')
-    except PhotoDelivery.DoesNotExist:
-        messages.error(request, "Delivery does not exist")
-        return redirect('administration:show_all_links_created')
-
-
-@staff_member_required(login_url='/administration/login/')
-def send_photo_via_account(request, pk):
-    # try:
-    #     photo = PhotoClient.objects.get(id=pk)
-    # except PhotoClient.DoesNotExist:
-    #     return HttpResponseNotFound("Not found")
-    # if request.method == 'POST':
-    #     if is_ajax(request):
-    #         client_name = request.POST.get("client_name")
-    #         client_email = request.POST.get("client_email")
-    #         next_ = request.POST.get('next', '/')
-    #         c_print(f"email: {client_email}", f"client name: {client_name}", f"next: {next_}")
-    #         delivery = PhotoDelivery(client_name=client_name, client_email=client_email)
-    #         delivery.save()
-    #         delivery.photos.add(photo)
-    #         delivery.save()
-    #         if client_email != "":
-    #             send_client_email(email_address=client_email, subject="New images were uploaded for you",
-    #                               header="New images were uploaded for you",
-    #                               message=f"Hello {client_name}, you can download your photos now !",
-    #                               footer="Thank you for using our service ! The Crueltouch Team",
-    #                               is_contact_form=False, is_other=True, button_label="Download my photos now",
-    #                               button_text="Download", button_link=delivery.link_to_download)
-    #         else:
-    #             # return HttpResponseRedirect(next_)
-    #             pass
-    #         return JsonResponse({'link': delivery.link_to_download})
-    # nota_bene = _(f"If you want the website to send the link automatically to the client, please, put the client "
-    #               f"email in the field below. If you don't want to send the link automatically, leave the field "
-    #               f"empty.")
-    context = {
-        'title': _("Create downloadable file"),
-        #   'nota_bene': nota_bene,
-    }
-    return render(request, 'administration/add/add_downloadable_file.html', context)
-
-
-@staff_member_required(login_url='/administration/login/')
-def send_photos_for_client_to_choose_from(request):
-    """
-    Upload photos for a client to review and select favorites.
-    Creates an album for the client if they don't have one.
-    """
-    client_list = UserClient.objects.filter(is_staff=False, is_superuser=False).order_by('first_name')
+    if invoice_number:
+        invoice = get_object_or_404(Invoice, invoice_number=invoice_number)
+        title = f"Edit Invoice {invoice.invoice_number}"
 
     if request.method == 'POST':
-        client_id = request.POST.get("client")
-        files = request.FILES.getlist("id_photo")
+        form = InvoiceForm(request.POST, instance=invoice)
+        service_formset = InvoiceServiceFormset(request.POST, instance=invoice)
+        attachment_formset = InvoiceAttachmentFormset(request.POST, request.FILES, instance=invoice)
 
-        if not client_id:
-            messages.error(request, "Please select a client")
-            return redirect('administration:send_photos_for_client_to_choose_from')
-
-        if not files:
-            messages.error(request, "Please select at least one photo")
-            return redirect('administration:send_photos_for_client_to_choose_from')
-
-        try:
-            user_client = UserClient.objects.get(id=client_id)
-        except UserClient.DoesNotExist:
-            messages.error(request, "Client not found")
-            return redirect('administration:send_photos_for_client_to_choose_from')
-
-        # Get or create client album
-        client_album, created = AlbumClient.objects.get_or_create(
-                owner=user_client,
-                defaults={'is_active': True}
-        )
-
-        # Create photos and add to album
-        photos = []
-        for file in files:
-            photo = Photo.objects.create(file=file)
-            photos.append(photo)
-
-        # Add photos to album
-        client_album.photos.add(*photos)
-
-        # Build the link to the album
-        album_url = request.build_absolute_uri(
-                reverse('client:album_details', args=[client_album.id])
-        )
-
-        # Send notification email
-        send_client_email(
-                email_address=user_client.email,
-                subject="New photos available for review",
-                header="New Photos Available",
-                message=f"Hello {user_client.first_name},\n\n"
-                        f"We've uploaded {len(photos)} new photo{'s' if len(photos) > 1 else ''} for you to review!\n\n"
-                        f"Log in to view and select your favorites.",
-                footer="Thank you! - The Tchiiz Team",
-                is_contact_form=False,
-                is_other=True,
-                button_label="View Your Photos",
-                button_text="View Photos",
-                button_link=album_url
-        )
-
-        messages.success(
-                request,
-                f"Successfully uploaded {len(photos)} photos for {user_client.get_full_name()}"
-        )
-        return redirect('administration:index')
-
-    context = get_base_context(request)
-    context.update({
-        'title': "Send Photos to Client",
-        'client_list': client_list,
-    })
-    return render(request, 'administration/add/add_client_photos.html', context)
-
-
-@staff_member_required(login_url='/administration/login/')
-def create_new_client(request):
-    previous = request.META.get('HTTP_REFERER')
-    if request.method == 'POST':
-        if is_ajax(request):
-            client_name = request.POST.get("client_name")
-            client_email = request.POST.get("client_email")
-            client_password = 'Crueltouch2022'
-            c_print(f"email: {client_email}", f"client name: {client_name}", f"next: {previous}")
-            try:
-                client = UserClient.objects.create_user(first_name=client_name, email=client_email,
-                                                        password=client_password)
-            except IntegrityError:
-                return JsonResponse({'error': 'Client already exists'})
+        if form.is_valid() and service_formset.is_valid() and attachment_formset.is_valid():
+            # Client Logic
+            client, _ = UserClient.objects.get_or_create(email=form.cleaned_data['client_email'])
+            client.first_name = form.cleaned_data['client_first_name']
+            client.last_name = form.cleaned_data['client_last_name']
+            client.phone_number = form.cleaned_data['client_phone']
+            client.address = form.cleaned_data['client_address']
             client.save()
-            client.set_first_login()
-            client.send_password_email()
-            return JsonResponse({'success': True, 'client': client.id, 'message': 'Client created successfully !'})
-    context = get_base_context(request)
-    context.update({
-        'title': _("Create new client"),
-        'previous': previous,
-    })
-    return render(request, 'administration/add/add_new_client.html', context)
+
+            # Invoice Logic
+            invoice_obj = form.save(commit=False)
+            invoice_obj.client = client
+            invoice_obj.save()
+
+            service_formset.instance = invoice_obj
+            service_formset.save()
+            attachment_formset.instance = invoice_obj
+            attachment_formset.save()
+
+            generate_and_process_invoice(request, invoice_obj.invoice_number)
+            messages.success(request, "Invoice saved successfully.")
+            return redirect('administration:list_invoices')
+    else:
+        form = InvoiceForm(instance=invoice)
+        service_formset = InvoiceServiceFormset(instance=invoice)
+        attachment_formset = InvoiceAttachmentFormset(instance=invoice)
+
+    context = {
+        'title': title, 'form': form,
+        'service_formset': service_formset,
+        'attachment_formset': attachment_formset
+    }
+    return render(request, 'administration/add/invoice_form.html', context)
 
 
-@login_required(login_url="/client/login/")
-def must_change_password(request, pk):
-    form = UserChangePasswordForm(request.POST)
-    if request.method == 'POST':
-        if form.is_valid():
+@staff_member_required(login_url='administration:login')
+def generate_and_process_invoice(request, invoice_number):
+    invoice = get_object_or_404(Invoice, invoice_number=invoice_number)
+    try:
+        perform_invoice_generation(invoice, request)
+    except Exception as e:
+        # HERE is where you handle user feedback for the manual click
+        c_print(f"Manual Generation Error: {e}")
+        # Optionally add messages.error(request, "Failed...")
+
+    return redirect('administration:list_invoices')
+
+
+@staff_member_required(login_url='administration:login')
+def view_invoice(request, invoice_number):
+    invoice = get_object_or_404(Invoice, invoice_number=invoice_number)
+    path = invoice.get_path()
+
+    # logic to decide if we regenerate
+    force_regen = False
+    if not os.path.exists(path):
+        force_regen = True
+    else:
+        # ... check timestamps logic ...
+        pass
+
+    if force_regen:
+        # We call the PURE function.
+        # If this fails, it RAISES an exception, which stops execution here.
+        perform_invoice_generation(invoice, request)
+
+    try:
+        return FileResponse(open(path, 'rb'), content_type='application/pdf')
+    except FileNotFoundError:
+        # The file is missing. Try ONE LAST TIME safely.
+        if not force_regen:
             try:
-                user = UserClient.objects.get(pk=pk)
-                password = form.cleaned_data['new_password1']
-                if user.password_is_same(password=password):
-                    messages.warning(request, _("You can't use your old password"))
-                    return redirect("administration:must_change_password")
-                user.password = make_password(password)
-                user.save()
-                user.set_not_first_login()
-                user.save()
-                return redirect("client:login")
-            except UserClient.DoesNotExist:
-                messages.warning(request, _("This user no longer exists !"))
-                return redirect("client:register")
-    else:
-        form = UserChangePasswordForm()
-    first_logon = True
-    msg = "You must change your password before you can log in"
-    context = get_base_context(request)
-    context.update({
-        'form': form,
-        'first_login': first_logon,
-        'msg': msg
-    })
-    return render(request, "administration/password/has_to_change_password.html", context)
+                perform_invoice_generation(invoice, request)
+                return FileResponse(open(path, 'rb'), content_type='application/pdf')
+            except Exception as e:
+                # Now we have the REAL error in 'e'.
+                # We can log it or print it to console
+                print(f"CRITICAL INVOICE FAILURE: {e}")
+                return HttpResponseServerError(f"Invoice generation failed: {e}")
+
+        return HttpResponseServerError("Invoice generation produced no file.")
 
 
-@login_required(login_url="/administration/login/")
-@staff_member_required(login_url='/administration/login/')
-def view_client_album_created(request):
-    album = AlbumClient.objects.all()
-    context = get_base_context(request)
-    context.update({
-        'title': _("View chosen photos"),
-        'album_list': album,
-    })
-    return render(request, 'administration/list/list_album_client.html', context)
+@staff_member_required(login_url='administration:login')
+def send_invoice_to_client(request, invoice_number):
+    invoice = get_object_or_404(Invoice, invoice_number=invoice_number)
+    download_url = request.build_absolute_uri(reverse('administration:view_invoice', args=[invoice_number]))
 
+    if not os.path.exists(invoice.get_path()):
+        generate_and_process_invoice(request, invoice_number)
 
-@login_required(login_url="/administration/login/")
-@staff_member_required(login_url='/administration/login/')
-def view_all_liked_photos(request, pk):
-    album = AlbumClient.objects.get(pk=pk)
-    context = get_base_context(request)
-    context.update({
-        'title': _("View chosen photos"),
-        'album': album,
-        'photos_liked': album.get_photos_liked(),
-        'photos_not_liked': album.get_photos_not_liked(),
-        'total_photos_label': _("Total photos sent"),
-    })
-    return render(request, 'administration/list/list_album_client_photos.html', context)
-
-
-@login_required(login_url="/administration/login/")
-@staff_member_required(login_url='/administration/login/')
-def delete_client_album(request, pk):
-    album = AlbumClient.objects.get(pk=pk)
-    album.delete_files()
-    return redirect("administration:view_client_album_created")
-
-
-def link_callback(uri, rel):
-    from django.contrib.staticfiles import finders
-    import os
-    from django.conf import settings
-    c_print(f"uri: {uri}", f"rel: {rel}")
-    # Check if the URI is in static files
-    result = finders.find(uri)
-    if result:
-        return result
-
-    # Handling media files
-    if uri.startswith(settings.MEDIA_URL):
-        path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.MEDIA_URL, ""))
-    elif uri.startswith('/media/'):  # If the URI starts with '/media/'
-        path = os.path.join(settings.MEDIA_ROOT, uri.replace('/media/', ""))
-    elif uri.startswith('media/'):  # Directly starts with 'media/'
-        path = os.path.join(settings.MEDIA_ROOT, uri[6:])  # Skip 'media/' part
-    else:
-        # Log or print the problematic URI
-        print("URI causing issue:", uri)
-        return uri  # Return as is for further investigation
-
-    # Check if the file exists
-    if not os.path.isfile(path):
-        print("File not found:", path)
-        raise Exception(f'File with URI {uri} not found.')
-
-    return path
-
-
-def get_client_emails(request):
-    query = request.GET.get('query', '')
-    clients = UserClient.objects.filter(email__icontains=query).values('email', 'first_name', 'last_name',
-                                                                       'phone_number', 'address')[
-        :5]  # Limit to 5 results for example
-    client_list = list(clients)
-    return JsonResponse(client_list, safe=False)
-
-
-# def invoice_form(request, invoice_number=None):
-#     invoice_instance = None
-#     title = "Create Invoice"  # Default title
-#
-#     if invoice_number:
-#         invoice_instance = Invoice.objects.get(invoice_number=invoice_number)
-#         title = "Edit Invoice"
-#
-#     if request.method == 'POST':
-#         form = InvoiceForm(request.POST, request.FILES, instance=invoice_instance)
-#         attachment_formset = InvoiceAttachmentFormset(request.POST, request.FILES, prefix='attachments',
-#                                                       instance=invoice_instance)
-#         service_formset = InvoiceServiceFormset(request.POST, prefix='services', instance=invoice_instance)
-#
-#         if form.is_valid() and attachment_formset.is_valid() and service_formset.is_valid():
-#             client = handle_client_data(form.cleaned_data)
-#             saved_invoice = save_invoice_and_formsets(form, attachment_formset, service_formset, client)
-#             return redirect('administration:generate_invoice', invoice_number=saved_invoice.invoice_number)
-#     else:
-#         form = InvoiceForm(instance=invoice_instance)
-#         attachment_formset = InvoiceAttachmentFormset(prefix='attachments', instance=invoice_instance)
-#         service_formset = InvoiceServiceFormset(prefix='services', instance=invoice_instance)
-#
-#     context = {
-#         'form': form,
-#         'attachment_formset': attachment_formset,
-#         'service_formset': service_formset,
-#         'title': title
-#     }
-#     return render(request, 'administration/add/invoice_form.html', context)
-
-
-def handle_client_data(form_data):
-    client_email = form_data['client_email']
-    first_name = form_data['client_first_name']
-    last_name = form_data['client_last_name']
-    client_phone = form_data['client_phone']
-    client_address = form_data['client_address']
-
-    client, created = UserClient.objects.get_or_create(
-            email=client_email,
-            defaults={'first_name': first_name, 'last_name': last_name, 'phone_number': client_phone,
-                      'address': client_address}
+    send_client_email(
+            email_address=invoice.client.email,
+            subject=f"Invoice {invoice.invoice_number}",
+            header="Your Invoice is Ready",
+            message=f"Hello {invoice.client.first_name}, please find your invoice attached.",
+            footer="Thank you.",
+            button_label="View Invoice",
+            button_text="Download PDF",
+            button_link=download_url
     )
-
-    if not created:
-        client.first_name = first_name
-        client.last_name = last_name
-        client.phone_number = client_phone
-        client.address = client_address
-        client.save()
-
-    return client
+    invoice.email_sent = True
+    invoice.save(update_fields=['email_sent'])
+    messages.success(request, f"Invoice sent to {invoice.client.email}")
+    return redirect('administration:list_invoices')
 
 
-# def save_invoice_and_formsets(form, attachment_formset, service_formset, client):
-#     invoice = form.save(commit=False)
-#     invoice.client = client
-#     invoice.save()
-#
-#     attachment_formset.instance = invoice
-#     service_formset.instance = invoice
-#     attachment_formset.save()
-#     service_formset.save()
-#     return invoice
-
-
-# @login_required(login_url="/administration/login/")
-# @staff_member_required(login_url='/administration/login/')
-# def invoice_form2(request):
-#     if request.method == 'POST':
-#         form = InvoiceForm(request.POST, request.FILES)
-#         attachment_formset = InvoiceAttachmentFormset(request.POST, request.FILES, prefix='attachments')
-#         service_formset = InvoiceServiceFormset(request.POST, prefix='services')
-#         if form.is_valid():
-#             client_email = form.cleaned_data['client_email']
-#             first_name = form.cleaned_data['client_first_name']
-#             last_name = form.cleaned_data['client_last_name']
-#             client_phone = form.cleaned_data['client_phone']
-#             client_address = form.cleaned_data['client_address']
-#
-#             client, created = UserClient.objects.get_or_create(
-#                 email=client_email,
-#                 defaults={'first_name': first_name, 'last_name': last_name, 'phone_number': client_phone,
-#                           'address': client_address}
-#             )
-#
-#             if client.phone_number is None or client.phone_number == "" or (
-#                     client.phone_number != client_phone and client_phone != ""):
-#                 client.phone_number = client_phone
-#             if client.address is None or client.address == "" or (
-#                     client.address != client_address and client_address != ""):
-#                 client.address = client_address
-#             if client.last_name is None or client.last_name == "" or (
-#                     client.last_name != last_name and last_name != ""):
-#                 client.last_name = last_name
-#             client.save()
-#
-#             # Save Invoice instance to database
-#             invoice = form.save(commit=False)
-#             invoice.client = client
-#             invoice.save()
-#
-#             # Now that the invoice instance is saved, assign it to the formsets
-#             attachment_formset.instance = invoice
-#             service_formset.instance = invoice
-#
-#             if attachment_formset.is_valid() and service_formset.is_valid():
-#                 attachment_formset.save()
-#                 service_formset.save()
-#                 invoice.save()
-#             return redirect('administration:generate_invoice', invoice_number=invoice.invoice_number)
-#     else:
-#         form = InvoiceForm()
-#         attachment_formset = InvoiceAttachmentFormset(prefix='attachments')
-#         service_formset = InvoiceServiceFormset(prefix='services')
-#
-#     context = {
-#         'form': form,
-#         'attachment_formset': attachment_formset,
-#         'service_formset': service_formset
-#     }
-#     return render(request, 'administration/add/invoice_form.html', context)
-#
-#
-# def archive_invoice_files(invoice):
-#     # Define the directories
-#     invoice_files_dir = "media/invoices/"
-#     archive_dir = "media/archived_invoices/"
-#
-#     # Create the archive directory if it doesn't exist
-#     os.makedirs(archive_dir, exist_ok=True)
-#
-#     # Generate the base name for the invoice files
-#     invoice_base_name = invoice.get_name()
-#
-#     # Find all invoice files
-#     invoice_files = glob.glob(f"{invoice_files_dir}{invoice_base_name}*")
-#
-#     # Retrieve attachment files using the InvoiceAttachment model
-#     attachment_files = [attachment.file.path for attachment in InvoiceAttachment.objects.filter(invoice=invoice)]
-#
-#     # Timestamp for the archive name
-#     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-#     archive_name = f"{archive_dir}{invoice_base_name}_{timestamp}.zip"
-#
-#     # Creating the archive
-#     with zipfile.ZipFile(archive_name, 'w') as archive:
-#         for file in invoice_files + attachment_files:
-#             archive.write(file, os.path.basename(file))
-#             os.remove(file)  # Remove the original file after adding to the archive
-#
-#     # Return the path of the created archive for further use (optional)
-#     return archive_name
-#
-#
-# def delete_invoice(request, invoice_number):
-#     invoice = Invoice.objects.get(invoice_number=invoice_number)
-#     archive_invoice_files(invoice)
-#     invoice.delete()
-#     return redirect('administration:index')
-#
-#
-# def list_invoices(request):
-#     invoices = Invoice.objects.all()
-#     return render(request, 'administration/list/list_invoices.html', {'invoices': invoices})
-
-
-# def view_invoice(request, invoice_number):
-#     invoice = Invoice.objects.get(invoice_number=invoice_number)
-#     pdf_path = f'media/invoices/{invoice.get_name()}.pdf'
-#
-#     # Check if the PDF exists
-#     if not os.path.exists(pdf_path):
-#         generate_and_process_invoice(request, invoice.invoice_number)
-#     else:
-#         # Get the updated date info about the file (Linux/ macOS)
-#         updated_date = datetime.datetime.fromtimestamp(os.path.getmtime(pdf_path))
-#
-#         # If the PDF updated date is not the same as the invoice updated date, regenerate the PDF
-#         if updated_date.replace(microsecond=0) != invoice.updated_at.replace(tzinfo=None, microsecond=0):
-#             # rename the old PDF by adding its updated date to the name
-#             os.rename(pdf_path, f'media/invoices/{invoice.get_name()}_{invoice.updated_at}.pdf')
-#             generate_and_process_invoice(request, invoice.invoice_number)
-#
-#     # After regeneration or if no regeneration was needed, open and return the PDF
-#     with open(pdf_path, 'rb') as f:
-#         pdf_content = f.read()
-#
-#     response = HttpResponse(pdf_content, content_type='application/pdf')
-#     response['Content-Disposition'] = f'filename="{invoice.get_name()}.pdf"'
-#     return response
-
-
+@staff_member_required(login_url='administration:login')
 @require_POST
 def update_invoice_status(request, invoice_number):
     invoice = get_object_or_404(Invoice, invoice_number=invoice_number)
     new_status = request.POST.get('status')
-
-    # Check if the new status is valid
     if new_status in dict(Invoice.INVOICE_STATUS_CHOICES):
         invoice.status = new_status
         invoice.save()
-        # Optionally, add a message to notify the user of the update
-        messages.success(request, f'Invoice {invoice_number} status updated to {new_status}.')
-    else:
-        # Handle invalid status update
-        messages.error(request, 'Invalid status update.')
-
-    return redirect('administration:index')
+        messages.success(request, f"Status updated to {new_status}")
+    return redirect('administration:list_invoices')
 
 
-# @login_required(login_url="/administration/login/")
-# @staff_member_required(login_url='/administration/login/')
-# def generate_and_process_invoice(request, invoice_number):
-#     os.makedirs("media/invoices", exist_ok=True)
-#     invoice = Invoice.objects.get(invoice_number=invoice_number)
-#
-#     # Step 1: Generate Invoice PDF
-#     pdf_path = generate_invoice_pdf(request, invoice.invoice_number)
-#     # Step 2: Sign the PDF
-#     signed_pdf_path = sign_pdf(invoice_number)
-#     # Step 3: Secure the PDF
-#     secure_pdf_path = f'media/invoices/{invoice.get_name()}.pdf'
-#     secure_pdf(signed_pdf_path, secure_pdf_path, "owner_password", invoice)
-#     # Cleanup: Remove temporary PDFs and serve the final secured PDF
-#     os.remove(pdf_path)
-#     os.remove(signed_pdf_path)
-#
-#     # Serve the final secured PDF
-#     with open(secure_pdf_path, 'rb') as f:
-#         pdf_content = f.read()
-#     # response = HttpResponse(pdf_content, content_type='application/pdf')
-#     # response['Content-Disposition'] = f'filename="{invoice.get_name()}.pdf"'
-#     return redirect('administration:index')
+@staff_member_required(login_url='administration:login')
+def delete_invoice(request, invoice_number):
+    invoice = get_object_or_404(Invoice, invoice_number=invoice_number)
+
+    # Archive before delete
+    archive_dir = os.path.join(settings.MEDIA_ROOT, "archived_invoices")
+    os.makedirs(archive_dir, exist_ok=True)
+    zip_path = os.path.join(archive_dir, f"{invoice.get_name()}_{timezone.now().strftime('%Y%m%d%H%M%S')}.zip")
+
+    files_to_zip = [invoice.get_path()] if os.path.exists(invoice.get_path()) else []
+    for att in invoice.attachments.all():
+        if att.file and os.path.exists(att.file.path):
+            files_to_zip.append(att.file.path)
+
+    if files_to_zip:
+        with zipfile.ZipFile(zip_path, 'w') as zf:
+            for f in files_to_zip:
+                zf.write(f, os.path.basename(f))
+
+    invoice.delete()
+    messages.success(request, "Invoice archived and deleted.")
+    return redirect('administration:list_invoices')
 
 
-def generate_invoice_pdf(request, invoice_number):
-    invoice = Invoice.objects.get(invoice_number=invoice_number)
-    template_path = 'administration/add/invoice.html'
-    header = "media/Logo/header_tchiiz.webp"
-    footer = "media/Logo/footer_tchiiz.webp"
-    if invoice.client.phone_number == "" or invoice.client.phone_number is None:
-        invoice.client.phone_number = "N/A"
-    if invoice.payment_method == "_":
-        invoice.payment_method = "none"
+@staff_member_required(login_url='administration:login')
+def get_client_emails(request):
+    query = request.GET.get('term', '')
+    clients = UserClient.objects.filter(email__icontains=query)[:5]
+    results = [{'label': c.email, 'value': c.email, 'first_name': c.first_name,
+                'last_name': c.last_name, 'phone': c.phone_number, 'address': c.address} for c in clients]
+    return JsonResponse(results, safe=False)
 
-    if invoice.discount > 0:
-        discount_percent = round(invoice.discount, 1)
-        discount_value = round(invoice.get_discount(invoice.get_base_amount()), 1)
-    else:
-        discount_percent = None
-        discount_value = None
 
-    if invoice.tax_rate > 0:
-        tax_percent = round(invoice.tax_rate, 1)
-        tax_value = round(invoice.get_tax(invoice.get_net_amount()), 1)
-    else:
-        tax_percent = None
-        tax_value = None
+# ==============================================================================
+# PHOTO DELIVERY - GUEST (Create Downloadable File)
+# ==============================================================================
+
+@staff_member_required(login_url='administration:login')
+def create_downloadable_file(request):
+    if request.method == 'POST':
+        files = request.FILES.getlist("images_client_link")
+        client_name = request.POST.get("client_name")
+        client_email = request.POST.get("client_email")
+
+        delivery = PhotoDelivery.objects.create(client_name=client_name, client_email=client_email)
+        photos = [PhotoClient(file=f) for f in files]
+        for p in photos: p.save()
+        delivery.photos.add(*photos)
+        delivery.save()
+
+        if client_email:
+            send_client_email(
+                    client_email, "Photos Ready", "Download Photos",
+                    f"Hello {client_name}, download your photos here.", "Tchiiz Studio",
+                    "Download", "Download", delivery.link_to_download
+            )
+
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'link': delivery.link_to_download})
+        return redirect('administration:show_all_links_created')
+
+    return render(request, 'administration/add/add_downloadable_file.html', {'title': "Create Download Link"})
+
+
+@staff_member_required(login_url='administration:login')
+def list_downloadable_files_link(request):
+    deliveries = PhotoDelivery.objects.all().order_by('-date')
+    return render(request, 'administration/list/list_created_link.html', {'deliveries': deliveries})
+
+
+@staff_member_required(login_url='administration:login')
+def delete_delivery(request, pk):
+    delivery = get_object_or_404(PhotoDelivery, pk=pk)
+    delivery.delete_files()
+    messages.success(request, "Delivery deleted.")
+    return redirect('administration:show_all_links_created')
+
+
+# --- Public Views (Imported by Homepage) ---
+
+def get_downloadable_client_images(request, id_delivery):
+    """
+    PUBLIC VIEW: Used by guests to view their photos via the unique token.
+    Imported by homepage/urls.py to serve clean URLs.
+    """
+    try:
+        delivery = PhotoDelivery.objects.get(id_delivery=id_delivery)
+    except PhotoDelivery.DoesNotExist:
+        return HttpResponseNotFound("Link invalid or expired.")
+
+    # Check expiration
+    if delivery.expiration_date and delivery.expiration_date < datetime.date.today():
+        return HttpResponse("This link has expired.", status=410)
 
     context = {
-        'invoice_number': invoice.invoice_number,
-        'client_name': invoice.client.get_full_name(),
-        'client_email': invoice.client.email,
-        'client_phone': invoice.client.phone_number,
-        'services': invoice.invoice_services.all(),
-        'payment_method': invoice.payment_method,
-        'invoice_date': invoice.created_at,
-        'details': invoice.details,
-        'total': invoice.get_base_amount(),
-        'header': header,
-        'footer': footer,
-        'stamps': invoice.get_stamp_link(),
-        'url': request.build_absolute_uri(),
-        'due_date': invoice.due_date,
-        'discount_percent': discount_percent,
-        'discount_value': discount_value,
-        'amount_paid': invoice.amount_paid,
-        'balance_due': invoice.balance_due(),
-        'tax_percent': tax_percent,
-        'tax_value': tax_value,
+        'client_name': delivery.client_name,
+        'photos': delivery.photos.all(),
+        'id_delivery': id_delivery,
+        'is_guest_view': True
     }
-    # Create a Django response object, and specify content_type as pdf
-    filename = f"{invoice.get_name()}_generated.pdf"
-    pdf_path = os.path.join(settings.MEDIA_ROOT, 'invoices', filename)
-
-    # find the template and render it.
-    template = get_template(template_path)
-    html = template.render(context)
-
-    # create a pdf
-    buffer = BytesIO()
-
-    # Generate PDF
-    pisa_status = pisa.CreatePDF(html, dest=buffer, link_callback=link_callback)
-    # if error then show some funny view
-    if pisa_status.err:
-        return HttpResponse('We had some errors <pre>' + html + '</pre>')
-    with open(pdf_path, 'wb') as f:
-        f.write(buffer.getvalue())
-    buffer.close()
-    return pdf_path
+    return render(request, 'administration/download/downloadable_images.html', context)
 
 
-# def sign_pdf(invoice_number):
-#     pdf_obj = Invoice.objects.get(invoice_number=invoice_number)
-#     pdf_path = f"media/invoices/{pdf_obj.get_name()}_generated.pdf"
-#
-#     # Read the contents of the private key and certificate files
-#     with open(settings.PRIVATE_KEY_PATH, 'rb') as key_file:
-#         private_key_data = key_file.read()
-#     with open(settings.CERTIFICATE_PATH, 'rb') as cert_file:
-#         certificate_data = cert_file.read()
-#
-#     # Load the private key and certificate
-#     private_key = serialization.load_pem_private_key(
-#         private_key_data,
-#         password=None,  # Assuming the private key is not password protected
-#         backend=default_backend()
-#     )
-#     certificate = x509.load_pem_x509_certificate(
-#         certificate_data,
-#         default_backend()
-#     )
-#
-#     # Read the PDF
-#     reader = PyPDF2.PdfReader(pdf_path)
-#     writer = PyPDF2.PdfWriter()
-#     for page in reader.pages:
-#         writer.add_page(page)
-#
-#     # Save to a temporary file
-#     tmp_pdf_path = f'media/invoices/{pdf_obj.get_name()}_tmp.pdf'
-#     with open(tmp_pdf_path, 'wb') as f:
-#         writer.write(f)
-#
-#     # Sign the PDF
-#     dct = {
-#         'sigflags': 3,
-#         'contact': 'tchiiz.web.studio@gmail.com',
-#         'location': 'Naples/Florida',
-#         'signingdate': datetime.datetime.utcnow().strftime("D:%Y%m%d%H%M%S+00'00'"),
-#         'reason': 'Signing the invoice',
-#     }
-#
-#     with open(tmp_pdf_path, 'rb') as f:
-#         datau = f.read()
-#
-#     # Pass the certificate object directly to the sign function
-#     datas = endesive_pdf.cms.sign(
-#         datau, dct,
-#         private_key,  # Private key object
-#         certificate,  # Certificate object
-#         [],  # Additional certificates, if any, as a list
-#         'sha256'
-#     )
-#
-#     output_pdf_path = f'media/invoices/{pdf_obj.get_name()}_signed.pdf'
-#     with open(output_pdf_path, 'wb') as fp:
-#         fp.write(datau)
-#         fp.write(datas)
-#     # delete tmp file
-#     os.remove(tmp_pdf_path)
-#     return output_pdf_path
-
-
-def secure_pdf(input_pdf_path, output_pdf_path, owner_password, invoice):
+def download_zip(request, id_delivery):
     """
-    Apply security restrictions to a PDF without requiring a user password to open.
-
-    Args:
-    input_pdf_path (str): Path to the input PDF file.
-    output_pdf_path (str): Path where the secured PDF will be saved.
-    owner_password (str): Owner password to change permissions.
+    PUBLIC VIEW: Download all photos in the delivery as a ZIP.
+    Renamed back from 'download_guest_zip' to fix ImportError in homepage/urls.py.
     """
-    with open(input_pdf_path, "rb") as input_stream:
-        reader = PyPDF2.PdfReader(input_stream)
-        from PyPDF2 import PdfWriter
-        writer = PdfWriter()
+    delivery = get_object_or_404(PhotoDelivery, id_delivery=id_delivery)
 
-        # Add pages
-        for page in reader.pages:
-            writer.add_page(page)
+    # Mark as downloaded
+    if not delivery.was_downloaded:
+        delivery.was_downloaded = True
+        delivery.save(update_fields=['was_downloaded'])
 
-        # Set up permissions
-        permissions = UserAccessPermissions.PRINT
+    # Stream Zip Response
+    response = HttpResponse(content_type='application/zip')
+    # Sanitize filename
+    safe_name = delivery.client_name.replace(' ', '_').replace('/', '') or "photos"
+    zip_filename = f"Tchiiz_Photos_{safe_name}.zip"
+    response['Content-Disposition'] = f'attachment; filename={zip_filename}'
 
-        # Add metadata to the PDF like author, title, etc.
-        metadata = {
-            '/Author': 'tchiiz.com',
-            '/Title': invoice.get_name(),
-            '/Subject': 'Invoice from tchiiz.com for photography services',
-            '/Producer': 'https://tchiiz.com',
-            '/Creator': 'https://tchiiz.com',
-            '/CreationDate': 'D:' + invoice.created_at.strftime('%Y%m%d%H%M%S'),
-            '/ModDate': 'D:' + invoice.updated_at.strftime('%Y%m%d%H%M%S'),
-            '/Keywords': f'tchiiz.com, invoice, services, secure, pdf, {invoice.status}',
-            '/Trapped': '/False',
-            '/PTEX.Fullbanner': 'This document was created by tchiiz.com',
-            '/BaseURL': 'https://tchiiz.com',
-        }
+    with zipfile.ZipFile(response, 'w') as zf:
+        for photo in delivery.photos.all():
+            if photo.file and os.path.exists(photo.file.path):
+                zf.write(photo.file.path, os.path.basename(photo.file.path))
 
-        writer.add_metadata(metadata)
-        # Encrypt the PDF with an empty user password and the owner password
-        writer.encrypt(user_password='', owner_pwd=owner_password, use_128bit=True, permissions_flag=permissions)
-
-        with open(output_pdf_path, "wb") as output_stream:
-            writer.write(output_stream)
+    return response
 
 
-def send_invoice_to_client(request, invoice_number):
-    invoice = Invoice.objects.get(invoice_number=invoice_number)
-    # get default domain
-    domain = request.get_host()
-    if settings.DEBUG:
-        prefix = "http" + "://"
-    else:
-        prefix = "https://"
-    url = f"{prefix}{domain}{invoice.get_absolute_url()}"
+# ==============================================================================
+# PHOTO DELIVERY - ACCOUNT (Send Photo Via Account)
+# ==============================================================================
 
-    # Check and generate the PDF if it doesn't exist
-    pdf_generation_response = invoice.generate_pdf_if_no_file(request)
-    if isinstance(pdf_generation_response, HttpResponseRedirect):
-        return pdf_generation_response
+@staff_member_required(login_url='administration:login')
+def send_photo_via_account(request):
+    """
+    Final Delivery: Uploads photos directly to a user's account in a specific album.
+    """
+    clients = UserClient.objects.filter(is_superuser=False).order_by('first_name')
+    if request.method == 'POST':
+        client_id = request.POST.get('client')  # Changed to match the select name usually used
+        files = request.FILES.getlist('final_photos')
 
-    # Continue to send the email
-    invoice.send_email(request, url)
-    return redirect('administration:index')
+        user = get_object_or_404(UserClient, id=client_id)
+        # Create a "Finals" album or add to the existing active one
+        album = AlbumClient.objects.create(owner=user, is_active=True)
+
+        photos = [Photo.objects.create(file=f, is_favorite=False, can_be_downloaded=True) for f in files]
+        album.photos.add(*photos)
+
+        send_client_email(
+                user.email, "Final Photos Ready", "Final Delivery",
+                f"Hello {user.first_name}, your final photos are in your dashboard.", "Enjoy",
+                "Login", "Login", request.build_absolute_uri(reverse('client:login'))
+        )
+        messages.success(request, f"Sent {len(photos)} photos to {user.get_full_name()}")
+        return redirect('administration:index')
+
+    return render(request, 'administration/add/add_account_delivery.html', {'clients': clients})
+
+
+# ==============================================================================
+# WEBSITE MANAGEMENT (Homepage / Portfolio)
+# ==============================================================================
+
+@staff_member_required(login_url='administration:login')
+def add_photos_homepage(request):
+    albums = AlbumHomepage.objects.all()
+    if request.method == "POST":
+        images = request.FILES.getlist("images_homepage")
+        album_id = request.POST.get('row')
+        for image in images:
+            PhotoHomepage.objects.create(album_id=album_id, file=image)
+        return redirect('administration:list_photos_homepage')
+
+    context = {'albums': albums, 'homepage': True, 'title': "Add to Homepage"}
+    return render(request, 'administration/add/add_photos.html', context)
+
+
+@staff_member_required(login_url='administration:login')
+def add_photos_portfolio(request):
+    albums = AlbumPortfolio.objects.all()
+    if request.method == "POST":
+        images = request.FILES.getlist("images_homepage")  # check input name in template
+        album_id = request.POST.get('row')
+        for image in images:
+            PhotoPortfolio.objects.create(album_id=album_id, file=image)
+        return redirect('administration:list_photos_portfolio')
+
+    context = {'albums': albums, 'homepage': False, 'title': "Add to Portfolio"}
+    return render(request, 'administration/add/add_photos.html', context)
+
+
+@staff_member_required(login_url='administration:login')
+def add_album_portfolio(request):
+    form = CreateAlbumForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('administration:list_photos_portfolio')
+    return render(request, 'administration/add/add_album.html', {'form': form})
+
+
+@staff_member_required(login_url='administration:login')
+def list_photos_portfolio(request):
+    photos = PhotoPortfolio.objects.all()
+    return render(request, 'administration/list/list_photos_portfolio.html',
+                  {'photos': photos, 'portfolio': True, 'title': "Portfolio Photos"})
+
+
+@staff_member_required(login_url='administration:login')
+def list_photos_homepage(request):
+    photos = PhotoHomepage.objects.all()
+    return render(request, 'administration/list/list_photos_portfolio.html',
+                  {'photos': photos, 'portfolio': False, 'title': "Homepage Photos"})
+
+
+@staff_member_required(login_url='administration:login')
+def delete_photo_portfolio(request, pk):
+    photo = get_object_or_404(PhotoPortfolio, pk=pk)
+    photo.delete()
+    return redirect('administration:list_photos_portfolio')
+
+
+@staff_member_required(login_url='administration:login')
+def delete_photo_homepage(request, pk):
+    photo = get_object_or_404(PhotoHomepage, pk=pk)
+    photo.delete()
+    return redirect('administration:list_photos_homepage')
+
+
+# ==============================================================================
+# CLIENT ALBUM MANAGEMENT (Review Liked Photos)
+# ==============================================================================
+
+@staff_member_required(login_url='administration:login')
+def send_photos_for_client_to_choose_from(request):
+    """Admin uploads Proofs for client."""
+    client_list = UserClient.objects.filter(is_superuser=False)
+    if request.method == 'POST':
+        client_id = request.POST.get("client")
+        files = request.FILES.getlist("id_photo")
+        user = get_object_or_404(UserClient, id=client_id)
+
+        album, _ = AlbumClient.objects.get_or_create(owner=user, defaults={'is_active': True})
+        photos = [Photo.objects.create(file=f) for f in files]
+        album.photos.add(*photos)
+
+        url = request.build_absolute_uri(reverse('client:album_details', args=[album.id]))
+        send_client_email(user.email, "Select Favorites", "Action Required",
+                          "Please select your favorites.", "Tchiiz", "View", "View", url)
+        return redirect('administration:index')
+
+    return render(request, 'administration/add/add_client_photos.html', {'client_list': client_list})
+
+
+@staff_member_required(login_url='administration:login')
+def view_client_album_created(request):
+    albums = AlbumClient.objects.all()
+    return render(request, 'administration/list/list_album_client.html', {'album_list': albums})
+
+
+@staff_member_required(login_url='administration:login')
+def view_all_liked_photos(request, pk):
+    album = get_object_or_404(AlbumClient, pk=pk)
+    return render(request, 'administration/list/list_album_client_photos.html', {
+        'album': album,
+        'photos_liked': album.photos.filter(is_favorite=True),
+        'photos_not_liked': album.photos.filter(is_favorite=False)
+    })
+
+
+@staff_member_required(login_url='administration:login')
+def delete_client_album(request, pk):
+    album = get_object_or_404(AlbumClient, pk=pk)
+    album.delete_files()  # Model method
+    return redirect("administration:view_client_album_created")
+
+
+# ==============================================================================
+# USER MANAGEMENT
+# ==============================================================================
+
+@staff_member_required(login_url='administration:login')
+def list_requested_user(request):
+    clients = UserClient.objects.filter(is_superuser=False)
+    return render(request, 'administration/list/list_user.html', {'clients': clients})
+
+
+@staff_member_required(login_url='administration:login')
+def create_new_client(request):
+    if request.method == 'POST':
+        try:
+            client = UserClient.objects.create_user(
+                    first_name=request.POST.get("client_name"),
+                    email=request.POST.get("client_email"),
+                    password="ChangeMe123!"
+            )
+            client.set_first_login()
+            client.send_password_email()
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'success': True, 'client': client.id})
+        except Exception as e:
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'error': str(e)})
+    return render(request, 'administration/add/add_new_client.html')
+
+
+@staff_member_required(login_url='administration:login')
+def update_client(request, pk):
+    """Edit existing client details"""
+    client = get_object_or_404(UserClient, pk=pk)
+
+    if request.method == 'POST':
+        # Extract form data
+        first_name = request.POST.get('first_name', '').strip()
+        last_name = request.POST.get('last_name', '').strip()
+        email = request.POST.get('email', '').strip()
+        phone_number = request.POST.get('phone_number', '').strip()
+        address = request.POST.get('address', '').strip()
+
+        # Validation
+        if not first_name:
+            messages.error(request, 'First name is required')
+            return redirect('administration:update_client', pk=pk)
+
+        if not email:
+            messages.error(request, 'Email is required')
+            return redirect('administration:update_client', pk=pk)
+
+        # Check for duplicate email (excluding current client)
+        if UserClient.objects.filter(email=email).exclude(pk=pk).exists():
+            messages.error(request, f'Email {email} is already in use')
+            return redirect('administration:update_client', pk=pk)
+
+        # Name validation using your utility
+        if check(data=first_name):
+            messages.error(request, 'First name contains invalid characters')
+            return redirect('administration:update_client', pk=pk)
+
+        if last_name and check(data=last_name):
+            messages.error(request, 'Last name contains invalid characters')
+            return redirect('administration:update_client', pk=pk)
+
+        # Update client
+        client.first_name = first_name
+        client.last_name = last_name
+        client.email = email
+        client.phone_number = phone_number
+        client.address = address
+        client.save()
+
+        messages.success(request, f'Client {client.get_full_name()} updated successfully')
+        return redirect('administration:user_list')
+
+    context = {
+        'client': client,
+        'title': f'Edit Client: {client.get_full_name()}'
+    }
+    return render(request, 'administration/add/update_client.html', context)
+
+
+@staff_member_required(login_url='administration:login')
+def view_client_details(request, pk):
+    """Comprehensive client details page"""
+    client = get_object_or_404(UserClient, pk=pk)
+
+    # Gather all client data
+    albums = AlbumClient.objects.filter(owner=client).order_by('-created_at')
+
+    # Get bookings if appointment app exists
+    bookings = []
+    try:
+        from appointment.models import Appointment
+        bookings = Appointment.objects.filter(client=client).order_by('-created_at')[:10]
+    except ImportError:
+        pass
+
+    # Get invoices
+    invoices = Invoice.objects.filter(client=client).order_by('-created_at')[:10]
+
+    # Calculate stats
+    total_photos = 0
+    total_liked = 0
+    for album in albums:
+        total_photos += album.photos.count()
+        total_liked += album.photos.filter(is_favorite=True).count()
+
+    total_invoiced = sum(inv.total_amount() for inv in invoices)
+    total_paid = sum(inv.amount_paid for inv in invoices)
+
+    context = {
+        'client': client,
+        'albums': albums,
+        'bookings': bookings,
+        'invoices': invoices,
+        'total_photos': total_photos,
+        'total_liked': total_liked,
+        'total_invoiced': total_invoiced,
+        'total_paid': total_paid,
+        'balance_due': total_invoiced - total_paid,
+        'title': f'Client Details: {client.get_full_name()}'
+    }
+    return render(request, 'administration/view/client_details.html', context)
+
+
+@login_required(login_url="/client/login/")
+def must_change_password(request, pk):
+    """Force password change logic."""
+    form = UserChangePasswordForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        user = get_object_or_404(UserClient, pk=pk)
+        new_pass = form.cleaned_data['new_password1']
+        if user.check_password(new_pass):
+            messages.warning(request, "Cannot use old password.")
+        else:
+            user.password = make_password(new_pass)
+            user.set_not_first_login()
+            user.save()
+            return redirect("client:login")
+
+    return render(request, "administration/password/has_to_change_password.html",
+                  {'form': form, 'first_login': True})
+
+
+# ==============================================================================
+# MESSAGES
+# ==============================================================================
+
+@staff_member_required(login_url='administration:login')
+def list_contact_form(request):
+    forms = ContactForm.objects.all()
+    return render(request, 'administration/list/list_contact_forms.html', {'contact_forms': forms})
+
+
+@staff_member_required(login_url='administration:login')
+def delete_contact_form(request, pk):
+    get_object_or_404(ContactForm, pk=pk).delete()
+    return redirect('administration:message_list')

@@ -1,67 +1,79 @@
-{% extends 'administration/list/data.html' %}
+{% extends 'administration/base.html' %}
 {% load i18n %}
 {% load static %}
 
 {% block title %}TCHIIZ | {% translate "User List" %}{% endblock %}
+{% block header_title %}{% translate "Client Management" %}{% endblock %}
 
-{% block pageTitle %}
-    {% translate "User List" %}
-{% endblock %}
-{% block pageLink %}
-    {% translate "User List" %}
+{% block customCSS %}
+    <link rel="stylesheet" href="{% static 'administration/css/users-list.css' %}">
 {% endblock %}
 
-
-{% block table %}
-    <!-- Main content -->
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">{% translate "User List" %}</h3>
+{% block body %}
+    <div class="tchiiz-card">
+        <div class="tchiiz-card-header">
+            <div>
+                <h3 class="tchiiz-card-title">{% translate "Client List" %}</h3>
+                <p class="tchiiz-card-subtitle">
+                    <span class="client-count-badge">{{ clients|length }}</span>
+                    {% translate "registered clients" %}
+                </p>
+            </div>
+            <a href="{% url 'administration:create_new_client' %}" class="btn btn-primary btn-sm">
+                <i class="fas fa-user-plus"></i> {% translate "Add Client" %}
+            </a>
         </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th>{% translate "First name" %}</th>
-                    <th>{% translate "Email" %}</th>
-                    <th>{% translate "Start date" %}</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
+
+        {% if clients %}
+            <div class="clients-list">
                 {% for rs in clients %}
-                    <tr>
-                        <td>
-                            &nbsp;&nbsp;&nbsp;{{ rs.first_name }}
-                        </td>
-                        <td>
-                            <a href="mailto:{{ rs.email }}">
-                                &nbsp;&nbsp;&nbsp;{{ rs.email }}
+                    <div class="client-card">
+                        <div class="client-avatar">
+                            {% if rs.profile_photo and rs.profile_photo.file %}
+                                <img src="{{ rs.profile_photo.file.url }}" alt="{{ rs.first_name }}">
+                            {% else %}
+                                <div class="avatar-placeholder">
+                                    {{ rs.first_name|slice:":1"|upper|default:"U" }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="client-info">
+                            <div class="client-name">
+                                <span>{{ rs.get_full_name|default:rs.email }}</span>
+                            </div>
+                            <div class="client-email">
+                                <i class="far fa-envelope"></i>
+                                <a href="mailto:{{ rs.email }}">{{ rs.email }}</a>
+                            </div>
+                            <div class="client-date">
+                                <i class="far fa-calendar"></i>
+                                <span>{% translate "Joined" %} {{ rs.start_date|date:"M d, Y" }}</span>
+                            </div>
+                        </div>
+
+                        <div class="client-actions">
+                            <a href="{% url 'administration:update_client' rs.pk %}" class="btn-action btn-action-edit">
+                                <i class="fas fa-edit"></i>
+                                <span>{% translate "Edit" %}</span>
                             </a>
-                        </td>
-                        <td>
-                            {{ rs.start_date }}
-                        </td>
-                        <td>
-                            <button class="btn btn-primary">
-                                <i class="fas fa-edit"></i>&nbsp;Update
-                            </button>
-                        </td>
-                    </tr>
+                            <a href="{% url 'administration:view_client_details' rs.pk %}"
+                               class="btn-action btn-action-view">
+                                <i class="fas fa-eye"></i>
+                                <span>{% translate "View" %}</span>
+                            </a>
+                        </div>
+                    </div>
                 {% endfor %}
-                </tbody>
-                <tfoot>
-                <tr>
-                    <th>{% translate "First name" %}</th>
-                    <th>{% translate "Email" %}</th>
-                    <th>{% translate "Start date" %}</th>
-                    <th></th>
-                </tr>
-                </tfoot>
-            </table>
-        </div>
-        <!-- /.table-responsive -->
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <i class="far fa-user"></i>
+                <p>{% translate "No clients registered yet." %}</p>
+                <a href="{% url 'administration:create_new_client' %}" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i> {% translate "Add Your First Client" %}
+                </a>
+            </div>
+        {% endif %}
     </div>
-    <!-- /.card-body -->
 {% endblock %}
