@@ -19,7 +19,11 @@ from django.conf import global_settings
 from django.conf import locale
 from django.utils.translation import gettext_lazy as _
 
-load_dotenv()
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+env_path = BASE_DIR / '.env'
+load_dotenv(dotenv_path=env_path)
 allowed_hosts_str = os.getenv('LIST_OF_ALLOWED_HOSTS', default="")
 
 debug_value = os.getenv('DEBUG_VALUE')
@@ -39,9 +43,6 @@ OTHER_ADMIN_EMAIL = os.getenv('OTHER_ADMIN_EMAIL', default="")
 PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID', default="")
 PAYPAL_CLIENT_SECRET = os.getenv('PAYPAL_CLIENT_SECRET', default="")
 PAYPAL_ENVIRONMENT = os.getenv('PAYPAL_ENVIRONMENT', default="")
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -150,6 +151,9 @@ if DEBUG:
     STATICFILES_DIRS = [
         BASE_DIR / "static",
     ]
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_collected')
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -323,3 +327,4 @@ Q_CLUSTER = {
     'bulk': 10,
     'orm': 'default',
 }
+

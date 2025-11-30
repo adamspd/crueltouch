@@ -127,6 +127,16 @@ class UserClient(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255, null=True, blank=True)
 
+    is_active = models.BooleanField(
+        default=True,
+        help_text=_("Designates whether this user should be treated as active. "
+                    "Unselect this instead of deleting accounts.")
+    )
+    is_staff = models.BooleanField(
+        default=False,
+        help_text=_("Designates whether the user can log into this admin site.")
+    )
+
     # Contact information
     phone_number = models.CharField(
             max_length=18,
