@@ -1,227 +1,372 @@
-/* General styling for the services page */
-
+/* ============================================
+   GENERAL LAYOUT
+   ============================================ */
 body {
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5; /* Light background for the whole page */
-    color: #333; /* Default text color */
+    background-color: #f5f5f5;
+    color: #333;
 }
 
 .main-container {
-    font-family: Arial, sans-serif; /* Choose your preferred font */
-    max-width: 1200px; /* Maximum width of the main container */
-    width: 100%; /* Full width of the main container */
-    margin: 0 auto; /* Center align the main container */
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
     padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center align the content vertically */
+    align-items: center;
 }
 
 .page-title {
-    font-size: 24px; /* Adjust the font size as needed */
-    font-weight: bold; /* Makes the title stand out */
+    font-size: 2rem;
+    font-weight: 800;
     text-align: center;
-    margin: 20px 0; /* Top and bottom margin for the title */
-}
-
-.page-menu {
-    width: 100%; /* Full width */
-    margin-bottom: 20px; /* Space below the menu */
-    /* Add additional styling as needed */
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.2s;
-    /* center the menu */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 20px 0 40px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .page-body {
     width: 100%;
     display: flex;
-    align-items: center;
     justify-content: center;
 }
 
+/* ============================================
+   LOCATION TOOLBAR
+   ============================================ */
+.location-toolbar {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 0 10px;
+}
 
-/* Horizontally aligned buttons design */
-.category-container {
+.location-toolbar label {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #333;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.city-scroller {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* ============================================
+   CITY CHIPS (Buttons)
+   ============================================ */
+.city-chip {
+    position: relative;
+    padding: 14px 24px;
+    background: #fff;
+    border: 2px solid #e0e0e0;
+    color: #666;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+}
+
+/* Standard Hover */
+.city-chip:hover {
+    border-color: #333;
+    color: #000;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Standard Active */
+.city-chip.active {
+    background: #222;
+    border-color: #222;
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* --- SPECIAL ZONES (Naples, Fort Myers) --- */
+.city-chip.special-zone {
+    background: linear-gradient(135deg, #fffbf2 0%, #fff 100%);
+    border: 2px solid #ffd700;
+    color: #bfa100;
+    overflow: hidden;
+}
+
+/* Add Star Icon */
+.city-chip.special-zone::after {
+    content: "★";
+    color: #ffd700;
+    margin-left: 8px;
+    font-size: 1.1em;
+    vertical-align: middle;
+}
+
+/* Special Zone Hover */
+.city-chip.special-zone:hover {
+    background: #fff9e6;
+    border-color: #ffaa00;
+    color: #d48806;
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(255, 215, 0, 0.25);
+}
+
+/* Special Zone Active */
+.city-chip.special-zone.active {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    border-color: #FFA500;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(255, 165, 0, 0.4);
+}
+
+.city-chip.special-zone.active::after {
+    color: #fff;
+}
+
+/* ============================================
+   CATEGORY TABS
+   ============================================ */
+.page-menu {
     display: flex;
     justify-content: center;
-    width: 75%;
-    margin: 0 auto; /* Center container within its parent */
+    gap: 10px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
 }
 
 .category-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 20px;
-    margin: 10px;
-    text-align: center;
-    background-color: #e0e0e0; /* Default gray background */
-    color: #777; /* Dimmed text color for inactive state */
-    font-size: 16px; /* Slightly larger font size */
-    border: 1px solid #d4d4d4; /* Subtle border */
-    border-radius: 20px; /* More rounded corners */
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    padding: 10px 20px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent; /* Thicker line */
+    font-weight: bold;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s, border-color 0.3s;
 }
 
-.category-button:hover, .category-button:focus, .active {
-    background-image: linear-gradient(to right, rgba(194, 211, 248, 0.5), rgba(228, 209, 248, 0.5), rgba(250, 197, 197, 0.5));
-    color: #010159;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px); /* Slight raise effect on hover */
+.category-button:hover {
+    color: #000;
 }
 
-/* Services list design initially hidden */
-.service-list {
-    width: 100%; /* Adjust as needed */
-    display: none; /* Initially hidden */
+.category-button.active {
+    border-bottom: 3px solid #000;
+    color: #000;
+}
+
+/* ============================================
+   SERVICE LIST & ITEMS
+   ============================================ */
+.category-container {
+    max-width: 1000px;
     margin: 0 auto;
-    justify-content: center; /* Center items horizontally */
+    width: 100%;
 }
 
-/* Service list item design */
+.service-list {
+    display: none;
+    animation: fadeIn 0.4s ease-out;
+}
+
 .page-item {
-    display: flex; /* Enables flexbox layout */
-    align-items: center; /* Vertically centers the items */
-    justify-content: flex-start; /* Aligns items to the start */
-    margin-bottom: 80px; /* Space between each item */
-    position: relative; /* Sets relative positioning */
+    display: flex;
+    border: 1px solid #eee;
+    margin-bottom: 30px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden; /* Keeps images inside radius */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+    transition: transform 0.3s ease;
+}
+
+.page-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+/* --- THE 3 PICTURE "POP" STYLE --- */
+.page-item.special-deal {
+    border: 2px solid #d4af37; /* Gold border */
+    position: relative;
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15); /* Golden Glow */
+}
+
+/* Badge Styling */
+.deal-badge {
+    background-color: #d4af37;
+    color: white;
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    vertical-align: middle;
+    margin-left: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .item-picture {
-    flex: 0 0 450px; /* Fixed size for square images */
-    height: 450px; /* Same as width for square aspect ratio */
-    overflow: hidden; /* Ensures image does not overflow the container */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 40%;
+    min-height: 300px;
+    position: relative;
 }
 
 .item-picture img {
     width: 100%;
     height: 100%;
-    border-radius: 15px;
-    object-fit: cover; /* Ensures image covers the area */
-    object-position: top center; /* Aligns the image to the top center */
+    object-fit: cover; /* Crucial: Prevents stretching */
+    object-position: top center; /* Crucial: Focuses on faces/heads */
+    display: block;
 }
 
 .item-description {
-    width: 400px; /* Width of the description */
-    height: 400px; /* Height of the description, making it square */
-    position: absolute; /* Absolute positioning to overlap the image */
-    left: 430px; /* Adjust as needed to overlap the image */
-    top: 50%; /* Center vertically */
-    transform: translateY(-50%); /* Adjust vertical positioning */
-    padding: 25px; /* Adequate padding around the text */
-    background-color: rgba(255, 255, 255, 0.99); /* Semi-transparent background */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: adds depth */
+    width: 60%;
+    padding: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border-radius: 15px;
-    border: 0.5px solid rgba(56, 44, 44, 0.87);
 }
 
-
-/* Service item description */
 .item-name {
-    font-size: 24px; /* Larger font size for the title */
-    font-weight: bold; /* Bold for emphasis */
-    color: #333; /* Dark color for title */
-    margin-bottom: 10px; /* Spacing after the title */
+    margin-top: 0;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    color: #111;
 }
 
 .description-paragraph {
-    font-size: 16px; /* Comfortable reading size */
-    color: #666; /* Slightly lighter than the title */
-    margin-bottom: 10px; /* Spacing after the paragraph */
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
 }
 
-.item-description p {
-    font-size: 16px; /* Consistent font size */
-    color: #666; /* Slightly lighter color */
-    margin-bottom: 5px; /* Smaller spacing */
+.specs-row {
+    margin: 20px 0;
+    font-family: monospace; /* Technical look */
+    font-size: 1.1rem;
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+    padding: 15px 0;
+    display: flex;
+    gap: 30px;
+    color: #333;
 }
 
-.item-description .btn-dark {
-    padding: 10px 20px; /* Adequate padding */
-    background-color: #333333; /* Dark color */
-    color: white; /* Text color */
-    text-align: center; /* Center text */
-    border-radius: 5px; /* Rounded corners */
-    text-decoration: none; /* Removes underline from links */
-    display: inline-block; /* Allows setting padding and other box model properties */
-    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+.price-tag {
+    font-weight: bold;
+    color: #000;
 }
 
-.item-description .btn-dark:hover {
-    background-color: #555; /* Slightly lighter on hover */
+/* ============================================
+   BOOK NOW BUTTON
+   ============================================ */
+.btn-book {
+    display: inline-block;
+    background: #000;
+    color: #fff;
+    padding: 16px 32px;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    align-self: flex-start;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
 }
 
+/* Fixed Hover: Gold/Orange instead of gray */
+.btn-book:hover {
+    background-color: #d4af37; /* Matches the special zone gold */
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+    transform: translateY(-2px);
+}
 
+.no-city-state {
+    text-align: center;
+    padding: 60px;
+    background: #fff;
+    border: 2px dashed #e0e0e0;
+    color: #888;
+    border-radius: 10px;
+}
 
-/* Responsive design for tablet screens */
-@media screen and (max-width: 768px) {
-    .page-menu {
-        /* I want the menu button to use the space available and break into multiple lines */
-        flex-wrap: wrap;
-        justify-content: center;
+/* ============================================
+   RESPONSIVE (MOBILE)
+   ============================================ */
+@media (max-width: 768px) {
+    .page-item {
+        flex-direction: column;
     }
 
-    .category-container {
+    .item-picture {
+        width: 100%;
+        /* Remove the fixed height: 250px; */
+
+        /* Use aspect-ratio to keep it nice and square-ish on mobile */
+        aspect-ratio: 4 / 5;
+        /* Or use height: auto if you want the FULL image, but it might be too tall */
+
+        min-height: auto;
+    }
+
+    /* Optional: Ensure the image fills this new ratio perfectly */
+    .item-picture img {
+        height: 100%;
         width: 100%;
     }
 
-    .page-item {
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 40px; /* Increase space between items */
-        border: 1px solid #ddd; /* Add a border */
-        padding: 5px; /* Add padding inside the item */
-        border-radius: 10px;
-    }
-
-    .item-picture, .item-description {
-        flex: 0 0 auto; /* Adjust size for smaller screens */
-        width: 95%; /* Full width */
-        height: auto; /* Adjust height */
-        position: relative; /* Reset positioning */
-        left: 0;
-        top: 0;
-        transform: translateY(0);
-    }
-
     .item-description {
-        padding: 15px;
-        margin-top: 20px; /* Space between image and description */
+        width: 100%;
+        padding: 25px;
     }
-}
 
+    .location-toolbar {
+        flex-direction: column;
+        gap: 10px;
+    }
 
-/* Responsive design for mobile screens */
-@media screen and (max-width: 480px) {
-    .category-button {
-        padding: 8px 15px; /* Smaller padding */
-        margin: 5px; /* Smaller margin */
-        font-size: 14px; /* Smaller font size */
+    .city-scroller {
+        gap: 8px;
+    }
+
+    .city-chip {
+        flex: 1 0 45%; /* Grid layout */
+        text-align: center;
+        margin: 0;
+        padding: 12px 10px;
+        font-size: 0.95rem;
+    }
+
+    .location-toolbar label {
+        font-size: 1.3rem;
     }
 
     .item-name {
-        font-size: 20px; /* Slightly smaller font size */
+        font-size: 1.5rem;
     }
+}
 
-    .description-paragraph, .item-description p {
-        font-size: 14px; /* Smaller font size for readability */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
     }
-
-    .item-description .btn-dark {
-        padding: 8px 15px; /* Smaller button padding */
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

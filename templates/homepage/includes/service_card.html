@@ -1,0 +1,24 @@
+<div class="page-item {% if service.price == 150 %}special-deal{% endif %}">
+    <div class="item-picture">
+        <img src="{{ service.get_image_url }}" alt="{{ service.name }}" loading="lazy">
+    </div>
+    <div class="item-description">
+        <h2 class="item-name">
+            {{ service.name }}
+            {% if service.price == 150 %}
+                <span class="deal-badge">Exclusive</span>
+            {% endif %}
+        </h2>
+
+        <div class="description-paragraph">{{ service.description|safe }}</div>
+
+        <div class="specs-row">
+            <span class="spec-tag">{{ service.get_duration }}</span>
+            <span class="price-tag">${{ service.displayed_price }}</span>
+        </div>
+
+        <a href="{% url 'appointment:appointment_request' service_id=service.id %}" class="btn-book">
+            Book Now
+        </a>
+    </div>
+</div>

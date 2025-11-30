@@ -1,143 +1,114 @@
 {% extends 'homepage/base.html' %}
 {% load i18n %}
 {% load static %}
+
 {% block priceTableCSS %}
     <link rel="stylesheet" type="text/css" href="{% static 'homepage/css/services.css' %}"/>
 {% endblock %}
-{% block title %}
-    {{ page_title }}
-{% endblock %}
-{% block description %}
-    {{ page_description }}
-{% endblock %}
+
+{% block title %}{{ page_title }}{% endblock %}
+{% block description %}{{ page_description }}{% endblock %}
+
 {% block body %}
     <div class="main-container">
-        <h1 class="page-title">{% trans "Select and Schedule Your Appointment" %}</h1>
-        <div class="page-menu">
-            <div class="category-button portrait-service" onclick="showService('portrait-service')">
-                {% translate 'Portrait/Birthday' %}
-            </div>
-            <div class="category-button wedding-service" onclick="showService('wedding-service')">
-                {% translate 'Wedding' %}
-            </div>
-            <div class="category-button product-service" onclick="showService('product-service')">
-                {% translate 'Product Photography' %}
-            </div>
-            <div class="category-button event-service" onclick="showService('event-service')">
-                {% translate 'Events' %}
+
+        <div class="location-toolbar">
+            <label for="city-select">Session Location:</label>
+            <div class="city-scroller">
+                {% for city in cities %}
+                    <a href="?city={{ city.id }}"
+                       class="city-chip
+                              {% if selected_city.id == city.id %}active{% endif %}
+                              {% if city.is_economy_zone %}special-zone{% endif %}"> {{ city.name }}
+                    </a>
+                {% endfor %}
             </div>
         </div>
+
+        <h1 class="page-title">{% trans "Select Your Package" %}</h1>
+
+        <div class="page-menu">
+            <div class="category-button portrait-service"
+                 onclick="showService('portrait-service')">{% translate 'Portrait' %}</div>
+            <div class="category-button wedding-service"
+                 onclick="showService('wedding-service')">{% translate 'Wedding' %}</div>
+            <div class="category-button product-service"
+                 onclick="showService('product-service')">{% translate 'Product' %}</div>
+            <div class="category-button event-service"
+                 onclick="showService('event-service')">{% translate 'Events' %}</div>
+        </div>
+
         <div class="page-body">
-            <div class="category-container">
-                <div class="wedding-service service-list" id="wedding-service">
-                    {% for service in wedding_service %}
-                        <div class="page-item">
-                            <div class="item-picture">
-                                <img src="{{ service.get_image_url }}" alt="{{ service.name }}" loading="lazy">
-                            </div>
-                            <div class="item-description">
-                                <h2 class="item-name">{{ service.name }}</h2>
-                                <p class="description-paragraph">{{ service.description|safe }}</p>
-                                <hr>
-                                <p>{{ service.get_duration }}</p>
-                                <p>{{ service.get_price_text }}</p>
-                                <a href="{% url 'appointment:appointment_request' service_id=service.id %}"
-                                   class="btn btn-dark">{% translate 'Book Now' %}</a>
-                            </div>
-                        </div>
-                    {% endfor %}
+
+            {% if not selected_city %}
+                <div class="no-city-state">
+                    <h3>Select a city above to see availability and pricing.</h3>
+                    <p>Prices and packages vary by location (Naples, Tampa, Orlando, etc).</p>
                 </div>
-                <div class="portrait-service service-list" id="portrait-service">
-                    {% for service in portrait_service %}
-                        <div class="page-item">
-                            <div class="item-picture">
-                                <img src="{{ service.get_image_url }}" alt="{{ service.name }}" loading="lazy">
-                            </div>
-                            <div class="item-description">
-                                <h2 class="item-name">{{ service.name }}</h2>
-                                <p class="description-paragraph">{{ service.description|safe }}</p>
-                                <hr>
-                                <p>{{ service.get_duration }}</p>
-                                <p>{{ service.get_price_text }}</p>
-                                <a href="{% url 'appointment:appointment_request' service_id=service.id %}"
-                                   class="btn btn-dark">{% translate 'Book Now' %}</a>
-                            </div>
-                        </div>
-                    {% endfor %}
+            {% else %}
+
+                <div class="category-container">
+                    <div class="portrait-service service-list" id="portrait-service">
+                        {% if portrait_service %}
+                            {% for service in portrait_service %}
+                                {% include "homepage/includes/service_card.html" with service=service %}
+                            {% endfor %}
+                        {% else %}
+                            <p class="empty-msg">No portrait packages available in {{ selected_city.name }}.</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="wedding-service service-list" id="wedding-service">
+                        {% if wedding_service %}
+                            {% for service in wedding_service %}
+                                {% include "homepage/includes/service_card.html" with service=service %}
+                            {% endfor %}
+                        {% else %}
+                            <p class="empty-msg">No wedding packages available in {{ selected_city.name }}.</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="product-service service-list" id="product-service">
+                        {% if product_service %}
+                            {% for service in product_service %}
+                                {% include "homepage/includes/service_card.html" with service=service %}
+                            {% endfor %}
+                        {% else %}
+                            <p class="empty-msg">No product packages available in {{ selected_city.name }}.</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="event-service service-list" id="event-service">
+                        {% if event_service %}
+                            {% for service in event_service %}
+                                {% include "homepage/includes/service_card.html" with service=service %}
+                            {% endfor %}
+                        {% else %}
+                            <p class="empty-msg">No event packages available in {{ selected_city.name }}.</p>
+                        {% endif %}
+                    </div>
                 </div>
-                <div class="product-service service-list" id="product-service">
-                    {% for service in product_service %}
-                        <div class="page-item">
-                            <div class="item-picture">
-                                <img src="{{ service.get_image_url }}" alt="{{ service.name }}" loading="lazy">
-                            </div>
-                            <div class="item-description">
-                                <h2 class="item-name">{{ service.name }}</h2>
-                                <p class="description-paragraph">{{ service.description|safe }}</p>
-                                <hr>
-                                <p>{{ service.get_duration }}</p>
-                                <p>{{ service.get_price_text }}</p>
-                                <a href="{% url 'appointment:appointment_request' service_id=service.id %}"
-                                   class="btn btn-dark">{% translate 'Book Now' %}</a>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-                <div class="event-service service-list" id="event-service">
-                    {% for service in event_service %}
-                        <div class="page-item">
-                            <div class="item-picture">
-                                <img src="{{ service.get_image_url }}" alt="{{ service.name }}" loading="lazy">
-                            </div>
-                            <div class="item-description">
-                                <h2 class="item-name">{{ service.name }}</h2>
-                                <p class="description-paragraph">{{ service.description|safe }}</p>
-                                <hr>
-                                <p>{{ service.get_duration }}</p>
-                                <p>{{ service.get_price_text }}</p>
-                                <a href="{% url 'appointment:appointment_request' service_id=service.id %}"
-                                   class="btn btn-dark">{% translate 'Book Now' %}</a>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
+            {% endif %}
         </div>
     </div>
-{% endblock %}
 
-{% block customJS %}
     <script>
-        function showService(serviceId) {
-            const selectedService = document.getElementById(serviceId);
-            const isActive = selectedService && selectedService.style.display === 'block';
+        function showService(serviceClass) {
+            // Hide all lists
+            document.querySelectorAll('.service-list').forEach(el => el.style.display = 'none');
+            // Remove active class from buttons
+            document.querySelectorAll('.category-button').forEach(btn => btn.classList.remove('active'));
 
-            if (!isActive) {
-                updateActiveButton(serviceId);
-                const serviceLists = document.getElementsByClassName('service-list');
-                for (let i = 0; i < serviceLists.length; i++) {
-                    serviceLists[i].style.display = 'none'; // Hide all service lists
-                }
-                if (selectedService) {
-                    selectedService.style.display = 'block'; // Show the clicked service
-                } else {
-                    console.error('Element with ID ' + serviceId + ' not found.');
-                }
-            }
+            // Show selected
+            const selected = document.getElementById(serviceClass);
+            if (selected) selected.style.display = 'block'; // Or 'grid' if you change CSS
+
+            // Highlight button
+            const btn = document.querySelector('.' + serviceClass);
+            if (btn) btn.classList.add('active');
         }
 
-        function updateActiveButton(serviceClassName) {
-            let buttons = document.querySelectorAll('.category-button');
-            buttons.forEach(button => {
-                if (button.classList.contains(serviceClassName)) {
-                    button.classList.add('active');
-                } else {
-                    button.classList.remove('active');
-                }
-            });
-        }
-
-        // On load show portrait-service by default
+        // Default open
         showService('portrait-service');
     </script>
 {% endblock %}
