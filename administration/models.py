@@ -56,8 +56,8 @@ class PhotoDelivery(models.Model):
     was_downloaded = models.BooleanField(default=False)
 
     # Access
-    id_delivery = models.CharField(max_length=255, unique=True, blank=True)
-    link_to_download = models.CharField(max_length=255, blank=True)
+    id_delivery = models.CharField(max_length=255, unique=True, blank=True, default="")
+    link_to_download = models.CharField(max_length=255, blank=True, default="")
 
     # Guest Info
     client_name = models.CharField(max_length=255, default='')
@@ -145,8 +145,8 @@ class Invoice(models.Model):
     amount_paid = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     # Text Content
-    details = models.TextField(blank=True, help_text="Client visible details")
-    notes = models.TextField(blank=True, help_text="Internal notes (not visible to client)")
+    details = models.TextField(blank=True, default='', help_text="Client visible details")
+    notes = models.TextField(blank=True, default='', help_text="Internal notes (not visible to client)")
 
     # Flags
     email_sent = models.BooleanField(default=False)
