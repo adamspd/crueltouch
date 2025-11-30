@@ -34,17 +34,26 @@ class ContactForm(models.Model):
 
 
 class Quarantine(models.Model):
+    # Sender Info
     full_name = models.CharField(max_length=255)
     email = models.EmailField()
-    message = models.TextField()
-    reason = models.TextField()
+    ip_address = models.GenericIPAddressField(unpack_ipv4=True, blank=True, null=True)
+    user_agent = models.TextField(blank=True, default="")
 
-    # meta
+    # Content
+    subject = models.CharField(max_length=255, blank=True, default="", verbose_name=_("Subject"))
+    message = models.TextField()
+
+    # Internal Logic
+    reason = models.TextField(help_text="Why was this quarantined?")
+    is_processed = models.BooleanField(default=False, help_text="Has the background worker checked this?")
+
+    # Meta
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Quarantined Message from {self.full_name}"
+        return f"[{'Processed' if self.is_processed else 'Pending'}] {self.email} - {self.reason[:30]}"
 
 
 @receiver(post_save, sender=ContactForm)
