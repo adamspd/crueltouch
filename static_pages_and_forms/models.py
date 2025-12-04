@@ -4,11 +4,12 @@ import os
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 
 from crueltouch.productions import production_debug
-from utils.crueltouch_utils import c_print, send_client_email, send_email_admin
+from utils.crueltouch_utils import _get_base_url, c_print, send_client_email, send_email_admin
 
 load_dotenv()  # take environment variables from .env.
 
@@ -63,7 +64,10 @@ def send_email_after_saving_contact_form(sender, instance, created, *args, **kwa
             client_email = TEST_EMAIL
         else:
             client_email = instance.email
-        c_print("client.models:235 | Sending email to admin to notify of a new contact form submission")
+        c_print("Sending email to admin to notify of a new contact form submission")
+        base_url = _get_base_url()
+        path = reverse('pf:index_portfolio')
+        portfolio_url = f"{base_url}{path}"
         sent = send_client_email(
             subject=_(f"Your message has been received") + " !",
             email_address=client_email,
@@ -71,10 +75,8 @@ def send_email_after_saving_contact_form(sender, instance, created, *args, **kwa
             message=_(f"Hi {instance.full_name}, thank you for reaching out to us. We will get back to you as soon as "
                       "possible. "),
             footer=_("Have a great day! Tchiiz Studio"),
-            is_contact_form=True,
-            is_other=False,
             button_label=_("Awesome!"),
-            button_link="https://tchiiz.com/portfolio/",
+            button_link=portfolio_url,
             button_text=_("Ok")
         )
         if sent:  # if email was sent
@@ -82,6 +84,5 @@ def send_email_after_saving_contact_form(sender, instance, created, *args, **kwa
                 subject="New contact form submission",
                 message=f"Hi, you have a new contact form submission from {instance.full_name} with email address "
                         f"{client_email}. The message is: \"{instance.message}\"",
-                is_contact_form=True,
-                is_other=False
+                is_contact_form=True
             )

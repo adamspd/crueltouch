@@ -52,6 +52,10 @@
                             </div>
 
                             <div class="message-actions-header">
+                                <div class="message-timestamp">
+                                    <span class="timestamp-date">{{ rs.created_at|date:"d M Y" }}</span>
+                                    <span class="timestamp-time">{{ rs.created_at|date:"h:i A" }}</span>
+                                </div>
                                 <button class="btn-expand" onclick="toggleMessage(this)">
                                     <i class="fas fa-chevron-down"></i>
                                 </button>

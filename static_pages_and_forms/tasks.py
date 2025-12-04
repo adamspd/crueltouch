@@ -49,4 +49,4 @@ def process_quarantined_contact(quarantine_id):
         # Cleanup: Remove from Quarantine since it's now a valid contact.
         # (Or keep it and mark 'Approved' if you want a full audit log)
         submission.delete()
-        c_print(f"Submission {submission.id} APPROVED. Moved to Contact.")
+        c_print(f"Submission for {submission.full_name} APPROVED. Moved to Contact.")

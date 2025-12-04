@@ -768,7 +768,8 @@ def must_change_password(request, pk):
 
 @staff_member_required(login_url='administration:login')
 def list_contact_form(request):
-    forms = ContactForm.objects.all()
+    # getting contact forms and sort it by created_at desc
+    forms = ContactForm.objects.all().order_by('-created_at')
     return render(request, 'administration/list/list_contact_forms.html', {'contact_forms': forms})
 
 
