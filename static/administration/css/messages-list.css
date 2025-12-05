@@ -120,20 +120,20 @@
     display: flex;
     flex-direction: column; /* Stacks them vertically */
     justify-content: center;
-    align-items: flex-end;  /* Aligns text to the right, next to buttons */
+    align-items: flex-end; /* Aligns text to the right, next to buttons */
     margin-right: 0.75rem;
-    line-height: 1.2;       /* Tightens the gap between date and time */
+    line-height: 1.2; /* Tightens the gap between date and time */
 }
 
 .timestamp-date {
     font-size: 0.75rem;
     font-weight: 600;
-    color: #6b7280;       /* Cool gray */
+    color: #6b7280; /* Cool gray */
 }
 
 .timestamp-time {
-    font-size: 0.7rem;    /* Smaller than the date */
-    color: #9ca3af;       /* Lighter gray to de-emphasize */
+    font-size: 0.7rem; /* Smaller than the date */
+    color: #9ca3af; /* Lighter gray to de-emphasize */
     text-transform: uppercase;
 }
 
@@ -261,6 +261,117 @@
     border-color: #b91c1c;
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(185, 28, 28, 0.3);
+}
+
+/* Report Button */
+.btn-action-report {
+    background: #f59e0b; /* Amber/Warning color */
+    color: white;
+}
+
+.btn-action-report:hover {
+    background: #d97706;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3);
+}
+
+/* Custom Modal */
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(2px);
+}
+
+.custom-modal {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    animation: modalPop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalPop {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-header h4 {
+    margin: 0 0 1rem 0;
+    color: #1f2937;
+}
+
+.modal-body p {
+    color: #4b5563;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+.modal-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.btn-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.btn-quarantine {
+    background: #4f46e5;
+    color: white;
+}
+
+.btn-quarantine:hover {
+    background: #4338ca;
+}
+
+.btn-delete {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.btn-delete:hover {
+    background: #b91c1c;
+    color: white;
+}
+
+.btn-cancel {
+    background: white;
+    color: #6b7280;
+    border: 1px solid #d1d5db;
+}
+
+.btn-cancel:hover {
+    background: #f3f4f6;
 }
 
 /* Empty State */

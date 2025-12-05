@@ -19,6 +19,8 @@ user_patterns = [
 
 message_patterns = [
     path('list/', views.list_contact_form, name='message_list'),
+    path('message/<int:pk>/report/', views.report_spam_suggestion, name='message_report'),
+    path('message/<int:pk>/quarantine/', views.move_to_quarantine, name='message_quarantine'),
     path('delete/<int:pk>/', views.delete_contact_form, name='message_delete'),
     # Fixed: mapped to views.send_invoice_to_client
     path('send-invoice/<str:invoice_number>/', views.send_invoice_to_client, name='send_invoice'),
