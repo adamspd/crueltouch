@@ -4,6 +4,7 @@ import os
 import zipfile
 from typing import Any
 
+import requests
 from appointment.models import Appointment, StaffMember
 from dateutil.relativedelta import relativedelta
 from django.conf import settings
@@ -28,7 +29,7 @@ from client.forms import CreateAlbumForm
 from client.models import Album as AlbumClient, Photo, UserClient
 from homepage.models import Album as AlbumHomepage, Photo as PhotoHomepage
 from portfolio.models import Album as AlbumPortfolio, Photo as PhotoPortfolio
-from static_pages_and_forms.models import ContactForm
+from static_pages_and_forms.models import ContactForm, Quarantine
 from utils.crueltouch_utils import c_print, check, send_client_email
 
 
@@ -771,6 +772,72 @@ def list_contact_form(request):
     # getting contact forms and sort it by created_at desc
     forms = ContactForm.objects.all().order_by('-created_at')
     return render(request, 'administration/list/list_contact_forms.html', {'contact_forms': forms})
+
+
+SPAM_API_URL = "https://spam-detection-api.adamspierredavid.com/v1/suggestion/"
+
+
+@staff_member_required(login_url='administration:login')
+@require_POST
+def report_spam_suggestion(request, pk):
+    """
+    Proxies the request to the external Spam API.
+    """
+    message_instance = get_object_or_404(ContactForm, pk=pk)
+
+    # Construct payload as per your curl example
+    payload = {
+        "message": message_instance.message,
+        "subject": message_instance.subject or "No Subject",
+        "is_spam": True  # Assuming the button is 'Report Spam', so this is True
+    }
+
+    try:
+        # We act as the curl client here
+        response = requests.post(
+                SPAM_API_URL,
+                json=payload,
+                headers={"Content-Type": "application/json"},
+                timeout=30
+        )
+
+        # We pass the external API's response back to our frontend
+        # so we can debug if needed.
+        api_data = response.json()
+
+        return JsonResponse({
+            "success": True,
+            "api_response": api_data
+        })
+
+    except requests.RequestException as e:
+        return JsonResponse({"success": False, "error": str(e)}, status=500)
+
+
+@staff_member_required(login_url='administration:login')
+def move_to_quarantine(request, pk):
+    """
+    Copies data to Quarantine model, deletes from ContactForm.
+    """
+    message_instance = get_object_or_404(ContactForm, pk=pk)
+
+    # Create Quarantine entry
+    Quarantine.objects.create(
+            full_name=message_instance.full_name,
+            email=message_instance.email,
+            # We don't have IP/UserAgent in ContactForm model based on your snippet,
+            # so we leave them blank or handle them if you actually store them.
+            subject=message_instance.subject,
+            message=message_instance.message,
+            reason="Manually moved to quarantine by admin via Spam Report",
+            is_processed=True  # Mark as processed since admin saw it
+    )
+
+    # Delete the original
+    message_instance.delete()
+
+    # Redirect back to list
+    return redirect('administration:message_list')
 
 
 @staff_member_required(login_url='administration:login')
