@@ -1,6 +1,6 @@
 # static_pages_and_forms/models.py
 import os
-
+from django.conf import settings
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -8,7 +8,6 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 
-from crueltouch.productions import production_debug
 from utils.crueltouch_utils import _get_base_url, c_print, send_client_email, send_email_admin
 
 load_dotenv()  # take environment variables from .env.
@@ -60,7 +59,7 @@ class Quarantine(models.Model):
 @receiver(post_save, sender=ContactForm)
 def send_email_after_saving_contact_form(sender, instance, created, *args, **kwargs):
     if created:
-        if production_debug or DATABASE_UPDATE:
+        if settings.DEBUG or DATABASE_UPDATE:
             client_email = TEST_EMAIL
         else:
             client_email = instance.email
