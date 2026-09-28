@@ -5,7 +5,6 @@ dnspython==2.8.0
 docutils==0.23
 markdown2==2.5.5
 Pillow==12.3.0
-py3-validate-email==1.0.12
 requests==2.34.2
 django-appointment==3.11.0
 django-payment-manager==1.0.1
