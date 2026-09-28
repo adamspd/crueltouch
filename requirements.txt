@@ -6,7 +6,7 @@ docutils==0.23
 markdown2==2.5.5
 Pillow==12.3.0
 requests==2.34.2
-django-appointment==3.11.0
+django-appointment==3.12.0
 django-payment-manager==1.0.1
 python-dotenv==1.2.3
 django-simple-history==3.13.0
