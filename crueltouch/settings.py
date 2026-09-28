@@ -54,19 +54,26 @@ ADMIN_NAME = os.getenv('ADMIN_NAME', default="Admin")
 OTHER_ADMIN_EMAIL = os.getenv('OTHER_ADMIN_EMAIL', default="")
 
 # Email Server
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+email_user = os.getenv('EMAIL_HOST_USER', "")
+MAILERS = {
+    'default': {
+        'BACKEND': 'django.core.mail.backends.smtp.EmailBackend',
+        'OPTIONS': {
+            'host': 'smtp.gmail.com',
+            'port': 587,
+            'use_tls': True,
+            'username': email_user,
+            'password': os.getenv('EMAIL_HOST_PASSWORD', ""),
+        },
+    },
+}
 EMAIL_USE_LOCALTIME = True
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', "")
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', "")
-SERVER_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = email_user
 EMAIL_SUBJECT_PREFIX = ""
 
-ADMINS = [('Main Admin', ADMIN_EMAIL)]
+ADMINS = [ADMIN_EMAIL]
 if not DEBUG and OTHER_ADMIN_EMAIL:
-    ADMINS.append(('Support', OTHER_ADMIN_EMAIL))
+    ADMINS.append(OTHER_ADMIN_EMAIL)
 
 MANAGERS = ADMINS
 
@@ -179,7 +186,6 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'America/New_York'
 USE_I18N = True
 USE_TZ = True
-USE_L10N = True
 
 # Custom Language Support
 EXTRA_LANG_INFO = {
