@@ -1,90 +1,35 @@
-"""
-Django settings for Tchiiz' project.
-Refactored for strict environment variable handling.
-"""
+"""Django settings for the Tchiiz project."""
 import os
-import sys
-from pathlib import Path
-
 from django.conf import global_settings, locale
 from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
+from pathlib import Path
 
-# --- PATH CONFIGURATION ---
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Load environment variables
-env_path = BASE_DIR / '.env'
-load_dotenv(dotenv_path=env_path)
+load_dotenv(dotenv_path=BASE_DIR / '.env')
 
 
-# --- UTILITY: Strict Boolean Parsing ---
-def get_env_bool(var_name, default=False):
-    """
-    Parses a string environment variable to a boolean.
-    'True', 'true', '1', 'yes' -> True
-    Anything else -> False
-    """
-    value = os.getenv(var_name, str(default))
-    return value.lower() in ('true', '1', 't', 'y', 'yes')
+def get_env_bool(name, default=False):
+    return os.getenv(name, str(default)).lower() in ('true', '1', 't', 'y', 'yes')
 
 
-# --- CORE SETTINGS ---
+# --- Core ---
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# Defaults to FALSE if not found.
 DEBUG = get_env_bool('DEBUG_VALUE', False)
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY_VALUE')
 if not SECRET_KEY:
-    # Fail fast if no key is present. Don't fallback to weak defaults.
     raise ValueError("FATAL: SECRET_KEY_VALUE is missing from .env")
 
-allowed_hosts_env = os.getenv('LIST_OF_ALLOWED_HOSTS', default="")
-if allowed_hosts_env:
-    ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_env.split(',')]
-else:
-    ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+allowed_hosts = os.getenv('LIST_OF_ALLOWED_HOSTS', "")
+ALLOWED_HOSTS = [h.strip() for h in allowed_hosts.split(',')] if allowed_hosts else ["127.0.0.1", "localhost"]
 
-# Admin & Email Config
-ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', default="")
-ADMIN_NAME = os.getenv('ADMIN_NAME', default="Admin")
-OTHER_ADMIN_EMAIL = os.getenv('OTHER_ADMIN_EMAIL', default="")
+ROOT_URLCONF = 'crueltouch.urls'
+WSGI_APPLICATION = 'crueltouch.wsgi.application'
+SITE_ID = 1
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email Server
-email_user = os.getenv('EMAIL_HOST_USER', "")
-MAILERS = {
-    'default': {
-        'BACKEND': 'django.core.mail.backends.smtp.EmailBackend',
-        'OPTIONS': {
-            'host': 'smtp.gmail.com',
-            'port': 587,
-            'use_tls': True,
-            'username': email_user,
-            'password': os.getenv('EMAIL_HOST_PASSWORD', ""),
-        },
-    },
-}
-EMAIL_USE_LOCALTIME = True
-SERVER_EMAIL = email_user
-EMAIL_SUBJECT_PREFIX = ""
-
-ADMINS = [ADMIN_EMAIL]
-if not DEBUG and OTHER_ADMIN_EMAIL:
-    ADMINS.append(OTHER_ADMIN_EMAIL)
-
-MANAGERS = ADMINS
-
-# Payment Config
-PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID', "")
-PAYPAL_CLIENT_SECRET = os.getenv('PAYPAL_CLIENT_SECRET', "")
-PAYPAL_ENVIRONMENT = os.getenv('PAYPAL_ENVIRONMENT', "sandbox")
-
-# --- APPS & MIDDLEWARE ---
-
-AUTH_USER_MODEL = 'client.UserClient'
+# --- Apps ---
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -96,21 +41,20 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'django.contrib.humanize',
-    # Third Party
+    # Third party
     'captcha',
     'django_q',
-    # Local Apps
+    # Local
     'core',
     'homepage',
     'client',
     'portfolio',
     'static_pages_and_forms',
     'administration',
+    # Third party, after local apps so local templates take priority
     'appointment',
     'payment',
 ]
-
-SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -122,10 +66,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.admindocs.middleware.XViewMiddleware',
-    'homepage.middleware.CacheControlMiddleware'
+    'homepage.middleware.CacheControlMiddleware',
 ]
-
-ROOT_URLCONF = 'crueltouch.urls'
 
 TEMPLATES = [
     {
@@ -143,9 +85,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'crueltouch.wsgi.application'
-
-# --- DATABASE ---
+# --- Database & cache ---
 
 DATABASES = {
     'default': {
@@ -154,7 +94,19 @@ DATABASES = {
     }
 }
 
-# --- AUTH ---
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': str(BASE_DIR / '.cache'),
+    }
+}
+
+# --- Auth & sessions ---
+
+AUTH_USER_MODEL = 'client.UserClient'
+LOGIN_URL = 'client/login/'
+LOGIN_REDIRECT_URL = 'client/'
+PASSWORD_RESET_TIMEOUT = 60 * 60
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
@@ -163,154 +115,117 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-LOGIN_URL = 'client/login/'
-LOGIN_REDIRECT_URL = 'client/'
-PASSWORD_RESET_TIMEOUT = 3600  # 1 hour
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+USER_ONLINE_TIMEOUT = 5 * 60
+USER_LAST_SEEN_TIMEOUT = 60 * 60 * 24 * 7
 
-# --- STATIC & MEDIA ---
+# --- Security (production) ---
+
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 60 * 60 * 24 * 365
+    SECURE_HSTS_PRELOAD = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+    SESSION_COOKIE_AGE = 60 * 60
+
+# --- Email ---
+
+email_user = os.getenv('EMAIL_HOST_USER', "")
+
+MAILERS = {
+    'default': {
+        'BACKEND': 'django.core.mail.backends.smtp.EmailBackend',
+        'OPTIONS': {
+            'host': 'smtp.gmail.com',
+            'port': 587,
+            'use_tls': True,
+            'username': email_user,
+            'password': os.getenv('EMAIL_HOST_PASSWORD', ""),
+        },
+    },
+}
+SERVER_EMAIL = email_user
+EMAIL_SUBJECT_PREFIX = ""
+EMAIL_USE_LOCALTIME = True
+
+ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', "")
+OTHER_ADMIN_EMAIL = os.getenv('OTHER_ADMIN_EMAIL', "")
+ADMINS = [ADMIN_EMAIL]
+if not DEBUG and OTHER_ADMIN_EMAIL:
+    ADMINS.append(OTHER_ADMIN_EMAIL)
+MANAGERS = ADMINS
+
+# --- Static & media ---
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-
 MEDIA_ROOT = BASE_DIR / 'media'
 
 if DEBUG:
-    STATICFILES_DIRS = [BASE_DIR / "static"]
+    STATICFILES_DIRS = [BASE_DIR / 'static']
     STATIC_ROOT = BASE_DIR / 'staticfiles_collected'
 else:
     STATIC_ROOT = BASE_DIR / 'static'
 
-# --- INTERNATIONALIZATION ---
+# --- Internationalization ---
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'America/New_York'
 USE_I18N = True
 USE_TZ = True
 
-# Custom Language Support
-EXTRA_LANG_INFO = {
-    'cr-ht': {
-        'bidi': False,
-        'code': 'cr-ht',
-        'name': 'Haitian Creole',
-        'name_local': "Kreyòl",
-    },
-}
-LANG_INFO = dict(locale.LANG_INFO, **EXTRA_LANG_INFO)
-locale.LANG_INFO = LANG_INFO
-
 LANGUAGES = (
     ('en', _('English')),
     ('es', _('Spanish')),
     ('fr', _('French')),
 )
-LANGUAGES_BIDI = global_settings.LANGUAGES_BIDI + ["cr-ht"]
 LOCALE_PATHS = [str(BASE_DIR / 'locale')]
 
-# --- LOGGING & CACHE ---
+# Haitian Creole
+locale.LANG_INFO = {
+    **locale.LANG_INFO,
+    'cr-ht': {'bidi': False, 'code': 'cr-ht', 'name': 'Haitian Creole', 'name_local': "Kreyòl"},
+}
+LANGUAGES_BIDI = global_settings.LANGUAGES_BIDI + ["cr-ht"]
 
-# Use relative paths so this works on dev AND prod without changing code
-LOGS_DIR = BASE_DIR / 'logs' / 'django'
-if not LOGS_DIR.exists():
-    # Make sure log dir exists to prevent startup crash
-    try:
-        os.makedirs(LOGS_DIR, exist_ok=True)
-    except OSError:
-        pass  # Handle permission errors gracefully if needed
+# --- Logging ---
 
-CACHES_LOCATION = BASE_DIR / '.cache'
+logs_dir = BASE_DIR / 'logs' / 'django'
+try:
+    logs_dir.mkdir(parents=True, exist_ok=True)
+except OSError:
+    pass
 
-if not DEBUG:
-    # Production Logging
-    LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        "handlers": {
-            "file": {
-                "level": "INFO",  # Changed from DEBUG to reduce noise in prod
-                "class": "logging.FileHandler",
-                "filename": str(LOGS_DIR / "django.log"),
-            },
-        },
-        'loggers': {
-            "django": {
-                "handlers": ["file"],
-                "level": "INFO",
-                "propagate": True,
-            },
-        },
-    }
-else:
-    # Dev Logging (Console)
+if DEBUG:
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
         'handlers': {
-            'console': {
-                'class': 'logging.StreamHandler',
+            'console': {'class': 'logging.StreamHandler'},
+        },
+        'root': {'handlers': ['console'], 'level': 'INFO'},
+    }
+else:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'file': {
+                'level': 'INFO',
+                'class': 'logging.FileHandler',
+                'filename': str(logs_dir / 'django.log'),
             },
         },
-        'root': {
-            'handlers': ['console'],
-            'level': 'INFO',
+        'loggers': {
+            'django': {'handlers': ['file'], 'level': 'INFO', 'propagate': True},
         },
     }
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': str(CACHES_LOCATION),
-    }
-}
+# --- Django Q ---
 
-MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
-USER_ONLINE_TIMEOUT = 300
-USER_LAST_SEEN_TIMEOUT = 60 * 60 * 24 * 7
-
-# --- SECURITY (PRODUCTION) ---
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-if not DEBUG:
-    CSRF_COOKIE_SECURE = True
-    SESSION_COOKIE_SECURE = True
-    SECURE_SSL_REDIRECT = True
-    SECURE_HSTS_SECONDS = 31536000  # 1 year
-    SECURE_HSTS_PRELOAD = True
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-    SESSION_COOKIE_AGE = 3600
-
-# --- APP CONFIGURATION ---
-
-# Appointment
-APPOINTMENT_SLOT_DURATION = 30
-APPOINTMENT_LEAD_TIME = (9, 0)
-APPOINTMENT_FINISH_TIME = (16, 30)
-APPOINTMENT_CLIENT_MODEL = AUTH_USER_MODEL
-APPOINTMENT_BASE_TEMPLATE = 'homepage/base.html'
-APPOINTMENT_ADMIN_BASE_TEMPLATE = 'administration/base.html'
-APPOINTMENT_WEBSITE_NAME = 'CruelTouch'
-APPOINTMENT_THANK_YOU_URL = None
-
-# Payment
-PAYMENT_PAYPAL_ENVIRONMENT = PAYPAL_ENVIRONMENT
-PAYMENT_PAYPAL_CLIENT_ID = PAYPAL_CLIENT_ID
-PAYMENT_PAYPAL_CLIENT_SECRET = PAYPAL_CLIENT_SECRET
-PAYMENT_BASE_TEMPLATE = 'homepage/base.html'
-PAYMENT_WEBSITE_NAME = 'CruelTouch'
-PAYMENT_MODEL = 'appointment.PaymentInfo'
-PAYMENT_REDIRECT_SUCCESS_URL = 'homepage:index'
-PAYMENT_APPLY_PAYPAL_FEES = True
-PAYMENT_FEES = 0.03 if not PAYMENT_APPLY_PAYPAL_FEES else 0.00
-
-# Secrets
-SECRETS_DIR = BASE_DIR / 'crueltouch' / 'secrets'
-PDF_CERTIFICATE_PATH = str(SECRETS_DIR / 'pdf_certificate.pfx')
-CERTIFICATE_PATH = str(SECRETS_DIR / 'pdf_certificate.crt')
-PRIVATE_KEY_PATH = str(SECRETS_DIR / 'pdfkey.key')
-
-# Django Q
 Q_CLUSTER = {
     'name': 'DjangORM',
     'workers': 4,
@@ -320,3 +235,33 @@ Q_CLUSTER = {
     'bulk': 10,
     'orm': 'default',
 }
+
+# --- Appointment ---
+
+APPOINTMENT_SLOT_DURATION = 30
+APPOINTMENT_LEAD_TIME = (9, 0)
+APPOINTMENT_FINISH_TIME = (16, 30)
+APPOINTMENT_CLIENT_MODEL = AUTH_USER_MODEL
+APPOINTMENT_BASE_TEMPLATE = 'homepage/base.html'
+APPOINTMENT_ADMIN_BASE_TEMPLATE = 'administration/base.html'
+APPOINTMENT_WEBSITE_NAME = 'CruelTouch'
+APPOINTMENT_THANK_YOU_URL = None
+
+# --- Payment ---
+
+PAYMENT_PAYPAL_ENVIRONMENT = os.getenv('PAYPAL_ENVIRONMENT', "sandbox")
+PAYMENT_PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID', "")
+PAYMENT_PAYPAL_CLIENT_SECRET = os.getenv('PAYPAL_CLIENT_SECRET', "")
+PAYMENT_BASE_TEMPLATE = 'homepage/base.html'
+PAYMENT_WEBSITE_NAME = 'CruelTouch'
+PAYMENT_MODEL = 'appointment.PaymentInfo'
+PAYMENT_REDIRECT_SUCCESS_URL = 'homepage:index'
+PAYMENT_APPLY_PAYPAL_FEES = True
+PAYMENT_FEES = 0.00 if PAYMENT_APPLY_PAYPAL_FEES else 0.03
+
+# --- PDF signing ---
+
+secrets_dir = BASE_DIR / 'crueltouch' / 'secrets'
+PDF_CERTIFICATE_PATH = str(secrets_dir / 'pdf_certificate.pfx')
+CERTIFICATE_PATH = str(secrets_dir / 'pdf_certificate.crt')
+PRIVATE_KEY_PATH = str(secrets_dir / 'pdfkey.key')
