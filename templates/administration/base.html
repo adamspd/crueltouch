@@ -84,7 +84,7 @@
                 <span>{% translate "Dashboard" %}</span>
             </a>
 
-            {% if user.email == "" %}
+            {% if user.is_superuser %}
                 <a href="/admin" class="tchiiz-nav-item tchiiz-nav-danger" target="_blank">
                     <i class="fas fa-lock"></i>
                     <span>{% translate "Django Admin" %}</span>
