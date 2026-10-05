@@ -13,7 +13,7 @@ django-simple-history==3.13.0
 xhtml2pdf==0.2.21
 pypdf>=6.19.0
 endesive==2.19.3
-cryptography==50.0.1
+cryptography==50.0.2
 django-simple-captcha==0.7.0
 django-q2==1.11.1
 git+https://git.ksol.io/karolyi/py3-validate-email@v1.0.12
