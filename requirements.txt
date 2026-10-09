@@ -1,5 +1,5 @@
 python-dateutil==2.9.0.post0
-Django==6.1.1
+Django==6.1.2
 django-js-asset==4.2.0
 dnspython==2.8.0
 docutils==0.23
