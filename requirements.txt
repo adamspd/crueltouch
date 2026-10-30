@@ -4,7 +4,7 @@ django-js-asset==5.0.0
 dnspython==2.9.1
 docutils==0.23
 markdown2==2.5.5
-Pillow==13.0.0
+Pillow==12.3.0
 requests==2.34.2
 django-appointment==3.12.0
 django-payment-manager==1.0.1
