@@ -58,6 +58,8 @@ class Quarantine(models.Model):
 
 @receiver(post_save, sender=ContactForm)
 def send_email_after_saving_contact_form(sender, instance, created, *args, **kwargs):
+    if kwargs.get("raw"):  # loaddata (restore or migration): send nothing
+        return
     if created:
         if settings.DEBUG or DATABASE_UPDATE:
             client_email = TEST_EMAIL

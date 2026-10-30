@@ -17,7 +17,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.urls import path, include
+from django.urls import path, include, re_path
+from django.views.static import serve
 
 admin.site.site_header = 'CruelTouch Administration'
 admin.site.site_title = 'CruelTouch Administration'
@@ -56,3 +57,6 @@ if settings.DEBUG:
         settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT
     )
+elif settings.SERVE_MEDIA:
+    # Kubernetes has no nginx, so Django serves uploads itself.
+    urlpatterns += [re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT})]
