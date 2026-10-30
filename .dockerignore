@@ -1,0 +1,29 @@
+# Files Docker never sends to the build, so they can't end up in the image.
+
+# Secrets and data (the media is 2.7 GB)
+.env
+.env.*
+!.env.example
+db.sqlite3*
+media/
+crueltouch/secrets/
+database_backup/
+
+# Built or local-only
+.git
+.github
+.venv
+.cache
+.idea
+logs/
+staticfiles_collected/
+**/__pycache__
+*.py[cod]
+.DS_Store
+
+# Not needed to run the site
+*.md
+Dockerfile
+.dockerignore
+run.sh
+tchiiz.service

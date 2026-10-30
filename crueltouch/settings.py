@@ -57,7 +57,11 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # First: answers Kubernetes probes before ALLOWED_HOSTS and the HTTPS redirect.
+    'core.health.HealthCheckMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    # Serves static files from gunicorn; no nginx in Kubernetes.
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -85,19 +89,45 @@ TEMPLATES = [
     },
 ]
 
+# --- Migrations of third-party apps ---
+# django-appointment and django-payment-manager ship no migrations (their models
+# are swappable), so the project keeps its own, here. homepage's first migration
+# depends on the appointment ones.
+MIGRATION_MODULES = {
+    'appointment': 'appointment_migrations',
+    'payment': 'payment_migrations',
+}
+
 # --- Database & cache ---
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# PostgreSQL when POSTGRES_HOST is set (Kubernetes), SQLite otherwise (local
+# dev). The POSTGRES_* names are the ones the official postgres image reads.
+if os.getenv('POSTGRES_HOST'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': os.getenv('POSTGRES_HOST'),
+            'PORT': os.getenv('POSTGRES_PORT', '5432'),
+            'NAME': os.getenv('POSTGRES_DB', 'tchiiz'),
+            'USER': os.getenv('POSTGRES_USER', 'tchiiz'),
+            'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
+            'CONN_MAX_AGE': 60,  # reuse a connection for a minute
+            'CONN_HEALTH_CHECKS': True,  # drop a reused connection that died
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': str(BASE_DIR / '.cache'),
+        # CACHE_DIR points at a writable volume in Kubernetes.
+        'LOCATION': os.getenv('CACHE_DIR', str(BASE_DIR / '.cache')),
     }
 }
 
@@ -128,6 +158,9 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
+    # Behind Traefik: trust its X-Forwarded-Proto so request.is_secure() is
+    # right and SECURE_SSL_REDIRECT doesn't loop.
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SESSION_EXPIRE_AT_BROWSER_CLOSE = True
     SESSION_COOKIE_AGE = 60 * 60
 
@@ -137,7 +170,8 @@ email_user = os.getenv('EMAIL_HOST_USER', "")
 
 MAILERS = {
     'default': {
-        'BACKEND': 'django.core.mail.backends.smtp.EmailBackend',
+        # Set EMAIL_BACKEND to the console backend to send nothing (data loads).
+        'BACKEND': os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend'),
         'OPTIONS': {
             'host': 'smtp.gmail.com',
             'port': 587,
@@ -162,7 +196,9 @@ MANAGERS = ADMINS
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.getenv('MEDIA_ROOT', str(BASE_DIR / 'media'))
+# No nginx in Kubernetes, so Django serves uploads itself (see urls.py).
+SERVE_MEDIA = get_env_bool('SERVE_MEDIA', False)
 
 if DEBUG:
     STATICFILES_DIRS = [BASE_DIR / 'static']
@@ -213,14 +249,11 @@ else:
         'version': 1,
         'disable_existing_loggers': False,
         'handlers': {
-            'file': {
-                'level': 'INFO',
-                'class': 'logging.FileHandler',
-                'filename': str(logs_dir / 'django.log'),
-            },
+            # The container's filesystem is read-only: log to the console.
+            'console': {'class': 'logging.StreamHandler'},
         },
         'loggers': {
-            'django': {'handlers': ['file'], 'level': 'INFO', 'propagate': True},
+            'django': {'handlers': ['console'], 'level': 'INFO', 'propagate': True},
         },
     }
 
@@ -228,7 +261,7 @@ else:
 
 Q_CLUSTER = {
     'name': 'DjangORM',
-    'workers': 4,
+    'workers': int(os.getenv('Q_CLUSTER_WORKERS', '4')),  # 1 in Kubernetes, to save memory
     'timeout': 90,
     'retry': 120,
     'queue_limit': 50,
@@ -261,7 +294,7 @@ PAYMENT_FEES = 0.00 if PAYMENT_APPLY_PAYPAL_FEES else 0.03
 
 # --- PDF signing ---
 
-secrets_dir = BASE_DIR / 'crueltouch' / 'secrets'
+secrets_dir = Path(os.getenv('PDF_SECRETS_DIR', str(BASE_DIR / 'crueltouch' / 'secrets')))
 PDF_CERTIFICATE_PATH = str(secrets_dir / 'pdf_certificate.pfx')
 CERTIFICATE_PATH = str(secrets_dir / 'pdf_certificate.crt')
 PRIVATE_KEY_PATH = str(secrets_dir / 'pdfkey.key')
