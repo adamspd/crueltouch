@@ -48,3 +48,6 @@ database_backup/*
 .cache
 django_q.service
 tchiiz.service
+
+# collected static files (generated)
+staticfiles_collected/
