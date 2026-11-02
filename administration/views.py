@@ -636,7 +636,7 @@ def delete_client_album(request, pk):
 
 @staff_member_required(login_url='administration:login')
 def list_requested_user(request):
-    clients = UserClient.objects.filter(is_superuser=False)
+    clients = UserClient.objects.filter(is_superuser=False).select_related('profile_photo').order_by('-start_date')
     return render(request, 'administration/list/list_user.html', {'clients': clients})
 
 
