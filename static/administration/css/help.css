@@ -1,0 +1,90 @@
+/* Help page: a sticky contents list beside the sections */
+.help-layout {
+    display: grid;
+    grid-template-columns: 11rem minmax(0, 1fr);
+    gap: 2rem;
+    align-items: start;
+    max-width: 62rem;
+}
+
+.help-toc {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.help-toc a {
+    padding: 0.35rem 0.6rem;
+    border-radius: 6px;
+    color: var(--tz-text-secondary);
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+
+.help-toc a:hover {
+    background: var(--tz-surface-hover);
+    color: var(--tz-text);
+}
+
+.help-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.help-section {
+    padding: 1.25rem 1.5rem;
+    scroll-margin-top: 1rem;
+}
+
+.help-section h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 0 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--tz-text);
+}
+
+.help-section h2 i {
+    width: 18px;
+    font-size: 0.9rem;
+    color: var(--tz-primary);
+}
+
+.help-section dl {
+    margin: 0;
+}
+
+.help-section dt {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--tz-text);
+}
+
+.help-section dd {
+    margin: 0.15rem 0 0.9rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--tz-text-secondary);
+}
+
+.help-section dd:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .help-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1rem;
+    }
+
+    .help-toc {
+        position: static;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}

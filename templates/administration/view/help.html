@@ -1,482 +1,131 @@
 {% extends 'administration/base.html' %}
 {% load i18n %}
 {% load static %}
-{% block title %}Help{% endblock %}
+
+{% block title %}TCHIIZ | {% translate "Help" %}{% endblock %}
+{% block header_title %}{% translate "Help" %}{% endblock %}
+{% block dark_mode %}data-dark-ready{% endblock %}
+
 {% block customCSS %}
-    <link rel="stylesheet" type="text/css" href="{% static 'administration/dist/css/help.css' %}">
+    <link rel="stylesheet" href="{% static 'administration/css/help.css' %}">
 {% endblock %}
+
 {% block body %}
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <!-- Small boxes (Stat box) -->
-                <div class="row">
-                    <div class="detailed">
-                        <div class="HelpCard">
-                            <div class="cardHeaderHelp">
-                                <h2>General</h2>
-                                <a href="#" class=""></a>
-                            </div>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <td>What functionality I implemented ?</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        For the administrator, you can login in 2 ways, through the admin page and
-                                        through the super
-                                        admin page, which you can access through the settings in the left panel. When
-                                        you log in as
-                                        admin here, you get a preview in the dashboard of how many photos you have
-                                        uploaded to your
-                                        web server for your clients. This helps you know when to delete old images and
-                                        therefore
-                                        have more space for further uploads, as you only have a total of 9 GB space in
-                                        your VPS.
-                                        You can also see how many customers have signed up on your website, how many
-                                        contact forms
-                                        (or messages) you have in total, and the total number of sessions (photo shoot)
-                                        you have
-                                        completed.
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <td>To be implemented</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        When you click on the name of a client, you will be able to upload several
-                                        photos for him at
-                                        the same time, see all the information relating to this client, how many
-                                        reservations he has
-                                        made, information relating to these reservations (done, pending, accepted,
-                                        canceled), see
-                                        all his unretouched photos, see his zip file containing all the photos. You will
-                                        be able to
-                                        modify the information related to this customer like his name, his e-mail
-                                        address etc ...
-                                        Rest assured, you can already do all this in the super admin page, but I admit
-                                        that it is
-                                        not user-friendly.
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="detailed">
-                        <div class="HelpCard">
-                            <div class="cardHeaderHelp">
-                                <h2>Dashboard</h2>
-                                <a href="#" class=""></a>
-                            </div>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <td>Card Header</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        Photo count shows how many photos you've uploaded for your customers so you can
-                                        edit
-                                        them after they've favorite them.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Client count shows how many clients have registered in your website including
-                                        yourself
-                                        and me. Will be change later to have the exact number.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Contact form count shows how many messages or contact form people have sent to
-                                        you.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Total session correspond to how many reservation you have received including all
-                                        type of
-                                        reservations.
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <td>To be implemented</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        Clicking on a card will bring you to the specified page.
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <td>Recent Booking</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        A list of all your recent reservations.
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <td>Status of a booking</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        Pending : The client went through your website and made a reservation for a
-                                        session with
-                                        you but it's not yet accepted
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Accepted : If you accept the conditions of the reservation, you will change the
-                                        status
-                                        to accepted.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Paid (to be implemented) : The client has done a first deposit via paypal
-                                        through the
-                                        website or via any other platform (if so you will change the status from
-                                        accepted to
-                                        paid)
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Done : All the conditions were accepted, you received your fist deposit, you
-                                        have done
-                                        the photo session and edited all the photos that the client downloaded and you
-                                        received
-                                        your final payments.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Canceled : Unfortunately, the client canceled the photo session.
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <td>Recent Client</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        A list of all your recent client registration.
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <td>To be implemented</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        You will be able to click on the name of a client to see all the information
-                                        about
-                                        him/her.
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="detailed">
-                        <div class="HelpCard">
-                            <div class="cardHeaderHelp">
-                                <h2>Client (To be implemented)</h2>
-                                <a href="#" class=""></a>
-                            </div>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <td>Client List</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        A table that will list all of your clients.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        You will be able to click on the name of a client to see all the informations
-                                        about
-                                        him/her and see if he/she has photos uploaded yet, if not, upload unedited
-                                        photos from
-                                        his/her last photo session, upload a zip file containing all of his/her last
-                                        session
-                                        edited photos and also you will be able to change the status of his/her
-                                        reservation from
-                                        pending to accepted and from accepted to done. If he/she cancel the reservation,
-                                        you
-                                        will be also able to see that information.
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <td>Card Header (when you click on the name of a client)</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        Photo count shows how many photos you've uploaded for this client so you can
-                                        edit them
-                                        after they've favorite them.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Contact form count shows how many messages or contact form this client have sent
-                                        to you.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Total session done correspond to how many photo session you have completed.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Canceled session correspond to how many photo session the client has canceled.
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <td>Photo List</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        A table that will list all of the photo of this client.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        You will be able to see which photos are listed as favorite, how many are listed
-                                        as so
-                                        and upload new ones if necessary.
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="detailed">
-                        <div class="HelpCard">
-                            <div class="cardHeaderHelp">
-                                <h2>Message (To be implemented) </h2>
-                                <a href="#" class=""></a>
-                            </div>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <td>Contact Form List (not yet implemented)</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        A table that will list all of your messages (conctact forms).
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="detailed">
-                        <div class="HelpCard">
-                            <div class="cardHeaderHelp">
-                                <h2>Help (in implementation)</h2>
-                                <a href="#" class=""></a>
-                            </div>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <td>What functionality I implemented ?</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        Information about how to use the admin panel.
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="detailed">
-                        <div class="HelpCard">
-                            <div class="cardHeaderHelp">
-                                <h2>Settings</h2>
-                                <a href="#" class=""></a>
-                            </div>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <td>Administration page</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        It shows all the information about your website in depth. It's a section you
-                                        better not
-                                        mess up if you don't know what you're doing. It's, for right now, the only page
-                                        you can
-                                        upload photos to your portfolio or create a new album, modify information about
-                                        you,
-                                        your clients, your contact forms and so on. You can delete the whole website in
-                                        there.
-                                        And only you and me have access to it.
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="detailed">
-                        <div class="HelpCard">
-                            <div class="cardHeaderHelp">
-                                <h2>Password</h2>
-                                <a href="#" class=""></a>
-                            </div>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <td>Change or modify password</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        The website does not store raw (clear text) passwords on the user model, but
-                                        only a
-                                        hash. Because of this, do not attempt to manipulate the password attribute of
-                                        the user
-                                        directly. This is why a helper function is used when creating a user.
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="detailed">
-                        <div class="HelpCard">
-                            <div class="cardHeaderHelp">
-                                <h2>Sign Out</h2>
-                                <a href="#" class=""></a>
-                            </div>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <td>Login out</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        Do I really have to explain what that is ?
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="detailed">
-                        <div class="HelpCard">
-                            <div class="cardHeaderHelp">
-                                <h2>Notes</h2>
-                                <a href="#" class=""></a>
-                            </div>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <td>Books</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        Clicking on the submit button when booking gives a server error 500, but the
-                                        booking is made anyway
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
+    <div class="tchiiz-page-head">
+        <div>
+            <h1 class="tchiiz-page-title">{% translate "Help" %}</h1>
+            <p class="tchiiz-page-subtitle">{% translate "How each part of the admin works, in the order of the menu." %}</p>
+        </div>
     </div>
-{% endblock %}
-{% block customJS %}
-    <script>
-        var my_chart = {{ book_me_by_month|safe }};
-    </script>
 
-    <script src="{% static 'administration/dist/js/pages/dashboard.js' %}"></script>
-    <script src="{% static 'administration/dist/js/pages/dashboard3.js' %}"></script>
+    <div class="help-layout">
+        <nav class="help-toc" aria-label="{% translate 'On this page' %}">
+            <a href="#dashboard">{% translate "Dashboard" %}</a>
+            <a href="#appointments">{% translate "Appointments" %}</a>
+            <a href="#website">{% translate "Homepage & portfolio" %}</a>
+            <a href="#sending">{% translate "Sending photos" %}</a>
+            <a href="#clients">{% translate "Clients" %}</a>
+            <a href="#messages">{% translate "Messages" %}</a>
+            <a href="#invoices">{% translate "Invoices" %}</a>
+            <a href="#account">{% translate "Your account" %}</a>
+        </nav>
+
+        <div class="help-sections">
+            <section class="tz-panel help-section" id="dashboard">
+                <h2><i class="fas fa-tachometer-alt"></i> {% translate "Dashboard" %}</h2>
+                <dl>
+                    <dt>{% translate "Key figures" %}</dt>
+                    <dd>{% translate "Totals for appointments, contact messages, photos stored in client albums and registered clients. Click a figure to open its list." %}</dd>
+                    <dt>{% translate "Appointments over time" %}</dt>
+                    <dd>{% translate "Bookings per month over the last year, with this month compared to the last one." %}</dd>
+                    <dt>{% translate "Recent appointments and invoices" %}</dt>
+                    <dd>{% translate "The latest five of each. Click an appointment to open it; change an invoice's status straight from its coloured label." %}</dd>
+                </dl>
+            </section>
+
+            <section class="tz-panel help-section" id="appointments">
+                <h2><i class="fas fa-calendar"></i> {% translate "Appointments" %}</h2>
+                <dl>
+                    <dt>{% translate "Calendar" %}</dt>
+                    <dd>{% translate "Click an appointment to see or edit it, drag it to another day to move it, and right-click a day to add one. The New Appointment button in the sidebar opens the same form from any page." %}</dd>
+                    <dt>{% translate "Bookings from the website" %}</dt>
+                    <dd>{% translate "When a client books online, the appointment appears here and both of you get an email." %}</dd>
+                    <dt>{% translate "Staff members" %}</dt>
+                    <dd>{% translate "Who can take appointments, with their working hours and days off. Clients can only book a staff member's open hours." %}</dd>
+                    <dt>{% translate "Services" %}</dt>
+                    <dd>{% translate "The sessions clients can book, with their duration, price and photo. Add, edit or remove them here; changes show on the website right away." %}</dd>
+                </dl>
+            </section>
+
+            <section class="tz-panel help-section" id="website">
+                <h2><i class="fas fa-image"></i> {% translate "Homepage & portfolio" %}</h2>
+                <dl>
+                    <dt>{% translate "Homepage" %}</dt>
+                    <dd>{% translate "Add photos to one of the homepage rows, or view and delete the ones already there." %}</dd>
+                    <dt>{% translate "Portfolio" %}</dt>
+                    <dd>{% translate "Photos are grouped in albums. Create an album first, then add photos to it." %}</dd>
+                </dl>
+            </section>
+
+            <section class="tz-panel help-section" id="sending">
+                <h2><i class="fas fa-paper-plane"></i> {% translate "Sending photos" %}</h2>
+                <dl>
+                    <dt>{% translate "To choose from" %}</dt>
+                    <dd>{% translate "Upload unedited photos to a client's account. They get an email asking them to pick their favourites." %}</dd>
+                    <dt>{% translate "View all chosen" %}</dt>
+                    <dd>{% translate "Each client album, with the photos they liked and the ones they didn't. Deleting an album also deletes its files." %}</dd>
+                    <dt>{% translate "Final via link" %}</dt>
+                    <dd>{% translate "For clients without an account: upload the edited photos to get a download link. Add their email to send it automatically. Links expire after 7 days; see and delete them under View all links." %}</dd>
+                    <dt>{% translate "Final via account" %}</dt>
+                    <dd>{% translate "For clients with an account: the edited photos go into a new album they can download from, and they get an email." %}</dd>
+                </dl>
+            </section>
+
+            <section class="tz-panel help-section" id="clients">
+                <h2><i class="fas fa-users"></i> {% translate "Clients" %}</h2>
+                <dl>
+                    <dt>{% translate "Client list" %}</dt>
+                    <dd>{% translate "Everyone with an account, newest first. Search by name, email or phone; open a client to see their details, albums, appointments and invoices." %}</dd>
+                    <dt>{% translate "Adding a client" %}</dt>
+                    <dd>{% translate "Creates the account and emails the client a link to set their own password." %}</dd>
+                </dl>
+            </section>
+
+            <section class="tz-panel help-section" id="messages">
+                <h2><i class="fas fa-comment"></i> {% translate "Messages" %}</h2>
+                <dl>
+                    <dt>{% translate "Reading and replying" %}</dt>
+                    <dd>{% translate "Messages from the website's contact form. Click one to read it; Reply opens your email app." %}</dd>
+                    <dt>{% translate "Report spam" %}</dt>
+                    <dd>{% translate "Teaches the spam filter, then lets you move the message to quarantine or delete it. Quarantined messages are in Django Admin, where you can approve them back." %}</dd>
+                </dl>
+            </section>
+
+            <section class="tz-panel help-section" id="invoices">
+                <h2><i class="fas fa-file-invoice-dollar"></i> {% translate "Invoices" %}</h2>
+                <dl>
+                    <dt>{% translate "Creating" %}</dt>
+                    <dd>{% translate "Pick the client, add the services and any attachments; the PDF is generated for you." %}</dd>
+                    <dt>{% translate "Status" %}</dt>
+                    <dd>{% translate "Pending, Paid, Partially paid, Cancelled or Overdue. Click the coloured label to change it." %}</dd>
+                    <dt>{% translate "Sending" %}</dt>
+                    <dd>{% translate "The paper plane emails the client a link to the PDF and marks the invoice as sent." %}</dd>
+                    <dt>{% translate "Deleting" %}</dt>
+                    <dd>{% translate "The PDF and attachments are saved in a zip archive on the server first." %}</dd>
+                </dl>
+            </section>
+
+            <section class="tz-panel help-section" id="account">
+                <h2><i class="fas fa-user-cog"></i> {% translate "Your account" %}</h2>
+                <dl>
+                    <dt>{% translate "Light or dark" %}</dt>
+                    <dd>{% translate "The button at the top right picks Light, Dark or System. System follows your device, even when it switches on its own in the evening. Pages that don't support dark mode yet stay light." %}</dd>
+                    <dt>{% translate "Change password" %}</dt>
+                    <dd>{% translate "Passwords are stored as hashes, so nobody can read yours, not even an administrator." %}</dd>
+                    <dt>{% translate "Django Admin" %}</dt>
+                    <dd>{% translate "Administrators only. Direct access to every record in the database: powerful, and changes there can't be undone." %}</dd>
+                </dl>
+            </section>
+        </div>
+    </div>
 {% endblock %}
