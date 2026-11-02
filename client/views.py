@@ -24,6 +24,11 @@ def register_page(request: HttpRequest):
         return redirect('client:client_homepage')
 
     if request.method == 'POST':
+        # Honeypot: people never see the "website" field, bots fill it in. Reply as if it worked, create nothing.
+        if request.POST.get('website'):
+            messages.success(request, f"Account was created for {request.POST.get('first_name', '')}")
+            return redirect('client:login')
+
         form = RegistrationForm(request.POST)
         email = request.POST.get('email', '')
 

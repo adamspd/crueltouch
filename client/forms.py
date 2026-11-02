@@ -1,4 +1,5 @@
 # client/forms.py
+from captcha.fields import CaptchaField, CaptchaTextInput
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
 from django.utils.translation import gettext_lazy as _
@@ -8,6 +9,13 @@ from portfolio.models import Album as AlbumForm
 
 
 class RegistrationForm(UserCreationForm):
+    # Bots signed up by the dozen through this form; the CAPTCHA is the same one as on the contact form
+    captcha = CaptchaField(widget=CaptchaTextInput(attrs={
+        'class': 'form-control',
+        'placeholder': _('Type the characters above'),
+        'autocomplete': 'off',
+    }))
+
     class Meta:
         model = UserClient
         fields = ['first_name', 'email', 'password1', 'password2']
