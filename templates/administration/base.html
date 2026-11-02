@@ -456,6 +456,24 @@
         });
     })();
 
+    // Search boxes: <input data-tz-filter="list-id"> hides the list's rows that don't contain the text,
+    // and shows the list's .tz-no-match message when none do.
+    document.querySelectorAll('[data-tz-filter]').forEach(function (input) {
+        const list = document.getElementById(input.dataset.tzFilter);
+        if (!list) return;
+        const noMatch = list.parentElement.querySelector('.tz-no-match');
+        input.addEventListener('input', function () {
+            const query = input.value.trim().toLowerCase();
+            let shown = 0;
+            Array.from(list.children).forEach(function (row) {
+                const match = !query || row.textContent.toLowerCase().includes(query);
+                row.hidden = !match;
+                if (match) shown++;
+            });
+            if (noMatch) noMatch.style.display = shown ? '' : 'block';
+        });
+    });
+
     // "New Appointment" in the sidebar: open the calendar's own dialog. On the calendar page, click its button;
     // elsewhere, go to the calendar with #new and open it there once the page has checked the user is staff.
     function openNewAppointmentDialog() {

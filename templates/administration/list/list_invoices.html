@@ -4,136 +4,113 @@
 
 {% block title %}TCHIIZ | {% translate "Invoices" %}{% endblock %}
 {% block header_title %}{% translate "Invoices" %}{% endblock %}
+{% block dark_mode %}data-dark-ready{% endblock %}
 
 {% block customCSS %}
     <link rel="stylesheet" href="{% static 'administration/css/invoices-list.css' %}">
 {% endblock %}
 
 {% block body %}
-    <div class="tchiiz-card">
-        <div class="tchiiz-card-header">
-            <div>
-                <h3 class="tchiiz-card-title">{% translate "Invoices" %}</h3>
-                <p class="tchiiz-card-subtitle">
-                    <span class="invoice-count-badge">{{ invoices|length }}</span>
-                    {% translate "invoices" %}
-                </p>
-            </div>
-            <a href="{% url 'administration:create_invoice' %}" class="btn btn-primary btn-sm">
-                <i class="fas fa-plus"></i> {% translate "Create Invoice" %}
-            </a>
+    <div class="tchiiz-page-head">
+        <div>
+            <h1 class="tchiiz-page-title">{% translate "Invoices" %}</h1>
+            <p class="tchiiz-page-subtitle">
+                {% blocktranslate count counter=invoices|length %}{{ counter }} invoice{% plural %}{{ counter }} invoices{% endblocktranslate %}
+            </p>
+        </div>
+        <a href="{% url 'administration:create_invoice' %}" class="tz-btn tz-btn-primary">
+            <i class="fas fa-plus"></i> {% translate "New invoice" %}
+        </a>
+    </div>
+
+    {% if invoices %}
+        <div class="tz-toolbar">
+            <label class="tz-search">
+                <i class="fas fa-search"></i>
+                <input type="search" placeholder="{% translate 'Search by client, email or number' %}"
+                       data-tz-filter="invoice-rows" aria-label="{% translate 'Search invoices' %}">
+            </label>
         </div>
 
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            {% endfor %}
-        {% endif %}
-
-        {% if invoices %}
-            <div class="invoices-list">
+        <div class="tz-panel">
+            <div class="tz-panel-head invoice-grid">
+                <span>{% translate "Client" %}</span>
+                <span>{% translate "Invoice" %}</span>
+                <span class="hide-sm">{% translate "Date" %}</span>
+                <span class="text-end">{% translate "Amount" %}</span>
+                <span>{% translate "Status" %}</span>
+                <span></span>
+            </div>
+            <ul class="tz-rows" id="invoice-rows">
                 {% for rs in invoices %}
-                    <div class="invoice-card">
-                        <div class="invoice-header">
-                            <div class="invoice-meta">
-                                <div class="invoice-date">
-                                    <i class="fas fa-calendar"></i>
-                                    <span>{{ rs.created_at|date:"M d, Y" }}</span>
-                                </div>
-                                <div class="invoice-client">
-                                    <i class="fas fa-user"></i>
-                                    <span>{{ rs.client.get_short_name }}</span>
-                                </div>
-                            </div>
-
-                            <div class="invoice-amount">
-                                <span class="amount-label">{% translate "Total" %}</span>
-                                <span class="amount-value">${{ rs.total_amount }}</span>
-                            </div>
-
-                            <div class="invoice-status-container">
-                                <form action="{% url 'administration:update_invoice_status' rs.invoice_number %}"
-                                      method="post" class="status-form">
-                                    {% csrf_token %}
-                                    <select name="status" onchange="this.form.submit()"
-                                            class="status-select status-{{ rs.status }}">
-                                        {% for status, status_display in rs.INVOICE_STATUS_CHOICES %}
-                                            <option value="{{ status }}"
-                                                    {% if rs.status == status %}selected{% endif %}>
-                                                {{ status_display }}
-                                            </option>
-                                        {% endfor %}
-                                    </select>
-                                </form>
-                                {% if rs.email_sent %}
-                                    <span class="email-badge" title="{% translate 'Email Sent' %}">
-                                    <i class="fas fa-check-circle"></i>
-                                </span>
-                                {% endif %}
+                    <li class="tz-row invoice-grid">
+                        <div class="tz-person">
+                            <span class="tz-avatar">{{ rs.client.first_name|default:""|slice:":1"|upper }}{{ rs.client.last_name|default:""|slice:":1"|upper }}</span>
+                            <div class="tz-stack">
+                                <span class="tz-strong">{{ rs.client.get_full_name|default:rs.client.email }}</span>
+                                <span class="tz-muted"><a href="mailto:{{ rs.client.email }}">{{ rs.client.email }}</a></span>
                             </div>
                         </div>
-
-                        <div class="invoice-contact">
-                            <div class="contact-item">
-                                <i class="far fa-envelope"></i>
-                                <a href="mailto:{{ rs.client.email }}">{{ rs.client.email }}</a>
-                            </div>
-                            {% if rs.client.phone_number %}
-                                <div class="contact-item">
-                                    <i class="fas fa-phone"></i>
-                                    <a href="tel:{{ rs.client.phone_number }}">{{ rs.client.phone_number }}</a>
-                                </div>
-                            {% else %}
-                                <div class="contact-item text-muted">
-                                    <i class="fas fa-phone"></i>
-                                    <span>{% translate "No phone" %}</span>
-                                </div>
+                        <span class="tz-muted tz-num">{{ rs.invoice_number }}</span>
+                        <div class="tz-stack hide-sm">
+                            <span class="tz-strong tz-num">{{ rs.created_at|date:"M j, Y" }}</span>
+                            {% if rs.due_date %}
+                                <span class="tz-muted">{% translate "Due" %} {{ rs.due_date|date:"M j" }}</span>
                             {% endif %}
                         </div>
-
-                        <div class="invoice-actions">
+                        <span class="tz-strong tz-num text-end">${{ rs.total_amount }}</span>
+                        <div>{% include "administration/includes/invoice_status.html" with invoice=rs %}</div>
+                        <div class="tz-actions">
                             {% if not rs.email_sent or not rs.status_changed %}
-                                <a href="{% url 'administration:send_invoice' rs.invoice_number %}"
-                                   class="btn-action btn-action-send">
-                                    <i class="fas fa-paper-plane"></i>
-                                    <span>{% translate "Send" %}</span>
+                                <a href="{% url 'administration:send_invoice' rs.invoice_number %}" class="tz-icon-btn"
+                                   title="{% if rs.email_sent %}{% translate 'Send again' %}{% else %}{% translate 'Send to client' %}{% endif %}">
+                                    <i class="far fa-paper-plane"></i>
                                 </a>
                             {% else %}
-                                <button class="btn-action btn-action-disabled" disabled>
-                                    <i class="fas fa-paper-plane"></i>
-                                    <span>{% translate "Sent" %}</span>
-                                </button>
+                                <span class="tz-icon-btn is-done" title="{% translate 'Sent' %}">
+                                    <i class="fas fa-check"></i>
+                                </span>
                             {% endif %}
-                            <a href="{% url 'administration:view_invoice' rs.invoice_number %}"
-                               class="btn-action btn-action-view" target="_blank">
-                                <i class="fas fa-eye"></i>
-                                <span>{% translate "View" %}</span>
+                            <a href="{% url 'administration:view_invoice' rs.invoice_number %}" class="tz-icon-btn"
+                               target="_blank" title="{% translate 'Open PDF' %}">
+                                <i class="far fa-file-pdf"></i>
                             </a>
-                            <a href="{% url 'administration:edit_invoice' rs.pk %}" class="btn-action btn-action-edit">
-                                <i class="fas fa-edit"></i>
-                                <span>{% translate "Edit" %}</span>
-                            </a>
-                            <a href="{% url 'administration:delete_invoice' rs.pk %}"
-                               class="btn-action btn-action-delete"
-                               onclick="return confirm('{% translate "Are you sure you want to delete this invoice?" %}')">
-                                <i class="fas fa-trash"></i>
-                                <span>{% translate "Delete" %}</span>
-                            </a>
+                            <div class="dropdown">
+                                <button type="button" class="tz-icon-btn" data-bs-toggle="dropdown"
+                                        data-bs-popper-config='{"strategy": "fixed"}' aria-expanded="false"
+                                        aria-label="{% translate 'More actions' %}">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'administration:edit_invoice' rs.pk %}">
+                                            <i class="far fa-edit"></i> {% translate "Edit" %}
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" href="{% url 'administration:delete_invoice' rs.pk %}"
+                                           onclick="return confirm('{% translate "Delete this invoice? Its PDF is archived first." %}')">
+                                            <i class="far fa-trash-alt"></i> {% translate "Delete" %}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
+                    </li>
                 {% endfor %}
-            </div>
-        {% else %}
-            <div class="empty-state">
-                <i class="far fa-file-invoice"></i>
-                <p>{% translate "No invoices found." %}</p>
-                <a href="{% url 'administration:create_invoice' %}" class="btn btn-primary">
-                    <i class="fas fa-plus"></i> {% translate "Create Your First Invoice" %}
+            </ul>
+            <p class="tz-empty tz-no-match">{% translate "No invoice matches your search." %}</p>
+        </div>
+    {% else %}
+        <div class="tz-panel tz-empty">
+            <i class="far fa-file-alt"></i>
+            {% translate "No invoices yet." %}
+            <div>
+                <a href="{% url 'administration:create_invoice' %}" class="tz-btn tz-btn-primary">
+                    <i class="fas fa-plus"></i> {% translate "Create your first invoice" %}
                 </a>
             </div>
-        {% endif %}
-    </div>
+        </div>
+    {% endif %}
 {% endblock %}
