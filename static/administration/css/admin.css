@@ -1311,3 +1311,10 @@ body.sidebar-open {
     --djappt-success: var(--tz-success);
     --djappt-success-soft: rgba(34, 197, 94, 0.12);
 }
+
+/* The calendar's right-click menu is placed at the cursor's page coordinates. Here only .tchiiz-content scrolls,
+   so those equal the window coordinates: fixed positioning puts it at the cursor (absolute was offset by the
+   sidebar and header). base.html keeps it inside the window. */
+#customContextMenu {
+    position: fixed !important;
+}

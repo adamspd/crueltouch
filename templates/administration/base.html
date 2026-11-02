@@ -474,6 +474,28 @@
         });
     });
 
+    // Calendar right-click menu (django-appointment): when it would overflow the window, open it to the
+    // left of and/or above the cursor instead.
+    (function () {
+        const menu = document.getElementById('customContextMenu');
+        if (!menu) return;
+        const margin = 8;
+        new MutationObserver(function () {
+            if (menu.style.display !== 'block') return;
+            const placed = menu.style.left + ',' + menu.style.top;
+            if (menu.dataset.tzPlaced === placed) return;  // our own adjustment
+            const x = parseFloat(menu.style.left), y = parseFloat(menu.style.top);
+            const width = menu.offsetWidth, height = menu.offsetHeight;
+            let left = x + width + margin > window.innerWidth ? x - width : x;
+            let top = y + height + margin > window.innerHeight ? y - height : y;
+            left = Math.max(margin, Math.min(left, window.innerWidth - width - margin));
+            top = Math.max(margin, Math.min(top, window.innerHeight - height - margin));
+            menu.style.left = left + 'px';
+            menu.style.top = top + 'px';
+            menu.dataset.tzPlaced = menu.style.left + ',' + menu.style.top;
+        }).observe(menu, {attributes: true, attributeFilter: ['style']});
+    })();
+
     // "New Appointment" in the sidebar: open the calendar's own dialog. On the calendar page, click its button;
     // elsewhere, go to the calendar with #new and open it there once the page has checked the user is staff.
     function openNewAppointmentDialog() {
