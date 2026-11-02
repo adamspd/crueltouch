@@ -1,0 +1,121 @@
+{% extends 'administration/base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}TCHIIZ | {{ title }}{% endblock %}
+{% block header_title %}{{ title }}{% endblock %}
+
+{% block customCSS %}
+    <link rel="stylesheet" href="{% static 'administration/css/forms.css' %}">
+{% endblock %}
+
+{% block body %}
+    <div class="form-container">
+        <div class="tchiiz-card form-card">
+            <div class="tchiiz-card-header">
+                <div>
+                    <h3 class="tchiiz-card-title">{{ title }}</h3>
+                    <p class="tchiiz-card-subtitle">
+                        {% translate "The edited photos go into a new album in the client's account, ready to download. The client gets an email." %}
+                    </p>
+                </div>
+            </div>
+
+            <form id="upload-form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label class="form-label" for="client">{% translate "Client" %}</label>
+                    {% if clients %}
+                        <select name="client" id="client" class="form-control" required>
+                            <option value="">{% translate "Choose a client" %}</option>
+                            {% for client in clients %}
+                                <option value="{{ client.id }}">{{ client.get_full_name|default:client.email }} ({{ client.email }})</option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                        <div class="alert alert-danger">
+                            {% translate "No clients found." %}
+                            <a href="{% url 'administration:create_new_client' %}"
+                               class="alert-link">{% translate "Create one first." %}</a>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="final_photos">{% translate "Final photos" %}</label>
+                    <div class="file-upload-area">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p class="file-upload-text">{% translate "Click to select files or drag and drop" %}</p>
+                        <input type="file" name="final_photos" id="final_photos" accept="image/*" multiple required
+                               class="file-input" onchange="updateFileCount(this)">
+                        <p class="file-count" id="file-count">{% translate "No files selected" %}</p>
+                    </div>
+                </div>
+
+                <div id="progress-container" class="progress-container">
+                    <div class="progress-bar-wrapper">
+                        <div id="progress-bar" class="progress-bar"></div>
+                    </div>
+                    <p id="progress-text" class="progress-text">0%</p>
+                </div>
+                <p id="upload-error" class="text-danger small" role="alert"></p>
+
+                <div class="form-actions">
+                    <a href="{% url 'administration:index' %}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> {% translate "Cancel" %}
+                    </a>
+                    <button type="submit" id="submit-btn" class="btn btn-primary" {% if not clients %}disabled{% endif %}>
+                        <i class="fas fa-paper-plane"></i> {% translate "Send to client" %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block customJS %}
+    <script>
+        function updateFileCount(input) {
+            const count = input.files.length;
+            document.getElementById('file-count').textContent = count
+                ? count + (count === 1 ? ' {% translate "file selected" %}' : ' {% translate "files selected" %}')
+                : '{% translate "No files selected" %}';
+        }
+
+        // Upload with a progress bar; the view redirects to the dashboard, which shows the confirmation
+        const form = document.getElementById('upload-form');
+        const button = document.getElementById('submit-btn');
+        const error = document.getElementById('upload-error');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            error.textContent = '';
+            document.getElementById('progress-container').style.display = 'block';
+            button.disabled = true;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> {% translate "Uploading…" %}';
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', form.action || window.location.href, true);
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.upload.onprogress = function (e) {
+                if (!e.lengthComputable) return;
+                const percent = Math.round((e.loaded / e.total) * 100);
+                document.getElementById('progress-bar').style.width = percent + '%';
+                document.getElementById('progress-text').textContent = percent + '%';
+            };
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    let next = "{% url 'administration:index' %}";
+                    try { next = JSON.parse(xhr.responseText).redirect || next; } catch (e) {}
+                    window.location.href = next;
+                    return;
+                }
+                error.textContent = '{% translate "The upload failed. Check the file sizes and try again." %}';
+                button.disabled = false;
+                button.innerHTML = '<i class="fas fa-paper-plane"></i> {% translate "Send to client" %}';
+            };
+            xhr.send(new FormData(form));
+        });
+    </script>
+{% endblock %}

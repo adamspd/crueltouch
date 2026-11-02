@@ -495,9 +495,15 @@ def send_photo_via_account(request):
                 "Login", "Login", request.build_absolute_uri(reverse('client:login'))
         )
         messages.success(request, f"Sent {len(photos)} photos to {user.get_full_name()}")
+        # The page uploads with XHR to show progress; it then goes to this URL, where the message is shown
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'redirect': reverse('administration:index')})
         return redirect('administration:index')
 
-    return render(request, 'administration/add/add_account_delivery.html', {'clients': clients})
+    return render(request, 'administration/add/add_account_delivery.html', {
+        'clients': clients,
+        'title': "Final Delivery via Account",
+    })
 
 
 # ==============================================================================
