@@ -45,6 +45,32 @@
     color-scheme: light;
 }
 
+/* Dark theme: set on <html> by the script in base.html, only on pages whose styles use these variables */
+:root[data-theme="dark"] {
+    --tz-bg-light: #0f0f11;
+    --tz-surface: #18181b;
+    --tz-surface-hover: #232327;
+    --tz-border: #2a2a2f;
+    --tz-border-strong: #3f3f46;
+    --tz-text: #f4f4f5;
+    --tz-text-secondary: #a1a1aa;
+    --tz-text-muted: #8b8b94;
+
+    --tz-primary: #3b82f6;
+    --tz-primary-dark: #2563eb;
+    --tz-primary-soft: rgba(59, 130, 246, 0.14);
+    --tz-primary-ring: rgba(59, 130, 246, 0.25);
+
+    --tz-success: #22c55e;
+    --tz-danger: #f87171;
+    --tz-danger-soft: rgba(248, 113, 113, 0.12);
+    --tz-overlay: rgba(0, 0, 0, 0.6);
+
+    --tz-card-shadow: none;
+
+    color-scheme: dark;
+}
+
 /* --- Layout Shell --- */
 body {
     margin: 0;
@@ -540,6 +566,18 @@ button.tchiiz-header-icon {
     padding: 0;
 }
 
+/* The appearance menu only shows on pages that support dark mode; its button shows the chosen mode */
+:root:not([data-dark-ready]) .tchiiz-theme-toggle,
+:root:not([data-theme-mode="light"]) .theme-icon-light,
+:root:not([data-theme-mode="dark"]) .theme-icon-dark,
+:root[data-theme-mode="light"] .theme-icon-system,
+:root[data-theme-mode="dark"] .theme-icon-system,
+:root:not([data-theme-mode="light"]) [data-theme-mode="light"] .tz-check,
+:root:not([data-theme-mode="dark"]) [data-theme-mode="dark"] .tz-check,
+:root:not([data-theme-mode="system"]) [data-theme-mode="system"] .tz-check {
+    display: none;
+}
+
 .tchiiz-notification-dot {
     position: absolute;
     top: 7px;
@@ -676,6 +714,16 @@ button.tchiiz-header-icon {
     --tint-green-bg: #f0fdf4;   --tint-green: #15803d;
     --tint-amber-bg: #fffbeb;   --tint-amber: #b45309;
     --tint-red-bg: #fef2f2;     --tint-red: #b91c1c;
+}
+
+:root[data-theme="dark"] {
+    --tint-orange-bg: rgba(251, 146, 60, 0.12);  --tint-orange: #fb923c;
+    --tint-cyan-bg: rgba(34, 211, 238, 0.12);    --tint-cyan: #22d3ee;
+    --tint-violet-bg: rgba(167, 139, 250, 0.14); --tint-violet: #a78bfa;
+    --tint-blue-bg: rgba(96, 165, 250, 0.14);    --tint-blue: #60a5fa;
+    --tint-green-bg: rgba(74, 222, 128, 0.12);   --tint-green: #4ade80;
+    --tint-amber-bg: rgba(251, 191, 36, 0.12);   --tint-amber: #fbbf24;
+    --tint-red-bg: rgba(248, 113, 113, 0.12);    --tint-red: #f87171;
 }
 
 /* ==========================================================================
@@ -1257,3 +1305,9 @@ body.sidebar-open {
     --djappt-accent-soft: var(--tz-primary-soft);
 }
 
+:root[data-theme="dark"] .tchiiz-content .djappt {
+    --djappt-danger: var(--tz-danger);
+    --djappt-danger-soft: var(--tz-danger-soft);
+    --djappt-success: var(--tz-success);
+    --djappt-success-soft: rgba(34, 197, 94, 0.12);
+}

@@ -1,7 +1,8 @@
 {% load static %}
 {% load i18n %}
 <!DOCTYPE html>
-<html lang="en">
+{# Pages whose styles use the colour variables in admin.css opt in to dark mode with the dark_mode block #}
+<html lang="en" {% block dark_mode %}{% if djappt_admin %}data-dark-ready{% endif %}{% endblock %}>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,25 @@
     <meta name="keywords" content="{% block keyword %}{% endblock %}">
     <meta name="author" content="{% block author %}{% endblock %}">
     {% block customMetaTag %}{% endblock %}
+
+    {# Set the theme before anything is drawn, so a dark page never flashes white #}
+    <script>
+        (function () {
+            const root = document.documentElement;
+            // Mode: 'light', 'dark' or 'system' (nothing saved)
+            let mode = 'system';
+            try { mode = localStorage.getItem('tchiiz-theme') || 'system'; } catch (e) {}
+            let theme = 'light';
+            if (root.hasAttribute('data-dark-ready')) {
+                theme = mode === 'system'
+                    ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+                    : mode;
+            }
+            root.dataset.themeMode = mode;
+            root.dataset.theme = theme;
+            root.dataset.bsTheme = theme;
+        })();
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -296,6 +316,26 @@
             </div>
 
             <div class="tchiiz-header-right">
+                <div class="dropdown tchiiz-theme-toggle">
+                    <button type="button" class="tchiiz-header-icon" data-bs-toggle="dropdown" aria-expanded="false"
+                            title="{% translate 'Appearance' %}" aria-label="{% translate 'Appearance' %}">
+                        <i class="far fa-sun theme-icon-light"></i>
+                        <i class="far fa-moon theme-icon-dark"></i>
+                        <i class="fas fa-desktop theme-icon-system"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><button type="button" class="dropdown-item" data-theme-mode="light">
+                            <i class="far fa-sun"></i> {% translate "Light" %}<i class="fas fa-check tz-check"></i>
+                        </button></li>
+                        <li><button type="button" class="dropdown-item" data-theme-mode="dark">
+                            <i class="far fa-moon"></i> {% translate "Dark" %}<i class="fas fa-check tz-check"></i>
+                        </button></li>
+                        <li><button type="button" class="dropdown-item" data-theme-mode="system">
+                            <i class="fas fa-desktop"></i> {% translate "System" %}<i class="fas fa-check tz-check"></i>
+                        </button></li>
+                    </ul>
+                </div>
+
                 <!-- Notification Bell -->
                 <a href="{% url 'administration:message_list' %}" class="tchiiz-header-icon"
                    title="{% translate 'Messages' %}">
@@ -382,6 +422,39 @@
         const sidebar = document.getElementById('sidebar');
         sidebar.classList.toggle('profile-expanded');
     }
+
+    // Appearance menu: Light, Dark or System. Light and Dark are remembered; System follows the computer,
+    // including when it switches while the page is open.
+    (function () {
+        const root = document.documentElement;
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+        function applyTheme() {
+            const mode = root.dataset.themeMode;
+            const theme = mode === 'system' ? (systemDark.matches ? 'dark' : 'light') : mode;
+            if (theme === root.dataset.theme) return;
+            root.dataset.theme = theme;
+            root.dataset.bsTheme = theme;
+            window.dispatchEvent(new CustomEvent('tchiiz:themechange', {detail: {theme: theme}}));
+        }
+
+        if (!root.hasAttribute('data-dark-ready')) return;
+
+        document.querySelectorAll('[data-theme-mode]').forEach(function (item) {
+            item.addEventListener('click', function () {
+                const mode = item.dataset.themeMode;
+                root.dataset.themeMode = mode;
+                try {
+                    if (mode === 'system') localStorage.removeItem('tchiiz-theme');
+                    else localStorage.setItem('tchiiz-theme', mode);
+                } catch (e) {}
+                applyTheme();
+            });
+        });
+        systemDark.addEventListener('change', function () {
+            if (root.dataset.themeMode === 'system') applyTheme();
+        });
+    })();
 
     // "New Appointment" in the sidebar: open the calendar's own dialog. On the calendar page, click its button;
     // elsewhere, go to the calendar with #new and open it there once the page has checked the user is staff.
