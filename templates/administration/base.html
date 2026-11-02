@@ -6,6 +6,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}TCHIIZ | Admin{% endblock %}</title>
+    <meta name="description" content="{% block description %}{% endblock %}">
+    <meta name="keywords" content="{% block keyword %}{% endblock %}">
+    <meta name="author" content="{% block author %}{% endblock %}">
+    {% block customMetaTag %}{% endblock %}
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,6 +18,7 @@
     <link rel="stylesheet" href="{% static 'administration/css/admin.css' %}">
 
     {% block customCSS %}{% endblock %}
+    {% block scriptHead %}{% endblock %}
 </head>
 <body>
 
@@ -34,18 +39,18 @@
         <!-- User Profile Power Center -->
         <div class="tchiiz-user-profile" onclick="toggleUserProfile(this)">
             <div class="tchiiz-user-avatar">
-                {% if user.profile_photo and user.profile_photo.file %}
-                    <img src="{{ user.profile_photo.file.url }}" alt="Profile">
+                {% if request.user.profile_photo and request.user.profile_photo.file %}
+                    <img src="{{ request.user.profile_photo.file.url }}" alt="Profile">
                 {% else %}
                     <div class="tchiiz-avatar-placeholder">
-                        {{ user.first_name|slice:":1"|default:"U" }}
+                        {{ request.user.first_name|slice:":1"|default:"U" }}
                     </div>
                 {% endif %}
                 <div class="tchiiz-user-status"></div>
             </div>
             <div class="tchiiz-user-info">
                 <div class="tchiiz-user-name">
-                    {% if user.first_name %}{{ user.get_full_name }}{% else %}{{ user.email }}{% endif %}
+                    {% if request.user.first_name %}{{ request.user.get_full_name }}{% else %}{{ request.user.email }}{% endif %}
                 </div>
                 <div class="tchiiz-user-role">Administrator</div>
             </div>
@@ -70,8 +75,10 @@
 
         <!-- Quick Action Button -->
         <div class="tchiiz-quick-action">
-            <a href="{% url 'appointment:get_user_appointments' %}" class="tchiiz-btn-primary">
-                <i class="fas fa-plus"></i> New Appointment
+            {# Opens the calendar's new appointment dialog (see the script at the bottom) #}
+            <a href="{% url 'appointment:get_user_appointments' %}#new" class="tchiiz-btn-primary"
+               id="tchiiz-new-appointment">
+                <i class="fas fa-plus"></i> {% translate "New Appointment" %}
             </a>
         </div>
 
@@ -84,7 +91,7 @@
                 <span>{% translate "Dashboard" %}</span>
             </a>
 
-            {% if user.is_superuser %}
+            {% if request.user.is_superuser %}
                 <a href="/admin" class="tchiiz-nav-item tchiiz-nav-danger" target="_blank">
                     <i class="fas fa-lock"></i>
                     <span>{% translate "Django Admin" %}</span>
@@ -94,32 +101,42 @@
             <div class="tchiiz-nav-divider"></div>
 
             <!-- Core Functions -->
+            {% with ns=request.resolver_match.namespace u=request.resolver_match.url_name %}
             <div class="tchiiz-nav-section">
-                <div class="tchiiz-nav-item has-treeview" onclick="toggleSubmenu(this)">
+                {# Open on every django-appointment page, not only the ones linked here #}
+                <div class="tchiiz-nav-item has-treeview {% if ns == 'appointment' %}menu-open{% endif %}"
+                     onclick="toggleSubmenu(this)">
                     <i class="fas fa-calendar"></i>
                     <span>{% translate "Appointment" %}</span>
                     <i class="fas fa-chevron-right tchiiz-submenu-arrow"></i>
                 </div>
-                <div class="tchiiz-nav-treeview">
+                <div class="tchiiz-nav-treeview" {% if ns == 'appointment' %}style="display: block"{% endif %}>
                     <a href="{% url 'appointment:get_user_appointments' %}"
-                       class="tchiiz-nav-item {% if request.resolver_match.url_name == 'get_user_appointments' %}active{% endif %}">
+                       class="tchiiz-nav-item {% if ns == 'appointment' %}{% if u == 'get_user_appointments' or u == 'display_appointment' %}active{% endif %}{% endif %}">
                         <i class="far fa-eye"></i>
                         <span>{% translate "View all" %}</span>
                     </a>
-                    <a href="{% url 'appointment:user_profile' user.id %}"
-                       class="tchiiz-nav-item {% if request.resolver_match.url_name == 'user_profile' %}active{% endif %}">
+                    {# Without an id: the staff list for a superuser, their own profile for a staff member #}
+                    <a href="{% url 'appointment:user_profile' %}"
+                       class="tchiiz-nav-item {% if ns == 'appointment' %}{% if u == 'user_profile' or u == 'update_user_info' or u == 'email_change_verification_code' or 'staff' in u or 'working_hours' in u or 'day_off' in u or 'unavailability' in u %}active{% endif %}{% endif %}">
                         <i class="far fa-user-circle"></i>
-                        <span>{% translate "User Profile" %}</span>
+                        <span>{% if request.user.is_superuser %}{% translate "Staff members" %}{% else %}{% translate "My profile" %}{% endif %}</span>
                     </a>
-                    {% if user.is_superuser %}
+                    <a href="{% url 'appointment:get_service_list' %}"
+                       class="tchiiz-nav-item {% if ns == 'appointment' %}{% if u == 'get_service_list' or u == 'update_service' or u == 'view_service' %}active{% endif %}{% endif %}">
+                        <i class="far fa-list-alt"></i>
+                        <span>{% translate "Services" %}</span>
+                    </a>
+                    {% if request.user.is_superuser %}
                         <a href="{% url 'appointment:add_service' %}"
-                           class="tchiiz-nav-item {% if request.resolver_match.url_name == 'add_service' %}active{% endif %}">
+                           class="tchiiz-nav-item {% if ns == 'appointment' and u == 'add_service' %}active{% endif %}">
                             <i class="far fa-plus-square"></i>
                             <span>{% translate "Add Service" %}</span>
                         </a>
                     {% endif %}
                 </div>
             </div>
+            {% endwith %}
 
             <div class="tchiiz-nav-section">
                 <div class="tchiiz-nav-item has-treeview" onclick="toggleSubmenu(this)">
@@ -128,7 +145,7 @@
                     <i class="fas fa-chevron-right tchiiz-submenu-arrow"></i>
                 </div>
                 <div class="tchiiz-nav-treeview">
-                    {% if user.is_superuser %}
+                    {% if request.user.is_superuser %}
                         <a href="{% url 'administration:add_photos_homepage' %}"
                            class="tchiiz-nav-item {% if request.resolver_match.url_name == 'add_photos_homepage' %}active{% endif %}">
                             <i class="far fa-plus-square"></i>
@@ -150,7 +167,7 @@
                     <i class="fas fa-chevron-right tchiiz-submenu-arrow"></i>
                 </div>
                 <div class="tchiiz-nav-treeview">
-                    {% if user.is_superuser %}
+                    {% if request.user.is_superuser %}
                         <a href="{% url 'administration:add_photos_portfolio' %}"
                            class="tchiiz-nav-item {% if request.resolver_match.url_name == 'add_photos_portfolio' %}active{% endif %}">
                             <i class="far fa-plus-square"></i>
@@ -162,7 +179,7 @@
                         <i class="far fa-file"></i>
                         <span>{% translate "View all photos" %}</span>
                     </a>
-                    {% if user.is_superuser %}
+                    {% if request.user.is_superuser %}
                         <a href="{% url 'administration:add_album' %}"
                            class="tchiiz-nav-item {% if request.resolver_match.url_name == 'add_album' %}active{% endif %}">
                             <i class="far fa-edit"></i>
@@ -241,7 +258,7 @@
                 <span>{% translate "Help" %}</span>
             </a>
 
-            <a href="{% url 'administration:must_change_password' user.id %}"
+            <a href="{% url 'administration:must_change_password' request.user.id %}"
                class="tchiiz-nav-item {% if request.resolver_match.url_name == 'must_change_password' %}active{% endif %}">
                 <i class="fas fa-key"></i>
                 <span>{% translate "Change password" %}</span>
@@ -271,7 +288,7 @@
                         <i class="fas fa-home"></i>
                     </a>
                     <span class="separator">/</span>
-                    <span class="current">{% block header_title %}Dashboard{% endblock %}</span>
+                    <span class="current">{% block header_title %}{{ page_title|default:"Dashboard" }}{% endblock %}</span>
                 </div>
             </div>
 
@@ -304,7 +321,8 @@
         </header>
 
         <div class="tchiiz-content">
-            {% if messages %}
+            {# django-appointment pages show their own messages (appointment/_messages.html) #}
+            {% if messages and not djappt_admin %}
                 {% for message in messages %}
                     <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
                         {{ message }}
@@ -360,6 +378,28 @@
         const sidebar = document.getElementById('sidebar');
         sidebar.classList.toggle('profile-expanded');
     }
+
+    // "New Appointment" in the sidebar: open the calendar's own dialog. On the calendar page, click its button;
+    // elsewhere, go to the calendar with #new and open it there once the page has checked the user is staff.
+    function openNewAppointmentDialog() {
+        const pageButton = document.getElementById('djappt-new-appointment');
+        if (!pageButton) return false;
+        const staffCheck = typeof setUserStaffAdminFlag === 'function' ? setUserStaffAdminFlag() : Promise.resolve();
+        staffCheck.then(() => pageButton.click());
+        return true;
+    }
+
+    document.getElementById('tchiiz-new-appointment').addEventListener('click', function (event) {
+        if (!openNewAppointmentDialog()) return;
+        event.preventDefault();
+        if (document.body.classList.contains('sidebar-open')) toggleSidebar();
+    });
+
+    window.addEventListener('load', function () {
+        if (window.location.hash !== '#new') return;
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+        openNewAppointmentDialog();
+    });
 
     // Auto-open active menu on load - IMPROVED VERSION
     document.addEventListener('DOMContentLoaded', function () {

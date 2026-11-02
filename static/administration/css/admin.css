@@ -713,3 +713,9 @@ body.sidebar-open {
         font-size: 0.8rem;
     }
 }
+
+/* --- django-appointment pages ---
+   Their .djappt-shell has its own padding for a bare base template; here .tchiiz-content already pads the page. */
+.tchiiz-content .djappt-shell {
+    padding: 0;
+}
