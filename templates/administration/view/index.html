@@ -2,7 +2,9 @@
 {% load i18n %}
 {% load static %}
 
-{% block header_title %}{% translate "Dashboard Overview" %}{% endblock %}
+{% block dark_mode %}data-dark-ready{% endblock %}
+
+{% block header_title %}{% translate "Dashboard" %}{% endblock %}
 
 {% block customCSS %}
     <link rel="stylesheet" href="{% static 'administration/css/dashboard.css' %}">
@@ -10,233 +12,57 @@
 
 {% block body %}
 
-    <!-- Enhanced Stats Grid -->
+    <div class="tchiiz-page-head">
+        <div>
+            <h1 class="tchiiz-page-title">
+                {% if request.user.first_name %}{% blocktranslate with name=request.user.first_name %}Welcome back, {{ name }}{% endblocktranslate %}{% else %}{% translate "Dashboard" %}{% endif %}
+            </h1>
+            <p class="tchiiz-page-subtitle">{% now "l, F j" %}</p>
+        </div>
+    </div>
+
+    <!-- Key figures -->
     <div class="tchiiz-stats-grid">
-        <div class="tchiiz-stat-card stat-appointments">
-            <div class="stat-content">
-                <div class="stat-header">
-                    <span class="stat-label">{% translate "Appointments" %}</span>
-                    <i class="fas fa-calendar-check stat-icon"></i>
-                </div>
-                <h3 class="stat-value">{{ total_request_session }}</h3>
-                <a href="{% url 'appointment:get_user_appointments' %}" class="stat-link">
-                    {% translate "View Details" %} <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-        </div>
-
-        <div class="tchiiz-stat-card stat-messages">
-            <div class="stat-content">
-                <div class="stat-header">
-                    <span class="stat-label">{% translate "Messages" %}</span>
-                    <i class="fas fa-envelope stat-icon"></i>
-                </div>
-                <h3 class="stat-value">{{ total_contact_forms }}</h3>
-                <a href="{% url 'administration:message_list' %}" class="stat-link">
-                    {% translate "Inbox" %} <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-        </div>
-
-        <div class="tchiiz-stat-card stat-photos">
-            <div class="stat-content">
-                <div class="stat-header">
-                    <span class="stat-label">{% translate "Photos" %}</span>
-                    <i class="fas fa-images stat-icon"></i>
-                </div>
-                <h3 class="stat-value">{{ total_photos_delivered }}</h3>
-                <a href="#" class="stat-link">
-                    {% translate "Analytics" %} <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-        </div>
-
-        <div class="tchiiz-stat-card stat-clients">
-            <div class="stat-content">
-                <div class="stat-header">
-                    <span class="stat-label">{% translate "Clients" %}</span>
-                    <i class="fas fa-users stat-icon"></i>
-                </div>
-                <h3 class="stat-value">{{ total_clients }}</h3>
-                <a href="{% url 'administration:user_list' %}" class="stat-link">
-                    {% translate "Manage Users" %} <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Recent Appointments Cards -->
-    <div class="tchiiz-card">
-        <div class="tchiiz-card-header">
-            <div>
-                <h3 class="tchiiz-card-title">{% translate "Recent Appointments" %}</h3>
-                <p class="tchiiz-card-subtitle">{% translate "Latest booking requests from clients" %}</p>
-            </div>
-            <a href="{% url 'appointment:get_user_appointments' %}" class="btn btn-primary btn-sm">
-                <i class="fas fa-calendar-alt"></i> {% translate "View All" %}
-            </a>
-        </div>
-
-        <div class="appointment-list">
-            {% for rs in request_session %}
-                <div class="appointment-card">
-                    <div class="appointment-date">
-                        <div class="date-badge">
-                            <span class="date-day">{{ rs.created_at|date:"d" }}</span>
-                            <span class="date-month">{{ rs.created_at|date:"M" }}</span>
-                            <span class="date-year">{{ rs.created_at|date:"Y" }}</span>
-                        </div>
-                    </div>
-
-                    <div class="appointment-details">
-                        <div class="appointment-client">
-                            <span class="client-name">{{ rs.client.get_full_name }}</span>
-                            {% if rs.phone %}
-                                <a href="tel:{{ rs.phone }}" class="client-phone">
-                                    <i class="fas fa-phone"></i> {{ rs.phone }}
-                                </a>
-                            {% else %}
-                                <span class="client-phone text-muted">{% translate "No phone" %}</span>
-                            {% endif %}
-                        </div>
-
-                        <div class="appointment-session">
-                            <span class="session-type">{{ rs.get_service_name }}</span>
-                            <span class="session-time">
-                            <i class="far fa-clock"></i> {{ rs.get_start_time }}
-                        </span>
-                        </div>
-
-                        <div class="appointment-location">
-                            {% if rs.address %}
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span class="location-text">{{ rs.address|truncatechars:50 }}</span>
-                            {% else %}
-                                <span class="text-muted">{% translate "No location provided" %}</span>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <div class="appointment-action">
-                        <a href="{% url 'appointment:display_appointment' rs.pk %}"
-                           class="btn-action"
-                           title="View Details">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                    </div>
-                </div>
-            {% empty %}
-                <div class="empty-state">
-                    <i class="far fa-calendar-times"></i>
-                    <p>{% translate "No appointments found." %}</p>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-
-    <!-- Recent Invoices Cards -->
-    <div class="tchiiz-card">
-        <div class="tchiiz-card-header">
-            <div>
-                <h3 class="tchiiz-card-title">{% translate "Recent Invoices" %}</h3>
-                <p class="tchiiz-card-subtitle">{% translate "Track payments and invoice status" %}</p>
-            </div>
-            <a href="{% url 'administration:list_invoices' %}" class="btn btn-primary btn-sm">
-                <i class="fas fa-file-invoice"></i> {% translate "View All" %}
-            </a>
-        </div>
-
-        <div class="invoice-list">
-            {% for rs in invoices %}
-                <div class="invoice-card">
-                    <div class="invoice-date">
-                        <div class="date-badge date-badge-small">
-                            <span class="date-day">{{ rs.created_at|date:"d" }}</span>
-                            <span class="date-month">{{ rs.created_at|date:"M" }}</span>
-                            <span class="date-year">{{ rs.created_at|date:"y" }}</span>
-                        </div>
-                    </div>
-
-                    <div class="invoice-details">
-                        <div class="invoice-client">
-                            <span class="client-name">{{ rs.client.get_short_name }}</span>
-                            <a href="mailto:{{ rs.client.email }}" class="client-email">
-                                <i class="far fa-envelope"></i> {{ rs.client.email|truncatechars:30 }}
-                            </a>
-                        </div>
-
-                        <div class="invoice-amount-display">
-                            <span class="invoice-amount">${{ rs.total_amount }}</span>
-                        </div>
-
-                        <div class="invoice-status">
-                            <form action="{% url 'administration:update_invoice_status' rs.invoice_number %}"
-                                  method="post" class="invoice-status-form">
-                                {% csrf_token %}
-                                <select name="status"
-                                        onchange="this.form.submit()"
-                                        class="status-select status-{{ rs.status }}">
-                                    {% for status, status_display in rs.INVOICE_STATUS_CHOICES %}
-                                        <option value="{{ status }}"
-                                                {% if rs.status == status %}selected{% endif %}>
-                                            {{ status_display }}
-                                        </option>
-                                    {% endfor %}
-                                </select>
-                                {% if rs.email_sent %}
-                                    <span class="email-sent-badge" title="Email Sent">
-                                    <i class="fas fa-check-circle"></i>
-                                </span>
-                                {% endif %}
-                            </form>
-                        </div>
-                    </div>
-
-                    <div class="invoice-actions">
-                        {% if not rs.email_sent %}
-                            <a href="{% url 'administration:send_invoice' rs.invoice_number %}"
-                               class="btn-action btn-action-primary"
-                               title="Send Invoice">
-                                <i class="fas fa-paper-plane"></i>
-                            </a>
-                        {% endif %}
-                        <a href="{% url 'administration:view_invoice' rs.invoice_number %}"
-                           class="btn-action"
-                           title="View PDF"
-                           target="_blank">
-                            <i class="fas fa-file-pdf"></i>
-                        </a>
-                    </div>
-                </div>
-            {% empty %}
-                <div class="empty-state">
-                    <i class="far fa-file-invoice"></i>
-                    <p>{% translate "No invoices found." %}</p>
-                </div>
-            {% endfor %}
-        </div>
+        <a href="{% url 'appointment:get_user_appointments' %}" class="tchiiz-stat-card">
+            <span class="stat-icon stat-appointments"><i class="far fa-calendar-check"></i></span>
+            <span class="stat-label">{% translate "Appointments" %}</span>
+            <span class="stat-value">{{ total_request_session }}</span>
+        </a>
+        <a href="{% url 'administration:message_list' %}" class="tchiiz-stat-card">
+            <span class="stat-icon stat-messages"><i class="far fa-envelope"></i></span>
+            <span class="stat-label">{% translate "Messages" %}</span>
+            <span class="stat-value">{{ total_contact_forms }}</span>
+        </a>
+        <a href="{% url 'administration:list_photos_portfolio' %}" class="tchiiz-stat-card">
+            <span class="stat-icon stat-photos"><i class="far fa-images"></i></span>
+            <span class="stat-label">{% translate "Photos" %}</span>
+            <span class="stat-value">{{ total_photos_delivered }}</span>
+        </a>
+        <a href="{% url 'administration:user_list' %}" class="tchiiz-stat-card">
+            <span class="stat-icon stat-clients"><i class="fas fa-user-friends"></i></span>
+            <span class="stat-label">{% translate "Clients" %}</span>
+            <span class="stat-value">{{ total_clients }}</span>
+        </a>
     </div>
 
     <!-- Monthly Overview Chart -->
     <div class="tchiiz-card">
         <div class="tchiiz-card-header">
             <div>
-                <h3 class="tchiiz-card-title">{% translate "Monthly Overview" %}</h3>
-                <p class="tchiiz-card-subtitle">{% translate "Last 12 months appointment trends" %}</p>
+                <h3 class="tchiiz-card-title">{% translate "Appointments over time" %}</h3>
+                <p class="tchiiz-card-subtitle">{% translate "Last 12 months" %}</p>
             </div>
             <div class="chart-stats">
                 {% if increase_percentage > 0 %}
                     <span class="stat-trend stat-trend-up">
-                    <i class="fas fa-arrow-up"></i> {{ increase_percentage|floatformat:1 }}%
-                </span>
+                        <i class="fas fa-arrow-up"></i> {{ increase_percentage|floatformat:1 }}%
+                    </span>
                 {% elif increase_percentage < 0 %}
                     <span class="stat-trend stat-trend-down">
-                    <i class="fas fa-arrow-down"></i> {{ increase_percentage|floatformat:1|cut:"-" }}%
-                </span>
+                        <i class="fas fa-arrow-down"></i> {{ increase_percentage|floatformat:1|cut:"-" }}%
+                    </span>
                 {% else %}
-                    <span class="stat-trend stat-trend-neutral">
-                    <i class="fas fa-minus"></i> 0%
-                </span>
+                    <span class="stat-trend stat-trend-neutral">0%</span>
                 {% endif %}
                 <span class="stat-trend-label">{% translate "vs last month" %}</span>
             </div>
@@ -247,88 +73,168 @@
         </div>
     </div>
 
+    <div class="tchiiz-dashboard-columns">
+        <!-- Recent Appointments -->
+        <div class="tchiiz-card tchiiz-card-list">
+            <div class="tchiiz-card-header">
+                <div>
+                    <h3 class="tchiiz-card-title">{% translate "Recent appointments" %}</h3>
+                    <p class="tchiiz-card-subtitle">{% translate "Latest booking requests" %}</p>
+                </div>
+                <a href="{% url 'appointment:get_user_appointments' %}" class="tchiiz-btn-ghost">
+                    {% translate "View all" %}
+                </a>
+            </div>
+
+            <ul class="tchiiz-list">
+                {% for rs in request_session %}
+                    <li>
+                        <a href="{% url 'appointment:display_appointment' rs.pk %}" class="tchiiz-list-row">
+                            <span class="list-avatar">{{ rs.client.first_name|default:""|slice:":1"|upper }}{{ rs.client.last_name|default:""|slice:":1"|upper }}</span>
+                            <span class="list-main">
+                                <span class="list-title">{{ rs.client.get_full_name|default:rs.client.email }}</span>
+                                <span class="list-meta">{{ rs.get_service_name }}{% if rs.address %} · {{ rs.address|truncatechars:40 }}{% endif %}</span>
+                            </span>
+                            <span class="list-side">
+                                <span class="list-title">{{ rs.get_start_time|date:"M j, Y" }}</span>
+                                <span class="list-meta">{{ rs.get_start_time|time:"g:i A" }}</span>
+                            </span>
+                            <i class="fas fa-chevron-right list-chevron"></i>
+                        </a>
+                    </li>
+                {% empty %}
+                    <li class="empty-state">{% translate "No appointments yet." %}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Recent Invoices -->
+        <div class="tchiiz-card tchiiz-card-list">
+            <div class="tchiiz-card-header">
+                <div>
+                    <h3 class="tchiiz-card-title">{% translate "Recent invoices" %}</h3>
+                    <p class="tchiiz-card-subtitle">{% translate "Payments and status" %}</p>
+                </div>
+                <a href="{% url 'administration:list_invoices' %}" class="tchiiz-btn-ghost">
+                    {% translate "View all" %}
+                </a>
+            </div>
+
+            <ul class="tchiiz-list">
+                {% for rs in invoices %}
+                    <li class="tchiiz-list-row">
+                        <span class="list-avatar">{{ rs.client.first_name|default:""|slice:":1"|upper }}{{ rs.client.last_name|default:""|slice:":1"|upper }}</span>
+                        <span class="list-main">
+                            <span class="list-title">{{ rs.client.get_short_name|default:rs.client.email }}</span>
+                            <span class="list-meta">{{ rs.created_at|date:"M j, Y" }} · ${{ rs.total_amount }}</span>
+                        </span>
+                        {% include "administration/includes/invoice_status.html" with invoice=rs %}
+                        <span class="invoice-actions">
+                            {% if rs.email_sent %}
+                                <span class="btn-action is-done" title="{% translate 'Email sent' %}">
+                                    <i class="fas fa-check"></i>
+                                </span>
+                            {% else %}
+                                <a href="{% url 'administration:send_invoice' rs.invoice_number %}"
+                                   class="btn-action" title="{% translate 'Send invoice' %}">
+                                    <i class="far fa-paper-plane"></i>
+                                </a>
+                            {% endif %}
+                            <a href="{% url 'administration:view_invoice' rs.invoice_number %}"
+                               class="btn-action" title="{% translate 'View PDF' %}" target="_blank">
+                                <i class="far fa-file-pdf"></i>
+                            </a>
+                        </span>
+                    </li>
+                {% empty %}
+                    <li class="empty-state">{% translate "No invoices yet." %}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block customJS %}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script>
         // Real data from Django backend
         const monthLabels = {{ month_labels|safe }};
         const appointmentData = {{ appointment_counts|safe }};
 
-        const ctx = document.getElementById('requested-sessions').getContext('2d');
-        new Chart(ctx, {
+        Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
+
+        // Colours come from the admin.css variables, so the chart follows the light / dark theme
+        function chartColours() {
+            const css = getComputedStyle(document.documentElement);
+            const v = (name) => css.getPropertyValue(name).trim();
+            return {line: v('--tz-primary'), grid: v('--tz-border'), text: v('--tz-text-muted'), surface: v('--tz-surface')};
+        }
+
+        function areaFill(context, colour) {
+            const {ctx, chartArea} = context.chart;
+            if (!chartArea) return 'transparent';
+            const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+            gradient.addColorStop(0, colour + '26');
+            gradient.addColorStop(1, colour + '00');
+            return gradient;
+        }
+
+        let colours = chartColours();
+        const chart = new Chart(document.getElementById('requested-sessions'), {
             type: 'line',
             data: {
                 labels: monthLabels,
                 datasets: [{
                     label: 'Appointments',
                     data: appointmentData,
-                    borderColor: '#d97706',
-                    backgroundColor: 'rgba(217, 119, 6, 0.1)',
-                    borderWidth: 3,
-                    tension: 0.4,
+                    borderColor: () => colours.line,
+                    backgroundColor: (context) => areaFill(context, colours.line),
+                    borderWidth: 2,
+                    cubicInterpolationMode: 'monotone',
                     fill: true,
-                    pointBackgroundColor: '#d97706',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2,
-                    pointRadius: 5,
-                    pointHoverRadius: 7,
-                    pointHoverBackgroundColor: '#b45309',
-                    pointHoverBorderWidth: 3
+                    pointRadius: 0,
+                    pointHoverRadius: 4,
+                    pointHoverBackgroundColor: () => colours.line,
+                    pointHoverBorderColor: () => colours.surface,
+                    pointHoverBorderWidth: 2
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                interaction: {mode: 'index', intersect: false},
                 plugins: {
-                    legend: {
-                        display: false
-                    },
+                    legend: {display: false},
                     tooltip: {
-                        backgroundColor: '#1f2937',
-                        titleColor: '#fff',
-                        bodyColor: '#fff',
-                        borderColor: '#374151',
-                        borderWidth: 1,
-                        padding: 12,
+                        backgroundColor: '#27272a',
+                        padding: 10,
+                        cornerRadius: 6,
                         displayColors: false,
                         callbacks: {
-                            label: function (context) {
-                                return context.parsed.y + ' appointments';
-                            }
+                            label: (context) => context.parsed.y + ' appointments'
                         }
                     }
                 },
                 scales: {
                     y: {
                         beginAtZero: true,
-                        grid: {
-                            color: '#f3f4f6',
-                            drawBorder: false
-                        },
-                        ticks: {
-                            color: '#6b7280',
-                            font: {
-                                size: 12
-                            },
-                            precision: 0
-                        }
+                        border: {display: false},
+                        grid: {color: () => colours.grid},
+                        ticks: {color: () => colours.text, font: {size: 11}, precision: 0, maxTicksLimit: 5}
                     },
                     x: {
-                        grid: {
-                            display: false,
-                            drawBorder: false
-                        },
-                        ticks: {
-                            color: '#6b7280',
-                            font: {
-                                size: 11
-                            }
-                        }
+                        border: {display: false},
+                        grid: {display: false},
+                        ticks: {color: () => colours.text, font: {size: 11}}
                     }
                 }
             }
+        });
+
+        window.addEventListener('tchiiz:themechange', function () {
+            colours = chartColours();
+            chart.update('none');
         });
     </script>
 {% endblock %}

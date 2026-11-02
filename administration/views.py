@@ -20,6 +20,7 @@ from django.http import FileResponse, HttpResponse, HttpResponseNotFound, HttpRe
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
 
 from administration.forms import (InvoiceAttachmentFormset, InvoiceForm, InvoiceServiceFormset, UserChangePasswordForm)
@@ -334,7 +335,13 @@ def update_invoice_status(request, invoice_number):
     if new_status in dict(Invoice.INVOICE_STATUS_CHOICES):
         invoice.status = new_status
         invoice.save()
-        messages.success(request, f"Status updated to {new_status}")
+        messages.success(request, f"Status updated to {invoice.get_status_display()}")
+
+    # Back to the page the status was changed from (the dashboard or the invoice list)
+    next_url = request.POST.get('next')
+    if next_url and url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()},
+                                                    require_https=request.is_secure()):
+        return redirect(next_url)
     return redirect('administration:list_invoices')
 
 

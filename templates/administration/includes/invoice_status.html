@@ -1,0 +1,22 @@
+{% load i18n %}
+{# Invoice status as a pill that opens a menu; picking a status submits the form. Needs `invoice`. #}
+<form action="{% url 'administration:update_invoice_status' invoice.invoice_number %}" method="post"
+      class="tz-status-form dropdown">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+    <button type="button" class="tz-pill status-{{ invoice.status }}" data-bs-toggle="dropdown"
+            data-bs-popper-config='{"strategy": "fixed"}' aria-expanded="false"
+            aria-label="{% translate 'Change status' %}">
+        <span class="tz-dot status-{{ invoice.status }}"></span>{{ invoice.get_status_display }}
+    </button>
+    <ul class="dropdown-menu">
+        {% for value, label in invoice.INVOICE_STATUS_CHOICES %}
+            <li>
+                <button type="submit" name="status" value="{{ value }}" class="dropdown-item">
+                    <span class="tz-dot status-{{ value }}"></span>{{ label }}
+                    {% if invoice.status == value %}<i class="fas fa-check tz-check"></i>{% endif %}
+                </button>
+            </li>
+        {% endfor %}
+    </ul>
+</form>
