@@ -21,4 +21,4 @@ git+https://git.ksol.io/karolyi/py3-validate-email@v1.0.12
 # Container: web server, static files from gunicorn, PostgreSQL driver
 gunicorn==26.2.0
 whitenoise==6.12.0
-psycopg[binary]==3.3.6
+psycopg[binary]==3.3.7
