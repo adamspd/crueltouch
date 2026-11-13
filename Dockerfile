@@ -2,7 +2,7 @@
 # the django-q worker (manage.py qcluster) and one-off jobs.
 
 # ---- Stage 1: install the Python packages -----------------------------------
-FROM python:3.13-slim-trixie AS build
+FROM python:3.14-slim-trixie AS build
 
 # git: one package is installed straight from its git repository.
 # The rest is for building PDF/graphics packages (xhtml2pdf) if no wheel exists.
@@ -21,7 +21,7 @@ RUN pip install -r requirements.txt
 
 
 # ---- Stage 2: the image that runs --------------------------------------------
-FROM python:3.13-slim-trixie
+FROM python:3.14-slim-trixie
 
 # libcairo2: runtime library for the PDF packages.
 RUN apt-get update \
